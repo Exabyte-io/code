@@ -1,9 +1,9 @@
-[![npm version](https://badge.fury.io/js/%40exabyte-io%2F@exabyte-io/core.js.svg)](https://badge.fury.io/js/%40exabyte-io%2F@exabyte-io/core.js)
+[![npm version](https://badge.fury.io/js/%40exabyte-io%2F/code.js.svg)](https://badge.fury.io/js/%40exabyte-io%2F/code.js)
 [![License: Apache](https://img.shields.io/badge/License-Apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-# @exabyte-io/core.js
+# @exabyte-io/code.js
 
-@exabyte-io/core.js houses entity definitions for use in the Mat3ra platform.
+@exabyte-io/code.js houses entity definitions for use in the Mat3ra platform.
 
 
 ### Installation
@@ -11,13 +11,13 @@
 For usage within a javascript project:
 
 ```bash
-npm install @exabyte-io/@exabyte-io/core.js
+npm install @exabyte-io/code.js
 ```
 
 For development:
 
 ```bash
-git clone https://github.com/Exabyte-io/@exabyte-io/core.js.git
+git clone https://github.com/Exabyte-io/code.js.git
 ```
 
 

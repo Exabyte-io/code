@@ -1,5 +1,5 @@
 {
-    "name": "@exabyte-io/core.js",
+    "name": "@exabyte-io/code.js",
     "version": "0.0.0",
     "description": "COre DEfinitions in JS for Mat3ra.com (Exabyte.io)",
     "scripts": {
@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Exabyte-io/core.js.git"
+        "url": "https://github.com/Exabyte-io/code.js.git"
     },
     "main": "dist/index.js",
     "files": [
@@ -22,10 +22,10 @@
     ],
     "author": "Exabyte Inc.",
     "bugs": {
-        "url": "https://github.com/Exabyte-io/core.js/issues"
+        "url": "https://github.com/Exabyte-io/code.js/issues"
     },
     "license": "Apache-2.0",
-    "homepage": "https://github.com/Exabyte-io/core.js",
+    "homepage": "https://github.com/Exabyte-io/code.js",
     "dependencies": {
         "@babel/cli": "7.16.0",
         "@babel/core": "7.16.0",
@@ -59,4 +59,3 @@
         "*.{js,css}": "prettier --write"
     }
 }
-
