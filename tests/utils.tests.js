@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { deepClone } from "./utils/clone";
+import { deepClone } from "../src/utils/clone";
 
 describe("deepClone", () => {
     const obj = {

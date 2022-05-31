@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ContextProvider } from "./provider";
+import { ContextProvider } from "../src/context/provider";
 
 describe("ContextProvider", () => {
 
