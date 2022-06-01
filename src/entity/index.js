@@ -3,7 +3,7 @@ import {
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
-} from "./entity/in_memory";
+} from "./in_memory";
 
 import {
     DefaultableMixin,
@@ -11,14 +11,14 @@ import {
     HasMetadataMixin,
     TaggableMixin,
     NamedEntityMixin,
-} from "./entity/mixins";
+} from "./mixins";
 
-import { ENTITY_SET_TYPES } from "./entity/set/enums";
+import { ENTITY_SET_TYPES } from "./set/enums";
 
-import { constructEntitySetFactoryByConfig } from "./entity/set/factory";
-import { InMemoryEntitySetMixin, InMemoryEntityInSetMixin } from "./entity/set/mixins";
-import * as selectorsForEntitySet from "./entity/set/selectors";
-import { OrderedInMemoryEntityInSetMixin, OrderedInMemoryEntitySetMixin } from "./entity/set/ordered/mixins";
+import { constructEntitySetFactoryByConfig } from "./set/factory";
+import { InMemoryEntitySetMixin, InMemoryEntityInSetMixin } from "./set/mixins";
+import * as selectorsForEntitySet from "./set/selectors";
+import { OrderedInMemoryEntityInSetMixin, OrderedInMemoryEntitySetMixin } from "./set/ordered/mixins";
 
 export {
 

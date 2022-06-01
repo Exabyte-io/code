@@ -1,7 +1,7 @@
-import { ContextProvider } from "./context/provider";
-import { ContextProviderRegistryContainer } from "./context/registry";
+import { ContextProvider } from "./provider";
+import { ContextProviderRegistryContainer } from "./registry";
 
-import { JobContextPickKeysForMixin, WorkflowContextPickKeysForMixin } from "./context/pickers";
+import { JobContextPickKeysForMixin, WorkflowContextPickKeysForMixin } from "./pickers";
 
 import {
     ApplicationContextMixinBuilder,
@@ -11,7 +11,7 @@ import {
     MethodDataContextMixin,
     JobContextMixin,
     WorkflowContextMixin,
-} from "./context/mixins";
+} from "./mixins";
 
 export {
     ContextProvider,
