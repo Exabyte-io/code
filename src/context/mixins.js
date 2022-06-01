@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 
-import { EntitiesInSetSortCompareFunc } from "../entity/set/ordered/utils";
+import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
 
 export const ApplicationContextMixinBuilder = (applicationCls) => (superclass) => class extends superclass {
     constructor(config) {
@@ -59,7 +59,7 @@ export const MaterialsSetContextMixin = (superclass) => class extends superclass
 
     sortMaterialsByIndexInSet(materials = []) {
         // DO NOT SORT IN PLACE AS IT CHANGES THE ORDER IN `this.materials` AND HAS SIDE EFFECTS (MaterialViewer).
-        return materials.concat().sort((a, b) => EntitiesInSetSortCompareFunc(a, b, this.materialsSet._id, false));
+        return materials.concat().sort((a, b) => compareEntitiesInOrderedSetForSorting(a, b, this.materialsSet._id, false));
     }
 
 };

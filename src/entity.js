@@ -1,26 +1,44 @@
-import { InMemoryEntity } from "./entity/in_memory";
-import { InMemoryEntitySet } from "./entity/set";
-import { OrderedInMemoryEntitySet } from "./entity/set/ordered";
 import {
-    DefaultableInMemoryEntity,
-    NamedDefaultableInMemoryEntity,
-    HasMetadataNamedDefaultableInMemoryEntity
-} from "./entity/other";
-
-export * from "./entity/mixins";
-export * from "./entity/set/enums";
-export * from "./entity/set/factory";
-export * from "./entity/set/mixins";
-import * as selectorsForEntitySet from "./entity/set/selectors";
-export * from "./entity/set/ordered/mixins";
-export * from "./entity/set/ordered/utils";
-
-export {
     InMemoryEntity,
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
-    InMemoryEntitySet,
-    OrderedInMemoryEntitySet,
+} from "./entity/in_memory";
+
+import {
+    DefaultableMixin,
+    HasDescriptionMixin,
+    HasMetadataMixin,
+    TaggableMixin,
+    NamedEntityMixin,
+} from "./entity/mixins";
+
+import { ENTITY_SET_TYPES } from "./entity/set/enums";
+
+import { constructEntitySetFactoryByConfig } from "./entity/set/factory";
+import { InMemoryEntitySetMixin, InMemoryEntityInSetMixin } from "./entity/set/mixins";
+import * as selectorsForEntitySet from "./entity/set/selectors";
+import { OrderedInMemoryEntityInSetMixin, OrderedInMemoryEntitySetMixin } from "./entity/set/ordered/mixins";
+
+export {
+
+    InMemoryEntity,
+    DefaultableInMemoryEntity,
+    NamedDefaultableInMemoryEntity,
+    HasMetadataNamedDefaultableInMemoryEntity,
+
+    DefaultableMixin,
+    HasDescriptionMixin,
+    HasMetadataMixin,
+    TaggableMixin,
+    NamedEntityMixin,
+
+    ENTITY_SET_TYPES,
+    constructEntitySetFactoryByConfig,
     selectorsForEntitySet,
-}
+    InMemoryEntitySetMixin,
+    InMemoryEntityInSetMixin,
+    OrderedInMemoryEntitySetMixin,
+    OrderedInMemoryEntityInSetMixin,
+
+};
