@@ -17,7 +17,10 @@
     "exports": {
         "./context": "./dist/context/index.js",
         "./entity": "./dist/entity/index.js",
-        "./utils": "./dist/utils/index.js"
+        "./utils": "./dist/utils/index.js",
+        "./dist/context": "./dist/context/index.js",
+        "./dist/entity": "./dist/entity/index.js",
+        "./dist/utils": "./dist/utils/index.js"
     },
     "files": [
         "/dist",
