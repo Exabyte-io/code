@@ -1,20 +1,24 @@
 {
-    "name": "@exabyte-io/PROJECT_NAME",
+    "name": "@exabyte-io/code.js",
     "version": "0.0.0",
-    "description": "PROJECT_DESCRIPTION",
+    "description": "COre DEfinitions in JS for Mat3ra.com (Exabyte.io)",
     "scripts": {
         "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile",
-        "prepare": "husky install"
+        "postinstall": "npm run transpile"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Exabyte-io/PROJECT_NAME.git"
+        "url": "https://github.com/Exabyte-io/code.js.git"
     },
     "main": "dist/index.js",
+    "exports": {
+        "./context": "./dist/context/index.js",
+        "./entity": "./dist/entity/index.js",
+        "./utils": "./dist/utils/index.js"
+    },
     "files": [
         "/dist",
         "/src",
@@ -22,10 +26,10 @@
     ],
     "author": "Exabyte Inc.",
     "bugs": {
-        "url": "https://github.com/Exabyte-io/PROJECT_NAME/issues"
+        "url": "https://github.com/Exabyte-io/code.js/issues"
     },
     "license": "Apache-2.0",
-    "homepage": "https://github.com/Exabyte-io/PROJECT_NAME",
+    "homepage": "https://github.com/Exabyte-io/code.js",
     "dependencies": {
         "@babel/cli": "7.16.0",
         "@babel/core": "7.16.0",
@@ -34,7 +38,11 @@
         "@babel/preset-env": "7.16.4",
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
-        "@babel/runtime-corejs3": "7.16.8"
+        "@babel/runtime-corejs3": "7.16.8",
+        "crypto-js": "^4.1.1",
+        "lodash": "^4.17.21",
+        "mixwith": "^0.1.1",
+        "underscore": "^1.13.3"
     },
     "devDependencies": {
         "chai": "^4.3.4",
@@ -59,4 +67,3 @@
         "*.{js,css}": "prettier --write"
     }
 }
-
