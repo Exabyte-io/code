@@ -3,7 +3,8 @@
 
 # @exabyte-io/code.js
 
-@exabyte-io/code.js houses entity definitions for use in the Mat3ra platform.
+@exabyte-io/code.js houses COre DEfinitions (CODE) for use across the Mat3ra platform.
+Its usage can be found in other open-source packages used in the platform.
 
 
 ### Installation
