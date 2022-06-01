@@ -1,9 +1,12 @@
 import {
     InMemoryEntity,
+} from "./in_memory";
+
+import {
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
-} from "./in_memory";
+} from "./other";
 
 import {
     DefaultableMixin,
