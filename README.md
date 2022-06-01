@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/%40exabyte-io%2F/code.js.svg)](https://badge.fury.io/js/%40exabyte-io%2F/code.js)
+[![npm version](https://badge.fury.io/js/%40exabyte-io%2Fcode.js.svg)](https://badge.fury.io/js/%40exabyte-io%2Fcode.js)
 [![License: Apache](https://img.shields.io/badge/License-Apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 # @exabyte-io/code.js
