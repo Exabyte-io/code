@@ -7,14 +7,18 @@
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile",
-        "prepare": "husky install"
+        "postinstall": "npm run transpile"
     },
     "repository": {
         "type": "git",
         "url": "https://github.com/Exabyte-io/code.js.git"
     },
     "main": "dist/index.js",
+    "exports": {
+        "./context": "./dist/context/index.js",
+        "./entity": "./dist/entity/index.js",
+        "./utils": "./dist/utils/index.js"
+    },
     "files": [
         "/dist",
         "/src",
@@ -34,7 +38,11 @@
         "@babel/preset-env": "7.16.4",
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
-        "@babel/runtime-corejs3": "7.16.8"
+        "@babel/runtime-corejs3": "7.16.8",
+        "crypto-js": "^4.1.1",
+        "lodash": "^4.17.21",
+        "mixwith": "^0.1.1",
+        "underscore": "^1.13.3"
     },
     "devDependencies": {
         "chai": "^4.3.4",

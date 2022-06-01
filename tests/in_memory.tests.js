@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { InMemoryEntity } from "./in_memory";
+import { InMemoryEntity } from "../src/entity/in_memory";
 
 describe("InMemoryEntity", () => {
 
