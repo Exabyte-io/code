@@ -1,6 +1,8 @@
 name: Continuous testing and publication to NPM from 'main'
 
-on: [push]
+on:
+  workflow_dispatch:
+  push:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
