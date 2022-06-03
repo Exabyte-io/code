@@ -16,8 +16,9 @@ import {
     NamedEntityMixin,
 } from "./mixins";
 
-import { ENTITY_SET_TYPES } from "./set/enums";
+import { InMemoryEntitySet } from "./set";
 
+import { ENTITY_SET_TYPES } from "./set/enums";
 import { constructEntitySetFactoryByConfig } from "./set/factory";
 import { InMemoryEntitySetMixin, InMemoryEntityInSetMixin } from "./set/mixins";
 import * as selectorsForEntitySet from "./set/selectors";

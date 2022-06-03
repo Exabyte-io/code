@@ -2,14 +2,11 @@ import _ from "underscore";
 import {mix} from "mixwith";
 
 import { InMemoryEntity } from "./in_memory";
-import {NamedEntityMixin, TaggableMixin } from "./mixins";
 import {InMemoryEntitySetMixin, InMemoryEntityInSetMixin } from "./set/mixins";
 
 export class InMemoryEntitySet extends mix(InMemoryEntity).with(
     InMemoryEntitySetMixin,
     InMemoryEntityInSetMixin,
-    NamedEntityMixin,
-    TaggableMixin,
 ) {
 
     get isEntitySet() {return this.prop('isEntitySet')}
