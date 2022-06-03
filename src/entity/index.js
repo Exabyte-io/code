@@ -37,6 +37,7 @@ export {
     TaggableMixin,
     NamedEntityMixin,
 
+    InMemoryEntitySet,
     ENTITY_SET_TYPES,
     constructEntitySetFactoryByConfig,
     selectorsForEntitySet,
