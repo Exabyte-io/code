@@ -14,14 +14,14 @@ export function safeMakeObject(name) {
     return result;
 }
 
-/**@todo Operates on arrays --> should be moved to array.js
+/**
  * @summary Pluck a single entry out of an iterable according to an attribute and match condition
  * @param obj {Object|Array} iterable to pluck from
  * @param attribute {String} attribute to compare to value
  * @param value {Any} matching value
  * @returns filtered[0] {Any|null} first matching entry if found
  */
-export function getOneMatch(obj, attribute, value) {
+export function getOneMatchFromObject(obj, attribute, value) {
     const filtered = lodash.filter(obj, [attribute, value]);
     if (filtered.length !== 1) {
         console.log(`found ${filtered.length} ${attribute} matching ${value}, expected 1.`);
