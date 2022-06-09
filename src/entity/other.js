@@ -7,6 +7,12 @@ export class DefaultableInMemoryEntity extends mix(InMemoryEntity).with(
 ) {
 
 }
+
+export class NamedInMemoryEntity extends mix(InMemoryEntity).with(
+    NamedEntityMixin
+) {
+
+}
 export class NamedDefaultableInMemoryEntity extends mix(InMemoryEntity).with(
     DefaultableMixin,
     NamedEntityMixin,

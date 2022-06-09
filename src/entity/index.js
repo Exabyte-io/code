@@ -3,6 +3,7 @@ import {
 } from "./in_memory";
 
 import {
+    NamedInMemoryEntity,
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
@@ -26,6 +27,7 @@ import { OrderedInMemoryEntityInSetMixin, OrderedInMemoryEntitySetMixin } from "
 export {
 
     InMemoryEntity,
+    NamedInMemoryEntity,
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
