@@ -1,3 +1,4 @@
+import _ from "underscore";
 import math from "mathjs";
 
 import { tolerance as TOLERANCE } from "./constants";
@@ -213,6 +214,25 @@ const calculateSegmentsBetweenPoints3D = (point1, point2, n) => {
     return result;
 }
 
+/**
+ * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
+ * Returns a string representing the Number object to the specified precision.
+ * @memberOf Helpers
+ * @package exabyte:core
+ * @locus Client
+ * @method
+ * @name toPrecision
+ * @param {Number} number
+ * @param {Number} precision Optional. An integer specifying the number of significant digits.
+ */
+export function numberToPrecision(number, precision) {
+
+    if (_.isNumber(number)) {
+        return number.toPrecision(precision);
+    }
+    return number;
+}
+
 export const math = {
     ...math,
     PI: Math.PI,
@@ -233,4 +253,5 @@ export const math = {
     combinationsFromIntervals,
     calculateSegmentsBetweenPoints3D,
     roundValueToNDecimals,
+    numberToPrecision,
 };
