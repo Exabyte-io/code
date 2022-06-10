@@ -22,6 +22,8 @@ import {
     toFixedLocale,
 } from "./str";
 
+import { getSearchQuerySelector } from "./selector";
+
 export {
     compareEntitiesInOrderedSetForSorting,
 
@@ -54,4 +56,6 @@ export {
     toFixedLocale,
 
     getUUID,
+
+    getSearchQuerySelector,
 };
