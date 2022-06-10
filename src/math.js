@@ -185,7 +185,35 @@ const combinationsFromIntervals = (arrA, arrB, arrC) => {
     return combs;
 };
 
-export default {
+const roundValueToNDecimals = (value, decimals = 3) => {
+  return parseFloat(value.toFixed(decimals));
+}
+
+/**
+ * @summary Returns n splits of the passed segment.
+ * @param point1 {Number[]}
+ * @param point2 {Number[]}
+ * @param n {Number}
+ */
+const calculateSegmentsBetweenPoints3D = (point1, point2, n) => {
+    // safely parse if passed strings
+    const point1_ = point1.map(x => parseFloat(x));
+    const point2_ = point2.map(x => parseFloat(x));
+    const n_ = parseInt(n)
+
+    const result = [];
+    for (let i = 1; i < n_; i++) {
+        const lambda = i / (n_ - i);
+        result.push([
+            (point1_[0] + lambda * point2_[0]) / (1 + lambda),
+            (point1_[1] + lambda * point2_[1]) / (1 + lambda),
+            (point1_[2] + lambda * point2_[2]) / (1 + lambda)
+        ]);
+    }
+    return result;
+}
+
+export const math = {
     ...math,
     PI: Math.PI,
     trunc: Math.trunc,
@@ -203,4 +231,6 @@ export default {
     almostEqual,
     combinations,
     combinationsFromIntervals,
+    calculateSegmentsBetweenPoints3D,
+    roundValueToNDecimals,
 };
