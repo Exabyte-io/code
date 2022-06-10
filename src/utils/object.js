@@ -1,4 +1,7 @@
+import _ from 'underscore';
 import lodash from "lodash";
+
+import { deepClone } from "./clone";
 
 /**
  * @summary Safely convert input to { name: str } if it is not already
@@ -30,4 +33,146 @@ export function getOneMatchFromObject(obj, attribute, value) {
         return;
     }
     return filtered[0];
+}
+
+/**
+ * @summary Converts all keys of object to camelCase.
+ * @param obj {Object}
+ */
+export function convertKeysToCamelCaseForObject(obj) {
+    obj = deepClone(obj);
+    return lodash.mapKeys(obj, function (v, k) {
+        return lodash.camelCase(k);
+    })
+}
+
+/*
+ * Renames keys inside the object. Looks for keys from keysOriginal above and uses the corresponding keysRenamed entry
+ * @param {Object} object - Object to rename keys in
+ * @param {Array} keysOriginal - List of keys to rename
+ * @param {Array} keysRenamed - List of keys to rename original keys to, in the same order
+ */
+export function renameKeysForObject(o, keysOriginal = [], keysRenamed = []) {
+
+    if (!lodash.isObject(o)) {
+        return o;
+    }
+
+    if (lodash.isArray(o)) {
+        return o.map(x => renameKeysForObject(x, keysOriginal, keysRenamed));
+    }
+
+    let result = {}, origKey, destKey, idx, value;
+
+    for (origKey in o) {
+        // Get the destination key
+        idx = keysOriginal.indexOf(origKey);
+        if (idx === -1) {
+            destKey = origKey;
+        } else {
+            destKey = keysRenamed[idx];
+        }
+        // Get the value
+        value = o[origKey];
+        // If this is an object, recurse
+        if (typeof value === 'object') {
+            value = renameKeysForObject(value, keysOriginal, keysRenamed);
+        }
+        // Set it on the result using the destination key
+        result[destKey] = value;
+    }
+    return result;
+}
+
+/**
+ * @summary Flattens complex object into object with single key-value pair.  Required properties for object: "name", "value".
+ * "units" property is ignored. Only one extra property is allowed. E.g.
+ * {name: 'propName', value: 1} -> {propName: 1}
+ * {name: "propName", value: 1, extraProp: {name: "extraPropName", value: "2"}} -> {"propName:extraPropName=2": 1}
+ * @param {Object} obj Object to stringify.
+ * @param {String} [levelSeparator] ':' by default.
+ * @param {String} [keyValueSeparator] '=' by default.
+ * @param {String} [suffix]
+ * @return {Object}
+ */
+export function flattenObject(obj, levelSeparator = ':', keyValueSeparator = '=', suffix) {
+    const requiredKeys = ['name', 'value'];
+    const allowedKeys = requiredKeys.concat(['units']);
+    const extraKeys = _.keys(_.omit(obj, allowedKeys));
+
+    // If there is more than one extra key, raise an exception
+    if (extraKeys.length > 1) {
+        throw new Error('flattenObject: more than one extra property')
+    }
+
+    const tailSuffix = _.isEmpty(suffix) ? '' : `${levelSeparator}${suffix}`;
+
+    if (extraKeys.length === 0) {
+        return {[`${obj.name}${tailSuffix}`]: obj.value};
+    }
+
+    const extraPropertyKey = extraKeys[0];
+    const extraPropertyValue = obj[extraKeys[0]];
+
+    if (!_.isObject(extraPropertyValue)) {
+        return {
+            [`${obj.name}${levelSeparator}${extraPropertyKey}=${extraPropertyValue}${tailSuffix}`]: obj.value
+        };
+    }
+
+    const flatSubObj = stringifyObject(extraPropertyValue, levelSeparator, keyValueSeparator);
+    const key = `${obj.name}${levelSeparator}${flatSubObj}${tailSuffix}`;
+    return {[key]: obj.value};
+}
+
+/**
+ * @summary Converts object into string. Recursive. Required properties for object: "name", "value".
+ * "units" property is ignored. Only one extra property is allowed. Function is called recursively on extraProperty.
+ * E.g. {name: "propName", value: 1} -> 'propName=1'
+ * {name: "propName", value: 1, extraProp: {name: "extraPropName", value: "2"}} -> "propName=1:extraPropName=2"
+ * @param {Object} obj Object to stringify.
+ * @param {String} [levelSeparator] ':' by default.
+ * @param {String} [keyValueSeparator] '=' by default.
+ * @param {String} [prefix] Empty by default.
+ * @return {String}
+ */
+export function stringifyObject(obj, levelSeparator = ':', keyValueSeparator = '=', prefix = '') {
+    const requiredKeys = ['name', 'value'];
+    const allowedKeys = requiredKeys.concat(['units']);
+    const extraKeys = _.keys(_.omit(obj, allowedKeys));
+
+    // If there is more than one extra key, raise an exception
+    if (extraKeys.length > 1) {
+        throw new Error('stringifyObject: more than one extra property')
+    }
+
+    if (extraKeys.length === 0) {
+        return `${obj.name}${keyValueSeparator}${obj.value}`;
+    }
+
+    const extraPropertyKey = extraKeys[0];
+    const extraPropertyValue = obj[extraKeys[0]];
+
+    prefix = _.isEmpty(prefix) ? `${obj.name}${keyValueSeparator}${obj.value}` : `${prefix}${levelSeparator}${obj.name}${keyValueSeparator}${obj.value}`;
+
+    if (!_.isObject(extraPropertyValue)) {
+        return `${prefix}:${extraPropertyKey}${keyValueSeparator}${extraPropertyValue}`;
+    }
+
+    return stringifyObject(extraPropertyValue, levelSeparator, keyValueSeparator, prefix);
+}
+
+/**
+ * Sort object keys alphabetically
+ */
+export function sortKeysDeepForObject(obj) {
+    if (_.isArray(obj)) {
+        return obj.map(sortKeysDeepForObject);
+    }
+    if (_.isObject(obj)) {
+        const sortedObject = {};
+        _.keys(obj).sort().map(key => sortedObject[key] = sortKeysDeepForObject(obj[key]));
+        return sortedObject
+    }
+    return obj;
 }
