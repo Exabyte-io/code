@@ -1,5 +1,5 @@
 import _ from "underscore";
-import math from "mathjs";
+import mathjs from "mathjs";
 
 import { tolerance as TOLERANCE } from "./constants";
 
@@ -234,7 +234,7 @@ export function numberToPrecision(number, precision) {
 }
 
 export const math = {
-    ...math,
+    ...mathjs,
     PI: Math.PI,
     trunc: Math.trunc,
     product,
