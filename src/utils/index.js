@@ -4,6 +4,7 @@ import { extendClass, extendClassStaticProps, cloneClass } from "./class";
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import { getProgrammingLanguageFromFileExtension, formatFileSize } from "./file";
+import { calculateHashFromObject, calculateHashFromString, removeTimestampableKeysFromConfig } from "./hash";
 import {
     getOneMatchFromObject,
     safeMakeObject,
@@ -48,6 +49,10 @@ export {
 
     getProgrammingLanguageFromFileExtension,
     formatFileSize,
+
+    calculateHashFromObject,
+    calculateHashFromString,
+    removeTimestampableKeysFromConfig,
 
     removeNewLinesAndExtraSpaces,
     randomAlphanumeric,
