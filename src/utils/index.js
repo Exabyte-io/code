@@ -1,21 +1,31 @@
+import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
+import { safeMakeArray, convertToCompactCSVArrayOfObjects } from "./array";
+import { extendClass, extendClassStaticProps, cloneClass } from "./class";
 import { deepClone } from "./clone";
+import { refreshCodeMirror } from "./codemirror";
+import { getProgrammingLanguageFromFileExtension } from "./file";
 import { getOneMatchFromObject, safeMakeObject } from "./object";
 import { getUUID } from "./uuid";
-import { safeMakeArray } from "./array";
-import { getProgrammingLanguageFromFileExtension } from "./file";
 import { removeNewLinesAndExtraSpaces } from "./str";
-import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
 
 export {
+    compareEntitiesInOrderedSetForSorting,
+
     safeMakeArray,
+    convertToCompactCSVArrayOfObjects,
+
+    cloneClass,
+    extendClass,
+    extendClassStaticProps,
 
     deepClone,
+
+    refreshCodeMirror,
 
     getOneMatchFromObject,
     safeMakeObject,
 
     getProgrammingLanguageFromFileExtension,
-    compareEntitiesInOrderedSetForSorting,
 
     removeNewLinesAndExtraSpaces,
 
