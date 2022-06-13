@@ -17,6 +17,7 @@ import {
     NamedEntityMixin,
 } from "./mixins";
 
+import { InMemoryEntitySet } from "./set";
 import { ENTITY_SET_TYPES } from "./set/enums";
 
 import { constructEntitySetFactoryByConfig } from "./set/factory";
@@ -38,6 +39,7 @@ export {
     TaggableMixin,
     NamedEntityMixin,
 
+    InMemoryEntitySet,
     ENTITY_SET_TYPES,
     constructEntitySetFactoryByConfig,
     selectorsForEntitySet,
