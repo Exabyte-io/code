@@ -18,7 +18,7 @@ export class InMemoryEntitySet extends mix(InMemoryEntity).with(
 
     get entityCls() {return this.prop('entityCls')}
 
-    get cls() {return this.entityCls}
+    get cls() {return this.entityCls || super.cls}
 
     toJSONForInclusionInEntity() {
         return _.pick(this.toJSON(), ['_id', 'type']);
