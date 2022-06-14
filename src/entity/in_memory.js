@@ -109,6 +109,9 @@ export class InMemoryEntity {
 
     get cls() {return this.constructor.name}
 
+    // TODO: figure out why the above getter for `cls` returns `null` and use only one
+    getClsName() {return this.constructor.name}
+
     get slug() {return this.prop('slug')}
 
     get isSystemEntity() {
@@ -127,7 +130,7 @@ export class InMemoryEntity {
         return {
             _id: this.id,
             slug: this.slug,
-            cls: this.cls,
+            cls: this.getClsName(),
         }
     }
 
