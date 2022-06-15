@@ -3,6 +3,7 @@ import {
 } from "./in_memory";
 
 import {
+    NamedInMemoryEntity,
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
@@ -16,6 +17,7 @@ import {
     NamedEntityMixin,
 } from "./mixins";
 
+import { InMemoryEntitySet } from "./set";
 import { ENTITY_SET_TYPES } from "./set/enums";
 
 import { constructEntitySetFactoryByConfig } from "./set/factory";
@@ -26,6 +28,7 @@ import { OrderedInMemoryEntityInSetMixin, OrderedInMemoryEntitySetMixin } from "
 export {
 
     InMemoryEntity,
+    NamedInMemoryEntity,
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
@@ -36,6 +39,7 @@ export {
     TaggableMixin,
     NamedEntityMixin,
 
+    InMemoryEntitySet,
     ENTITY_SET_TYPES,
     constructEntitySetFactoryByConfig,
     selectorsForEntitySet,
