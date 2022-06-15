@@ -24,7 +24,7 @@
         "./dist/entity": "./dist/entity/index.js",
         "./dist/utils": "./dist/utils/index.js",
         "./dist/constants": "./dist/constants.js",
-        "./dist/math": "./dist/math.js",
+        "./dist/math": "./dist/math.js"
     },
     "files": [
         "/dist",
