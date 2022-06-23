@@ -7,7 +7,7 @@ import {
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
-    NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
+    NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
     NamedDefaultableRepetitionRuntimeContextAndRenderInMemoryEntity,
 } from "./other";
 
@@ -18,6 +18,8 @@ import {
     TaggableMixin,
     NamedEntityMixin,
 } from "./mixins/props";
+
+import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
 
 import { InMemoryEntitySet } from "./set";
 import { ENTITY_SET_TYPES } from "./set/enums";
@@ -37,7 +39,7 @@ export {
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
-    NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
+    NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
     NamedDefaultableRepetitionRuntimeContextAndRenderInMemoryEntity,
 
     DefaultableMixin,
@@ -45,6 +47,7 @@ export {
     HasMetadataMixin,
     TaggableMixin,
     NamedEntityMixin,
+    RuntimeContextFieldMixin,
 
     InMemoryEntitySet,
     ENTITY_SET_TYPES,
