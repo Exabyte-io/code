@@ -30,6 +30,15 @@ export class NamedDefaultableRepetitionImportantSettingsInMemoryEntity extends m
     ImportantSettingsProviderMixin,
 ) {}
 
+export class NamedDefaultableRepetitionContextAndRenderInMemoryEntity extends mix(
+    InMemoryEntity,
+).with(
+    DefaultableMixin,
+    NamedEntityMixin,
+    HasRepetitionMixin,
+    ContextAndRenderFieldsMixin,
+) {}
+
 export class NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity extends mix(
     InMemoryEntity,
 ).with(

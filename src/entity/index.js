@@ -7,6 +7,7 @@ import {
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
+    NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
     NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
     NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
 } from "./other";
@@ -39,8 +40,9 @@ export {
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
+    NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
     NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
-    NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity
+    NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
 
     DefaultableMixin,
     HasDescriptionMixin,
