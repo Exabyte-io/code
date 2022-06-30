@@ -20,6 +20,7 @@ import {
     NamedEntityMixin,
 } from "./mixins/props";
 
+import { RuntimeItemsMixin } from "./mixins/runtime_items";
 import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
 
 import { InMemoryEntitySet } from "./set";
@@ -49,6 +50,7 @@ export {
     HasMetadataMixin,
     TaggableMixin,
     NamedEntityMixin,
+    RuntimeItemsMixin,
     RuntimeContextFieldMixin,
 
     InMemoryEntitySet,

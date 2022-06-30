@@ -1,6 +1,8 @@
 import _ from "underscore";
 import s from "underscore.string";
 
+import { safeMakeObject } from "../../utils/object";
+
 /*
  * @summary Contains runtime items: results, monitors, pre/postProcessors
  *          Is meant to work with Entity, InMemoryEntity b/c of `prop` extraction from `_json`.
@@ -8,32 +10,21 @@ import s from "underscore.string";
 
 export const RuntimeItemsMixin = (superclass) => {
     return class extends superclass {
-        // converts "string" to {"name": "string"}
-        _safeMakeNameObjectFromString(name) {
-            if (!name) return;
-            let result = name;
-            if (_.isString(name)) result = {name};
-            if (!_.isObject(result) || _.isArray(result) || !result.name)
-                throw new Error(
-                    "RuntimeItemsMixin._safeMakeNameObjectFromString: failed while creating a named object",
-                );
-            return result;
-        }
 
         get results() {
-            return this.prop("results", this.defaultResults).map((r) => {return this._safeMakeNameObjectFromString(r)});
+            return this.prop("results", this.defaultResults).map(safeMakeObject);
         }
 
         get monitors() {
-            return this.prop("monitors", this.defaultMonitors).map(this._safeMakeNameObjectFromString)
+            return this.prop("monitors", this.defaultMonitors).map(safeMakeObject);
         }
 
         get preProcessors() {
-            return this.prop("preProcessors", this.defaultPreProcessors).map(this._safeMakeNameObjectFromString)
+            return this.prop("preProcessors", this.defaultPreProcessors).map(safeMakeObject);
         }
 
         get postProcessors() {
-            return this.prop("postProcessors", this.defaultPostProcessors).map(this._safeMakeNameObjectFromString)
+            return this.prop("postProcessors", this.defaultPostProcessors).map(safeMakeObject);
         }
 
         get defaultResults() {return []}
@@ -85,11 +76,11 @@ export const RuntimeItemsUILogicMixin = (superclass) => {
         }
 
         _addRuntimeItem(key = "results", config) {
-            this._json[key].push(this._safeMakeNameObjectFromString(config));
+            this._json[key].push(safeMakeObject(config));
         }
 
         _removeRuntimeItem(key = "results", config) {
-            config = this._safeMakeNameObjectFromString(config);
+            config = safeMakeObject(config);
             this._removeRuntimeItemByName(key, config.name);
         }
 
