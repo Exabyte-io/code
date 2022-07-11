@@ -48,6 +48,14 @@ export const RuntimeItemsMixin = (superclass) => {
 export const RuntimeItemsUILogicMixin = (superclass) => {
     return class extends RuntimeItemsMixin(superclass) {
 
+        constructor(config) {
+            super(config);
+            this._initRuntimeItems(
+                ["results", "monitors", "preProcessors", "postProcessors"],
+                config,
+            );
+        }
+
         setRuntimeItemsToDefaultValues() {
             ["results", "monitors", "preProcessors", "postProcessors"].map((name) =>
                 this.setProp(name, this[`default${s.capitalize(name)}`]),
