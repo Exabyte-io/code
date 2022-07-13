@@ -145,6 +145,7 @@ export class InMemoryEntity {
         let filtered;
         if (!name) {
             filtered = entities.filter(entity => entity.prop("isDefault") === true);
+            if (!filtered.length) filtered = [entities[0]];
         } else {
             filtered = entities.filter(entity => entity.prop("name") === name);
         }
