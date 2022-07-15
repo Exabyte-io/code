@@ -38,20 +38,26 @@ export function extendClassStaticProps(childClass, parentClass, excludedProps = 
 
 /**
  * Extends an object with a parent class namespace.
- * See extendClass
+ * See extendClass.
+ * TODO : match call signature with extendClass and
+ *        make use of getPrototypeOf rather than __proto__
+ *        but verify correctness in additional use cases first
  */
-export function extendThis(child, parentClass, excludedProps = [], ...args) {
+export function extendThis(child, childClass, parentClass, excludedProps = [], ...args) {
     let props;
     let obj = new parentClass.prototype.constructor(...args);
-    const exclude = ["constructor", ...excludedProps];
+    const exclude = ["constructor", ...Object.getOwnPropertyNames(childClass)];
+    const seen = []; // remember most recent occurrence of prop name (like inheritance)
     while (obj.__proto__) {
         props = Object.getOwnPropertyNames(obj.__proto__);
         props.filter(p => !exclude.includes(p)).map((prop) => {
+            if (seen.includes(prop)) return;
             const getter = obj.__lookupGetter__(prop);
             const setter = obj.__lookupSetter__(prop);
             if (getter) child.__defineGetter__(prop, getter);
             if (setter) child.__defineSetter__(prop, setter);
             if (!(getter || setter)) child[prop] = obj[prop];
+            seen.push(prop);
         })
         obj = obj.__proto__;
     }
