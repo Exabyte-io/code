@@ -35,3 +35,24 @@ export function extendClassStaticProps(childClass, parentClass, excludedProps = 
         childClass[prop] = parentClass[prop]
     });
 }
+
+/**
+ * Extends an object with a parent class namespace.
+ * See extendClass
+ */
+export function extendThis(child, parentClass, excludedProps = [], ...args) {
+    let props;
+    let obj = new parentClass.prototype.constructor(...args);
+    const exclude = ["constructor", ...excludedProps];
+    while (obj.__proto__) {
+        props = Object.getOwnPropertyNames(obj.__proto__);
+        props.filter(p => !exclude.includes(p)).map((prop) => {
+            const getter = obj.__lookupGetter__(prop);
+            const setter = obj.__lookupSetter__(prop);
+            if (getter) child.__defineGetter__(prop, getter);
+            if (setter) child.__defineSetter__(prop, setter);
+            if (!(getter || setter)) child[prop] = obj[prop];
+        })
+        obj = obj.__proto__;
+    }
+}

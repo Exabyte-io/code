@@ -135,7 +135,8 @@ export class InMemoryEntity {
     }
 
     /**
-     * @summary Pluck an entity from a collection by name
+     * @summary Pluck an entity from a collection by name.
+     *          If no name is provided and no entity has prop isDefault, return the first entity
      * @param entities {Array} the entities
      * @param entity {string} the kind of entities
      * @param name {string} the name of the entity to choose
