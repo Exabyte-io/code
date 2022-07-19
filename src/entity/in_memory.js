@@ -95,7 +95,12 @@ export class InMemoryEntity {
 
         if (!ctx.isValid()) {
             console.log(JSON.stringify(this.toJSON()));
-            console.log(ctx.getErrorObject());
+            if (ctx.getErrorObject) {
+                console.log(ctx.getErrorObject());
+            }
+            if (ctx.validationErrors) {
+                console.log(ctx.validationErrors());
+            }
         }
 
         return ctx.isValid();
