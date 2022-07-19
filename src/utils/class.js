@@ -35,3 +35,30 @@ export function extendClassStaticProps(childClass, parentClass, excludedProps = 
         childClass[prop] = parentClass[prop]
     });
 }
+
+/**
+ * Slightly different implementation of extendClass assuming excludedProps
+ * is contained within the child-most class definition and assigning only
+ * the most recent props rather than the most distant props.
+ * See extendClass.
+ */
+export function extendThis(childClass, parentClass, config) {
+    let props, protos;
+    let obj = new parentClass.prototype.constructor(config);
+    const exclude = ["constructor", ...Object.getOwnPropertyNames(childClass.prototype)];
+    const seen = []; // remember most recent occurrence of prop name (like inheritance)
+    while (Object.getPrototypeOf(obj)) {
+        protos = Object.getPrototypeOf(obj);
+        props = Object.getOwnPropertyNames(protos);
+        props.filter(p => !exclude.includes(p)).map((prop) => {
+            if (seen.includes(prop)) return;
+            const getter = protos.__lookupGetter__(prop);
+            const setter = protos.__lookupSetter__(prop);
+            if (getter) childClass.prototype.__defineGetter__(prop, getter);
+            if (setter) childClass.prototype.__defineSetter__(prop, setter);
+            if (!(getter || setter)) childClass.prototype[prop] = protos[prop];
+            seen.push(prop);
+        })
+        obj = protos;
+    }
+}

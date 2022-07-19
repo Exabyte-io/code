@@ -95,7 +95,12 @@ export class InMemoryEntity {
 
         if (!ctx.isValid()) {
             console.log(JSON.stringify(this.toJSON()));
-            console.log(ctx.getErrorObject());
+            if (ctx.getErrorObject) {
+                console.log(ctx.getErrorObject());
+            }
+            if (ctx.validationErrors) {
+                console.log(ctx.validationErrors());
+            }
         }
 
         return ctx.isValid();
@@ -135,7 +140,8 @@ export class InMemoryEntity {
     }
 
     /**
-     * @summary Pluck an entity from a collection by name
+     * @summary Pluck an entity from a collection by name.
+     *          If no name is provided and no entity has prop isDefault, return the first entity
      * @param entities {Array} the entities
      * @param entity {string} the kind of entities
      * @param name {string} the name of the entity to choose
@@ -145,6 +151,7 @@ export class InMemoryEntity {
         let filtered;
         if (!name) {
             filtered = entities.filter(entity => entity.prop("isDefault") === true);
+            if (!filtered.length) filtered = [entities[0]];
         } else {
             filtered = entities.filter(entity => entity.prop("name") === name);
         }
