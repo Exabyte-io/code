@@ -1,4 +1,5 @@
 import lodash from "lodash";
+import mergeAllOf from "json-schema-merge-allof";
 
 // import { ESSE } from "@exabyte-io/esse.js";
 import { deepClone } from "../utils/clone";
