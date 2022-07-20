@@ -36,14 +36,6 @@ export const JSONSchemasInterface = {
         });
     },
 
-    getAsSimpleSchemaById: function (schemaId) {
-        const schemaObject = this.schemaById(schemaId);
-        if (!schemaObject) {
-            throw new Error(`JSONSchemasInterface.getAsSimpleSchemaByNameRegex: schema ${schemaId} not found`);
-        }
-        return jsonToSimpleSchema(schemaObject);
-    },
-
     /**
      * @example <caption>Search by schemaId regex</caption>
      * JSONSchemasInterface.matchSchema({
