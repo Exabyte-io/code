@@ -175,10 +175,6 @@ export class InMemoryEntity {
         return null;
     }
 
-    static get jsonSchemaMixes() {
-        return [];
-    }
-
     static getMainJsonSchema() {
         const originalSchema = getSchemaByClassName(this.name);
 

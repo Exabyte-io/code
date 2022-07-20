@@ -1,4 +1,5 @@
 import mergeAllOf from "json-schema-merge-allof";
+import { getSchemaById } from './JSONSchemasInterface';
 import { schemas } from '@exabyte-io/esse.js/lib/js/esse/schemas.js';
 
 const mainSchemas = {
@@ -126,25 +127,6 @@ const mixSchemas = {
     //     ...unitMix
     // ]
 };
-
-
-const schemaCache = new Map();
-
-function getSchemaById(schemaId) {
-    if (!schemaCache.has(schemaId)) {
-        const rawSchema = schemas.find((schema) => schema.schemaId === schemaId);
-
-        const schema = mergeAllOf(rawSchema, {
-            resolvers: {
-                defaultResolver: mergeAllOf.options.resolvers.title
-            }
-        });
-    
-        schemaCache.set(schemaId, schema);
-    }
-    
-    return schemaCache.get(schemaId);
-}
 
 export function getSchemaByClassName(className) {
     return getSchemaById(mainSchemas[className]);
