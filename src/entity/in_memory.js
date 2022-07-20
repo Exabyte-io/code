@@ -3,7 +3,7 @@ import mergeAllOf from "json-schema-merge-allof";
 
 // import { ESSE } from "@exabyte-io/esse.js";
 import { deepClone } from "../utils/clone";
-import { getSchemaByClassName, getSchemasByIds } from "../utils/schemas";
+import { getSchemaByClassName, getMixSchemasByClassName } from "../utils/schemas";
 
 
 // TODO: https://exabyte.atlassian.net/browse/SOF-5946
@@ -199,7 +199,7 @@ export class InMemoryEntity {
         return mergeAllOf({
             allOf: [
                 this.getMainJsonSchema(),
-                ...getSchemasByIds(this.jsonSchemaMixes)
+                ...getMixSchemasByClassName(this.name)
             ]
         }, {
             resolvers: {

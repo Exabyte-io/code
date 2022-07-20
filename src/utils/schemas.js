@@ -21,6 +21,112 @@ const mainSchemas = {
     Unit: "workflow-unit",
 };
 
+const materialMix = [
+    'system-recalculated-hash',
+];
+
+const entityMix = [
+    'system-description-object',
+    'system-base-entity-set',
+    'system-sharing',
+    'system-metadata',
+    'system-defaultable',
+];
+
+const subWorkflowMix = [
+    'system-system-name',
+    'system-is-multi-material'
+];
+
+const workflowMix = [
+    'workflow-base-flowchart',
+    'system-history',
+    'system-is-outdated'
+];
+
+const bankMaterialMix = [
+    'system-conventional',
+    'system-creator-account'
+];
+
+const bankWorkflowMix = [
+    'system-creator-account'
+];
+
+const jobMix = [
+    'system-status',
+    'system-job-extended'
+];
+
+const unitMix = [
+    'system-unit-extended',
+    'system-status',
+    'workflow-unit-runtime-runtime-items'
+];
+
+const mixSchemas = {
+    Entity: [
+        ...entityMix
+    ],
+    Material: [
+        ...entityMix,
+        ...materialMix
+    ],
+    BankMaterial: [
+        ...entityMix,
+        ...materialMix,
+        ...bankMaterialMix,
+    ],
+    Workflow: [
+        ...entityMix,
+        ...subWorkflowMix,
+        ...workflowMix
+    ],
+    Subworkflow: [
+        ...subWorkflowMix
+    ],
+    BankWorkflow: [
+        ...entityMix,
+        ...subWorkflowMix,
+        ...workflowMix,
+        ...bankWorkflowMix
+    ],
+    Job: [
+        ...entityMix,
+        ...jobMix
+    ],
+    // AssertionUnit: [
+    //     ...unitMix
+    // ],
+    // AssignmentUnit: [
+    //     ...unitMix
+    // ],
+    // ConditionUnit : [
+    //     ...unitMix
+    // ],
+    // ExecutionUnit: [
+    //     ...unitMix
+    // ],
+    // IOUnit: [
+    //     ...unitMix
+    // ],
+    // MapUnit: [
+    //     ...unitMix
+    // ],
+    // ProcessingUnit: [
+    //     ...unitMix
+    // ],
+    // ReduceUnit: [
+    //     ...unitMix
+    // ],
+    // SubworkflowUnit: [
+    //     ...unitMix
+    // ],
+    // Unit: [
+    //     ...unitMix
+    // ]
+};
+
 
 const schemaCache = new Map();
 
@@ -46,4 +152,8 @@ export function getSchemaByClassName(className) {
 
 export function getSchemasByIds(ids) {
     return ids.map(id => getSchemaById(id));
+}
+
+export function getMixSchemasByClassName(className) {
+    return mixSchemas[className].map(schemaId => getSchemaById(schemaId));
 }
