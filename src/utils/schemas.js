@@ -129,13 +129,9 @@ const mixSchemas = {
 };
 
 export function getSchemaByClassName(className) {
-    return getSchemaById(mainSchemas[className]);
-}
-
-export function getSchemasByIds(ids) {
-    return ids.map(id => getSchemaById(id));
+    return mainSchemas[className] ? getSchemaById(mainSchemas[className]) : null;
 }
 
 export function getMixSchemasByClassName(className) {
-    return mixSchemas[className].map(schemaId => getSchemaById(schemaId));
+    return mixSchemas[className] ? mixSchemas[className].map(schemaId => getSchemaById(schemaId)) : [];
 }
