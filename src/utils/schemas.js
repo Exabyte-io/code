@@ -8,6 +8,10 @@ const mainSchemas = {
     Subworkflow: "workflow-subworkflow",
     BankWorkflow: "workflow",
     Job: "job",
+    Application: "software-application",
+    Executable: "software-executable",
+    Flavor: "software-flavor",
+    Template: "software-template",
     AssertionUnit: "workflow-unit-assertion",
     AssignmentUnit: "workflow-unit-assignment",
     ConditionUnit: "workflow-unit-condition",
@@ -67,6 +71,10 @@ const assignmentUnitMix = [
     'system-scope'
 ];
 
+const flavorMix = [
+    'system-is-multi-material'
+]
+
 const mixSchemas = {
     Entity: [
         ...entityMix
@@ -97,6 +105,10 @@ const mixSchemas = {
     Job: [
         ...entityMix,
         ...jobMix
+    ],
+    Flavor: [
+        ...entityMix,
+        ...flavorMix
     ],
     AssertionUnit: [
         ...unitMix
