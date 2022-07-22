@@ -1,6 +1,4 @@
-import mergeAllOf from "json-schema-merge-allof";
 import { getSchemaById } from './JSONSchemasInterface';
-import { schemas } from '@exabyte-io/esse.js/lib/js/esse/schemas.js';
 
 const mainSchemas = {
     Material: "material",
@@ -19,7 +17,7 @@ const mainSchemas = {
     ProcessingUnit: "workflow-unit-processing",
     ReduceUnit: "workflow-unit-reduce",
     SubworkflowUnit: "workflow-unit",
-    Unit: "workflow-unit",
+    Unit: "workflow-unit"
 };
 
 const materialMix = [
@@ -65,6 +63,10 @@ const unitMix = [
     'workflow-unit-runtime-runtime-items'
 ];
 
+const assignmentUnitMix = [
+    'system-scope'
+];
+
 const mixSchemas = {
     Entity: [
         ...entityMix
@@ -96,36 +98,37 @@ const mixSchemas = {
         ...entityMix,
         ...jobMix
     ],
-    // AssertionUnit: [
-    //     ...unitMix
-    // ],
-    // AssignmentUnit: [
-    //     ...unitMix
-    // ],
-    // ConditionUnit : [
-    //     ...unitMix
-    // ],
-    // ExecutionUnit: [
-    //     ...unitMix
-    // ],
-    // IOUnit: [
-    //     ...unitMix
-    // ],
-    // MapUnit: [
-    //     ...unitMix
-    // ],
-    // ProcessingUnit: [
-    //     ...unitMix
-    // ],
-    // ReduceUnit: [
-    //     ...unitMix
-    // ],
-    // SubworkflowUnit: [
-    //     ...unitMix
-    // ],
-    // Unit: [
-    //     ...unitMix
-    // ]
+    AssertionUnit: [
+        ...unitMix
+    ],
+    AssignmentUnit: [
+        ...unitMix,
+        ...assignmentUnitMix
+    ],
+    ConditionUnit : [
+        ...unitMix
+    ],
+    ExecutionUnit: [
+        ...unitMix
+    ],
+    IOUnit: [
+        ...unitMix
+    ],
+    MapUnit: [
+        ...unitMix
+    ],
+    ProcessingUnit: [
+        ...unitMix
+    ],
+    ReduceUnit: [
+        ...unitMix
+    ],
+    SubworkflowUnit: [
+        ...unitMix
+    ],
+    Unit: [
+        ...unitMix
+    ]
 };
 
 export function getSchemaByClassName(className) {
