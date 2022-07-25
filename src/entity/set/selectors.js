@@ -1,36 +1,38 @@
 import { safeMakeArray } from "../../utils";
 
-const getInSetEntrySelectorBuilder = function (config) {
+const getInSetEntrySelectorBuilder = (config) => {
     return {
         inSet: {
-            $elemMatch: config
-        }
-    }
+            $elemMatch: config,
+        },
+    };
 };
 
-const getInSetEntrySelectorByIdsCls = function (ids, cls = 'Team') {
-    ids = safeMakeArray(ids);
+const getInSetEntrySelectorByIdsCls = (ids, cls = "Team") => {
+    const newIds = safeMakeArray(ids);
     const config = {
-        _id: {$in: ids},
-        ...cls ? {cls} : {},
+        _id: { $in: newIds },
+        ...(cls ? { cls } : {}),
     };
     return getInSetEntrySelectorBuilder(config);
 };
 
 const getInSetEntrySelectorByIds = (ids) => getInSetEntrySelectorByIdsCls(ids, null);
 
-const getInSetEntrySelector = function (cls, _id) {
+const getInSetEntrySelector = (cls, _id) => {
     return {
         inSet: {
             $elemMatch: {
-                ...cls ? {cls} : {},
-                ..._id ? {_id} : {},
-            }
-        }
-    }
+                ...(cls ? { cls } : {}),
+                ...(_id ? { _id } : {}),
+            },
+        },
+    };
 };
 
-const getInSetEntryWithoutClsOnly = {inSet: {$not: {$elemMatch: {cls: {$exists: false}}}}};
+const getInSetEntryWithoutClsOnly = {
+    inSet: { $not: { $elemMatch: { cls: { $exists: false } } } },
+};
 
 export {
     getInSetEntrySelectorByIdsCls,
@@ -38,4 +40,4 @@ export {
     getInSetEntrySelectorByIds,
     getInSetEntrySelectorBuilder,
     getInSetEntrySelector,
-}
+};

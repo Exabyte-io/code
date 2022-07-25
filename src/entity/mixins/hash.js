@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { calculateHashFromObject } from "../../utils/hash";
 import { removeCommentsFromSourceCode, removeEmptyLinesFromString } from "../../utils/str";
 
@@ -7,6 +8,7 @@ export const HashedEntityMixin = (superclass) => {
          * @summary Returns an object based on meaningful fields for this unit, that will be used to calculate the hash
          *          Must be overridden.
          */
+        // eslint-disable-next-line class-methods-use-this
         getHashObject() {
             return {};
         }
@@ -28,10 +30,10 @@ export const HashedInputArrayMixin = (superclass) => {
          * @summary expects an array with elements containing field [{content: "..."}]
          */
         get hashFromArrayInputContent() {
-            const objectForHashing = this.input.map(i =>
-                removeEmptyLinesFromString(removeCommentsFromSourceCode(i.content))
+            const objectForHashing = this.input.map((i) =>
+                removeEmptyLinesFromString(removeCommentsFromSourceCode(i.content)),
             );
-            return calculateHashFromObject(objectForHashing)
+            return calculateHashFromObject(objectForHashing);
         }
     };
 };

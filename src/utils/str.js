@@ -1,7 +1,7 @@
 import _ from "underscore";
 
 export function removeNewLinesAndExtraSpaces(str) {
-    return str.replace(/[\n\r]/g, "").replace(/  +/g, ' ')
+    return str.replace(/[\n\r]/g, "").replace(/  +/g, " ");
 }
 
 /**
@@ -17,7 +17,12 @@ export function randomAlphanumeric(length) {
     // Random letter is required in generated string because of when
     // the result is used as username and contains only numbers, the
     // slug will be inappropriate (e.g., "user-1232", "user-12" both have "user" as slug).
-    return randomLetter + Math.random().toString(36).substring(2, 2 + length - 1);
+    return (
+        randomLetter +
+        Math.random()
+            .toString(36)
+            .substring(2, 2 + length - 1)
+    );
 }
 
 export function toFixedLocale(number, precision) {
@@ -35,9 +40,9 @@ export function toFixedLocale(number, precision) {
  */
 export function removeCommentsFromSourceCode(text, language = "shell") {
     const regexList = {
-        "shell": /^(\s+)?#(?!!).*$/gm,
+        shell: /^(\s+)?#(?!!).*$/gm,
     };
-    return text.replace(regexList[language], '')
+    return text.replace(regexList[language], "");
 }
 
 /**
@@ -47,5 +52,5 @@ export function removeCommentsFromSourceCode(text, language = "shell") {
  */
 export function removeEmptyLinesFromString(string) {
     // remove "\n" on empty lines AND the very last "\n"
-    return string.replace(/^\s*[\r\n]/gm, '').trim()
+    return string.replace(/^\s*[\r\n]/gm, "").trim();
 }
