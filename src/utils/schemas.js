@@ -75,6 +75,10 @@ const flavorMix = [
     'system-is-multi-material'
 ];
 
+const systemEntityMix = [
+    'system-entity'
+];
+
 const mixSchemas = {
     Entity: [
         ...entityMix
@@ -108,16 +112,20 @@ const mixSchemas = {
     ],
     Application: [
         ...entityMix,
+        ...systemEntityMix
     ],
     Executable: [
         ...entityMix,
+        ...systemEntityMix
     ],
     Flavor: [
         ...entityMix,
-        ...flavorMix
+        ...flavorMix,
+        ...systemEntityMix
     ],
     Template: [
         ...entityMix,
+        ...systemEntityMix
     ],
     AssertionUnit: [
         ...unitMix
