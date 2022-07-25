@@ -1,42 +1,34 @@
-import {
-    InMemoryEntity,
-} from "./in_memory";
-
-import {
-    NamedInMemoryEntity,
-    DefaultableInMemoryEntity,
-    NamedDefaultableInMemoryEntity,
-    HasMetadataNamedDefaultableInMemoryEntity,
-    NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
-    NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
-    NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
-} from "./other";
-
+import { InMemoryEntity } from "./in_memory";
+import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
+import { HashedInputArrayMixin } from "./mixins/hash";
 import {
     DefaultableMixin,
     HasDescriptionMixin,
     HasMetadataMixin,
-    TaggableMixin,
     NamedEntityMixin,
+    TaggableMixin,
 } from "./mixins/props";
-
-import { HashedInputArrayMixin } from "./mixins/hash";
 import { RuntimeItemsMixin } from "./mixins/runtime_items";
-import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
-
+import {
+    DefaultableInMemoryEntity,
+    HasMetadataNamedDefaultableInMemoryEntity,
+    NamedDefaultableInMemoryEntity,
+    NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
+    NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
+    NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
+    NamedInMemoryEntity,
+} from "./other";
 import { InMemoryEntitySet } from "./set";
 import { ENTITY_SET_TYPES } from "./set/enums";
-
 import { constructEntitySetFactoryByConfig } from "./set/factory";
-import { InMemoryEntitySetMixin, InMemoryEntityInSetMixin } from "./set/mixins";
-import * as selectorsForEntitySet from "./set/selectors";
+import { InMemoryEntityInSetMixin, InMemoryEntitySetMixin } from "./set/mixins";
 import {
     OrderedInMemoryEntityInSetMixin,
     OrderedInMemoryEntitySetMixin,
 } from "./set/ordered/mixins";
+import * as selectorsForEntitySet from "./set/selectors";
 
 export {
-
     InMemoryEntity,
     NamedInMemoryEntity,
     DefaultableInMemoryEntity,
@@ -45,7 +37,6 @@ export {
     NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
     NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
     NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
-
     DefaultableMixin,
     HasDescriptionMixin,
     HasMetadataMixin,
@@ -54,7 +45,6 @@ export {
     RuntimeItemsMixin,
     RuntimeContextFieldMixin,
     HashedInputArrayMixin,
-
     InMemoryEntitySet,
     ENTITY_SET_TYPES,
     constructEntitySetFactoryByConfig,
@@ -63,5 +53,4 @@ export {
     InMemoryEntityInSetMixin,
     OrderedInMemoryEntitySetMixin,
     OrderedInMemoryEntityInSetMixin,
-
 };
