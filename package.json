@@ -7,7 +7,9 @@
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile"
+        "postinstall": "npm run transpile",
+        "prettier": "prettier --check src tests",
+        "prepare": "husky install"
     },
     "repository": {
         "type": "git",
