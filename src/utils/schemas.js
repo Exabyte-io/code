@@ -106,9 +106,18 @@ const mixSchemas = {
         ...entityMix,
         ...jobMix
     ],
+    Application: [
+        ...entityMix,
+    ],
+    Executable: [
+        ...entityMix,
+    ],
     Flavor: [
         ...entityMix,
         ...flavorMix
+    ],
+    Template: [
+        ...entityMix,
     ],
     AssertionUnit: [
         ...unitMix
