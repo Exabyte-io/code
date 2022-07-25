@@ -73,7 +73,7 @@ const assignmentUnitMix = [
 
 const flavorMix = [
     'system-is-multi-material'
-]
+];
 
 const mixSchemas = {
     Entity: [
