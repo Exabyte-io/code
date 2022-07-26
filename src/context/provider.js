@@ -10,22 +10,23 @@
  * @notes   Should hold static data only (see `setData` method), no classes or functions
  */
 import lodash from "lodash";
+
 import { deepClone } from "../utils/clone";
 
 export class ContextProvider {
-
     constructor(config) {
         this.config = config;
-        this.name = config.name;                // property name, ie. "kpath"
+        this.name = config.name; // property name, ie. "kpath"
         this.domain = config.domain || "default";
 
         // if context is passed inside config, treat it as additional config
+        // eslint-disable-next-line no-param-reassign
         if (config.context) config = ContextProvider.createConfigFromContext(config);
 
         this.entityName = config.entityName || "unit"; // entity this provider yields data to, eg. "unit", "subworkflow"
-        this.data = config.data;                // property data container
-        this.extraData = config.extraData;      // property extraData container, used track changes to data, for example
-        this.isEdited = config.isEdited;       // whether property was edited by user, available under `isEdited` key
+        this.data = config.data; // property data container
+        this.extraData = config.extraData; // property extraData container, used track changes to data, for example
+        this.isEdited = config.isEdited; // whether property was edited by user, available under `isEdited` key
 
         this.setIsEdited = this.setIsEdited.bind(this);
         this.getData = this.getData.bind(this);
@@ -37,7 +38,7 @@ export class ContextProvider {
     static getConstructorConfig(config) {
         return {
             constructor: this.prototype.constructor,
-            config: config
+            config,
         };
     }
 
@@ -45,11 +46,16 @@ export class ContextProvider {
         const data = lodash.get(config.context, config.name);
         const isEdited = lodash.get(config.context, this.getIsEditedKeyByName(config.name));
         const extraData = lodash.get(config.context, this.getExtraDataKeyByName(config.name));
-        return Object.assign(config, data ? {
-            data,
-            extraData,
-            isEdited,
-        } : {});
+        return Object.assign(
+            config,
+            data
+                ? {
+                      data,
+                      extraData,
+                      isEdited,
+                  }
+                : {},
+        );
     }
 
     setIsEdited(bool) {
@@ -65,52 +71,53 @@ export class ContextProvider {
     }
 
     // override in children
+    // eslint-disable-next-line class-methods-use-this
     get defaultData() {
-        throw new Error('Not implemented.');
+        throw new Error("Not implemented.");
     }
 
     // override in children
+    // eslint-disable-next-line class-methods-use-this
     transformData(data) {
         return data;
     }
 
     yieldData(...transformDataArgs) {
-        const extraDataObject = this.extraData ? {[this.extraDataKey]: this.extraData} : {};
+        const extraDataObject = this.extraData ? { [this.extraDataKey]: this.extraData } : {};
         return {
             ...extraDataObject,
             [this.name]: this.transformData(this.getData(), ...transformDataArgs),
             [this.isEditedKey]: this.isEdited,
-        }
+        };
     }
 
     // override when this.data needs additional processing before making it available to rendering context
     // used to calculate explicit points path, for example
     yieldDataForRendering() {
-        return this.yieldData()
+        return this.yieldData();
     }
 
     get extraDataKey() {
-        return `${this.name}ExtraData`
+        return `${this.name}ExtraData`;
     }
 
     static getExtraDataKeyByName(name) {
-        return `${name}ExtraData`
+        return `${name}ExtraData`;
     }
 
     get isEditedKey() {
-        return `is${lodash.capitalize(this.name)}Edited`
+        return `is${lodash.capitalize(this.name)}Edited`;
     }
 
     static getIsEditedKeyByName(name) {
-        return `is${lodash.capitalize(name)}Edited`
+        return `is${lodash.capitalize(name)}Edited`;
     }
 
     get isUnitContextProvider() {
-        return this.entityName === "unit"
+        return this.entityName === "unit";
     }
 
     get isSubworkflowContextProvider() {
-        return this.entityName === "subworkflow"
+        return this.entityName === "subworkflow";
     }
-
 }

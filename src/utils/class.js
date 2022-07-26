@@ -1,5 +1,5 @@
 export function cloneClass(classToClone) {
-    return Object.assign(Object.create(Object.getPrototypeOf(classToClone)), classToClone)
+    return Object.assign(Object.create(Object.getPrototypeOf(classToClone)), classToClone);
 }
 
 /**
@@ -14,26 +14,32 @@ export function cloneClass(classToClone) {
  */
 export function extendClass(childClass, parentClass, excludedProps = [], ...args) {
     const parentNonStaticProps = Object.getOwnPropertyNames(parentClass.prototype);
-    parentNonStaticProps.filter(p => !excludedProps.includes(p)).forEach(prop => {
-        if (prop === 'constructor') {
-            Object.assign(childClass.prototype, new parentClass.prototype.constructor(...args));
-        } else {
-            const getter = parentClass.prototype.__lookupGetter__(prop);
-            const setter = parentClass.prototype.__lookupSetter__(prop);
-            if (getter) childClass.prototype.__defineGetter__(prop, getter);
-            if (setter) childClass.prototype.__defineSetter__(prop, setter);
-            if (!(getter || setter)) childClass.prototype[prop] = parentClass.prototype[prop];
-        }
-    });
+    parentNonStaticProps
+        .filter((p) => !excludedProps.includes(p))
+        .forEach((prop) => {
+            if (prop === "constructor") {
+                Object.assign(childClass.prototype, new parentClass.prototype.constructor(...args));
+            } else {
+                const get = parentClass.prototype.__lookupGetter__(prop);
+                const set = parentClass.prototype.__lookupSetter__(prop);
+                if (get || set) {
+                    Object.defineProperty(childClass.prototype, prop, { get, set });
+                } else {
+                    childClass.prototype[prop] = parentClass.prototype[prop];
+                }
+            }
+        });
 }
 
-export function extendClassStaticProps(childClass, parentClass, excludedProps = [], ...args) {
-    const parentStaticProps = Object.getOwnPropertyNames(parentClass).filter(p => ![
-        "length", "name", "prototype"
-    ].includes(p));
-    parentStaticProps.filter(p => !excludedProps.includes(p)).forEach(prop => {
-        childClass[prop] = parentClass[prop]
-    });
+export function extendClassStaticProps(childClass, parentClass, excludedProps = []) {
+    const parentStaticProps = Object.getOwnPropertyNames(parentClass).filter(
+        (p) => !["length", "name", "prototype"].includes(p),
+    );
+    parentStaticProps
+        .filter((p) => !excludedProps.includes(p))
+        .forEach((prop) => {
+            childClass[prop] = parentClass[prop];
+        });
 }
 
 /**
@@ -50,15 +56,21 @@ export function extendThis(childClass, parentClass, config) {
     while (Object.getPrototypeOf(obj)) {
         protos = Object.getPrototypeOf(obj);
         props = Object.getOwnPropertyNames(protos);
-        props.filter(p => !exclude.includes(p)).map((prop) => {
-            if (seen.includes(prop)) return;
-            const getter = protos.__lookupGetter__(prop);
-            const setter = protos.__lookupSetter__(prop);
-            if (getter) childClass.prototype.__defineGetter__(prop, getter);
-            if (setter) childClass.prototype.__defineSetter__(prop, setter);
-            if (!(getter || setter)) childClass.prototype[prop] = protos[prop];
-            seen.push(prop);
-        })
+        props
+            .filter((p) => !exclude.includes(p))
+            // eslint-disable-next-line no-loop-func
+            .map((prop) => {
+                if (seen.includes(prop)) return;
+                const get = protos.__lookupGetter__(prop);
+                const set = protos.__lookupSetter__(prop);
+                if (get || set) {
+                    Object.defineProperty(childClass.prototype, prop, { get, set });
+                } else {
+                    childClass.prototype[prop] = parentClass.prototype[prop];
+                }
+                seen.push(prop); // don't override with older definition in hierarchy
+                return null;
+            });
         obj = protos;
     }
 }

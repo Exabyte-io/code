@@ -1,15 +1,12 @@
 import lodash from "lodash";
 
 // import { ESSE } from "@exabyte-io/esse.js";
-
 import { deepClone } from "../utils/clone";
 
 // TODO: https://exabyte.atlassian.net/browse/SOF-5946
 // const schemas = new ESSE().schemas;
 
-
 export class InMemoryEntity {
-
     static create(config) {
         return new this.prototype.constructor(config);
     }
@@ -61,12 +58,13 @@ export class InMemoryEntity {
      * @returns {*}
      */
     clone(extraContext = {}) {
-        return new this.constructor(Object.assign({}, this.toJSON(), extraContext));
+        return new this.constructor({ ...this.toJSON(), ...extraContext });
     }
 
     // override upon inheritance
     get schema() {
         if (this._schema) return this._schema;
+        return null;
     }
 
     set schema(schema) {
@@ -106,18 +104,30 @@ export class InMemoryEntity {
         return ctx.isValid();
     }
 
-    get id() {return this.prop('_id', '')}
+    get id() {
+        return this.prop("_id", "");
+    }
 
-    set id(id) {this.setProp('_id', id)}
+    set id(id) {
+        this.setProp("_id", id);
+    }
 
-    static get cls() {return this.prototype.constructor.name}
+    static get cls() {
+        return this.prototype.constructor.name;
+    }
 
-    get cls() {return this.constructor.name}
+    get cls() {
+        return this.constructor.name;
+    }
 
     // TODO: figure out why the above getter for `cls` returns `null` and use only one
-    getClsName() {return this.constructor.name}
+    getClsName() {
+        return this.constructor.name;
+    }
 
-    get slug() {return this.prop('slug')}
+    get slug() {
+        return this.prop("slug");
+    }
 
     get isSystemEntity() {
         return this.prop("systemName", false);
@@ -130,13 +140,13 @@ export class InMemoryEntity {
      */
     getAsEntityReference(byIdOnly = false) {
         if (byIdOnly) {
-            return { _id: this.id }
+            return { _id: this.id };
         }
         return {
             _id: this.id,
             slug: this.slug,
             cls: this.getClsName(),
-        }
+        };
     }
 
     /**
@@ -147,18 +157,18 @@ export class InMemoryEntity {
      * @param name {string} the name of the entity to choose
      * @returns {*}
      */
+    // eslint-disable-next-line class-methods-use-this
     getEntityByName(entities, entity, name) {
         let filtered;
         if (!name) {
-            filtered = entities.filter(entity => entity.prop("isDefault") === true);
+            filtered = entities.filter((ent) => ent.prop("isDefault") === true);
             if (!filtered.length) filtered = [entities[0]];
         } else {
-            filtered = entities.filter(entity => entity.prop("name") === name);
+            filtered = entities.filter((ent) => ent.prop("name") === name);
         }
         if (filtered.length !== 1) {
             console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
         }
         return filtered[0];
     }
-
 }

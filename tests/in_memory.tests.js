@@ -1,17 +1,19 @@
 import { expect } from "chai";
+
 import { InMemoryEntity } from "../src/entity/in_memory";
 
 describe("InMemoryEntity", () => {
-
     const obj = {
-        "a": "b",
-        "name": "test",
-    }
+        a: "b",
+        name: "test",
+    };
 
     it("can be created", () => {
         const empty = new InMemoryEntity();
+        // eslint-disable-next-line no-unused-expressions
         expect(empty).to.exist;
         const entity = new InMemoryEntity(obj);
+        // eslint-disable-next-line no-unused-expressions
         expect(entity).to.exist;
     });
 
@@ -35,6 +37,7 @@ describe("InMemoryEntity", () => {
         const entity = new InMemoryEntity(obj);
         expect(entity.prop("a")).to.equal("b");
         entity.unsetProp("a");
+        // eslint-disable-next-line no-unused-expressions
         expect(entity.prop("a")).not.to.exist;
     });
 
@@ -42,5 +45,4 @@ describe("InMemoryEntity", () => {
         const entity = new InMemoryEntity(obj);
         expect(JSON.stringify(entity.toJSON())).to.be.equal(JSON.stringify(obj));
     });
-
 });

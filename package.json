@@ -7,7 +7,9 @@
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile"
+        "postinstall": "npm run transpile",
+        "prettier": "prettier --check src tests",
+        "prepare": "husky install"
     },
     "repository": {
         "type": "git",
@@ -51,17 +53,19 @@
         "mathjs": "^3.9.0",
         "mixwith": "^0.1.1",
         "underscore": "^1.13.3",
-        "underscore.string": "^3.3.4"
+        "underscore.string": "^3.3.4",
+        "uuid": "8.3.2"
     },
     "devDependencies": {
         "chai": "^4.3.4",
         "eslint": "7.32.0",
         "eslint-config-airbnb": "19.0.2",
         "eslint-config-prettier": "8.3.0",
-        "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-import": "2.25.3",
         "eslint-plugin-jsdoc": "37.1.0",
         "eslint-plugin-jsx-a11y": "6.5.1",
+        "eslint-plugin-prettier": "4.2.1",
+        "eslint-plugin-react": "7.30.0",
         "eslint-plugin-simple-import-sort": "7.0.0",
         "husky": "^7.0.4",
         "lint-staged": "^12.1.2",

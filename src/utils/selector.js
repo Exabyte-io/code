@@ -7,14 +7,14 @@
 export function getSearchQuerySelector(searchQuery, fields = []) {
     const selector = {};
     if (searchQuery) {
-        selector.$or = fields.map(field => {
+        selector.$or = fields.map((field) => {
             return {
                 [field]: {
                     $regex: searchQuery,
-                    $options: 'i'
-                }
-            }
-        })
+                    $options: "i",
+                },
+            };
+        });
     }
     return selector;
 }

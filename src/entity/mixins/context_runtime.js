@@ -19,7 +19,7 @@ export const RuntimeContextFieldMixin = (superclass) => {
         }
 
         toJSON() {
-            return Object.assign({}, super.toJSON(), {runtimeContext: this._runtimeContext});
+            return { ...super.toJSON(), runtimeContext: this._runtimeContext };
         }
     };
 };

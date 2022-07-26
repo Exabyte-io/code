@@ -1,5 +1,6 @@
-import _ from "underscore";
+/* eslint-disable */
 import mathjs from "mathjs";
+import _ from "underscore";
 
 import { tolerance as TOLERANCE } from "./constants";
 
@@ -187,8 +188,8 @@ const combinationsFromIntervals = (arrA, arrB, arrC) => {
 };
 
 const roundValueToNDecimals = (value, decimals = 3) => {
-  return parseFloat(value.toFixed(decimals));
-}
+    return parseFloat(value.toFixed(decimals));
+};
 
 /**
  * @summary Returns n splits of the passed segment.
@@ -198,9 +199,9 @@ const roundValueToNDecimals = (value, decimals = 3) => {
  */
 const calculateSegmentsBetweenPoints3D = (point1, point2, n) => {
     // safely parse if passed strings
-    const point1_ = point1.map(x => parseFloat(x));
-    const point2_ = point2.map(x => parseFloat(x));
-    const n_ = parseInt(n)
+    const point1_ = point1.map((x) => parseFloat(x));
+    const point2_ = point2.map((x) => parseFloat(x));
+    const n_ = parseInt(n);
 
     const result = [];
     for (let i = 1; i < n_; i++) {
@@ -208,11 +209,11 @@ const calculateSegmentsBetweenPoints3D = (point1, point2, n) => {
         result.push([
             (point1_[0] + lambda * point2_[0]) / (1 + lambda),
             (point1_[1] + lambda * point2_[1]) / (1 + lambda),
-            (point1_[2] + lambda * point2_[2]) / (1 + lambda)
+            (point1_[2] + lambda * point2_[2]) / (1 + lambda),
         ]);
     }
     return result;
-}
+};
 
 /**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
@@ -226,7 +227,6 @@ const calculateSegmentsBetweenPoints3D = (point1, point2, n) => {
  * @param {Number} precision Optional. An integer specifying the number of significant digits.
  */
 export function numberToPrecision(number, precision) {
-
     if (_.isNumber(number)) {
         return number.toPrecision(precision);
     }

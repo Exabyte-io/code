@@ -1,4 +1,4 @@
-import _ from "underscore";
+/* eslint-disable max-classes-per-file, class-methods-use-this */
 import s from "underscore.string";
 
 import { safeMakeObject } from "../../utils/object";
@@ -10,7 +10,6 @@ import { safeMakeObject } from "../../utils/object";
 
 export const RuntimeItemsMixin = (superclass) => {
     return class extends superclass {
-
         get results() {
             return this.prop("results", this.defaultResults).map(safeMakeObject);
         }
@@ -27,13 +26,21 @@ export const RuntimeItemsMixin = (superclass) => {
             return this.prop("postProcessors", this.defaultPostProcessors).map(safeMakeObject);
         }
 
-        get defaultResults() {return []}
+        get defaultResults() {
+            return [];
+        }
 
-        get defaultMonitors() {return []}
+        get defaultMonitors() {
+            return [];
+        }
 
-        get defaultPreProcessors() {return []}
+        get defaultPreProcessors() {
+            return [];
+        }
 
-        get defaultPostProcessors() {return []}
+        get defaultPostProcessors() {
+            return [];
+        }
 
         get hashObjectFromRuntimeItems() {
             return {
@@ -67,29 +74,38 @@ export const RuntimeItemsUILogicMixin = (superclass) => {
          * @param config
          * @private
          */
+        // eslint-disable-next-line no-unused-vars
         _initRuntimeItems(keys, config) {
             // keeping this separate from constructor so that it can be overridden in mixing (eg. in `ExecutionUnit`)
             const me = this;
             keys.map((key) => {
                 if (!me._json[key]) me._json[key] = me[`default${s.capitalize(key)}`];
+                return null;
             });
         }
 
+        // eslint-disable-next-line default-param-last
         _addRuntimeItem(key = "results", config) {
             this._json[key].push(safeMakeObject(config));
         }
 
+        // eslint-disable-next-line default-param-last
         _removeRuntimeItem(key = "results", config) {
-            config = safeMakeObject(config);
-            this._removeRuntimeItemByName(key, config.name);
+            const newConfig = safeMakeObject(config);
+            this._removeRuntimeItemByName(key, newConfig.name);
         }
 
         _removeRuntimeItemByName(key, name) {
-            this._json[key] = this._json[key].filter(x => x.name !== name);
+            this._json[key] = this._json[key].filter((x) => x.name !== name);
         }
 
+        // eslint-disable-next-line default-param-last
         _toggleRuntimeItem(key = "results", data, isAdding) {
-            isAdding ? this._addRuntimeItem(key, data) : this._removeRuntimeItem(key, data);
+            if (isAdding) {
+                this._addRuntimeItem(key, data);
+            } else {
+                this._removeRuntimeItem(key, data);
+            }
         }
 
         toggleResult(data, isAdding) {
@@ -109,25 +125,25 @@ export const RuntimeItemsUILogicMixin = (superclass) => {
         }
 
         get resultNames() {
-            return this.results.map(r => {
-                return r && r.name
-            })
+            return this.results.map((r) => {
+                return r && r.name;
+            });
         }
 
         get monitorNames() {
-            return this.monitors.map(r => r.name)
+            return this.monitors.map((r) => r.name);
         }
 
         get postProcessorNames() {
-            return this.postProcessors.map(r => r.name)
+            return this.postProcessors.map((r) => r.name);
         }
 
         get preProcessorNames() {
-            return this.preProcessors.map(r => r.name)
+            return this.preProcessors.map((r) => r.name);
         }
 
         getResultByName(name) {
-            return this.results.find(r => r.name === name);
+            return this.results.find((r) => r.name === name);
         }
     };
 };
