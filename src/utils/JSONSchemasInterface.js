@@ -1,22 +1,7 @@
 import mergeAllOf from "json-schema-merge-allof";
-import {schemas} from '@exabyte-io/esse.js/lib/js/esse/schemas.js';
+import { schemas } from '@exabyte-io/esse.js';
 
 const schemaCache = new Map();
-
-export function getSchemaById(schemaId) {
-    if (!schemaCache.has(schemaId)) {
-        const schema = mergeAllOf(JSONSchemasInterface.schemaById(schemaId), {
-            resolvers: {
-                defaultResolver: mergeAllOf.options.resolvers.title
-            }
-        });
-    
-        schemaCache.set(schemaId, schema);
-    }
-    
-    return schemaCache.get(schemaId);
-}
-
 
 export const JSONSchemasInterface = {
 
@@ -25,15 +10,23 @@ export const JSONSchemasInterface = {
     },
 
     schemaById(schemaId) {
-        return schemas.find(schema => schema.schemaId === schemaId);
+        if (!schemaCache.has(schemaId)) {
+            const originalSchema = schemas.find(schema => schema.schemaId === schemaId);
+
+            const schema = mergeAllOf(originalSchema, {
+                resolvers: {
+                    defaultResolver: mergeAllOf.options.resolvers.title
+                }
+            });
+
+            schemaCache.set(schemaId, schema);
+        }
+
+        return schemaCache.get(schemaId);
     },
 
     resolvedSchemaById(schemaId) {
-        return mergeAllOf(this.schemaById(schemaId), {
-            resolvers: {
-                defaultResolver: mergeAllOf.options.resolvers.title
-            }
-        });
+        return this.schemaById(schemaId);
     },
 
     /**

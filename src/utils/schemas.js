@@ -1,4 +1,4 @@
-import { getSchemaById } from './JSONSchemasInterface';
+import { JSONSchemasInterface } from './JSONSchemasInterface';
 
 const mainSchemas = {
     Material: "material",
@@ -24,10 +24,6 @@ const mainSchemas = {
     Unit: "workflow-unit"
 };
 
-const materialMix = [
-    'system-recalculated-hash',
-];
-
 const entityMix = [
     'system-description-object',
     'system-base-entity-set',
@@ -48,7 +44,7 @@ const workflowMix = [
 ];
 
 const bankMaterialMix = [
-    'system-conventional',
+    'material-conventional',
     'system-creator-account'
 ];
 
@@ -84,12 +80,10 @@ const mixSchemas = {
         ...entityMix
     ],
     Material: [
-        ...entityMix,
-        ...materialMix
+        ...entityMix
     ],
     BankMaterial: [
         ...entityMix,
-        ...materialMix,
         ...bankMaterialMix,
     ],
     Workflow: [
@@ -161,9 +155,9 @@ const mixSchemas = {
 };
 
 export function getSchemaByClassName(className) {
-    return mainSchemas[className] ? getSchemaById(mainSchemas[className]) : null;
+    return mainSchemas[className] ? JSONSchemasInterface.schemaById(mainSchemas[className]) : null;
 }
 
 export function getMixSchemasByClassName(className) {
-    return mixSchemas[className] ? mixSchemas[className].map(schemaId => getSchemaById(schemaId)) : [];
+    return mixSchemas[className] ? mixSchemas[className].map(schemaId => JSONSchemasInterface.schemaById(schemaId)) : [];
 }
