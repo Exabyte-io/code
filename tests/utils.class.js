@@ -1,40 +1,33 @@
-import { mix } from "mixwith";
+/* eslint-disable max-classes-per-file, class-methods-use-this */
 import { expect } from "chai";
-import { InMemoryEntity, NamedInMemoryEntity, DefaultableMixin, RuntimeItemsMixin } from "../src/entity";
-import { deepClone } from "../src/utils/clone";
+import { mix } from "mixwith";
+
+import {
+    DefaultableMixin,
+    InMemoryEntity,
+    NamedInMemoryEntity,
+    RuntimeItemsMixin,
+} from "../src/entity";
 import { extendClass, extendThis } from "../src/utils/class";
 
-
 class BaseEntity extends mix(InMemoryEntity).with(RuntimeItemsMixin) {
-
-    constructor(config) {
-        super(config);
-    }
-
     baseMethod() {
         return "base";
     }
-
 }
 
-
 class ExtendClassEntity extends mix(NamedInMemoryEntity).with(DefaultableMixin) {
-
     constructor(config, excluded = []) {
         super(config);
         extendClass(ExtendClassEntity, BaseEntity, excluded, [config]);
-
     }
 
     baseMethod() {
         return "derived";
     }
-
 }
 
-
 class BaseBetweenEntity extends NamedInMemoryEntity {
-
     static staticAttr = "base";
 
     constructor(config) {
@@ -45,12 +38,9 @@ class BaseBetweenEntity extends NamedInMemoryEntity {
     betweenMethod() {
         return "base";
     }
-
 }
 
-
 class BetweenEntity extends BaseBetweenEntity {
-
     static staticAttr = "between";
 
     constructor(config) {
@@ -63,24 +53,18 @@ class BetweenEntity extends BaseBetweenEntity {
     }
 }
 
-
 class ExtendThisEntity extends mix(BetweenEntity).with(DefaultableMixin) {
-
-    constructor(config, excluded = []) {
+    constructor(config) {
         super(config);
         extendThis(ExtendThisEntity, BaseEntity, config);
-
     }
 
     baseMethod() {
         return "derived";
     }
-
 }
 
-
 describe("extendClass", () => {
-
     it("extends classes no excluded props", () => {
         const obj = new ExtendClassEntity({});
         expect(obj.baseMethod()).to.be.equal("base");
@@ -92,23 +76,20 @@ describe("extendClass", () => {
     });
 
     it("should have results but doesnt", () => {
-        const obj = new ExtendClassEntity({"results": ["test"]});
-        expect(JSON.stringify(obj.results)).not.to.be.equal(JSON.stringify([{"name": "test"}]));
+        const obj = new ExtendClassEntity({ results: ["test"] });
+        expect(JSON.stringify(obj.results)).not.to.be.equal(JSON.stringify([{ name: "test" }]));
     });
-
 });
 
-
 describe("extendThis", () => {
-
     it("extends this prefer child method", () => {
         const obj = new ExtendThisEntity({});
         expect(obj.baseMethod()).to.be.equal("derived");
     });
 
     it("extends this support base mixins", () => {
-        const obj = new ExtendThisEntity({"results": ["test"]});
-        expect(JSON.stringify(obj.results)).to.be.equal(JSON.stringify([{"name": "test"}]));
+        const obj = new ExtendThisEntity({ results: ["test"] });
+        expect(JSON.stringify(obj.results)).to.be.equal(JSON.stringify([{ name: "test" }]));
     });
 
     it("remembers intermediate methods", () => {
@@ -129,5 +110,4 @@ describe("extendThis", () => {
         expect(BaseBetweenEntity.staticAttr).to.be.equal("base");
         expect(ExtendThisEntity.staticAttr).to.be.equal("between");
     });
-
 });

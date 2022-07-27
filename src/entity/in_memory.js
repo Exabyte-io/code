@@ -67,6 +67,7 @@ export class InMemoryEntity {
     // override upon inheritance
     get schema() {
         if (this._schema) return this._schema;
+        return null;
     }
 
     set schema(schema) {
@@ -159,13 +160,14 @@ export class InMemoryEntity {
      * @param name {string} the name of the entity to choose
      * @returns {*}
      */
+    // eslint-disable-next-line class-methods-use-this
     getEntityByName(entities, entity, name) {
         let filtered;
         if (!name) {
-            filtered = entities.filter(entity => entity.prop("isDefault") === true);
+            filtered = entities.filter((ent) => ent.prop("isDefault") === true);
             if (!filtered.length) filtered = [entities[0]];
         } else {
-            filtered = entities.filter((entity) => entity.prop("name") === name);
+            filtered = entities.filter((ent) => ent.prop("name") === name);
         }
         if (filtered.length !== 1) {
             console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);

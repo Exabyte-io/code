@@ -1,13 +1,14 @@
 import { expect } from "chai";
+
 import { ContextProvider } from "../src/context/provider";
 
 describe("ContextProvider", () => {
-
     const minimal = { name: "name" };
     const data = { a: "test" };
 
     it("can be created", () => {
         const provider = new ContextProvider(minimal);
+        // eslint-disable-next-line no-unused-expressions
         expect(provider).to.exist;
     });
 
@@ -18,9 +19,7 @@ describe("ContextProvider", () => {
         provider.setIsEdited(true);
         expect(JSON.stringify(provider.getData())).to.equal(JSON.stringify(data));
         expect(() => provider.defaultData).to.throw("Not implemented.");
-    })
+    });
 
     // transform, yieldData, yieldDataForRendering
-
-
 });

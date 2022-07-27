@@ -1,10 +1,12 @@
+/* eslint-disable max-classes-per-file */
 import { mix } from "mixwith";
+
 import { InMemoryEntity } from "./in_memory";
-import { DefaultableMixin, HasMetadataMixin, NamedEntityMixin } from "./mixins/props";
 import { ContextAndRenderFieldsMixin, ImportantSettingsProviderMixin } from "./mixins/context";
 import { HashedEntityMixin } from "./mixins/hash";
+import { DefaultableMixin, HasMetadataMixin, NamedEntityMixin } from "./mixins/props";
 import { HasRepetitionMixin } from "./mixins/repetition";
-import { RuntimeItemsUILogicMixin, RuntimeItemsUIAllowedMixin } from "./mixins/runtime_items";
+import { RuntimeItemsUIAllowedMixin, RuntimeItemsUILogicMixin } from "./mixins/runtime_items";
 
 export class DefaultableInMemoryEntity extends mix(InMemoryEntity).with(DefaultableMixin) {}
 
@@ -23,21 +25,11 @@ export class HasMetadataNamedDefaultableInMemoryEntity extends mix(InMemoryEntit
 
 export class NamedDefaultableRepetitionImportantSettingsInMemoryEntity extends mix(
     InMemoryEntity,
-).with(
-    DefaultableMixin,
-    NamedEntityMixin,
-    HasRepetitionMixin,
-    ImportantSettingsProviderMixin,
-) {}
+).with(DefaultableMixin, NamedEntityMixin, HasRepetitionMixin, ImportantSettingsProviderMixin) {}
 
 export class NamedDefaultableRepetitionContextAndRenderInMemoryEntity extends mix(
     InMemoryEntity,
-).with(
-    DefaultableMixin,
-    NamedEntityMixin,
-    HasRepetitionMixin,
-    ContextAndRenderFieldsMixin,
-) {}
+).with(DefaultableMixin, NamedEntityMixin, HasRepetitionMixin, ContextAndRenderFieldsMixin) {}
 
 export class NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity extends mix(
     InMemoryEntity,

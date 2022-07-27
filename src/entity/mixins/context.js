@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { deepClone } from "../../utils/clone";
 
 export const ContextAndRenderFieldsMixin = (superclass) => {
@@ -17,8 +18,8 @@ export const ContextAndRenderFieldsMixin = (superclass) => {
         }
 
         updateContext(ctx = {}, executeRender = false) {
-            this._context = Object.assign({}, this.context, ctx);
-            executeRender && this.render();
+            this._context = { ...this.context, ...ctx };
+            if (executeRender) this.render();
         }
 
         // to get "persistent" context, that is stored in database and further should be provided to constructor
@@ -29,15 +30,16 @@ export const ContextAndRenderFieldsMixin = (superclass) => {
 
         // to make context persistent in `_json`
         updatePersistentContext(ctx = {}) {
-            this.setProp("context", Object.assign({}, ctx));
+            this.setProp("context", { ...ctx });
         }
 
         // to get persistent and volatile context combined
         getCombinedContext() {
-            return Object.assign({}, this.getPersistentContext(), this.context);
+            return { ...this.getPersistentContext(), ...this.context };
         }
 
         // override in subclasses
+        // eslint-disable-next-line no-unused-vars
         render(context = this.context) {
             throw new Error("RenderInitMixin: render not implemented in derived class");
         }
@@ -69,14 +71,14 @@ export const ImportantSettingsProviderMixin = (superclass) => {
         }
 
         setImportant(key, value) {
-            this.setProp("important", {[key]: value})
+            this.setProp("important", { [key]: value });
         }
 
         /**
          * @return {JSONSchemaFormDataProvider[]}
          */
         get importantSettingsProviders() {
-            return this.contextProviders.filter(p => p.domain === "important");
+            return this.contextProviders.filter((p) => p.domain === "important");
         }
 
         get isImportantEdited() {
@@ -84,7 +86,7 @@ export const ImportantSettingsProviderMixin = (superclass) => {
         }
 
         set isImportantEdited(bool) {
-            this.setProp("important", Object.assign(this.important, {isEdited: bool}));
+            this.setProp("important", Object.assign(this.important, { isEdited: bool }));
         }
     };
 };

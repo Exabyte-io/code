@@ -1,5 +1,6 @@
-import _ from "underscore";
 import CryptoJS from "crypto-js";
+import _ from "underscore";
+
 import { sortKeysDeepForObject } from "./object";
 
 /**

@@ -1,10 +1,10 @@
 const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
-    "in": "fortran",
-    "sh": "shell",
-    "bash": "shell",
-    "zsh": "shell",
-    "pbs": "shell",
-    "py": "python"
+    in: "fortran",
+    sh: "shell",
+    bash: "shell",
+    zsh: "shell",
+    pbs: "shell",
+    py: "python",
 };
 
 /**
@@ -12,8 +12,8 @@ const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
  * @param filename {String}
  * @param defaultLanguage {String}
  */
-export function getProgrammingLanguageFromFileExtension(filename, defaultLanguage = 'fortran') {
-    const fileExt = filename.split('.').pop().toLowerCase();
+export function getProgrammingLanguageFromFileExtension(filename, defaultLanguage = "fortran") {
+    const fileExt = filename.split(".").pop().toLowerCase();
     return FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP[fileExt] || defaultLanguage;
 }
 
@@ -25,16 +25,6 @@ export function getProgrammingLanguageFromFileExtension(filename, defaultLanguag
 export function formatFileSize(size, decimals = 2) {
     if (size === 0) return "0 Bytes";
     const index = Math.floor(Math.log(size) / Math.log(1024));
-    const units = [
-        "Bytes",
-        "KB",
-        "MB",
-        "GB",
-        "TB",
-        "PB",
-        "EB",
-        "ZB",
-        "YB"
-    ];
-    return parseFloat((size / Math.pow(1024, index)).toFixed(decimals)) + " " + units[index]
+    const units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    return parseFloat((size / 1024 ** index).toFixed(decimals)) + " " + units[index];
 }

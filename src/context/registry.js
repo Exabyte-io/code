@@ -1,6 +1,5 @@
 export class ContextProviderRegistryContainer {
-
-    constructor(config = {}) {
+    constructor() {
         this._providers = [];
     }
 
@@ -12,24 +11,23 @@ export class ContextProviderRegistryContainer {
         this._providers = p;
     }
 
-    addProvider({name, instance}) {
+    addProvider({ name, instance }) {
         this._providers.push({
             name,
-            instance
+            instance,
         });
     }
 
     findProviderInstanceByName(name) {
-        const p = this.providers.find(p => p.name === name);
-        return p && p.instance;
+        const provider = this.providers.find((p) => p.name === name);
+        return provider && provider.instance;
     }
 
     removeProvider(providerCls) {
-        this.providers = this.providers.filter(p => p.name === providerCls.name);
+        this.providers = this.providers.filter((p) => p.name === providerCls.name);
     }
 
     removeProviderByName(name) {
-        this.providers = this.providers.filter(p => p.name === name);
+        this.providers = this.providers.filter((p) => p.name === name);
     }
-
 }

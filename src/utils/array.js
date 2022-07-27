@@ -1,5 +1,5 @@
-import _ from 'underscore';
 import lodash from "lodash";
+import _ from "underscore";
 
 export function safeMakeArray(x) {
     if (!lodash.isArray(x)) return [x];
@@ -12,11 +12,12 @@ export function safeMakeArray(x) {
  * @param objects
  */
 export function convertToCompactCSVArrayOfObjects(objects) {
-    const headers = _.uniq(_.flatten(objects.map(x => _.keys(x))));
+    const headers = _.uniq(_.flatten(objects.map((x) => _.keys(x))));
     const result = [headers];
-    objects.forEach(x => {
+    objects.forEach((x) => {
         const row = [];
-        headers.forEach(header => {
+        headers.forEach((header) => {
+            // eslint-disable-next-line no-prototype-builtins
             row.push(x.hasOwnProperty(header) ? x[header] : null);
         });
         result.push(row);

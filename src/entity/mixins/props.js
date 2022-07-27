@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 export const DefaultableMixin = (superclass) => {
     return class extends superclass {
         get isDefault() {
@@ -16,34 +17,54 @@ export const DefaultableMixin = (superclass) => {
 
 export const TaggableMixin = (superclass) => {
     return class extends superclass {
-        get tags() {return this.prop("tags", [])}
+        get tags() {
+            return this.prop("tags", []);
+        }
 
-        set tags(array) {this.setProp("tags", array)}
+        set tags(array) {
+            this.setProp("tags", array);
+        }
 
         // only keep unique elements in tags
-        setTags(array) {this.tags = array.filter((value, index, self) => self.indexOf(value) === index)}
+        setTags(array) {
+            this.tags = array.filter((value, index, self) => self.indexOf(value) === index);
+        }
     };
 };
 
 export const HasMetadataMixin = (superclass) => {
     return class extends superclass {
-        get metadata() {return this.prop("metadata", {})}
+        get metadata() {
+            return this.prop("metadata", {});
+        }
 
-        set metadata(object) {this.setProp("metadata", object)}
+        set metadata(object) {
+            this.setProp("metadata", object);
+        }
 
-        updateMetadata(object) {this.metadata = Object.assign({}, this.metadata, object)}
+        updateMetadata(object) {
+            this.metadata = { ...this.metadata, ...object };
+        }
     };
 };
 
 export const HasDescriptionMixin = (superclass) => {
     return class extends superclass {
-        get description() {return this.prop("description", "")}
+        get description() {
+            return this.prop("description", "");
+        }
 
-        set description(string) {this.setProp("description", string)}
+        set description(string) {
+            this.setProp("description", string);
+        }
 
-        get descriptionObject() {return this.prop("descriptionObject")}
+        get descriptionObject() {
+            return this.prop("descriptionObject");
+        }
 
-        set descriptionObject(obj) {this.setProp("descriptionObject", obj)}
+        set descriptionObject(obj) {
+            this.setProp("descriptionObject", obj);
+        }
     };
 };
 
