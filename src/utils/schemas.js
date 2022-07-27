@@ -1,4 +1,4 @@
-import { JSONSchemasInterface } from './JSONSchemasInterface';
+import { JSONSchemasInterface } from '../JSONSchemasInterface';
 
 const mainSchemas = {
     Material: "material",

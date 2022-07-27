@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { JSONSchemasInterface } from './../src/utils/JSONSchemasInterface';
+import { JSONSchemasInterface } from './../src/JSONSchemasInterface';
 
 describe("JSONSchemasInterface", () => {
 
