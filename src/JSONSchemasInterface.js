@@ -1,15 +1,15 @@
 import { schemas } from "@exabyte-io/esse.js/schemas";
 import mergeAllOf from "json-schema-merge-allof";
 
-const schemaCache = new Map();
-
-export const JSONSchemasInterface = {
-    schemas() {
-        return schemas;
-    },
-
-    schemaById(schemaId) {
-        if (!schemaCache.has(schemaId)) {
+const schemasCache = new Map();
+export class JSONSchemasInterface {
+    /**
+     *
+     * @param {string} schemaId id of JSON schema from ESSE
+     * @returns {Object.<string, any>} resolved JSON schema
+     */
+    static schemaById(schemaId) {
+        if (!schemasCache.has(schemaId)) {
             const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
 
             const schema = mergeAllOf(originalSchema, {
@@ -18,15 +18,11 @@ export const JSONSchemasInterface = {
                 },
             });
 
-            schemaCache.set(schemaId, schema);
+            schemasCache.set(schemaId, schema);
         }
 
-        return schemaCache.get(schemaId);
-    },
-
-    resolvedSchemaById(schemaId) {
-        return this.schemaById(schemaId);
-    },
+        return schemasCache.get(schemaId);
+    }
 
     /**
      * @example <caption>Search by schemaId regex</caption>
@@ -49,7 +45,7 @@ export const JSONSchemasInterface = {
      * @param  {Object} query - An object containing mongo-like search query
      * @returns {Object|null} JSON schema
      */
-    matchSchema(query) {
+    static matchSchema(query) {
         const searchFields = Object.keys(query);
         return schemas.find((schema) => {
             return searchFields.every((field) => {
@@ -57,5 +53,5 @@ export const JSONSchemasInterface = {
                 return new RegExp($regex).test(schema[field]);
             });
         });
-    },
-};
+    }
+}

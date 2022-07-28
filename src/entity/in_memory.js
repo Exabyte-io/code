@@ -1,10 +1,9 @@
-import lodash from "lodash";
 import mergeAllOf from "json-schema-merge-allof";
+import lodash from "lodash";
 
 // import { ESSE } from "@exabyte-io/esse.js";
 import { deepClone } from "../utils/clone";
-import { getSchemaByClassName, getMixSchemasByClassName } from "../utils/schemas";
-
+import { getMixSchemasByClassName, getSchemaByClassName } from "../utils/schemas";
 
 // TODO: https://exabyte.atlassian.net/browse/SOF-5946
 // const schemas = new ESSE().schemas;
@@ -175,36 +174,61 @@ export class InMemoryEntity {
         return filtered[0];
     }
 
+    /**
+     * @summary If there any nested in-memory entities, first resolve them
+     *          and then mix with original schema in baseJSONSchema()
+     * @returns {Object.<string,InMemoryEntity>|null}
+     * @example
+     * class Workflow extends InMemoryEntity {
+     *     get customJsonSchemaProperties() {
+     *         return {
+     *             subworkflows: {
+     *                  type: 'array',
+     *                  items: Subworkflow.jsonSchema
+     *              }
+     *         };
+     *     }
+     * }
+     */
     static get customJsonSchemaProperties() {
         return null;
     }
 
-    static getMainJsonSchema() {
-        const originalSchema = getSchemaByClassName(this.name);
-
+    /**
+     * Returns original ESSE schema with nested properties from customJsonSchemaProperties
+     * @see customJsonSchemaProperties
+     * @returns {Object} schema
+     */
+    static get baseJSONSchema() {
         if (!this.customJsonSchemaProperties) {
-            return originalSchema;
+            return getSchemaByClassName(this.name);
         }
+
+        const { properties, ...schema } = getSchemaByClassName(this.name);
 
         return {
-            ...originalSchema,
+            ...schema,
             properties: {
-                ...originalSchema.properties,
-                ...this.customJsonSchemaProperties
-            }
-        }
+                ...properties,
+                ...this.customJsonSchemaProperties,
+            },
+        };
     }
 
+    /**
+     * Returns resolved JSON schema with custom properties and all mixes from schemas.js
+     * @returns {Object} schema
+     */
     static get jsonSchema() {
-        return mergeAllOf({
-            allOf: [
-                this.getMainJsonSchema(),
-                ...getMixSchemasByClassName(this.name)
-            ]
-        }, {
-            resolvers: {
-                defaultResolver: mergeAllOf.options.resolvers.title
-            }
-        });
-	}
+        return mergeAllOf(
+            {
+                allOf: [this.baseJSONSchema, ...getMixSchemasByClassName(this.name)],
+            },
+            {
+                resolvers: {
+                    defaultResolver: mergeAllOf.options.resolvers.title,
+                },
+            },
+        );
+    }
 }

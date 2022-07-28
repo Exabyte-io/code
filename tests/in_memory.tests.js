@@ -45,4 +45,19 @@ describe("InMemoryEntity", () => {
         const entity = new InMemoryEntity(obj);
         expect(JSON.stringify(entity.toJSON())).to.be.equal(JSON.stringify(obj));
     });
+
+    it("jsonSchema returns correct schema", () => {
+        class Entity extends InMemoryEntity {
+            static get customJsonSchemaProperties() {
+                return {
+                    nested: {
+                        type: "string",
+                    },
+                };
+            }
+        }
+        expect(Entity.jsonSchema).to.be.an("object");
+        expect(Entity.jsonSchema).to.have.nested.property("properties.isDefault"); // check mix schemas
+        expect(Entity.jsonSchema).to.have.nested.property("properties.nested.type"); // check custom properties
+    });
 });

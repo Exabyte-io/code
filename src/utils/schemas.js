@@ -1,6 +1,6 @@
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
-const mainSchemas = {
+export const mainSchemas = {
     Material: "material",
     Entity: "system-entity",
     BankMaterial: "material",
@@ -50,7 +50,7 @@ const flavorMix = ["system-is-multi-material"];
 
 const systemEntityMix = ["system-entity"];
 
-const mixSchemas = {
+export const mixSchemas = {
     Entity: [...entityMix],
     Material: [...entityMix],
     BankMaterial: [...entityMix, ...bankMaterialMix],
