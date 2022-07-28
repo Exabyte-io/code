@@ -1,4 +1,4 @@
-import { schemas } from "@exabyte-io/esse.js";
+import { schemas } from "@exabyte-io/esse.js/schemas";
 import mergeAllOf from "json-schema-merge-allof";
 
 const schemaCache = new Map();
