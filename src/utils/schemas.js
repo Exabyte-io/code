@@ -1,4 +1,4 @@
-import { JSONSchemasInterface } from '../JSONSchemasInterface';
+import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
 const mainSchemas = {
     Material: "material",
@@ -21,137 +21,57 @@ const mainSchemas = {
     ProcessingUnit: "workflow-unit-processing",
     ReduceUnit: "workflow-unit-reduce",
     SubworkflowUnit: "workflow-unit",
-    Unit: "workflow-unit"
+    Unit: "workflow-unit",
 };
 
 const entityMix = [
-    'system-description-object',
-    'system-base-entity-set',
-    'system-sharing',
-    'system-metadata',
-    'system-defaultable',
+    "system-description-object",
+    "system-base-entity-set",
+    "system-sharing",
+    "system-metadata",
+    "system-defaultable",
 ];
 
-const subWorkflowMix = [
-    'system-system-name',
-    'system-is-multi-material'
-];
+const subWorkflowMix = ["system-system-name", "system-is-multi-material"];
 
-const workflowMix = [
-    'workflow-base-flowchart',
-    'system-history',
-    'system-is-outdated'
-];
+const workflowMix = ["workflow-base-flow", "system-history", "system-is-outdated"];
 
-const bankMaterialMix = [
-    'material-conventional',
-    'system-creator-account'
-];
+const bankMaterialMix = ["material-conventional", "system-creator-account"];
 
-const bankWorkflowMix = [
-    'system-creator-account'
-];
+const bankWorkflowMix = ["system-creator-account"];
 
-const jobMix = [
-    'system-status',
-    'system-job-extended'
-];
+const jobMix = ["system-status", "system-job-extended"];
 
-const unitMix = [
-    'system-unit-extended',
-    'system-status',
-    'workflow-unit-runtime-runtime-items'
-];
+const unitMix = ["system-unit-extended", "system-status", "workflow-unit-runtime-runtime-items"];
 
-const assignmentUnitMix = [
-    'system-scope'
-];
+const assignmentUnitMix = ["system-scope"];
 
-const flavorMix = [
-    'system-is-multi-material'
-];
+const flavorMix = ["system-is-multi-material"];
 
-const systemEntityMix = [
-    'system-entity'
-];
+const systemEntityMix = ["system-entity"];
 
 const mixSchemas = {
-    Entity: [
-        ...entityMix
-    ],
-    Material: [
-        ...entityMix
-    ],
-    BankMaterial: [
-        ...entityMix,
-        ...bankMaterialMix,
-    ],
-    Workflow: [
-        ...entityMix,
-        ...subWorkflowMix,
-        ...workflowMix
-    ],
-    Subworkflow: [
-        ...subWorkflowMix
-    ],
-    BankWorkflow: [
-        ...entityMix,
-        ...subWorkflowMix,
-        ...workflowMix,
-        ...bankWorkflowMix
-    ],
-    Job: [
-        ...entityMix,
-        ...jobMix
-    ],
-    Application: [
-        ...entityMix,
-        ...systemEntityMix
-    ],
-    Executable: [
-        ...entityMix,
-        ...systemEntityMix
-    ],
-    Flavor: [
-        ...entityMix,
-        ...flavorMix,
-        ...systemEntityMix
-    ],
-    Template: [
-        ...entityMix,
-        ...systemEntityMix
-    ],
-    AssertionUnit: [
-        ...unitMix
-    ],
-    AssignmentUnit: [
-        ...unitMix,
-        ...assignmentUnitMix
-    ],
-    ConditionUnit : [
-        ...unitMix
-    ],
-    ExecutionUnit: [
-        ...unitMix
-    ],
-    IOUnit: [
-        ...unitMix
-    ],
-    MapUnit: [
-        ...unitMix
-    ],
-    ProcessingUnit: [
-        ...unitMix
-    ],
-    ReduceUnit: [
-        ...unitMix
-    ],
-    SubworkflowUnit: [
-        ...unitMix
-    ],
-    Unit: [
-        ...unitMix
-    ]
+    Entity: [...entityMix],
+    Material: [...entityMix],
+    BankMaterial: [...entityMix, ...bankMaterialMix],
+    Workflow: [...entityMix, ...subWorkflowMix, ...workflowMix],
+    Subworkflow: [...subWorkflowMix],
+    BankWorkflow: [...entityMix, ...subWorkflowMix, ...workflowMix, ...bankWorkflowMix],
+    Job: [...entityMix, ...jobMix],
+    Application: [...entityMix, ...systemEntityMix],
+    Executable: [...entityMix, ...systemEntityMix],
+    Flavor: [...entityMix, ...flavorMix, ...systemEntityMix],
+    Template: [...entityMix, ...systemEntityMix],
+    AssertionUnit: [...unitMix],
+    AssignmentUnit: [...unitMix, ...assignmentUnitMix],
+    ConditionUnit: [...unitMix],
+    ExecutionUnit: [...unitMix],
+    IOUnit: [...unitMix],
+    MapUnit: [...unitMix],
+    ProcessingUnit: [...unitMix],
+    ReduceUnit: [...unitMix],
+    SubworkflowUnit: [...unitMix],
+    Unit: [...unitMix],
 };
 
 export function getSchemaByClassName(className) {
@@ -159,5 +79,7 @@ export function getSchemaByClassName(className) {
 }
 
 export function getMixSchemasByClassName(className) {
-    return mixSchemas[className] ? mixSchemas[className].map(schemaId => JSONSchemasInterface.schemaById(schemaId)) : [];
+    return mixSchemas[className]
+        ? mixSchemas[className].map((schemaId) => JSONSchemasInterface.schemaById(schemaId))
+        : [];
 }
