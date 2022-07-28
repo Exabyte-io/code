@@ -1,22 +1,21 @@
+import { schemas } from "@exabyte-io/esse.js";
 import mergeAllOf from "json-schema-merge-allof";
-import { schemas } from '@exabyte-io/esse.js';
 
 const schemaCache = new Map();
 
 export const JSONSchemasInterface = {
-
-    schemas: function () {
+    schemas() {
         return schemas;
     },
 
     schemaById(schemaId) {
         if (!schemaCache.has(schemaId)) {
-            const originalSchema = schemas.find(schema => schema.schemaId === schemaId);
+            const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
 
             const schema = mergeAllOf(originalSchema, {
                 resolvers: {
-                    defaultResolver: mergeAllOf.options.resolvers.title
-                }
+                    defaultResolver: mergeAllOf.options.resolvers.title,
+                },
             });
 
             schemaCache.set(schemaId, schema);
@@ -52,11 +51,11 @@ export const JSONSchemasInterface = {
      */
     matchSchema(query) {
         const searchFields = Object.keys(query);
-        return schemas.find(schema => {
-            return searchFields.every(field => {
-                const {$regex} = query[field];
+        return schemas.find((schema) => {
+            return searchFields.every((field) => {
+                const { $regex } = query[field];
                 return new RegExp($regex).test(schema[field]);
             });
         });
-    }
+    },
 };
