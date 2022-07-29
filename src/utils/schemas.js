@@ -1,6 +1,6 @@
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
-export const mainSchemas = {
+export const baseSchemas = {
     Material: "material",
     Entity: "system-entity",
     BankMaterial: "material",
@@ -75,7 +75,7 @@ export const mixSchemas = {
 };
 
 export function getSchemaByClassName(className) {
-    return mainSchemas[className] ? JSONSchemasInterface.schemaById(mainSchemas[className]) : null;
+    return baseSchemas[className] ? JSONSchemasInterface.schemaById(baseSchemas[className]) : null;
 }
 
 export function getMixSchemasByClassName(className) {
