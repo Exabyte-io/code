@@ -1,7 +1,9 @@
+import mergeAllOf from "json-schema-merge-allof";
 import lodash from "lodash";
 
 // import { ESSE } from "@exabyte-io/esse.js";
 import { deepClone } from "../utils/clone";
+import { getMixSchemasByClassName, getSchemaByClassName } from "../utils/schemas";
 
 // TODO: https://exabyte.atlassian.net/browse/SOF-5946
 // const schemas = new ESSE().schemas;
@@ -170,5 +172,63 @@ export class InMemoryEntity {
             console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
         }
         return filtered[0];
+    }
+
+    /**
+     * @summary If there any nested in-memory entities, first resolve them
+     *          and then mix with original schema in baseJSONSchema()
+     * @returns {Object.<string,InMemoryEntity>|null}
+     * @example
+     * class Workflow extends InMemoryEntity {
+     *     get customJsonSchemaProperties() {
+     *         return {
+     *             subworkflows: {
+     *                  type: 'array',
+     *                  items: Subworkflow.jsonSchema
+     *              }
+     *         };
+     *     }
+     * }
+     */
+    static get customJsonSchemaProperties() {
+        return null;
+    }
+
+    /**
+     * Returns original ESSE schema with nested properties from customJsonSchemaProperties
+     * @see customJsonSchemaProperties
+     * @returns {Object} schema
+     */
+    static get baseJSONSchema() {
+        if (!this.customJsonSchemaProperties) {
+            return getSchemaByClassName(this.name);
+        }
+
+        const { properties, ...schema } = getSchemaByClassName(this.name);
+
+        return {
+            ...schema,
+            properties: {
+                ...properties,
+                ...this.customJsonSchemaProperties,
+            },
+        };
+    }
+
+    /**
+     * Returns resolved JSON schema with custom properties and all mixes from schemas.js
+     * @returns {Object} schema
+     */
+    static get jsonSchema() {
+        return mergeAllOf(
+            {
+                allOf: [this.baseJSONSchema, ...getMixSchemasByClassName(this.name)],
+            },
+            {
+                resolvers: {
+                    defaultResolver: mergeAllOf.options.resolvers.title,
+                },
+            },
+        );
     }
 }
