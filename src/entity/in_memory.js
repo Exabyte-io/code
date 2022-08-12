@@ -220,15 +220,20 @@ export class InMemoryEntity {
      * @returns {Object} schema
      */
     static get jsonSchema() {
-        return mergeAllOf(
-            {
-                allOf: [this.baseJSONSchema, ...getMixSchemasByClassName(this.name)],
-            },
-            {
-                resolvers: {
-                    defaultResolver: mergeAllOf.options.resolvers.title,
+        try {
+            return mergeAllOf(
+                {
+                    allOf: [this.baseJSONSchema, ...getMixSchemasByClassName(this.name)],
                 },
-            },
-        );
+                {
+                    resolvers: {
+                        defaultResolver: mergeAllOf.options.resolvers.title,
+                    },
+                },
+            );
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
     }
 }
