@@ -25,28 +25,28 @@ export const baseSchemas = {
 };
 
 const entityMix = [
-    "system/description/object",
-    "system/base/entity/set",
+    "system/description-object",
+    "system/base-entity-set",
     "system/sharing",
     "system/metadata",
     "system/defaultable",
 ];
 
-const subWorkflowMix = ["system/system/name", "system/is/multi/material"];
+const subWorkflowMix = ["system/system-name", "system/is-multi-material"];
 
-const workflowMix = ["workflow/base/flow", "system/history", "system/is/outdated"];
+const workflowMix = ["workflow/base-flow", "system/history", "system/is-outdated"];
 
-const bankMaterialMix = ["material/conventional", "system/creator/account"];
+const bankMaterialMix = ["material/conventional", "system/creator-account"];
 
-const bankWorkflowMix = ["system/creator/account"];
+const bankWorkflowMix = ["system/creator-account"];
 
-const jobMix = ["system/status", "system/job/extended"];
+const jobMix = ["system/status", "system/job-extended"];
 
-const unitMix = ["system/unit/extended", "system/status", "workflow/unit/runtime/runtime/items"];
+const unitMix = ["system/unit-extended", "system/status", "workflow/unit/runtime/runtime-items"];
 
 const assignmentUnitMix = ["system/scope"];
 
-const flavorMix = ["system/is/multi/material"];
+const flavorMix = ["system/is-multi-material"];
 
 const systemEntityMix = ["system/entity"];
 
