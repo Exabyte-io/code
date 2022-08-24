@@ -26,6 +26,7 @@ import {
     removeNewLinesAndExtraSpaces,
     toFixedLocale,
 } from "./str";
+import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
 
 export {
@@ -57,4 +58,5 @@ export {
     toFixedLocale,
     getUUID,
     getSearchQuerySelector,
+    containsEncodedComponents,
 };
