@@ -48,7 +48,7 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#f014f7ce3a42d9564cfde7b3104f346a539bccdc",
+        "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#52051df1fcdd2aed900f5f6aa51320449bf5dca2",
         "crypto-js": "^4.1.1",
         "json-schema-merge-allof": "^0.8.1",
         "lodash": "^4.17.21",
