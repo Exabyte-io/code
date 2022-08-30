@@ -18,13 +18,15 @@ export const ApplicationContextMixinBuilder = (applicationCls) => (superclass) =
         }
     };
 
-export const MaterialContextMixinBuilder = (materialCls) => (superclass) =>
+export const MaterialContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
-            if (!materialCls) throw Error("MaterialContextMixinBuilder: materialCls is undefined");
+            if (!this.constructor.materialCls) {
+                throw Error("MaterialContextMixin: materialCls is undefined");
+            }
             this._material = config.context && config.context.material;
-            if (!this._material) this._material = materialCls.createDefault();
+            if (!this._material) this._material = this.constructor.materialCls.createDefault();
             this.updateMaterialHash();
         }
 
@@ -74,14 +76,18 @@ export const MaterialsSetContextMixin = (superclass) =>
         }
     };
 
-export const MaterialsContextMixinBuilder = (materialCls) => (superclass) =>
+export const MaterialsContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
             const materials = this.config.context && this.config.context.materials;
-            if (!materialCls) throw Error("MaterialsContextMixinBuilder: materialCls is undefined");
+            if (!this.constructor.materialCls) {
+                throw Error("MaterialsContextMixin: materialCls is undefined");
+            }
             this._materials =
-                materials && materials.length ? materials : [materialCls.createDefault()];
+                materials && materials.length
+                    ? materials
+                    : [this.constructor.materialCls.createDefault()];
         }
 
         get materials() {
