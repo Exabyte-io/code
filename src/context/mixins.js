@@ -3,14 +3,15 @@ import CryptoJS from "crypto-js";
 
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
 
-export const ApplicationContextMixinBuilder = (applicationCls) => (superclass) =>
+export const ApplicationContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
-            if (!applicationCls)
-                throw Error("ApplicationContextMixinBuilder: applicationCls is undefined");
+            if (!this.constructor.applicationCls)
+                throw Error("ApplicationContextMixin: applicationCls is undefined");
             this._application =
-                (config.context && config.context.application) || applicationCls.createDefault();
+                (config.context && config.context.application) ||
+                this.constructor.applicationCls.createDefault();
         }
 
         get application() {

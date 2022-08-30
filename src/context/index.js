@@ -1,6 +1,6 @@
 import { JSONSchemaFormDataProvider } from "./json_schema_provider";
 import {
-    ApplicationContextMixinBuilder,
+    ApplicationContextMixin,
     JobContextMixin,
     MaterialContextMixin,
     MaterialsContextMixin,
@@ -18,7 +18,7 @@ export {
     JobContextPickKeysForMixin,
     JSONSchemaFormDataProvider,
     WorkflowContextPickKeysForMixin,
-    ApplicationContextMixinBuilder,
+    ApplicationContextMixin,
     MaterialContextMixin,
     MaterialsContextMixin,
     MaterialsSetContextMixin,
