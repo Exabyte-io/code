@@ -7,11 +7,11 @@ export const ApplicationContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
-            if (!this.constructor.applicationCls)
-                throw Error("ApplicationContextMixin: applicationCls is undefined");
+            if (!this.constructor.Application)
+                throw Error("ApplicationContextMixin: Application is undefined");
             this._application =
                 (config.context && config.context.application) ||
-                this.constructor.applicationCls.createDefault();
+                this.constructor.Application.createDefault();
         }
 
         get application() {
@@ -23,11 +23,11 @@ export const MaterialContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
-            if (!this.constructor.materialCls) {
-                throw Error("MaterialContextMixin: materialCls is undefined");
+            if (!this.constructor.Material) {
+                throw Error("MaterialContextMixin: Material is undefined");
             }
             this._material = config.context && config.context.material;
-            if (!this._material) this._material = this.constructor.materialCls.createDefault();
+            if (!this._material) this._material = this.constructor.Material.createDefault();
             this.updateMaterialHash();
         }
 
@@ -82,13 +82,13 @@ export const MaterialsContextMixin = (superclass) =>
         constructor(config) {
             super(config);
             const materials = this.config.context && this.config.context.materials;
-            if (!this.constructor.materialCls) {
-                throw Error("MaterialsContextMixin: materialCls is undefined");
+            if (!this.constructor.Material) {
+                throw Error("MaterialsContextMixin: Material is undefined");
             }
             this._materials =
                 materials && materials.length
                     ? materials
-                    : [this.constructor.materialCls.createDefault()];
+                    : [this.constructor.Material.createDefault()];
         }
 
         get materials() {

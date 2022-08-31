@@ -32,15 +32,15 @@ class ProviderEntity extends mix(InMemoryEntity).with(
     MaterialContextMixin,
     ApplicationContextMixin,
 ) {
-    static materialCls = MockMaterial;
+    static Material = MockMaterial;
 
-    static applicationCls = MockApplication;
+    static Application = MockApplication;
 }
 
 class DerivedProviderEntity extends ProviderEntity {
-    static materialCls = SpecificMockMaterial;
+    static Material = SpecificMockMaterial;
 
-    static applicationCls = SpecificMockApplication;
+    static Application = SpecificMockApplication;
 }
 
 describe("Material & Application ContextMixin", () => {
