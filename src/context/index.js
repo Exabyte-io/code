@@ -10,11 +10,17 @@ import {
 } from "./mixins";
 import { JobContextPickKeysForMixin, WorkflowContextPickKeysForMixin } from "./pickers";
 import { ContextProvider } from "./provider";
-import { ContextProviderRegistryContainer } from "./registry";
+import {
+    ContextProviderRegistryContainer,
+    createAndPatchRegistry,
+    extendAndPatchRegistry,
+} from "./registry";
 
 export {
     ContextProvider,
     ContextProviderRegistryContainer,
+    extendAndPatchRegistry,
+    createAndPatchRegistry,
     JobContextPickKeysForMixin,
     JSONSchemaFormDataProvider,
     WorkflowContextPickKeysForMixin,
