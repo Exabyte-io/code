@@ -30,4 +30,18 @@ describe("JSONSchemasInterface", () => {
 
         expect(schema).to.be.an("object");
     });
+
+    it("can find registered schemas", () => {
+        JSONSchemasInterface.registerSchema({
+            schemaId: "test-schema-id",
+            properties: {
+                testProp: {
+                    type: "string",
+                },
+            },
+        });
+
+        const schema = JSONSchemasInterface.schemaById("test-schema-id");
+        expect(schema).to.be.an("object");
+    });
 });
