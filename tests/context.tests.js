@@ -1,8 +1,12 @@
 import { expect } from "chai";
 import { mix } from "mixwith";
 
-import { ApplicationContextMixin, MaterialContextMixin } from "../src/context/mixins";
-import { InMemoryEntity } from "../src/entity";
+import {
+    ApplicationContextMixin,
+    ContextProvider,
+    createAndPatchRegistry,
+    MaterialContextMixin,
+} from "../src/context";
 
 class MockMaterial {
     static createDefault() {
@@ -28,19 +32,23 @@ class SpecificMockApplication {
     }
 }
 
-class ProviderEntity extends mix(InMemoryEntity).with(
+class ProviderEntity extends mix(ContextProvider).with(
     MaterialContextMixin,
     ApplicationContextMixin,
 ) {
-    static materialCls = MockMaterial;
+    static Material = MockMaterial;
 
-    static applicationCls = MockApplication;
+    static Application = MockApplication;
 }
 
 class DerivedProviderEntity extends ProviderEntity {
-    static materialCls = SpecificMockMaterial;
+    static Material = SpecificMockMaterial;
 
-    static applicationCls = SpecificMockApplication;
+    static Application = SpecificMockApplication;
+}
+
+class ApplicationContextProvider extends mix(ContextProvider).with(ApplicationContextMixin) {
+    static Application = SpecificMockApplication;
 }
 
 describe("Material & Application ContextMixin", () => {
@@ -56,5 +64,28 @@ describe("Material & Application ContextMixin", () => {
         const provider = new DerivedProviderEntity(config);
         expect(provider.material).to.be.equal("defaultSpecificMockMaterial");
         expect(provider.application).to.be.equal("defaultSpecificMockApplication");
+    });
+});
+
+describe("ContextProviderRegistryContainer", () => {
+    const classConfigObj = {
+        DataManager: {
+            providerCls: ProviderEntity,
+            config: { name: "example1", domain: "important" },
+        },
+        ApplicationDataManager: {
+            providerCls: ApplicationContextProvider,
+            config: { name: "example2", domain: "important" },
+        },
+    };
+
+    it("can be created and patched", () => {
+        const registry = createAndPatchRegistry(classConfigObj, { Material: SpecificMockMaterial });
+        const _dataProvider = registry.findProviderInstanceByName("DataManager");
+        const dataProvider = new _dataProvider.constructor(_dataProvider.config);
+        const _appProvider = registry.findProviderInstanceByName("ApplicationDataManager");
+        const appProvider = new _appProvider.constructor(_appProvider.config);
+        expect(dataProvider.material).to.be.equal("defaultSpecificMockMaterial");
+        expect(appProvider.application).to.be.equal("defaultSpecificMockApplication");
     });
 });
