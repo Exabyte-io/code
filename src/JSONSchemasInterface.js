@@ -13,7 +13,7 @@ export class JSONSchemasInterface {
             const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
 
             if (!originalSchema) {
-                throw new Error(`Schema not found: ${originalSchema}`);
+                throw new Error(`Schema not found: ${schemaId}`);
             }
 
             const schema = mergeAllOf(originalSchema, {
