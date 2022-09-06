@@ -12,6 +12,10 @@ export class JSONSchemasInterface {
         if (!schemasCache.has(schemaId)) {
             const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
 
+            if (!originalSchema) {
+                throw new Error(`Schema not found: ${originalSchema}`);
+            }
+
             const schema = mergeAllOf(originalSchema, {
                 resolvers: {
                     defaultResolver: mergeAllOf.options.resolvers.title,
