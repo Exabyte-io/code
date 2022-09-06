@@ -25,6 +25,14 @@ export class JSONSchemasInterface {
     }
 
     /**
+     *
+     * @param {Object} - external schema
+     */
+    static registerSchema(schema) {
+        schemasCache.set(schema.schemaId, schema);
+    }
+
+    /**
      * @example <caption>Search by schemaId regex</caption>
      * JSONSchemasInterface.matchSchema({
      *   schemaId: {

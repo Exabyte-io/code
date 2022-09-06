@@ -24,7 +24,7 @@ export const baseSchemas = {
     Unit: "workflow/unit",
 };
 
-const entityMix = [
+export const entityMix = [
     "system/description-object",
     "system/base-entity-set",
     "system/sharing",
@@ -32,23 +32,27 @@ const entityMix = [
     "system/defaultable",
 ];
 
-const subWorkflowMix = ["system/system-name", "system/is-multi-material"];
+export const subWorkflowMix = ["system/system-name", "system/is-multi-material"];
 
-const workflowMix = ["workflow/base-flow", "system/history", "system/is-outdated"];
+export const workflowMix = ["workflow/base-flow", "system/history", "system/is-outdated"];
 
-const bankMaterialMix = ["material/conventional", "system/creator-account"];
+export const bankMaterialMix = ["material/conventional", "system/creator-account"];
 
-const bankWorkflowMix = ["system/creator-account"];
+export const bankWorkflowMix = ["system/creator-account"];
 
-const jobMix = ["system/status", "system/job-extended"];
+export const jobMix = ["system/status", "system/job-extended"];
 
-const unitMix = ["system/unit-extended", "system/status", "workflow/unit/runtime/runtime-items"];
+export const unitMix = [
+    "system/unit-extended",
+    "system/status",
+    "workflow/unit/runtime/runtime-items",
+];
 
-const assignmentUnitMix = ["system/scope"];
+export const assignmentUnitMix = ["system/scope"];
 
-const flavorMix = ["system/is-multi-material"];
+export const flavorMix = ["system/is-multi-material"];
 
-const systemEntityMix = ["system/entity"];
+export const systemEntityMix = ["system/entity"];
 
 export const mixSchemas = {
     Entity: [...entityMix],
@@ -82,4 +86,15 @@ export function getMixSchemasByClassName(className) {
     return mixSchemas[className]
         ? mixSchemas[className].map((schemaId) => JSONSchemasInterface.schemaById(schemaId))
         : [];
+}
+
+/**
+ * Register additional Entity classes to be resolved with jsonSchema property
+ * @param {String} className - class name derived from InMemoryEntity
+ * @param {String} classBaseSchema - base schemaId
+ * @param {Array} classMixSchemas - array of schemaId to mix
+ */
+export function registerClassName(className, classBaseSchema, classMixSchemas) {
+    baseSchemas[className] = classBaseSchema;
+    mixSchemas[className] = classMixSchemas;
 }

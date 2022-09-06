@@ -1,6 +1,8 @@
+/* eslint-disable max-classes-per-file */
 import { expect } from "chai";
 
 import { InMemoryEntity } from "../src/entity/in_memory";
+import { entityMix, registerClassName } from "../src/utils/schemas";
 
 describe("InMemoryEntity", () => {
     const obj = {
@@ -59,5 +61,23 @@ describe("InMemoryEntity", () => {
         expect(Entity.jsonSchema).to.be.an("object");
         expect(Entity.jsonSchema).to.have.nested.property("properties.isDefault"); // check mix schemas
         expect(Entity.jsonSchema).to.have.nested.property("properties.nested.type"); // check custom properties
+    });
+
+    it("jsonSchema returns correct registered schema", () => {
+        class RegisteredEntity extends InMemoryEntity {
+            static get customJsonSchemaProperties() {
+                return {
+                    nested: {
+                        type: "string",
+                    },
+                };
+            }
+        }
+
+        registerClassName(RegisteredEntity.name, "system/entity", entityMix);
+
+        expect(RegisteredEntity.jsonSchema).to.be.an("object");
+        expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties.isDefault"); // check mix schemas
+        expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties.nested.type"); // check custom properties
     });
 });

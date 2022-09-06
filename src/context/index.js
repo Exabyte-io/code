@@ -1,26 +1,32 @@
 import { JSONSchemaFormDataProvider } from "./json_schema_provider";
 import {
-    ApplicationContextMixinBuilder,
+    ApplicationContextMixin,
     JobContextMixin,
-    MaterialContextMixinBuilder,
-    MaterialsContextMixinBuilder,
+    MaterialContextMixin,
+    MaterialsContextMixin,
     MaterialsSetContextMixin,
     MethodDataContextMixin,
     WorkflowContextMixin,
 } from "./mixins";
 import { JobContextPickKeysForMixin, WorkflowContextPickKeysForMixin } from "./pickers";
 import { ContextProvider } from "./provider";
-import { ContextProviderRegistryContainer } from "./registry";
+import {
+    ContextProviderRegistryContainer,
+    createAndPatchRegistry,
+    extendAndPatchRegistry,
+} from "./registry";
 
 export {
     ContextProvider,
     ContextProviderRegistryContainer,
+    extendAndPatchRegistry,
+    createAndPatchRegistry,
     JobContextPickKeysForMixin,
     JSONSchemaFormDataProvider,
     WorkflowContextPickKeysForMixin,
-    ApplicationContextMixinBuilder,
-    MaterialContextMixinBuilder,
-    MaterialsContextMixinBuilder,
+    ApplicationContextMixin,
+    MaterialContextMixin,
+    MaterialsContextMixin,
     MaterialsSetContextMixin,
     MethodDataContextMixin,
     JobContextMixin,

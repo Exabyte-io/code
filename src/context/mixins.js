@@ -3,14 +3,15 @@ import CryptoJS from "crypto-js";
 
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
 
-export const ApplicationContextMixinBuilder = (applicationCls) => (superclass) =>
+export const ApplicationContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
-            if (!applicationCls)
-                throw Error("ApplicationContextMixinBuilder: applicationCls is undefined");
+            if (!this.constructor.Application)
+                throw Error("ApplicationContextMixin: Application is undefined");
             this._application =
-                (config.context && config.context.application) || applicationCls.createDefault();
+                (config.context && config.context.application) ||
+                this.constructor.Application.createDefault();
         }
 
         get application() {
@@ -18,13 +19,15 @@ export const ApplicationContextMixinBuilder = (applicationCls) => (superclass) =
         }
     };
 
-export const MaterialContextMixinBuilder = (materialCls) => (superclass) =>
+export const MaterialContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
-            if (!materialCls) throw Error("MaterialContextMixinBuilder: materialCls is undefined");
+            if (!this.constructor.Material) {
+                throw Error("MaterialContextMixin: Material is undefined");
+            }
             this._material = config.context && config.context.material;
-            if (!this._material) this._material = materialCls.createDefault();
+            if (!this._material) this._material = this.constructor.Material.createDefault();
             this.updateMaterialHash();
         }
 
@@ -74,14 +77,18 @@ export const MaterialsSetContextMixin = (superclass) =>
         }
     };
 
-export const MaterialsContextMixinBuilder = (materialCls) => (superclass) =>
+export const MaterialsContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
             const materials = this.config.context && this.config.context.materials;
-            if (!materialCls) throw Error("MaterialsContextMixinBuilder: materialCls is undefined");
+            if (!this.constructor.Material) {
+                throw Error("MaterialsContextMixin: Material is undefined");
+            }
             this._materials =
-                materials && materials.length ? materials : [materialCls.createDefault()];
+                materials && materials.length
+                    ? materials
+                    : [this.constructor.Material.createDefault()];
         }
 
         get materials() {
