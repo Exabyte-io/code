@@ -2,57 +2,57 @@ import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
 export const baseSchemas = {
     Material: "material",
-    Entity: "system-entity",
+    Entity: "system/entity",
     BankMaterial: "material",
     Workflow: "workflow",
-    Subworkflow: "workflow-subworkflow",
+    Subworkflow: "workflow/subworkflow",
     BankWorkflow: "workflow",
     Job: "job",
-    Application: "software-application",
-    Executable: "software-executable",
-    Flavor: "software-flavor",
-    Template: "software-template",
-    AssertionUnit: "workflow-unit-assertion",
-    AssignmentUnit: "workflow-unit-assignment",
-    ConditionUnit: "workflow-unit-condition",
-    ExecutionUnit: "workflow-unit-execution",
-    IOUnit: "workflow-unit-io",
-    MapUnit: "workflow-unit-map",
-    ProcessingUnit: "workflow-unit-processing",
-    ReduceUnit: "workflow-unit-reduce",
-    SubworkflowUnit: "workflow-unit",
-    Unit: "workflow-unit",
+    Application: "software/application",
+    Executable: "software/executable",
+    Flavor: "software/flavor",
+    Template: "software/template",
+    AssertionUnit: "workflow/unit/assertion",
+    AssignmentUnit: "workflow/unit/assignment",
+    ConditionUnit: "workflow/unit/condition",
+    ExecutionUnit: "workflow/unit/execution",
+    IOUnit: "workflow/unit/io",
+    MapUnit: "workflow/unit/map",
+    ProcessingUnit: "workflow/unit/processing",
+    ReduceUnit: "workflow/unit/reduce",
+    SubworkflowUnit: "workflow/unit",
+    Unit: "workflow/unit",
 };
 
 export const entityMix = [
-    "system-description-object",
-    "system-base-entity-set",
-    "system-sharing",
-    "system-metadata",
-    "system-defaultable",
+    "system/description-object",
+    "system/base-entity-set",
+    "system/sharing",
+    "system/metadata",
+    "system/defaultable",
 ];
 
-export const subWorkflowMix = ["system-system-name", "system-is-multi-material"];
+export const subWorkflowMix = ["system/system-name", "system/is-multi-material"];
 
-export const workflowMix = ["workflow-base-flow", "system-history", "system-is-outdated"];
+export const workflowMix = ["workflow/base-flow", "system/history", "system/is-outdated"];
 
-export const bankMaterialMix = ["material-conventional", "system-creator-account"];
+export const bankMaterialMix = ["material/conventional", "system/creator-account"];
 
-export const bankWorkflowMix = ["system-creator-account"];
+export const bankWorkflowMix = ["system/creator-account"];
 
-export const jobMix = ["system-status", "system-job-extended"];
+export const jobMix = ["system/status", "system/job-extended"];
 
 export const unitMix = [
-    "system-unit-extended",
-    "system-status",
-    "workflow-unit-runtime-runtime-items",
+    "system/unit-extended",
+    "system/status",
+    "workflow/unit/runtime/runtime-items",
 ];
 
-export const assignmentUnitMix = ["system-scope"];
+export const assignmentUnitMix = ["system/scope"];
 
-export const flavorMix = ["system-is-multi-material"];
+export const flavorMix = ["system/is-multi-material"];
 
-export const systemEntityMix = ["system-entity"];
+export const systemEntityMix = ["system/entity"];
 
 export const mixSchemas = {
     Entity: [...entityMix],
