@@ -70,8 +70,13 @@ export const HasDescriptionMixin = (superclass) => {
 
 export const NamedEntityMixin = (superclass) => {
     return class extends superclass {
+        // eslint-disable-next-line class-methods-use-this
+        get alternativeName() {
+            throw new Error("Alternative name not defined");
+        }
+
         get name() {
-            return this.prop("name", "");
+            return this.prop("name") || this.alternativeName || "";
         }
 
         set name(name) {
