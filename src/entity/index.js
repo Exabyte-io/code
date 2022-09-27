@@ -1,4 +1,5 @@
 import { InMemoryEntity } from "./in_memory";
+import { ContextAndRenderFieldsMixin } from "./mixins/context";
 import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
 import { HashedInputArrayMixin } from "./mixins/hash";
 import {
@@ -53,4 +54,5 @@ export {
     InMemoryEntityInSetMixin,
     OrderedInMemoryEntitySetMixin,
     OrderedInMemoryEntityInSetMixin,
+    ContextAndRenderFieldsMixin,
 };
