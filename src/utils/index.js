@@ -25,6 +25,7 @@ import {
     removeEmptyLinesFromString,
     removeNewLinesAndExtraSpaces,
     toFixedLocale,
+    convertArabicToRoman
 } from "./str";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
@@ -59,4 +60,5 @@ export {
     getUUID,
     getSearchQuerySelector,
     containsEncodedComponents,
+    convertArabicToRoman,
 };
