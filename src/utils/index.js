@@ -4,6 +4,7 @@ import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./c
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import { formatFileSize, getProgrammingLanguageFromFileExtension } from "./file";
+import { setNextLinks, setUnitsHead } from "./graph";
 import {
     calculateHashFromObject,
     calculateHashFromString,
@@ -20,12 +21,12 @@ import {
 } from "./object";
 import { getSearchQuerySelector } from "./selector";
 import {
+    convertArabicToRoman,
     randomAlphanumeric,
     removeCommentsFromSourceCode,
     removeEmptyLinesFromString,
     removeNewLinesAndExtraSpaces,
     toFixedLocale,
-    convertArabicToRoman
 } from "./str";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
@@ -61,4 +62,6 @@ export {
     getSearchQuerySelector,
     containsEncodedComponents,
     convertArabicToRoman,
+    setUnitsHead,
+    setNextLinks,
 };
