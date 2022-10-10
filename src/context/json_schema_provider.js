@@ -16,6 +16,7 @@ class JSONSchemaFormDataProvider extends ContextProvider {
     constructor(config) {
         super(config);
         this.defaultClassNames = "col-xs-12 col-sm-6 col-md-4 col-lg-3";
+        this.isUsingJinjaVariables = false;
     }
 
     // eslint-disable-next-line class-methods-use-this
