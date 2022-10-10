@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file, class-methods-use-this */
+import _ from "lodash";
 import s from "underscore.string";
 
 import { safeMakeObject } from "../../utils/object";
@@ -144,6 +145,21 @@ export const RuntimeItemsUILogicMixin = (superclass) => {
 
         getResultByName(name) {
             return this.results.find((r) => r.name === name);
+        }
+
+        filterResultsByName(name) {
+            return this.results.filter((r) => r.name === name);
+        }
+
+        updateResultsWithArrayOfObjectsByName(name, array) {
+            const filteredInput = array.filter((r) => r.name === name);
+            if (filteredInput.length === 0) return;
+
+            if (this.filterResultsByName(name).length === 0) {
+                this._json.results = this._json.results.concat(filteredInput);
+            } else {
+                this._json.results = _.unionWith(this._json.results, filteredInput, _.isEqual);
+            }
         }
     };
 };
