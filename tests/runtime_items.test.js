@@ -38,9 +38,10 @@ describe("RuntimeItemUILogicMixin", () => {
         expect(entity.filterResultsByName("file_content").length).to.be.equal(nFileResults);
     });
 
-    it("results are not updated from empty array of results", () => {
+    it("results are deleted by name when empty array of results is passed", () => {
         const entity = new MockEntity();
+        entity.updateResultsWithArrayOfObjectsByName("file_content", resultsArray);
         entity.updateResultsWithArrayOfObjectsByName("file_content", []);
-        expect(entity.results).to.eql(entity.defaultResults);
+        expect(entity.getResultByName("file_content")).to.be.undefined;
     });
 });
