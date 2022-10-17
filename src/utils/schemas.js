@@ -22,6 +22,7 @@ export const baseSchemas = {
     ReduceUnit: "workflow/unit/reduce",
     SubworkflowUnit: "workflow/unit",
     Unit: "workflow/unit",
+    Project: "project",
 };
 
 export const entityMix = [
@@ -54,6 +55,8 @@ export const flavorMix = ["system/is-multi-material"];
 
 export const systemEntityMix = ["system/entity"];
 
+export const projectMix = ["system/status"];
+
 export const mixSchemas = {
     Entity: [...entityMix],
     Material: [...entityMix],
@@ -76,6 +79,7 @@ export const mixSchemas = {
     ReduceUnit: [...unitMix],
     SubworkflowUnit: [...unitMix],
     Unit: [...unitMix],
+    Project: [...entityMix, ...systemEntityMix, ...projectMix],
 };
 
 export function getSchemaByClassName(className) {
