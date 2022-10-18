@@ -151,9 +151,9 @@ export const RuntimeItemsUILogicMixin = (superclass) => {
         }
 
         updateResultsWithArrayOfObjectsByName(name, array) {
-            const filteredInput = array.filter((r) => r.name === name);
+            const filteredInput = array.filter((r) => (r.name || r) === name);
             this._json.results = this._json.results
-                .filter((r) => r.name !== name)
+                .filter((r) => (r.name || r) !== name)
                 .concat(filteredInput);
         }
     };
