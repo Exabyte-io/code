@@ -16,7 +16,7 @@ function removeSchemaIdsAfterAllOf(schema, clean = false) {
     }
 
     if (Array.isArray(schema)) {
-        return schema.map(removeSchemaIdsAfterAllOf);
+        return schema.map((item) => removeSchemaIdsAfterAllOf(item));
     }
 
     if (typeof schema !== "object") {

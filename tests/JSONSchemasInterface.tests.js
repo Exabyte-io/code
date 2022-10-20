@@ -61,6 +61,18 @@ describe("JSONSchemasInterface", () => {
                         ],
                     },
                 },
+                valueMapFunction: {
+                    description: "Specifies the function to convert the currentValue in UI.",
+                    type: "string",
+                    enum: [
+                        "toString",
+                        "toContactUs",
+                        "toPlusMinusSign",
+                        "toUnlimited",
+                        "toSupportSeverity",
+                    ],
+                    default: "toString",
+                },
             },
         });
 
@@ -70,5 +82,10 @@ describe("JSONSchemasInterface", () => {
         assert(schema.schemaId, "system/in-set");
         expect(schema.properties.inSet.items.schemaId).to.be.an("undefined");
         expect(schema.properties.inSet.items.properties).to.be.an("object");
+        expect(schema.properties.valueMapFunction.enum[0]).to.be.an("string");
+        expect(schema.properties.valueMapFunction.enum[1]).to.be.an("string");
+        expect(schema.properties.valueMapFunction.enum[2]).to.be.an("string");
+        expect(schema.properties.valueMapFunction.enum[3]).to.be.an("string");
+        expect(schema.properties.valueMapFunction.enum[4]).to.be.an("string");
     });
 });
