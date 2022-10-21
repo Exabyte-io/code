@@ -2,6 +2,43 @@ import { schemas } from "@exabyte-io/esse.js/schemas";
 import mergeAllOf from "json-schema-merge-allof";
 
 const schemasCache = new Map();
+
+/**
+ * We assume that each schema in the application has its own unique schemaId
+ * Unfortunately, mergeAllOf keeps schemaId after merging, and this results in multiple different schemas with the same schemaId
+ * Hence this function
+ */
+function removeSchemaIdsAfterAllOf(schema, clean = false) {
+    if (clean) {
+        const { schemaId, ...restSchema } = schema;
+
+        return restSchema;
+    }
+
+    if (Array.isArray(schema)) {
+        return schema.map((item) => removeSchemaIdsAfterAllOf(item));
+    }
+
+    if (typeof schema !== "object") {
+        return schema;
+    }
+
+    if (schema.allOf) {
+        const { allOf, ...restSchema } = schema;
+
+        return {
+            allOf: allOf.map((innerSchema) => removeSchemaIdsAfterAllOf(innerSchema, true)),
+            ...restSchema,
+        };
+    }
+
+    return Object.fromEntries(
+        Object.entries(schema).map(([key, value]) => {
+            return [key, removeSchemaIdsAfterAllOf(value)];
+        }),
+    );
+}
+
 export class JSONSchemasInterface {
     /**
      *
@@ -16,13 +53,7 @@ export class JSONSchemasInterface {
                 throw new Error(`Schema not found: ${schemaId}`);
             }
 
-            const schema = mergeAllOf(originalSchema, {
-                resolvers: {
-                    defaultResolver: mergeAllOf.options.resolvers.title,
-                },
-            });
-
-            schemasCache.set(schemaId, schema);
+            this.registerSchema(originalSchema);
         }
 
         return schemasCache.get(schemaId);
@@ -32,8 +63,16 @@ export class JSONSchemasInterface {
      *
      * @param {Object} - external schema
      */
-    static registerSchema(schema) {
+    static registerSchema(originalSchema) {
+        const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema), {
+            resolvers: {
+                defaultResolver: mergeAllOf.options.resolvers.title,
+            },
+        });
+
         schemasCache.set(schema.schemaId, schema);
+
+        return schema;
     }
 
     /**
