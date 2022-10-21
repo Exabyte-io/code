@@ -18,7 +18,7 @@ describe("JSONSchemasInterface", () => {
         expect(schema).to.be.an("object");
     });
 
-    it("can find registered schemas", () => {
+    it("can find registered schemas; the schema is merged and clean", () => {
         JSONSchemasInterface.registerSchema({
             schemaId: "system/in-set",
             $schema: "http://json-schema.org/draft-04/schema#",
