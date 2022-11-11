@@ -72,7 +72,7 @@ export const MaterialsSetContextMixin = (superclass) =>
             return materials
                 .concat()
                 .sort((a, b) =>
-                    compareEntitiesInOrderedSetForSorting(a, b, this.materialsSet._id, false),
+                    compareEntitiesInOrderedSetForSorting(a, b, this.materialsSet?._id, false),
                 );
         }
     };
