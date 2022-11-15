@@ -4,11 +4,10 @@
     "description": "COre DEfinitions in JS for Mat3ra.com (Exabyte.io)",
     "scripts": {
         "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
-        "lint": "eslint src tests && prettier --write src tests",
-        "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
+        "lint": "eslint src tests",
+        "lint:fix": "eslint --fix --cache src tests",
         "transpile": "babel --out-dir dist src",
         "postinstall": "npm run transpile",
-        "prettier": "prettier --check src tests",
         "prepare": "husky install"
     },
     "repository": {
@@ -80,7 +79,6 @@
         "node": ">=12.0.0"
     },
     "lint-staged": {
-        "*.js": "eslint --cache --fix",
-        "*.{js,css}": "prettier --write"
+        "*.js": "eslint --cache --fix"
     }
 }

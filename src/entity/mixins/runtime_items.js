@@ -63,9 +63,7 @@ export const RuntimeItemsUILogicMixin = (superclass) => {
         }
 
         setRuntimeItemsToDefaultValues() {
-            ["results", "monitors", "preProcessors", "postProcessors"].map((name) =>
-                this.setProp(name, this[`default${s.capitalize(name)}`]),
-            );
+            ["results", "monitors", "preProcessors", "postProcessors"].map((name) => this.setProp(name, this[`default${s.capitalize(name)}`]));
         }
 
         /**

@@ -49,7 +49,8 @@ export function extendClassStaticProps(childClass, parentClass, excludedProps = 
  * See extendClass.
  */
 export function extendThis(childClass, parentClass, config) {
-    let props, protos;
+    let props,
+        protos;
     let obj = new parentClass.prototype.constructor(config);
     const exclude = ["constructor", ...Object.getOwnPropertyNames(childClass.prototype)];
     const seen = []; // remember most recent occurrence of prop name (like inheritance)

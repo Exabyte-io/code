@@ -50,10 +50,10 @@ export class ContextProvider {
             config,
             data
                 ? {
-                      data,
-                      extraData,
-                      isEdited,
-                  }
+                    data,
+                    extraData,
+                    isEdited,
+                }
                 : {},
         );
     }
