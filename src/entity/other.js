@@ -31,6 +31,7 @@ export class NamedDefaultableRepetitionContextAndRenderInMemoryEntity extends mi
     InMemoryEntity,
 ).with(DefaultableMixin, NamedEntityMixin, HasRepetitionMixin, ContextAndRenderFieldsMixin) {}
 
+// eslint-disable-next-line max-len
 export class NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity extends mix(
     InMemoryEntity,
 ).with(

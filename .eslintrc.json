@@ -1,7 +1,4 @@
 {
-    "extends": ["mat3ra"],
-    "rules": {
-        "prettier/prettier": "off"
-    }
+    "extends": ["mat3ra"]
 }
 
