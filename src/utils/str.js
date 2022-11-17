@@ -18,8 +18,8 @@ export function randomAlphanumeric(length) {
     // the result is used as username and contains only numbers, the
     // slug will be inappropriate (e.g., "user-1232", "user-12" both have "user" as slug).
     return (
-        randomLetter
-        + Math.random()
+        randomLetter +
+        Math.random()
             .toString(36)
             .substring(2, 2 + length - 1)
     );

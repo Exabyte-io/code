@@ -12,7 +12,8 @@ export function safeMakeObject(name) {
     if (!name) return;
     let result = name;
     if (lodash.isString(name)) result = { name };
-    if (!lodash.isObject(result) || lodash.isArray(result) || !result.name) throw new Error(`safeMakeObject: failed creating named object, found ${result}`);
+    if (!lodash.isObject(result) || lodash.isArray(result) || !result.name)
+        throw new Error(`safeMakeObject: failed creating named object, found ${result}`);
     return result;
 }
 
@@ -66,9 +67,10 @@ export function renameKeysForObject(o, keysOriginal = [], keysRenamed = []) {
         // Get the destination key
         const idx = keysOriginal.indexOf(origKey);
         const destKey = idx === -1 ? origKey : keysRenamed[idx];
-        const destValue = typeof origValue === "object"
-            ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
-            : origValue;
+        const destValue =
+            typeof origValue === "object"
+                ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
+                : origValue;
         result[destKey] = destValue;
         return null;
     });
