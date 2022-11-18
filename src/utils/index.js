@@ -20,12 +20,12 @@ import {
 } from "./object";
 import { getSearchQuerySelector } from "./selector";
 import {
+    convertArabicToRoman,
     randomAlphanumeric,
     removeCommentsFromSourceCode,
     removeEmptyLinesFromString,
     removeNewLinesAndExtraSpaces,
     toFixedLocale,
-    convertArabicToRoman
 } from "./str";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
