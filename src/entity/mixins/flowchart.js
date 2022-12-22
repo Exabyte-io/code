@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import lodash from "lodash";
 
 import { addUnit, removeUnit, replaceUnit } from "../../utils";
@@ -37,6 +38,30 @@ export const FlowchartEntityMixin = (superclass) => {
             return lodash.findIndex(this.units, (unit) => {
                 return unit.flowchartId === flowchartId;
             });
+        }
+    };
+};
+
+export const FlowchartItemMixin = (superclass) => {
+    return class extends superclass {
+        get flowchartId() {
+            return this.prop("flowchartId");
+        }
+
+        get head() {
+            return this.prop("head", false);
+        }
+
+        set head(bool) {
+            this.setProp("head", bool);
+        }
+
+        get next() {
+            return this.prop("next");
+        }
+
+        set next(flowchartId) {
+            this.setProp("next", flowchartId);
         }
     };
 };

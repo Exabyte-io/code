@@ -1,7 +1,7 @@
 import { InMemoryEntity } from "./in_memory";
 import { ContextAndRenderFieldsMixin } from "./mixins/context";
 import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
-import { FlowchartEntityMixin } from "./mixins/flowchart";
+import { FlowchartEntityMixin, FlowchartItemMixin } from "./mixins/flowchart";
 import { HashedInputArrayMixin } from "./mixins/hash";
 import {
     DefaultableMixin,
@@ -57,4 +57,5 @@ export {
     OrderedInMemoryEntityInSetMixin,
     ContextAndRenderFieldsMixin,
     FlowchartEntityMixin,
+    FlowchartItemMixin,
 };
