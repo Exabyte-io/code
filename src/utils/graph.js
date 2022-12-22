@@ -5,7 +5,7 @@
  */
 export function setUnitsHead(units) {
     const [first, ...tail] = units;
-    const inOrder = first.head && tail.every((u) => u.head === false);
+    const inOrder = first.head && tail.every((u) => !u.head);
     if (units.length > 0 && !inOrder) {
         first.head = true;
         tail.map((x) => (x.head = false));
@@ -31,4 +31,43 @@ export function setNextLinks(units) {
         }
     }
     return units;
+}
+
+/**
+ * Add unit to unit graph (by index or appending).
+ * @param units {Unit[]}
+ * @param unit {Unit}
+ * @param index {Number}
+ */
+export function addUnit(units, unit, index = -1) {
+    if (index >= 0 && index < units.length) {
+        units.splice(index, 0, unit);
+    } else {
+        units.push(unit);
+    }
+    return setNextLinks(setUnitsHead(units));
+}
+
+/**
+ * Remove unit based on flowchartId from unit graph.
+ * @param {Unit[]} units
+ * @param {string} flowchartId
+ * @returns {Array}
+ */
+export function removeUnit(units, flowchartId) {
+    const previousUnit = this.units.find((x) => x.next === flowchartId);
+    if (previousUnit) previousUnit.unsetProp("next");
+    // TODO: remove the setNextLinks and setUnitsHead and handle the logic via flowchart designer
+    return setNextLinks(setUnitsHead(units.filter((x) => x.flowchartId !== flowchartId)));
+}
+
+/**
+ * Replace a unit in a unit graph by index.
+ * @param {Unit[]} units
+ * @param {Unit} unit
+ * @param {Number} index
+ */
+export function replaceUnit(units, unit, index) {
+    units[index] = unit;
+    return setNextLinks(setUnitsHead(units));
 }
