@@ -55,7 +55,7 @@ export function addUnit(units, unit, index = -1) {
  * @returns {Array}
  */
 export function removeUnit(units, flowchartId) {
-    const previousUnit = this.units.find((x) => x.next === flowchartId);
+    const previousUnit = units.find((x) => x.next === flowchartId);
     if (previousUnit) previousUnit.unsetProp("next");
     // TODO: remove the setNextLinks and setUnitsHead and handle the logic via flowchart designer
     return setNextLinks(setUnitsHead(units.filter((x) => x.flowchartId !== flowchartId)));
