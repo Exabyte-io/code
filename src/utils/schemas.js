@@ -19,3 +19,47 @@ export function getSchemaByClassName(className) {
 export function registerClassName(className, schemaId) {
     schemas[className] = schemaId;
 }
+
+function buildCase({
+    parentKey,
+    parentValue,
+    childKey,
+    childValues,
+    dependencies = {},
+    extraFields = {},
+}) {
+    return {
+        properties: {
+            [parentKey]: {
+                enum: [parentValue],
+                ...extraFields.get(parentKey, {}),
+            },
+            [childKey]: {
+                enum: childValues,
+                ...extraFields.get(childKey, {}),
+            },
+        },
+        ...dependencies,
+    };
+}
+
+export function buildDependencies(parent, children) {
+    if (children.length === 0 || children.every((n) => !n.children?.length)) return {};
+    const parentKey = parent.data.selector;
+    const childKey = children[0].data.selector;
+    return {
+        dependencies: {
+            [parentKey]: {
+                oneOf: children.map((node) =>
+                    buildCase({
+                        parentKey,
+                        parentValue: parent.data[parentKey],
+                        childKey,
+                        childValues: node.options,
+                        dependencies: buildDependencies(node, node.children),
+                    }),
+                ),
+            },
+        },
+    };
+}
