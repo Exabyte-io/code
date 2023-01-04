@@ -1,7 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import lodash from "lodash";
 
-import { addUnit, removeUnit, replaceUnit } from "../../utils";
+import { addUnit, getUUID, removeUnit, replaceUnit } from "../../utils";
 
 export const FlowchartEntityMixin = (superclass) => {
     return class extends superclass {
@@ -44,6 +44,13 @@ export const FlowchartEntityMixin = (superclass) => {
 
 export const FlowchartItemMixin = (superclass) => {
     return class extends superclass {
+        constructor(config) {
+            super(config);
+            if (!config?.flowchartId) {
+                this.setProp("flowchartId", getUUID());
+            }
+        }
+
         get flowchartId() {
             return this.prop("flowchartId");
         }
