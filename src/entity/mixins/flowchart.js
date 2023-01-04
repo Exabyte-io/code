@@ -7,7 +7,7 @@ export const FlowchartEntityMixin = (superclass) => {
     return class extends superclass {
         constructor(config) {
             super(config);
-            this._units = config.units || [];
+            this._units = config?.units || [];
         }
 
         get units() {
@@ -34,7 +34,7 @@ export const FlowchartEntityMixin = (superclass) => {
             return this.units.find((x) => x.flowchartId === flowchartId);
         }
 
-        unitIndex(flowchartId) {
+        getUnitIndexByFlowchartId(flowchartId) {
             return lodash.findIndex(this.units, (unit) => {
                 return unit.flowchartId === flowchartId;
             });
