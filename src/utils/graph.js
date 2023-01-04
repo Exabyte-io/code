@@ -5,8 +5,7 @@
  */
 export function setUnitsHead(units) {
     const [first, ...tail] = units;
-    const inOrder = first.head && tail.every((u) => !u.head);
-    if (units.length > 0 && !inOrder) {
+    if (units.length > 0) {
         first.head = true;
         tail.map((x) => (x.head = false));
     }
