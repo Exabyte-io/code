@@ -15,7 +15,7 @@ describe("Flowchart Mixins", () => {
         expect(entity.units.length).to.be.equal(1);
     });
 
-    it("flowchart item can be added inbetween", () => {
+    it("flowchart item can be added between two other units", () => {
         const entity = new FlowchartEntity();
         entity.addUnit(new FlowchartItem());
         entity.addUnit(new FlowchartItem());
@@ -26,7 +26,7 @@ describe("Flowchart Mixins", () => {
         expect(entity.units[1].next).to.be.equal(entity.units[2].flowchartId);
     });
 
-    it("flowchart item points to correct target after removalof inbetween unit", () => {
+    it("flowchart item points to correct target after removal of the in-between unit", () => {
         const entity = new FlowchartEntity();
         entity.addUnit(new FlowchartItem());
         entity.addUnit(new FlowchartItem());
@@ -53,7 +53,7 @@ describe("Flowchart Mixins", () => {
         expect(entity.units.length).to.be.equal(0);
     });
 
-    it("flowchart item can be replaced inbetween", () => {
+    it("flowchart item can be replaced between two other units", () => {
         const entity = new FlowchartEntity();
         entity.addUnit(new FlowchartItem());
         entity.addUnit(new FlowchartItem());
@@ -72,7 +72,8 @@ describe("Flowchart Mixins", () => {
         const item = new FlowchartItem();
         entity.addUnit(item);
         const fetchedUnit = entity.getUnit(item.flowchartId);
-        expect(fetchedUnit._json).to.be.deep.equal(item._json);
+        expect(fetchedUnit).to.be.instanceof(FlowchartItem);
+        expect(fetchedUnit.flowchartId).to.be.equal(item.flowchartId);
     });
 
     it("flowchart item index can be found by flowchart Id", () => {
