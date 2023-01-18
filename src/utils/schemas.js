@@ -1,3 +1,5 @@
+import lodash from "lodash";
+
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
 export const schemas = {};
@@ -20,7 +22,19 @@ export function registerClassName(className, schemaId) {
     schemas[className] = schemaId;
 }
 
-function buildCase({
+/**
+ * @summary Build dependency case (i.e. subschema) for RJSF dependency block.
+ *
+ * Note that this function assumes the subschema to be of type `"object"`.
+ * @param {String} parentKey - Key of fixed property
+ * @param {any} parentValue - Value of fixed property
+ * @param {String} childKey - Key of variable property
+ * @param {Array} childValues - Array of values of variable property
+ * @param {Object} dependencies - dependencies block for variable property
+ * @param {Object} extraFields - extra fields for each property
+ * @returns {{properties: {}}}
+ */
+function buildDependencyCase({
     parentKey,
     parentValue,
     childKey,
@@ -32,31 +46,44 @@ function buildCase({
         properties: {
             [parentKey]: {
                 enum: [parentValue],
-                ...extraFields.get(parentKey, {}),
+                ...(extraFields[parentKey] || {}),
             },
             [childKey]: {
                 enum: childValues,
-                ...extraFields.get(childKey, {}),
+                ...(extraFields[childKey] || {}),
             },
         },
         ...dependencies,
     };
 }
 
-export function buildDependencies(parent, children) {
-    if (children.length === 0 || children.every((n) => !n.children?.length)) return {};
-    const parentKey = parent.data.selector;
-    const childKey = children[0].data.selector;
+/**
+ * @summary Recursively generate `dependencies` for RJSF schema based on tree.
+ * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)
+ * @returns {{}|{dependencies: {}}}
+ */
+export function buildDependencies(nodes) {
+    if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
+    const parentKey = nodes[0].dataSelector.key;
+    const childKey = nodes[0].children[0].dataSelector.key;
     return {
         dependencies: {
             [parentKey]: {
-                oneOf: children.map((node) =>
-                    buildCase({
+                oneOf: nodes.map((node) =>
+                    buildDependencyCase({
                         parentKey,
-                        parentValue: parent.data[parentKey],
+                        parentValue: lodash.get(node, node.dataSelector.value),
                         childKey,
-                        childValues: node.options,
-                        dependencies: buildDependencies(node, node.children),
+                        childValues: node.children.map((c) => lodash.get(c, c.dataSelector.value)),
+                        dependencies: buildDependencies(node.children),
+                        extraFields: {
+                            [parentKey]: { enumNames: [lodash.get(node, node.dataSelector.name)] },
+                            [childKey]: {
+                                enumNames: node.children.map((c) =>
+                                    lodash.get(c, c.dataSelector.name),
+                                ),
+                            },
+                        },
                     }),
                 ),
             },
