@@ -27,6 +27,7 @@ import {
     removeNewLinesAndExtraSpaces,
     toFixedLocale,
 } from "./str";
+import { mapTree } from "./tree";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
 
@@ -61,4 +62,5 @@ export {
     getSearchQuerySelector,
     containsEncodedComponents,
     convertArabicToRoman,
+    mapTree,
 };
