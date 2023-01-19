@@ -69,6 +69,20 @@ function buildDependencyCase({
     };
 }
 
+function getEnumValues(nodes) {
+    if (!nodes.length) return {};
+    return {
+        enum: nodes.map((node) => lodash.get(node, node.dataSelector.value)),
+    };
+}
+
+function getEnumNames(nodes) {
+    if (!nodes.length) return {};
+    return {
+        enumNames: nodes.map((node) => lodash.get(node, node.dataSelector.name)),
+    };
+}
+
 /**
  * @summary Recursively generate `dependencies` for RJSF schema based on tree.
  * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)
@@ -100,5 +114,38 @@ export function buildDependencies(nodes) {
                 ),
             },
         },
+    };
+}
+
+export function getSchemaWithDependencies({
+    schema = {},
+    schemaId,
+    nodes,
+    modifyProperties = false,
+}) {
+    const mainSchema =
+        lodash.isEmpty(schema) && schemaId ? JSONSchemasInterface.schemaById(schemaId) : schema;
+
+    if (!lodash.isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
+        console.error("getSchemaWithDependencies() only accepts schemas of type 'object'");
+        return {};
+    }
+    if (modifyProperties && nodes.length) {
+        const mod = {
+            [nodes[0].dataSelector.key]: {
+                ...getEnumNames(nodes),
+                ...getEnumValues(nodes),
+            },
+        };
+        lodash.forEach(mod, (extraFields, key) => {
+            if (lodash.has(mainSchema, `properties.${key}`)) {
+                mainSchema.properties[key] = { ...mainSchema.properties[key], ...extraFields };
+            }
+        });
+    }
+
+    return {
+        ...(schemaId ? mainSchema : schema),
+        ...buildDependencies(nodes),
     };
 }
