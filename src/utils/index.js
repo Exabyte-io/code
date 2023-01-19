@@ -18,6 +18,7 @@ import {
     sortKeysDeepForObject,
     stringifyObject,
 } from "./object";
+import { getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
@@ -63,4 +64,5 @@ export {
     containsEncodedComponents,
     convertArabicToRoman,
     mapTree,
+    getSchemaWithDependencies,
 };
