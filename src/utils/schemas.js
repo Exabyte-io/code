@@ -22,6 +22,18 @@ export function registerClassName(className, schemaId) {
     schemas[className] = schemaId;
 }
 
+export function typeofSchema(schema) {
+    if (lodash.has(schema, "type")) {
+        return schema.type;
+    }
+    if (lodash.has(schema, "properties")) {
+        return "object";
+    }
+    if (lodash.has(schema, "items")) {
+        return "array";
+    }
+}
+
 /**
  * @summary Build dependency case (i.e. subschema) for RJSF dependency block.
  *
