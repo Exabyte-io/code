@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { buildDependencies, getSchemaWithDependencies } from "../src/utils/schemas";
+import { buildDependencies, getSchemaWithDependencies, typeofSchema } from "../src/utils/schemas";
 
 describe("RJSF schema", () => {
     const tree = {
@@ -146,5 +146,25 @@ describe("RJSF schema", () => {
         expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
         expect(rjsfSchema.properties).to.be.eql(DFT_SCHEMA.properties);
         expect(rjsfSchema).to.have.property("dependencies");
+    });
+});
+
+describe("Schema utility", () => {
+    const schemas = [
+        ["string", { type: "string" }],
+        ["integer", { type: "integer" }],
+        ["number", { type: "number" }],
+        ["object", { type: "object" }],
+        ["array", { type: "array" }],
+    ];
+    const objSchemaNoType = { properties: { name: { type: "string" } } };
+    const arraySchemaNoType = { items: { type: "number" } };
+    it("type can be determined correctly", () => {
+        schemas.forEach(([type, schema]) => {
+            const currentType = typeofSchema(schema);
+            expect(currentType).to.be.equal(type);
+        });
+        expect(typeofSchema(objSchemaNoType)).to.be.equal("object");
+        expect(typeofSchema(arraySchemaNoType)).to.be.equal("array");
     });
 });
