@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { buildDependencies, getSchemaWithDependencies, typeofSchema } from "../src/utils/schemas";
 
 describe("RJSF schema", () => {
-    const tree = {
+    const TREE = {
         path: "/dft",
         dataSelector: { key: "type", value: "data.type.slug", name: "data.type.name" },
         data: {
@@ -119,7 +119,7 @@ describe("RJSF schema", () => {
     };
 
     it("dependencies block can be created from tree", () => {
-        const dependencies = buildDependencies([tree]);
+        const dependencies = buildDependencies([TREE]);
 
         const [dftCase] = dependencies.dependencies.type.oneOf;
         expect(dftCase.properties.subtype.enum).to.have.ordered.members(["lda", "gga"]);
@@ -140,11 +140,25 @@ describe("RJSF schema", () => {
     it("can be created with dependencies from schema", () => {
         const rjsfSchema = getSchemaWithDependencies({
             schema: DFT_SCHEMA,
-            nodes: [tree],
+            nodes: [TREE],
+        });
+        expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
+        expect(rjsfSchema.properties).to.be.eql(DFT_SCHEMA.properties);
+        expect(rjsfSchema).to.have.property("dependencies");
+    });
+
+    it("enum and enumNames can be added to schema properties", () => {
+        const rjsfSchema = getSchemaWithDependencies({
+            schema: DFT_SCHEMA,
+            nodes: [TREE],
+            modifyProperties: true,
         });
         // console.log(JSON.stringify(rjsfSchema, null, 4));
         expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
-        expect(rjsfSchema.properties).to.be.eql(DFT_SCHEMA.properties);
+        expect(rjsfSchema.properties.type).to.have.property("enum");
+        expect(rjsfSchema.properties.type.enum).to.be.eql(["dft"]);
+        expect(rjsfSchema.properties.type).to.have.property("enumNames");
+        expect(rjsfSchema.properties.type.enumNames).to.be.eql(["Density Functional Theory"]);
         expect(rjsfSchema).to.have.property("dependencies");
     });
 });
