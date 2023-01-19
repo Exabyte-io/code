@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { buildDependencies } from "../src/utils/schemas";
+import { buildDependencies, getSchemaWithDependencies } from "../src/utils/schemas";
 
 describe("RJSF schema", () => {
     const tree = {
@@ -103,9 +103,23 @@ describe("RJSF schema", () => {
             },
         ],
     };
-    it("can be created with dependencies from tree", () => {
+    const DFT_SCHEMA = {
+        type: "object",
+        properties: {
+            type: {
+                type: "string",
+            },
+            subtype: {
+                type: "string",
+            },
+            functional: {
+                type: "string",
+            },
+        },
+    };
+
+    it("dependencies block can be created from tree", () => {
         const dependencies = buildDependencies([tree]);
-        console.log(JSON.stringify(dependencies, null, 4));
 
         const [dftCase] = dependencies.dependencies.type.oneOf;
         expect(dftCase.properties.subtype.enum).to.have.ordered.members(["lda", "gga"]);
@@ -121,5 +135,16 @@ describe("RJSF schema", () => {
         expect(ggaCase.properties.functional.enum).to.have.ordered.members(["pbe", "pw91"]);
         expect(ggaCase.properties.functional.enumNames).to.have.ordered.members(["PBE", "PW91"]);
         expect(ggaCase).to.not.have.property("dependencies");
+    });
+
+    it("can be created with dependencies from schema", () => {
+        const rjsfSchema = getSchemaWithDependencies({
+            schema: DFT_SCHEMA,
+            nodes: [tree],
+        });
+        // console.log(JSON.stringify(rjsfSchema, null, 4));
+        expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
+        expect(rjsfSchema.properties).to.be.eql(DFT_SCHEMA.properties);
+        expect(rjsfSchema).to.have.property("dependencies");
     });
 });
