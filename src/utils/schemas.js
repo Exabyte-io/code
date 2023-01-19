@@ -34,41 +34,6 @@ export function typeofSchema(schema) {
     }
 }
 
-/**
- * @summary Build dependency case (i.e. subschema) for RJSF dependency block.
- *
- * Note that this function assumes the subschema to be of type `"object"`.
- * @param {String} parentKey - Key of fixed property
- * @param {any} parentValue - Value of fixed property
- * @param {String} childKey - Key of variable property
- * @param {Array} childValues - Array of values of variable property
- * @param {Object} dependencies - dependencies block for variable property
- * @param {Object} extraFields - extra fields for each property
- * @returns {{properties: {}}}
- */
-function buildDependencyCase({
-    parentKey,
-    parentValue,
-    childKey,
-    childValues,
-    dependencies = {},
-    extraFields = {},
-}) {
-    return {
-        properties: {
-            [parentKey]: {
-                enum: [parentValue],
-                ...(extraFields[parentKey] || {}),
-            },
-            [childKey]: {
-                enum: childValues,
-                ...(extraFields[childKey] || {}),
-            },
-        },
-        ...dependencies,
-    };
-}
-
 function getEnumValues(nodes) {
     if (!nodes.length) return {};
     return {
@@ -95,23 +60,21 @@ export function buildDependencies(nodes) {
     return {
         dependencies: {
             [parentKey]: {
-                oneOf: nodes.map((node) =>
-                    buildDependencyCase({
-                        parentKey,
-                        parentValue: lodash.get(node, node.dataSelector.value),
-                        childKey,
-                        childValues: node.children.map((c) => lodash.get(c, c.dataSelector.value)),
-                        dependencies: buildDependencies(node.children),
-                        extraFields: {
-                            [parentKey]: { enumNames: [lodash.get(node, node.dataSelector.name)] },
+                oneOf: nodes.map((node) => {
+                    return {
+                        properties: {
+                            [parentKey]: {
+                                ...getEnumValues([node]),
+                                ...getEnumNames([node]),
+                            },
                             [childKey]: {
-                                enumNames: node.children.map((c) =>
-                                    lodash.get(c, c.dataSelector.name),
-                                ),
+                                ...getEnumValues(node.children),
+                                ...getEnumNames(node.children),
                             },
                         },
-                    }),
-                ),
+                        ...buildDependencies(node.children),
+                    };
+                }),
             },
         },
     };
