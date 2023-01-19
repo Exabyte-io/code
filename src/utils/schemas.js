@@ -80,19 +80,28 @@ export function buildDependencies(nodes) {
     };
 }
 
+/**
+ * Combine schema and dependencies block for usage with react-jsonschema-form (RJSF)
+ * @param {Object} schema - Schema
+ * @param {String} schemaId - Schema id (takes precedence over `schema` when both are provided)
+ * @param {Object[]} nodes - Array of nodes
+ * @param {Boolean} modifyProperties - Whether properties in main schema should be modified (add `enum` and `enumNames`)
+ * @returns {{}|{[p: string]: *}} - RJSF schema
+ */
 export function getSchemaWithDependencies({
     schema = {},
     schemaId,
     nodes,
     modifyProperties = false,
 }) {
-    const mainSchema =
-        lodash.isEmpty(schema) && schemaId ? JSONSchemasInterface.schemaById(schemaId) : schema;
+    const mainSchema = schemaId ? JSONSchemasInterface.schemaById(schemaId) : schema;
 
     if (!lodash.isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
         console.error("getSchemaWithDependencies() only accepts schemas of type 'object'");
         return {};
     }
+
+    // RJSF does not automatically render dropdown widget if `enum` is not present
     if (modifyProperties && nodes.length) {
         const mod = {
             [nodes[0].dataSelector.key]: {
