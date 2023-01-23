@@ -1,7 +1,7 @@
-import lodash from "lodash";
+import forEach from "lodash/forEach";
 
 export const refreshCodeMirror = (containerId) => {
     const container = document.getElementById(containerId);
     const editors = container.getElementsByClassName("CodeMirror");
-    lodash.each(editors, (cm) => cm.CodeMirror.refresh());
+    forEach(editors, (cm) => cm.CodeMirror.refresh());
 };
