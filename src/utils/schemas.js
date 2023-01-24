@@ -1,7 +1,9 @@
+import cloneDeep from "lodash/cloneDeep";
 import forEach from "lodash/forEach";
 import get from "lodash/get";
 import has from "lodash/has";
 import isEmpty from "lodash/isEmpty";
+import pick from "lodash/pick";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
@@ -51,12 +53,24 @@ function getEnumNames(nodes) {
     };
 }
 
+function getOneOfValues(nodes) {
+    if (!nodes.length) return {};
+    return {
+        oneOf: nodes
+            .map(({ data, dataSelector }) => {
+                const keyObj = get(data, dataSelector.key);
+                return pick(keyObj, ["title", "enum"]);
+            })
+            .filter(Boolean),
+    };
+}
+
 /**
  * @summary Recursively generate `dependencies` for RJSF schema based on tree.
  * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)
  * @returns {{}|{dependencies: {}}}
  */
-export function buildDependencies(nodes) {
+export function buildDependenciesEnum(nodes) {
     if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
     const parentKey = nodes[0].dataSelector.key;
     const childKey = nodes[0].children[0].dataSelector.key;
@@ -75,7 +89,37 @@ export function buildDependencies(nodes) {
                                 ...getEnumNames(node.children),
                             },
                         },
-                        ...buildDependencies(node.children),
+                        ...buildDependenciesEnum(node.children),
+                    };
+                }),
+            },
+        },
+    };
+}
+
+/**
+ * @summary Recursively generate `dependencies` for RJSF schema based on tree.
+ * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)
+ * @returns {{}|{dependencies: {}}}
+ */
+export function buildDependenciesOneOf(nodes) {
+    if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
+    const parentKey = nodes[0].dataSelector.key;
+    const childKey = nodes[0].children[0].dataSelector.key;
+    return {
+        dependencies: {
+            [parentKey]: {
+                oneOf: nodes.map((node) => {
+                    return {
+                        properties: {
+                            [parentKey]: {
+                                ...pick(get(node.data, node.dataSelector.key), ["title", "enum"]),
+                            },
+                            [childKey]: {
+                                ...getOneOfValues(node.children),
+                            },
+                        },
+                        ...buildDependenciesOneOf(node.children),
                     };
                 }),
             },
@@ -89,6 +133,7 @@ export function buildDependencies(nodes) {
  * @param {String} schemaId - Schema id (takes precedence over `schema` when both are provided)
  * @param {Object[]} nodes - Array of nodes
  * @param {Boolean} modifyProperties - Whether properties in main schema should be modified (add `enum` and `enumNames`)
+ * @param {Boolean} useEnum - whether to use `enum` or `oneOf` to render dropdown menus
  * @returns {{}|{[p: string]: *}} - RJSF schema
  */
 export function getSchemaWithDependencies({
@@ -96,6 +141,7 @@ export function getSchemaWithDependencies({
     schemaId,
     nodes,
     modifyProperties = false,
+    useEnum = false,
 }) {
     const mainSchema = schemaId ? JSONSchemasInterface.schemaById(schemaId) : schema;
 
@@ -106,21 +152,30 @@ export function getSchemaWithDependencies({
 
     // RJSF does not automatically render dropdown widget if `enum` is not present
     if (modifyProperties && nodes.length) {
+        const modifiedSchema = cloneDeep(mainSchema);
         const mod = {
             [nodes[0].dataSelector.key]: {
-                ...getEnumNames(nodes),
-                ...getEnumValues(nodes),
+                ...(useEnum
+                    ? { ...getEnumNames(nodes), ...getEnumValues(nodes) }
+                    : getOneOfValues(nodes)),
             },
         };
         forEach(mod, (extraFields, key) => {
-            if (has(mainSchema, `properties.${key}`)) {
-                mainSchema.properties[key] = { ...mainSchema.properties[key], ...extraFields };
+            if (has(modifiedSchema, `properties.${key}`)) {
+                modifiedSchema.properties[key] = {
+                    ...modifiedSchema.properties[key],
+                    ...extraFields,
+                };
             }
         });
+        return {
+            ...modifiedSchema,
+            ...(useEnum ? buildDependenciesEnum(nodes) : buildDependenciesOneOf(nodes)),
+        };
     }
 
     return {
-        ...(schemaId ? mainSchema : schema),
-        ...buildDependencies(nodes),
+        ...mainSchema,
+        ...(useEnum ? buildDependenciesEnum(nodes) : buildDependenciesOneOf(nodes)),
     };
 }
