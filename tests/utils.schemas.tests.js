@@ -1,15 +1,20 @@
 import { expect } from "chai";
 
-import { buildDependencies, getSchemaWithDependencies, typeofSchema } from "../src/utils/schemas";
+import {
+    buildDependenciesEnum,
+    buildDependenciesOneOf,
+    getSchemaWithDependencies,
+    typeofSchema,
+} from "../src/utils/schemas";
 
 describe("RJSF schema", () => {
     const TREE = {
         path: "/dft",
-        dataSelector: { key: "type", value: "data.type.slug", name: "data.type.name" },
+        dataSelector: { key: "type", value: "data.type.enum[0]", name: "data.type.title" },
         data: {
             type: {
-                slug: "dft",
-                name: "Density Functional Theory",
+                enum: ["dft"],
+                title: "Density Functional Theory",
             },
         },
         children: [
@@ -17,13 +22,13 @@ describe("RJSF schema", () => {
                 path: "/dft/lda",
                 dataSelector: {
                     key: "subtype",
-                    value: "data.subtype.slug",
-                    name: "data.subtype.name",
+                    value: "data.subtype.enum[0]",
+                    name: "data.subtype.title",
                 },
                 data: {
                     subtype: {
-                        slug: "lda",
-                        name: "LDA",
+                        enum: ["lda"],
+                        title: "LDA",
                     },
                 },
                 children: [
@@ -31,13 +36,13 @@ describe("RJSF schema", () => {
                         path: "/dft/lda/svwn",
                         dataSelector: {
                             key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
+                            value: "data.functional.enum[0]",
+                            name: "data.functional.title",
                         },
                         data: {
                             functional: {
-                                slug: "svwn",
-                                name: "SVWN",
+                                enum: ["svwn"],
+                                title: "SVWN",
                             },
                         },
                     },
@@ -45,13 +50,13 @@ describe("RJSF schema", () => {
                         path: "/dft/lda/pz",
                         dataSelector: {
                             key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
+                            value: "data.functional.enum[0]",
+                            name: "data.functional.title",
                         },
                         data: {
                             functional: {
-                                slug: "pz",
-                                name: "PZ",
+                                enum: ["pz"],
+                                title: "PZ",
                             },
                         },
                     },
@@ -61,13 +66,13 @@ describe("RJSF schema", () => {
                 path: "/dft/gga",
                 dataSelector: {
                     key: "subtype",
-                    value: "data.subtype.slug",
-                    name: "data.subtype.name",
+                    value: "data.subtype.enum[0]",
+                    name: "data.subtype.title",
                 },
                 data: {
                     subtype: {
-                        slug: "gga",
-                        name: "GGA",
+                        enum: ["gga"],
+                        title: "GGA",
                     },
                 },
                 children: [
@@ -75,13 +80,13 @@ describe("RJSF schema", () => {
                         path: "/dft/gga/pbe",
                         dataSelector: {
                             key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
+                            value: "data.functional.enum[0]",
+                            name: "data.functional.title",
                         },
                         data: {
                             functional: {
-                                slug: "pbe",
-                                name: "PBE",
+                                enum: ["pbe"],
+                                title: "PBE",
                             },
                         },
                     },
@@ -89,13 +94,13 @@ describe("RJSF schema", () => {
                         path: "/dft/gga/pw91",
                         dataSelector: {
                             key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
+                            value: "data.functional.enum[0]",
+                            name: "data.functional.title",
                         },
                         data: {
                             functional: {
-                                slug: "pw91",
-                                name: "PW91",
+                                enum: ["pw91"],
+                                title: "PW91",
                             },
                         },
                     },
@@ -118,8 +123,8 @@ describe("RJSF schema", () => {
         },
     };
 
-    it("dependencies block can be created from tree", () => {
-        const dependencies = buildDependencies([TREE]);
+    it("dependencies block using 'enum' can be created from tree", () => {
+        const dependencies = buildDependenciesEnum([TREE]);
 
         const [dftCase] = dependencies.dependencies.type.oneOf;
         expect(dftCase.properties.subtype.enum).to.have.ordered.members(["lda", "gga"]);
@@ -137,10 +142,38 @@ describe("RJSF schema", () => {
         expect(ggaCase).to.not.have.property("dependencies");
     });
 
+    it("dependencies block using 'oneOf' can be created from tree", () => {
+        const dependencies = buildDependenciesOneOf([TREE]);
+
+        const [dftCase] = dependencies.dependencies.type.oneOf;
+        expect(dftCase.properties.subtype.oneOf).to.have.length(2);
+        expect(dftCase.properties.subtype.oneOf).to.deep.include({ title: "LDA", enum: ["lda"] });
+        expect(dftCase.properties.subtype.oneOf).to.deep.include({ title: "GGA", enum: ["gga"] });
+
+        const [ldaCase, ggaCase] = dftCase.dependencies.subtype.oneOf;
+        expect(ldaCase.properties.functional.oneOf).to.have.length(2);
+        expect(ldaCase.properties.functional.oneOf).to.deep.include({
+            title: "SVWN",
+            enum: ["svwn"],
+        });
+        expect(ldaCase.properties.functional.oneOf).to.deep.include({ title: "PZ", enum: ["pz"] });
+
+        expect(ggaCase.properties.functional.oneOf).to.have.length(2);
+        expect(ggaCase.properties.functional.oneOf).to.deep.include({
+            title: "PBE",
+            enum: ["pbe"],
+        });
+        expect(ggaCase.properties.functional.oneOf).to.deep.include({
+            title: "PW91",
+            enum: ["pw91"],
+        });
+    });
+
     it("can be created with dependencies from schema", () => {
         const rjsfSchema = getSchemaWithDependencies({
             schema: DFT_SCHEMA,
             nodes: [TREE],
+            useEnum: true,
         });
         expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
         expect(rjsfSchema.properties).to.be.eql(DFT_SCHEMA.properties);
@@ -152,6 +185,7 @@ describe("RJSF schema", () => {
             schema: DFT_SCHEMA,
             nodes: [TREE],
             modifyProperties: true,
+            useEnum: true,
         });
         // console.log(JSON.stringify(rjsfSchema, null, 4));
         expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
@@ -159,6 +193,23 @@ describe("RJSF schema", () => {
         expect(rjsfSchema.properties.type.enum).to.be.eql(["dft"]);
         expect(rjsfSchema.properties.type).to.have.property("enumNames");
         expect(rjsfSchema.properties.type.enumNames).to.be.eql(["Density Functional Theory"]);
+        expect(rjsfSchema).to.have.property("dependencies");
+    });
+
+    it("title and const (enum) can be added to schema properties", () => {
+        const rjsfSchema = getSchemaWithDependencies({
+            schema: DFT_SCHEMA,
+            nodes: [TREE],
+            modifyProperties: true,
+            useEnum: false,
+        });
+        // console.log(JSON.stringify(rjsfSchema, null, 4));
+        expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
+        expect(rjsfSchema.properties.type).to.have.property("oneOf");
+        expect(rjsfSchema.properties.type.oneOf).to.deep.include({
+            title: "Density Functional Theory",
+            enum: ["dft"],
+        });
         expect(rjsfSchema).to.have.property("dependencies");
     });
 });
