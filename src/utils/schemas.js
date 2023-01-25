@@ -3,7 +3,6 @@ import forEach from "lodash/forEach";
 import get from "lodash/get";
 import has from "lodash/has";
 import isEmpty from "lodash/isEmpty";
-import pick from "lodash/pick";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
@@ -56,12 +55,12 @@ function getEnumNames(nodes) {
 function getOneOfValues(nodes) {
     if (!nodes.length) return {};
     return {
-        oneOf: nodes
-            .map(({ data, dataSelector }) => {
-                const keyObj = get(data, dataSelector.key);
-                return pick(keyObj, ["title", "enum"]);
-            })
-            .filter(Boolean),
+        oneOf: nodes.map((node) => {
+            return {
+                title: get(node, node.dataSelector.name),
+                enum: [get(node, node.dataSelector.value)],
+            };
+        }),
     };
 }
 
@@ -113,7 +112,8 @@ export function buildDependenciesOneOf(nodes) {
                     return {
                         properties: {
                             [parentKey]: {
-                                ...pick(get(node.data, node.dataSelector.key), ["title", "enum"]),
+                                title: get(node, node.dataSelector.name),
+                                enum: [get(node, node.dataSelector.value)],
                             },
                             [childKey]: {
                                 ...getOneOfValues(node.children),
