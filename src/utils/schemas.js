@@ -1,7 +1,4 @@
-import forEach from "lodash/forEach";
-import get from "lodash/get";
-import has from "lodash/has";
-import isEmpty from "lodash/isEmpty";
+import lodash from "lodash";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
@@ -26,13 +23,13 @@ export function registerClassName(className, schemaId) {
 }
 
 export function typeofSchema(schema) {
-    if (has(schema, "type")) {
+    if (lodash.has(schema, "type")) {
         return schema.type;
     }
-    if (has(schema, "properties")) {
+    if (lodash.has(schema, "properties")) {
         return "object";
     }
-    if (has(schema, "items")) {
+    if (lodash.has(schema, "items")) {
         return "array";
     }
 }
@@ -40,14 +37,14 @@ export function typeofSchema(schema) {
 function getEnumValues(nodes) {
     if (!nodes.length) return {};
     return {
-        enum: nodes.map((node) => get(node, node.dataSelector.value)),
+        enum: nodes.map((node) => lodash.get(node, node.dataSelector.value)),
     };
 }
 
 function getEnumNames(nodes) {
     if (!nodes.length) return {};
     return {
-        enumNames: nodes.map((node) => get(node, node.dataSelector.name)),
+        enumNames: nodes.map((node) => lodash.get(node, node.dataSelector.name)),
     };
 }
 
@@ -99,7 +96,7 @@ export function getSchemaWithDependencies({
 }) {
     const mainSchema = schemaId ? JSONSchemasInterface.schemaById(schemaId) : schema;
 
-    if (!isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
+    if (!lodash.isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
         console.error("getSchemaWithDependencies() only accepts schemas of type 'object'");
         return {};
     }
@@ -112,8 +109,8 @@ export function getSchemaWithDependencies({
                 ...getEnumValues(nodes),
             },
         };
-        forEach(mod, (extraFields, key) => {
-            if (has(mainSchema, `properties.${key}`)) {
+        lodash.forEach(mod, (extraFields, key) => {
+            if (lodash.has(mainSchema, `properties.${key}`)) {
                 mainSchema.properties[key] = { ...mainSchema.properties[key], ...extraFields };
             }
         });

@@ -1,5 +1,4 @@
-import get from "lodash/get";
-import omit from "lodash/omit";
+import lodash from "lodash";
 
 // import { ESSE } from "@exabyte-io/esse.js";
 import { deepClone } from "../utils/clone";
@@ -25,7 +24,7 @@ export class InMemoryEntity {
      */
     prop(name, defaultValue = null) {
         // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
-        return get(this._json, name, defaultValue) || defaultValue;
+        return lodash.get(this._json, name, defaultValue) || defaultValue;
     }
 
     /**
@@ -50,7 +49,7 @@ export class InMemoryEntity {
      * @param exclude {String[]}
      */
     toJSON(exclude = []) {
-        const config = deepClone(omit(this._json, exclude));
+        const config = deepClone(lodash.omit(this._json, exclude));
         return this.clean(config);
     }
 
