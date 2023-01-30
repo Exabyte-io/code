@@ -4,6 +4,7 @@ import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./c
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import { formatFileSize, getProgrammingLanguageFromFileExtension } from "./file";
+import { addUnit, removeUnit, replaceUnit, setNextLinks, setUnitsHead } from "./graph";
 import {
     calculateHashFromObject,
     calculateHashFromString,
@@ -61,4 +62,9 @@ export {
     getSearchQuerySelector,
     containsEncodedComponents,
     convertArabicToRoman,
+    setUnitsHead,
+    setNextLinks,
+    addUnit,
+    removeUnit,
+    replaceUnit,
 };
