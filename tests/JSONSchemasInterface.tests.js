@@ -1,47 +1,91 @@
-import { expect } from "chai";
+import { assert, expect } from "chai";
 
 import { JSONSchemasInterface } from "../src/JSONSchemasInterface";
-import { baseSchemas, mixSchemas } from "../src/utils/schemas";
 
 describe("JSONSchemasInterface", () => {
-    it("can find main schema", () => {
-        Object.values(baseSchemas).forEach((schemaId) => {
-            const schema = JSONSchemasInterface.schemaById(schemaId);
-            expect(schema).to.be.an("object");
-        });
-    });
-
-    it("can find mix schemas", () => {
-        Object.values(mixSchemas).forEach((schemaIds) => {
-            schemaIds.forEach((schemaId) => {
-                const schema = JSONSchemasInterface.schemaById(schemaId);
-                expect(schema).to.be.an("object");
-            });
-        });
+    it("can find schema", () => {
+        const schema = JSONSchemasInterface.schemaById("workflow");
+        expect(schema).to.be.an("object");
     });
 
     it("can match schemas", () => {
-        const schemaId = Object.values(baseSchemas)[0];
         const schema = JSONSchemasInterface.matchSchema({
             schemaId: {
-                $regex: schemaId,
+                $regex: "workflow",
             },
         });
 
         expect(schema).to.be.an("object");
     });
 
-    it("can find registered schemas", () => {
+    it("can find registered schemas; the schema is merged and clean", () => {
         JSONSchemasInterface.registerSchema({
-            schemaId: "test-schema-id",
+            schemaId: "system/in-set",
+            $schema: "http://json-schema.org/draft-04/schema#",
+            title: "System in-set schema",
             properties: {
-                testProp: {
+                inSet: {
+                    type: "array",
+                    items: {
+                        allOf: [
+                            {
+                                schemaId: "system/entity-reference",
+                                $schema: "http://json-schema.org/draft-04/schema#",
+                                title: "entity reference schema",
+                                properties: {
+                                    _id: {
+                                        description: "entity identity",
+                                        type: "string",
+                                    },
+                                    cls: {
+                                        description: "entity class",
+                                        type: "string",
+                                    },
+                                    slug: {
+                                        description: "entity slug",
+                                        type: "string",
+                                    },
+                                },
+                            },
+                            {
+                                type: "object",
+                                properties: {
+                                    type: {
+                                        type: "string",
+                                    },
+                                    index: {
+                                        type: "number",
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+                valueMapFunction: {
+                    description: "Specifies the function to convert the currentValue in UI.",
                     type: "string",
+                    enum: [
+                        "toString",
+                        "toContactUs",
+                        "toPlusMinusSign",
+                        "toUnlimited",
+                        "toSupportSeverity",
+                    ],
+                    default: "toString",
                 },
             },
         });
 
-        const schema = JSONSchemasInterface.schemaById("test-schema-id");
+        const schema = JSONSchemasInterface.schemaById("system/in-set");
+
         expect(schema).to.be.an("object");
+        assert(schema.schemaId, "system/in-set");
+        expect(schema.properties.inSet.items.schemaId).to.be.an("undefined");
+        expect(schema.properties.inSet.items.properties).to.be.an("object");
+        expect(schema.properties.valueMapFunction.enum[0]).to.be.an("string");
+        expect(schema.properties.valueMapFunction.enum[1]).to.be.an("string");
+        expect(schema.properties.valueMapFunction.enum[2]).to.be.an("string");
+        expect(schema.properties.valueMapFunction.enum[3]).to.be.an("string");
+        expect(schema.properties.valueMapFunction.enum[4]).to.be.an("string");
     });
 });

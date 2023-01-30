@@ -7,8 +7,9 @@ export const ApplicationContextMixin = (superclass) =>
     class extends superclass {
         constructor(config) {
             super(config);
-            if (!this.constructor.Application)
+            if (!this.constructor.Application) {
                 throw Error("ApplicationContextMixin: Application is undefined");
+            }
             this._application =
                 (config.context && config.context.application) ||
                 this.constructor.Application.createDefault();
@@ -69,11 +70,9 @@ export const MaterialsSetContextMixin = (superclass) =>
 
         sortMaterialsByIndexInSet(materials = []) {
             // DO NOT SORT IN PLACE AS IT CHANGES THE ORDER IN `this.materials` AND HAS SIDE EFFECTS (MaterialViewer).
-            return materials
-                .concat()
-                .sort((a, b) =>
-                    compareEntitiesInOrderedSetForSorting(a, b, this.materialsSet._id, false),
-                );
+            return materials.concat().sort((a, b) => {
+                return compareEntitiesInOrderedSetForSorting(a, b, this.materialsSet._id, false);
+            });
         }
     };
 
