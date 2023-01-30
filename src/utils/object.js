@@ -1,9 +1,4 @@
-import camelCase from "lodash/camelCase";
-import filter from "lodash/filter";
-import isArray from "lodash/isArray";
-import isObject from "lodash/isObject";
-import isString from "lodash/isString";
-import mapKeys from "lodash/mapKeys";
+import lodash from "lodash";
 import _ from "underscore";
 
 import { deepClone } from "./clone";
@@ -16,8 +11,8 @@ import { deepClone } from "./clone";
 export function safeMakeObject(name) {
     if (!name) return;
     let result = name;
-    if (isString(name)) result = { name };
-    if (!isObject(result) || isArray(result) || !result.name)
+    if (lodash.isString(name)) result = { name };
+    if (!lodash.isObject(result) || lodash.isArray(result) || !result.name)
         throw new Error(`safeMakeObject: failed creating named object, found ${result}`);
     return result;
 }
@@ -30,7 +25,7 @@ export function safeMakeObject(name) {
  * @returns filtered[0] {Any|null} first matching entry if found
  */
 export function getOneMatchFromObject(obj, attribute, value) {
-    const filtered = filter(obj, [attribute, value]);
+    const filtered = lodash.filter(obj, [attribute, value]);
     if (filtered.length !== 1) {
         console.log(`found ${filtered.length} ${attribute} matching ${value}, expected 1.`);
     }
@@ -46,8 +41,8 @@ export function getOneMatchFromObject(obj, attribute, value) {
  */
 export function convertKeysToCamelCaseForObject(obj) {
     const newObj = deepClone(obj);
-    return mapKeys(newObj, (v, k) => {
-        return camelCase(k);
+    return lodash.mapKeys(newObj, (v, k) => {
+        return lodash.camelCase(k);
     });
 }
 
@@ -58,11 +53,11 @@ export function convertKeysToCamelCaseForObject(obj) {
  * @param {Array} keysRenamed - List of keys to rename original keys to, in the same order
  */
 export function renameKeysForObject(o, keysOriginal = [], keysRenamed = []) {
-    if (!isObject(o)) {
+    if (!lodash.isObject(o)) {
         return o;
     }
 
-    if (isArray(o)) {
+    if (lodash.isArray(o)) {
         return o.map((x) => renameKeysForObject(x, keysOriginal, keysRenamed));
     }
 

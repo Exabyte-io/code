@@ -9,8 +9,7 @@
  *             to next one, for example data about material to track when it is changed.
  * @notes   Should hold static data only (see `setData` method), no classes or functions
  */
-import capitalize from "lodash/capitalize";
-import get from "lodash/get";
+import lodash from "lodash";
 
 import { deepClone } from "../utils/clone";
 
@@ -44,9 +43,9 @@ export class ContextProvider {
     }
 
     static createConfigFromContext(config) {
-        const data = get(config.context, config.name);
-        const isEdited = get(config.context, this.getIsEditedKeyByName(config.name));
-        const extraData = get(config.context, this.getExtraDataKeyByName(config.name));
+        const data = lodash.get(config.context, config.name);
+        const isEdited = lodash.get(config.context, this.getIsEditedKeyByName(config.name));
+        const extraData = lodash.get(config.context, this.getExtraDataKeyByName(config.name));
         return Object.assign(
             config,
             data
@@ -107,11 +106,11 @@ export class ContextProvider {
     }
 
     get isEditedKey() {
-        return `is${capitalize(this.name)}Edited`;
+        return `is${lodash.capitalize(this.name)}Edited`;
     }
 
     static getIsEditedKeyByName(name) {
-        return `is${capitalize(name)}Edited`;
+        return `is${lodash.capitalize(name)}Edited`;
     }
 
     get isUnitContextProvider() {

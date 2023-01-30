@@ -1,8 +1,8 @@
-import isArray from "lodash/isArray";
+import lodash from "lodash";
 import _ from "underscore";
 
 export function safeMakeArray(x) {
-    if (!isArray(x)) return [x];
+    if (!lodash.isArray(x)) return [x];
     return x;
 }
 

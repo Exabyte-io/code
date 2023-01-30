@@ -1,8 +1,4 @@
-import cloneDeep from "lodash/cloneDeep";
-import forEach from "lodash/forEach";
-import get from "lodash/get";
-import has from "lodash/has";
-import isEmpty from "lodash/isEmpty";
+import lodash from "lodash";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
@@ -27,13 +23,13 @@ export function registerClassName(className, schemaId) {
 }
 
 export function typeofSchema(schema) {
-    if (has(schema, "type")) {
+    if (lodash.has(schema, "type")) {
         return schema.type;
     }
-    if (has(schema, "properties")) {
+    if (lodash.has(schema, "properties")) {
         return "object";
     }
-    if (has(schema, "items")) {
+    if (lodash.has(schema, "items")) {
         return "array";
     }
 }
@@ -41,14 +37,14 @@ export function typeofSchema(schema) {
 function getEnumValues(nodes) {
     if (!nodes.length) return {};
     return {
-        enum: nodes.map((node) => get(node, node.dataSelector.value)),
+        enum: nodes.map((node) => lodash.get(node, node.dataSelector.value)),
     };
 }
 
 function getEnumNames(nodes) {
     if (!nodes.length) return {};
     return {
-        enumNames: nodes.map((node) => get(node, node.dataSelector.name)),
+        enumNames: nodes.map((node) => lodash.get(node, node.dataSelector.name)),
     };
 }
 
@@ -57,8 +53,8 @@ function getOneOfValues(nodes) {
     return {
         oneOf: nodes.map((node) => {
             return {
-                title: get(node, node.dataSelector.name),
-                enum: [get(node, node.dataSelector.value)],
+                title: lodash.get(node, node.dataSelector.name),
+                enum: [lodash.get(node, node.dataSelector.value)],
             };
         }),
     };
@@ -112,8 +108,8 @@ export function buildDependenciesOneOf(nodes) {
                     return {
                         properties: {
                             [parentKey]: {
-                                title: get(node, node.dataSelector.name),
-                                enum: [get(node, node.dataSelector.value)],
+                                title: lodash.get(node, node.dataSelector.name),
+                                enum: [lodash.get(node, node.dataSelector.value)],
                             },
                             [childKey]: {
                                 ...getOneOfValues(node.children),
@@ -145,14 +141,14 @@ export function getSchemaWithDependencies({
 }) {
     const mainSchema = schemaId ? JSONSchemasInterface.schemaById(schemaId) : schema;
 
-    if (!isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
+    if (!lodash.isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
         console.error("getSchemaWithDependencies() only accepts schemas of type 'object'");
         return {};
     }
 
     // RJSF does not automatically render dropdown widget if `enum` is not present
     if (modifyProperties && nodes.length) {
-        const modifiedSchema = cloneDeep(mainSchema);
+        const modifiedSchema = lodash.cloneDeep(mainSchema);
         const mod = {
             [nodes[0].dataSelector.key]: {
                 ...(useEnum
@@ -160,8 +156,8 @@ export function getSchemaWithDependencies({
                     : getOneOfValues(nodes)),
             },
         };
-        forEach(mod, (extraFields, key) => {
-            if (has(modifiedSchema, `properties.${key}`)) {
+        lodash.forEach(mod, (extraFields, key) => {
+            if (lodash.has(modifiedSchema, `properties.${key}`)) {
                 modifiedSchema.properties[key] = {
                     ...modifiedSchema.properties[key],
                     ...extraFields,
