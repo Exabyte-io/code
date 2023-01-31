@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { mapTree } from "../src/utils";
+import { findTree, mapTree } from "../src/utils";
 
 describe("Tree data structure", () => {
     const TREE = {
@@ -11,6 +11,7 @@ describe("Tree data structure", () => {
                 children: [
                     {
                         path: "/A/B/C",
+                        name: "test",
                     },
                 ],
             },
@@ -27,5 +28,11 @@ describe("Tree data structure", () => {
         expect(mappedTree.children[0]).to.have.property("foo", "bar");
         expect(mappedTree.children[0].children[0]).to.have.property("foo", "bar");
         expect(mappedTree.children[1]).to.have.property("foo", "bar");
+    });
+
+    it("find", () => {
+        const found = findTree(TREE, (node) => node.path === "/A/B/C");
+        expect(found).to.be.an("object");
+        expect(found).to.have.property("name", "test");
     });
 });

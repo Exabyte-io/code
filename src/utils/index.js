@@ -29,7 +29,7 @@ import {
     removeNewLinesAndExtraSpaces,
     toFixedLocale,
 } from "./str";
-import { mapTree } from "./tree";
+import { findTree, mapTree } from "./tree";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
 
@@ -70,5 +70,6 @@ export {
     removeUnit,
     replaceUnit,
     mapTree,
+    findTree,
     getSchemaWithDependencies,
 };
