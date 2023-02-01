@@ -21,6 +21,7 @@ export function mapTree(nodes, fn) {
  * @param nodes
  * @param fn - function to be applied to each node (must have node as argument)
  * @returns {null|Object}
+ * @todo add switch between DFS and BFS
  */
 export function findTree(nodes_, fn) {
     if (!nodes_) return null;
