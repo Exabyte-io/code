@@ -35,4 +35,10 @@ describe("Tree data structure", () => {
         expect(found).to.be.an("object");
         expect(found).to.have.property("name", "test");
     });
+
+    it("findTree returns undefined if node does not exist", () => {
+        const notFound = findTree(TREE, (node) => node.path === "A/X/Y/Z");
+        // eslint-disable-next-line no-unused-expressions
+        expect(notFound).to.be.undefined;
+    });
 });

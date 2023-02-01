@@ -18,14 +18,14 @@ export function mapTree(nodes, fn) {
 
 /**
  *
- * @param nodes
+ * @param nodes_
  * @param fn - function to be applied to each node (must have node as argument)
  * @returns {null|Object}
  * @todo add switch between DFS and BFS
  */
 export function findTree(nodes_, fn) {
-    if (!nodes_) return null;
     const nodes = Array.isArray(nodes_) ? nodes_ : [nodes_];
+    if (!nodes.filter(Boolean).length) return undefined;
     const result = nodes.find(fn);
     return result || findTree(nodes.flatMap((n) => n?.children).filter(Boolean), fn);
 }
