@@ -19,6 +19,7 @@ import {
     sortKeysDeepForObject,
     stringifyObject,
 } from "./object";
+import { getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
@@ -28,6 +29,7 @@ import {
     removeNewLinesAndExtraSpaces,
     toFixedLocale,
 } from "./str";
+import { mapTree } from "./tree";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
 
@@ -67,4 +69,6 @@ export {
     addUnit,
     removeUnit,
     replaceUnit,
+    mapTree,
+    getSchemaWithDependencies,
 };
