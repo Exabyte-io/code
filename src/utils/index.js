@@ -14,6 +14,7 @@ import {
     convertKeysToCamelCaseForObject,
     flattenObject,
     getOneMatchFromObject,
+    mergeTerminalNodes,
     renameKeysForObject,
     safeMakeObject,
     sortKeysDeepForObject,
@@ -71,4 +72,5 @@ export {
     replaceUnit,
     mapTree,
     getSchemaWithDependencies,
+    mergeTerminalNodes,
 };
