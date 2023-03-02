@@ -207,7 +207,7 @@ export function sortKeysDeepForObject(obj) {
  */
 export function mergeTerminalNodes(tree, unique = false) {
     const terminalValues = lodash.values(tree).reduce((accumulator, value) => {
-        if (lodash.isObject(value)) {
+        if (lodash.isPlainObject(value)) {
             return accumulator.concat(mergeTerminalNodes(value));
         }
         return accumulator.concat(value);
