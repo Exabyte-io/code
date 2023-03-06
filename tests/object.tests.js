@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { flattenObject } from "../src/utils/object";
+import { flattenObject, mergeTerminalNodes } from "../src/utils/object";
 
 describe("flattenObject", () => {
     it("serializes simple object", () => {
@@ -44,5 +44,42 @@ describe("flattenObject", () => {
         expect(() => {
             flattenObject(obj);
         }).to.throw();
+    });
+});
+
+describe("mergeTerminalNodes", () => {
+    it("merges terminal nodes containing an array of strings", () => {
+        const treeStrings = {
+            level1: {
+                level2a: {
+                    level3a: {
+                        key1: ["a", "b", "c"],
+                    },
+                    level3b: {
+                        key2: ["d", "e", "f"],
+                    },
+                },
+            },
+        };
+        const merged = mergeTerminalNodes(treeStrings);
+        expect(merged).to.have.members(["a", "b", "c", "d", "e", "f"]);
+    });
+
+    it("merges terminal nodes containing an array of objects", () => {
+        const treeObjects = {
+            level1: {
+                level2a: {
+                    level3a: {
+                        key1: [{ path: "a" }, { path: "b" }, { path: "c" }],
+                    },
+                    level3b: {
+                        key2: [{ path: "d" }, { path: "e" }, { path: "f" }],
+                    },
+                },
+            },
+        };
+        const merged = mergeTerminalNodes(treeObjects);
+        expect(merged).to.have.length(6);
+        expect(merged.map((o) => o.path)).to.have.members(["a", "b", "c", "d", "e", "f"]);
     });
 });
