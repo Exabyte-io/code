@@ -43,7 +43,7 @@ function getValues(ref) {
  * Supports YAML objects with the following keys:
  *   - `key`: name or path of parameter, e.g. `job.workflow`
  *   - `values`: list of values (use either `ref` or `values`)
- *   - `ref`: reference to values in another YAML file. Supports reading from ESSE
+ *   - `ref`: reference to values in another YAML file.
  * See the tests for example usage.
  */
 export const parameterType = new yaml.Type("!parameter", {
@@ -89,20 +89,4 @@ export const combineType = new yaml.Type("!combine", {
     },
 });
 
-/**
- * !enum YAML tag, which turns an array into a JSON Schema compatible enum object.
- * See the tests for example usage.
- */
-export const enumType = new yaml.Type("!enum", {
-    kind: "sequence",
-    construct(data) {
-        return {
-            enum: data || [],
-        };
-    },
-    represent(object) {
-        return object.enum;
-    },
-});
-
-export const allYAMLSchemas = yaml.DEFAULT_SCHEMA.extend([parameterType, combineType, enumType]);
+export const allYAMLSchemas = yaml.DEFAULT_SCHEMA.extend([parameterType, combineType]);
