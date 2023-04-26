@@ -33,6 +33,7 @@ import {
 import { mapTree } from "./tree";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
+import { allYAMLSchemas, combineType, enumType, parameterType } from "./yaml";
 
 export {
     compareEntitiesInOrderedSetForSorting,
@@ -73,4 +74,8 @@ export {
     mapTree,
     getSchemaWithDependencies,
     mergeTerminalNodes,
+    enumType,
+    combineType,
+    parameterType,
+    allYAMLSchemas,
 };
