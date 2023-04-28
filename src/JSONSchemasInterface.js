@@ -1,4 +1,5 @@
 import { schemas } from "@exabyte-io/esse.js/schemas";
+import Ajv from "ajv";
 import mergeAllOf from "json-schema-merge-allof";
 
 const schemasCache = new Map();
@@ -104,5 +105,16 @@ export class JSONSchemasInterface {
                 return new RegExp($regex).test(schema[field]);
             });
         });
+    }
+
+    /**
+     * Create validation function for schema with schemaId
+     * @param {string} schemaId - id of JSON schema from ESSE
+     * @param {Object} options - Options to pass through to Ajv object
+     * @return {ValidateFunction<unknown>}
+     */
+    static resolveJsonValidator(schemaId, options = {}) {
+        const ajv = new Ajv(options);
+        return ajv.compile(this.schemaById(schemaId));
     }
 }

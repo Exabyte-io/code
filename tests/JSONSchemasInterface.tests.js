@@ -88,4 +88,26 @@ describe("JSONSchemasInterface", () => {
         expect(schema.properties.valueMapFunction.enum[3]).to.be.an("string");
         expect(schema.properties.valueMapFunction.enum[4]).to.be.an("string");
     });
+
+    it("can create a validation function for a schema by schema id", () => {
+        JSONSchemasInterface.registerSchema({
+            schemaId: "test/person",
+            $schema: "http://json-schema.org/draft-04/schema#",
+            type: "object",
+            properties: {
+                name: { type: "string" },
+                age: { type: "integer", minimum: 18 },
+            },
+            required: ["name", "age"],
+        });
+        const personValid = { name: "John Doe", age: 30 };
+        const personInvalid = { name: "John Doe", age: 15 };
+        const validate = JSONSchemasInterface.resolveJsonValidator("test/person", {
+            allErrors: true,
+            verbose: true,
+        });
+
+        expect(validate(personValid)).to.be.true;
+        expect(validate(personInvalid)).to.be.false;
+    });
 });
