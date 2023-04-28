@@ -49,6 +49,7 @@
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
         "@exabyte-io/esse.js": "2022.10.21-1",
+        "ajv": "4.1.7",
         "crypto-js": "^4.1.1",
         "json-schema-merge-allof": "^0.8.1",
         "js-yaml": "^4.1.0",
