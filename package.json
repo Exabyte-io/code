@@ -22,11 +22,13 @@
         "./utils": "./dist/utils/index.js",
         "./constants": "./dist/constants.js",
         "./math": "./dist/math.js",
+        "./JSONSchemasInterface": "./dist/JSONSchemasInterface.js",
         "./dist/context": "./dist/context/index.js",
         "./dist/entity": "./dist/entity/index.js",
         "./dist/utils": "./dist/utils/index.js",
         "./dist/constants": "./dist/constants.js",
-        "./dist/math": "./dist/math.js"
+        "./dist/math": "./dist/math.js",
+        "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js"
     },
     "files": [
         "/dist",
