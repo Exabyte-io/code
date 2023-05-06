@@ -22,19 +22,31 @@ function combineKeys(a, b) {
 }
 
 /**
+ * Utility function splitting a reference such as `"/path/to/source.yml#/name.lastName"`
+ * into the file path (`/path/to/source.yml`) and object path (`name.lastName`).
+ * @param {string} ref - Reference to file with optional object path suffix
+ * @return {{ objPath: string, filePath: string }}
+ */
+function splitReference(ref) {
+    return {
+        filePath: ref.replace(/#.*$/, ""),
+        objPath: ref.replace(/^(.*?)(?:#\/|$)/, ""),
+    };
+}
+
+/**
  * Resolve path to YAML and return values as an array.
  * A specific key in the referenced YAML file can be specified via `#/keyName`,
  * e.g. `"/path/to/source.yml#/name"`.
  * @param {string} ref - path to YAML file (may specify key via `#/`)
  */
-function getValues(ref) {
-    const refPath = ref.replace(/#.*$/, "");
-    const fileContent = fs.readFileSync(refPath, "utf8");
+function getYamlValues(ref) {
+    const { filePath, objPath } = splitReference(ref);
+    const fileContent = fs.readFileSync(filePath, "utf8");
     // eslint-disable-next-line no-use-before-define
     const parsedContent = yaml.load(fileContent, { schema: allYAMLSchemas });
 
-    const keyName = ref.replace(/.*#\/?/, "");
-    const values = lodash.get(parsedContent, keyName);
+    const values = objPath ? lodash.get(parsedContent, objPath) : parsedContent;
     return Array.isArray(values) ? values : [values];
 }
 
@@ -54,7 +66,7 @@ export const parameterType = new yaml.Type("!parameter", {
         const { key, values = [], ref, exclude } = data;
 
         try {
-            let values_ = ref && !values.length ? getValues(ref) : values;
+            let values_ = ref && !values.length ? getYamlValues(ref) : values;
             if (exclude) {
                 const regex = new RegExp(exclude);
                 values_ = values_.filter((v) => !regex.test(v));
@@ -102,7 +114,12 @@ export const esseType = new yaml.Type("!esse", {
     },
     construct(data) {
         try {
-            return JSONSchemasInterface.schemaById(data);
+            const { filePath: schemaId, objPath } = splitReference(data);
+            const schema = JSONSchemasInterface.schemaById(schemaId);
+            if (objPath) {
+                return lodash.get(schema, objPath);
+            }
+            return schema;
         } catch (e) {
             return data;
         }
