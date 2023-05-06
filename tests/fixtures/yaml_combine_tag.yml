@@ -1,0 +1,28 @@
+# parse a custom !combine tag with forEach and config keys
+case1: !combine
+  name: mytest
+  forEach:
+    - key: a
+      values: [ 1, 2 ]
+    - key: b
+      values: [ 3, 4 ]
+  config:
+    c: 5
+# ----------------------
+# parse a custom !combine tag with only a name key
+case2: !combine
+  name: mytest
+# ----------------------
+# parse a custom !combine tag with forEach key and no values
+case3: !combine
+  name: mytest
+  forEach:
+    - key: a
+    - key: b
+# ----------------------
+# parse a custom !combine tag with an empty forEach key and a config key
+case4: !combine
+  name: mytest
+  forEach: []
+  config:
+    c: 5

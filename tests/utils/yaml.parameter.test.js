@@ -3,52 +3,35 @@ import fs from "fs";
 import yaml from "js-yaml";
 
 import { parameterType } from "../../src/utils/yaml";
+import { YAML_PARAMETER_FILE } from "../enums";
 
 const parameterSchema = yaml.DEFAULT_SCHEMA.extend([parameterType]);
 
-describe("YAML tag !parameter", () => {
-    const yamlTestFile = "test.yaml";
-
-    before(() => {
-        fs.writeFileSync(yamlTestFile, "job:\n  workflow: [run, stop, pause]\n");
-    });
-
-    after(() => {
-        fs.unlinkSync(yamlTestFile);
-    });
+describe("YAML tag: !parameter", () => {
+    const yamlFixture = fs.readFileSync(YAML_PARAMETER_FILE, "utf8");
 
     it("should correctly parse a custom !parameter tag with a key and values", () => {
-        const inputYaml = "test: !parameter\n  key: some.key\n  values: [a, b, c]";
-        const parsed = yaml.load(inputYaml, { schema: parameterSchema });
-
-        assert.deepEqual(parsed.test, { key: "some.key", values: ["a", "b", "c"] });
+        const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
+        assert.deepEqual(parsed.case1, { key: "some.key", values: ["a", "b", "c"] });
     });
 
     it("should correctly parse a custom !parameter tag with a ref", () => {
-        const inputYaml = `test: !parameter\n  key: job.workflow\n  ref: ./${yamlTestFile}#/job.workflow`;
-        const parsed = yaml.load(inputYaml, { schema: parameterSchema });
-
-        assert.deepEqual(parsed.test, { key: "job.workflow", values: ["run", "stop", "pause"] });
+        const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
+        assert.deepEqual(parsed.case2, { key: "job.workflow", values: ["run", "stop", "pause"] });
     });
 
     it("should correctly parse a custom !parameter tag with a ref and exclude", () => {
-        const inputYaml = `test: !parameter\n  key: workflow\n  ref: ./${yamlTestFile}#/job.workflow\n  exclude: run`;
-        const parsed = yaml.load(inputYaml, { schema: parameterSchema });
-
-        assert.deepEqual(parsed.test, { key: "workflow", values: ["stop", "pause"] });
+        const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
+        assert.deepEqual(parsed.case3, { key: "workflow", values: ["stop", "pause"] });
     });
 
     it("should correctly parse a custom !parameter tag with a ref and exclude using a regular expression", () => {
-        const inputYaml = `test: !parameter\n  key: job.workflow\n  ref: ./${yamlTestFile}#/job.workflow\n  exclude: (run|pause)`;
-        const parsed = yaml.load(inputYaml, { schema: parameterSchema });
-
-        assert.deepEqual(parsed.test, { key: "job.workflow", values: ["stop"] });
+        const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
+        assert.deepEqual(parsed.case4, { key: "job.workflow", values: ["stop"] });
     });
 
     it("should return the original data when an error occurs", () => {
-        const inputYaml = "test: !parameter\n  key: error.key\n  ref: non_existent_file.yaml";
-        const parsed = yaml.load(inputYaml, { schema: parameterSchema });
-
-        assert.deepEqual(parsed.test, { key: "error.key", ref: "non_existent_file.yaml" });
+        const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
+        assert.deepEqual(parsed.case5, { key: "error.key", ref: "non_existent_file.yaml" });
     });
 });
