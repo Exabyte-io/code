@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { flattenObject, mergeTerminalNodes } from "../src/utils/object";
+import { flattenObject, mergeTerminalNodes } from "../../src/utils/object";
 
 describe("flattenObject", () => {
     it("serializes simple object", () => {

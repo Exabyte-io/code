@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from "chai";
 
-import { deepClone } from "../src/utils/clone";
-import { containsEncodedComponents } from "../src/utils/url";
+import { deepClone } from "../../src/utils/clone";
+import { containsEncodedComponents } from "../../src/utils/url";
 
 describe("deepClone", () => {
     const obj = {
