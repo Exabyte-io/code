@@ -2,6 +2,8 @@ import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
 
+import { JSONSchemasInterface } from "../JSONSchemasInterface";
+
 /**
  * Creates combinations of objects given two arrays of objects.
  * @param {Object[]} a - First list of objects
@@ -89,4 +91,22 @@ export const combineType = new yaml.Type("!combine", {
     },
 });
 
-export const allYAMLSchemas = yaml.DEFAULT_SCHEMA.extend([parameterType, combineType]);
+/**
+ * !ESSE YAML tag which resolves an ESSE schema by id;
+ * See the tests for example usage.
+ */
+export const esseType = new yaml.Type("!esse", {
+    kind: "scalar",
+    resolve(data) {
+        return data && lodash.isString(data);
+    },
+    construct(data) {
+        try {
+            return JSONSchemasInterface.schemaById(data);
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
+export const allYAMLSchemas = yaml.DEFAULT_SCHEMA.extend([parameterType, combineType, esseType]);
