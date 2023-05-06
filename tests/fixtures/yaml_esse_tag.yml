@@ -1,0 +1,5 @@
+# parse a custom !esse tag and return ESSE schema
+case1: !esse core/primitive/scalar
+# ----------------------
+# return the original data when an error occurs
+case2: !esse non-existent-schema-id
