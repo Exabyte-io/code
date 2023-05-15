@@ -1,3 +1,5 @@
+import lodash from "lodash";
+import nunjucks from "nunjucks";
 import _ from "underscore";
 
 export function removeNewLinesAndExtraSpaces(str) {
@@ -87,4 +89,39 @@ export function convertArabicToRoman(num) {
     }
 
     return str;
+}
+
+/**
+ * Render name template based on config.
+ * Use substitution map to replace a config value with a more readable variant.
+ * @param {string} template - Template for the name property
+ * @param {Object} data - Entity config
+ * @param {Object} substitutionMap - Maps object value to human-readable string
+ * @return {string}
+ * @example
+ * generateName(
+ *     "Hello {{user}}!",
+ *     {user: "user001"},
+ *     {user001: "John Doe"}
+ * ); // "Hello John Doe!"
+ */
+export function generateName(template, data, substitutionMap = {}) {
+    // Create a copy of data to avoid modifying the original
+    const renderData = lodash.cloneDeep(data);
+
+    // Helper function for recursive substitution
+    function substituteNested(obj) {
+        lodash.forIn(obj, (value, key) => {
+            if (lodash.isPlainObject(value)) {
+                // If value is an object, recurse
+                substituteNested(value);
+            } else if (substitutionMap[value]) {
+                // If value is in substitution map, replace it
+                obj[key] = substitutionMap[value];
+            }
+        });
+    }
+
+    substituteNested(renderData);
+    return nunjucks.renderString(template, renderData);
 }

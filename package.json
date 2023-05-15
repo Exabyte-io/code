@@ -53,11 +53,12 @@
         "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#df6235c48a44747cbcf9a96b5176ad204e26be8b",
         "ajv": "4.1.7",
         "crypto-js": "^4.1.1",
-        "json-schema-merge-allof": "^0.8.1",
         "js-yaml": "^4.1.0",
+        "json-schema-merge-allof": "^0.8.1",
         "lodash": "^4.17.21",
         "mathjs": "^3.9.0",
         "mixwith": "^0.1.1",
+        "nunjucks": "^3.2.4",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4",
         "uuid": "8.3.2"

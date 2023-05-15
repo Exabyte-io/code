@@ -24,6 +24,7 @@ import { getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
+    generateName,
     randomAlphanumeric,
     removeCommentsFromSourceCode,
     removeEmptyLinesFromString,
@@ -78,4 +79,5 @@ export {
     parameterType,
     allYAMLSchemas,
     esseType,
+    generateName,
 };
