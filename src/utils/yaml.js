@@ -22,7 +22,7 @@ function combineKeys(a, b) {
 }
 
 /**
- * Utility function splitting a reference such as `"/path/to/source.yml#/name.lastName"`
+ * Utility function splitting a reference such as `"/path/to/source.yml#/name/lastName"`
  * into the file path (`/path/to/source.yml`) and object path (`name.lastName`).
  * @param {string} ref - Reference to file with optional object path suffix
  * @return {{ objPath: string, filePath: string }}
@@ -30,7 +30,7 @@ function combineKeys(a, b) {
 function splitReference(ref) {
     return {
         filePath: ref.replace(/#.*$/, ""),
-        objPath: ref.replace(/^(.*?)(?:#\/|$)/, ""),
+        objPath: ref.replace(/^(.*?)(?:#\/|$)/, "").replace("/", "."),
     };
 }
 

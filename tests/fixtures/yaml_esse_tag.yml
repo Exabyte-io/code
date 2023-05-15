@@ -5,4 +5,4 @@ case1: !esse core/primitive/scalar
 case2: !esse non-existent-schema-id
 # ----------------------
 # parse a custom !esse tag and return a value from the ESSE schema
-case3: !esse definitions/units#/pressure.enum
+case3: !esse definitions/units#/pressure/enum
