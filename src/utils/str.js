@@ -106,6 +106,7 @@ export function convertArabicToRoman(num) {
  * ); // "Hello John Doe!"
  */
 export function generateName(template, data, substitutionMap = {}) {
+    if (!template) return "";
     // Create a copy of data to avoid modifying the original
     const renderData = lodash.cloneDeep(data);
 

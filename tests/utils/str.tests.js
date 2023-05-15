@@ -32,4 +32,24 @@ describe("generateName", () => {
 
         expect(result).to.be.equal("Hello user001!");
     });
+
+    it("should return the original string if the template does not contain any variable", () => {
+        const template = "Hello world!";
+        const data = { user: "user001" };
+        const substitutionMap = {};
+
+        const result = generateName(template, data, substitutionMap);
+
+        expect(result).to.be.equal("Hello world!");
+    });
+
+    it("should return the an empty string if the template is undefined", () => {
+        const template = undefined;
+        const data = { user: "user001" };
+        const substitutionMap = {};
+
+        const result = generateName(template, data, substitutionMap);
+
+        expect(result).to.be.equal("");
+    });
 });
