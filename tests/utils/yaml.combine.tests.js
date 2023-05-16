@@ -43,7 +43,7 @@ describe("YAML tag: !combine", () => {
         assert.deepEqual(parsed.case4, expectedResult);
     });
 
-    it("should correctly parse a custom !combine tag with an empty forEach key and a config key", () => {
+    it("should correctly parse a custom !combine tag and generate name based on template", () => {
         const parsed = yaml.load(yamlFixture, { schema: combineSchema });
         const expectedResult = [
             { name: "A1 with B2 and C5", a: 1, b: "two", c: 5 },
@@ -51,5 +51,28 @@ describe("YAML tag: !combine", () => {
         ];
 
         assert.deepEqual(parsed.case5, expectedResult);
+    });
+
+    it("should correctly parse a custom !combine tag with additional property", () => {
+        const parsed = yaml.load(yamlFixture, { schema: combineSchema });
+        const expectedResult = [
+            { name: "mytest", a: 1, b: 3 },
+            { name: "mytest", a: 1, b: 4 },
+            { name: "additional property", x: 7 },
+        ];
+
+        assert.deepEqual(parsed.case6, expectedResult);
+    });
+
+    it("should correctly parse a custom !combine tag with additional property from !combine tag", () => {
+        const parsed = yaml.load(yamlFixture, { schema: combineSchema });
+        const expectedResult = [
+            { name: "mytest", a: 1, b: 3 },
+            { name: "mytest", a: 1, b: 4 },
+            { name: "additional property", x: 7, y: 9 },
+            { name: "additional property", x: 8, y: 9 },
+        ];
+
+        assert.deepEqual(parsed.case7, expectedResult);
     });
 });

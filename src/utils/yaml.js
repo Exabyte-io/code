@@ -92,7 +92,7 @@ export const parameterType = new yaml.Type("!parameter", {
 export const combineType = new yaml.Type("!combine", {
     kind: "mapping",
     construct(data) {
-        const { name, forEach = [], config = {} } = data;
+        const { name, forEach = [], config = {}, extraConfigs = [] } = data;
         let result = [{}];
         // eslint-disable-next-line no-restricted-syntax
         for (const item of forEach) {
@@ -106,7 +106,7 @@ export const combineType = new yaml.Type("!combine", {
         result.forEach(
             (r) => (r.name = generateName(name?.template || name, r, name?.substitutions)),
         );
-        return result;
+        return extraConfigs.length ? result.concat(extraConfigs) : result;
     },
 });
 

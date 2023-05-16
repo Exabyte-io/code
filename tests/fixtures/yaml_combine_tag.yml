@@ -26,7 +26,7 @@ case4: !combine
   forEach: []
   config:
     c: 5
-# parse a custom !combine tag with forEach and config keys
+# parse a custom !combine tag and generate name based on template
 case5: !combine
   name:
     template: A{{ a }} with B{{ b }} and C5
@@ -40,3 +40,29 @@ case5: !combine
       values: [ "two", "four" ]
   config:
     c: 5
+# parse a custom !combine tag with additional property
+case6: !combine
+  name: mytest
+  forEach:
+    - key: b
+      values: [ 3, 4 ]
+  config:
+    a: 1
+  extraConfigs:
+    - name: additional property
+      x: 7
+# parse a custom !combine tag with additional property from !combine tag
+case7: !combine
+  name: mytest
+  forEach:
+    - key: b
+      values: [ 3, 4 ]
+  config:
+    a: 1
+  extraConfigs: !combine
+    name: additional property
+    forEach:
+      - key: x
+        values: [ 7, 8 ]
+    config:
+      y: 9
