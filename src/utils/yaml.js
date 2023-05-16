@@ -99,21 +99,23 @@ export const combineType = new yaml.Type("!combine", {
     kind: "mapping",
     construct(data) {
         const { name, forEach = [], config = {}, extraConfigs = [] } = data;
-        let result = [{}];
+        let combinations = [{}];
         // eslint-disable-next-line no-restricted-syntax
         for (const item of forEach) {
             const { key, values = [] } = item;
             if (values.length) {
                 const newCombinations = values.map((v) => lodash.set({}, key, v));
-                result = combineKeys(result, newCombinations);
+                combinations = combineKeys(combinations, newCombinations);
             }
         }
         // merge static config and remove any properties which are null
-        result = result.map((r) => lodash.chain(r).merge(config).omitBy(lodash.isNull).value());
-        result.forEach(
-            (r) => (r.name = generateName(name?.template || name, r, name?.substitutions)),
+        const configs = combinations.map((c) =>
+            lodash.chain(c).merge(config).omitBy(lodash.isNull).value(),
         );
-        return extraConfigs.length ? result.concat(extraConfigs) : result;
+        configs.forEach(
+            (c) => (c.name = generateName(name?.template || name, c, name?.substitutions)),
+        );
+        return extraConfigs.length ? configs.concat(extraConfigs) : configs;
     },
 });
 
