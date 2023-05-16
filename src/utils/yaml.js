@@ -117,7 +117,7 @@ export const combineType = new yaml.Type("!combine", {
         configs.forEach(
             (c) => (c.name = generateName(name?.template || name, c, name?.substitutions)),
         );
-        return extraConfigs.length ? configs.concat(extraConfigs) : configs;
+        return extraConfigs.length ? configs.concat(extraConfigs.flat()) : configs;
     },
 });
 
