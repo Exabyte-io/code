@@ -1,68 +1,80 @@
 # parse a custom !combine tag with forEach and config keys
 case1: !combine
-  name: mytest
-  forEach:
-    - key: a
-      values: [ 1, 2 ]
-    - key: b
-      values: [ 3, 4 ]
-  config:
-    c: 5
+    name: mytest
+    forEach:
+        -   key: a
+            values: [1, 2]
+        -   key: b
+            values: [3, 4]
+    config:
+        c: 5
 # ----------------------
 # parse a custom !combine tag with only a name key
 case2: !combine
-  name: mytest
+    name: mytest
 # ----------------------
 # parse a custom !combine tag with forEach key and no values
 case3: !combine
-  name: mytest
-  forEach:
-    - key: a
-    - key: b
+    name: mytest
+    forEach:
+        -   key: a
+        -   key: b
 # ----------------------
 # parse a custom !combine tag with an empty forEach key and a config key
 case4: !combine
-  name: mytest
-  forEach: []
-  config:
-    c: 5
+    name: mytest
+    forEach: []
+    config:
+        c: 5
 # parse a custom !combine tag and generate name based on template
 case5: !combine
-  name:
-    template: A{{ a }} with B{{ b }} and C5
-    substitutions:
-      two: 2
-      four: 4
-  forEach:
-    - key: a
-      values: [ 1 ]
-    - key: b
-      values: [ "two", "four" ]
-  config:
-    c: 5
+    name:
+        template: A{{ a }} with B{{ b }} and C5
+        substitutions:
+            two: 2
+            four: 4
+    forEach:
+        -   key: a
+            values: [1]
+        -   key: b
+            values: ["two", "four"]
+    config:
+        c: 5
 # parse a custom !combine tag with additional property
 case6: !combine
-  name: mytest
-  forEach:
-    - key: b
-      values: [ 3, 4 ]
-  config:
-    a: 1
-  extraConfigs:
-    - name: additional property
-      x: 7
+    name: mytest
+    forEach:
+        -   key: b
+            values: [3, 4]
+    config:
+        a: 1
+    extraConfigs:
+        -   name: additional property
+            x: 7
 # parse a custom !combine tag with additional property from !combine tag
 case7: !combine
-  name: mytest
-  forEach:
-    - key: b
-      values: [ 3, 4 ]
-  config:
-    a: 1
-  extraConfigs: !combine
-    name: additional property
+    name: mytest
     forEach:
-      - key: x
-        values: [ 7, 8 ]
+        -   key: b
+            values: [3, 4]
     config:
-      y: 9
+        a: 1
+    extraConfigs: !combine
+        name: additional property
+        forEach:
+            -   key: x
+                values: [7, 8]
+        config:
+            y: 9
+# create an additional config when includeNull parameter is provided
+case8: !combine
+    name:
+        template: "A{{ a }}{{ ' with B' + b if b }}"
+        substitutions:
+            two: 2
+            four: 4
+    forEach:
+        -   key: b
+            values: ["two", "four", null]
+    config:
+        a: 1

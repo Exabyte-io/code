@@ -75,4 +75,15 @@ describe("YAML tag: !combine", () => {
 
         assert.deepEqual(parsed.case7, expectedResult);
     });
+
+    it("should create an additional config when falsy parameter is provided", () => {
+        const parsed = yaml.load(yamlFixture, { schema: combineSchema });
+        const expectedResult = [
+            { name: "A1 with B2", a: 1, b: "two" },
+            { name: "A1 with B4", a: 1, b: "four" },
+            { name: "A1", a: 1 },
+        ];
+
+        assert.deepEqual(parsed.case8, expectedResult);
+    });
 });

@@ -89,6 +89,7 @@ export const parameterType = new yaml.Type("!parameter", {
  *   - name.substitutions: in-place substitutions for template variables (optional)
  *   - forEach: list of parameter objects (defining key and value, see above) which is used to create combinations
  *   - config: static config to be added to every object
+ *   - extraConfigs: sequence of additional configs
  * See the tests for example usage.
  */
 export const combineType = new yaml.Type("!combine", {
@@ -104,7 +105,8 @@ export const combineType = new yaml.Type("!combine", {
                 result = combineKeys(result, newCombinations);
             }
         }
-        result = result.map((r) => lodash.merge(r, config));
+        // merge static config and remove any properties which are null
+        result = result.map((r) => lodash.chain(r).merge(config).omitBy(lodash.isNull).value());
         result.forEach(
             (r) => (r.name = generateName(name?.template || name, r, name?.substitutions)),
         );
