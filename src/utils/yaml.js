@@ -6,9 +6,12 @@ import { JSONSchemasInterface } from "../JSONSchemasInterface";
 import { generateName } from "./str";
 
 /**
- * Creates combinations of objects given two arrays of objects.
+ * Creates combinations by merging objects given two arrays of objects.
  * @param {Object[]} a - First list of objects
  * @param {Object[]} b - Second list of objects
+ * @example
+ * combineKeys([{ a: 1 }], [{ b: 2 }, { b: 3 }]);
+ * // [{ a: 1, b: 2 }, { a: 1, b: 3 }]
  */
 function combineKeys(a, b) {
     const combined = [];
@@ -24,7 +27,7 @@ function combineKeys(a, b) {
 
 /**
  * Utility function splitting a reference such as `"/path/to/source.yml#/name/lastName"`
- * into the file path (`/path/to/source.yml`) and object path (`name.lastName`).
+ * into the file path (`/path/to/source.yml`) and object path (`name.lastName`) compatible with lodash.get().
  * @param {string} ref - Reference to file with optional object path suffix
  * @return {{ objPath: string, filePath: string }}
  */
