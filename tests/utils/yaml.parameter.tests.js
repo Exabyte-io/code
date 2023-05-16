@@ -34,4 +34,9 @@ describe("YAML tag: !parameter", () => {
         const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
         assert.deepEqual(parsed.case5, { key: "error.key", ref: "non_existent_file.yaml" });
     });
+
+    it("should add null to values array when includeNull is true", () => {
+        const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
+        assert.deepEqual(parsed.case6, { key: "some.key", values: ["a", "b", "c", null] });
+    });
 });

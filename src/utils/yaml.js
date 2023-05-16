@@ -59,15 +59,17 @@ function getYamlValues(ref) {
  *   - `key`: name or path of parameter, e.g. `job.workflow`
  *   - `values`: list of values (use either `ref` or `values`)
  *   - `ref`: reference to values in another YAML file.
+ *   - `includeNull`: whether to add `null` to values array
  * See the tests for example usage.
  */
 export const parameterType = new yaml.Type("!parameter", {
     kind: "mapping",
     construct(data) {
-        const { key, values = [], ref, exclude } = data;
+        const { key, values = [], ref, exclude, includeNull = false } = data;
 
         try {
             let values_ = ref && !values.length ? getYamlValues(ref) : values;
+            if (includeNull) values_.push(null);
             if (exclude) {
                 const regex = new RegExp(exclude);
                 values_ = values_.filter((v) => !regex.test(v));
