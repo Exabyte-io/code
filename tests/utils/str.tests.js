@@ -52,4 +52,14 @@ describe("generateName", () => {
 
         expect(result).to.be.equal("");
     });
+
+    it("should replace the template variable with an empty string if the value is falsy", () => {
+        const template = "Hello {{ user }}!";
+        const data = { user: null };
+        const substitutionMap = {};
+
+        const result = generateName(template, data, substitutionMap);
+
+        expect(result).to.be.equal("Hello !");
+    });
 });
