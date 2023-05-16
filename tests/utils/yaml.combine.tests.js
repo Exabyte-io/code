@@ -42,4 +42,14 @@ describe("YAML tag: !combine", () => {
 
         assert.deepEqual(parsed.case4, expectedResult);
     });
+
+    it("should correctly parse a custom !combine tag with an empty forEach key and a config key", () => {
+        const parsed = yaml.load(yamlFixture, { schema: combineSchema });
+        const expectedResult = [
+            { name: "A1 with B2 and C5", a: 1, b: "two", c: 5 },
+            { name: "A1 with B4 and C5", a: 1, b: "four", c: 5 },
+        ];
+
+        assert.deepEqual(parsed.case5, expectedResult);
+    });
 });

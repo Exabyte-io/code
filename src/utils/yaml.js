@@ -3,6 +3,7 @@ import yaml from "js-yaml";
 import lodash from "lodash";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
+import { generateName } from "./str";
 
 /**
  * Creates combinations of objects given two arrays of objects.
@@ -82,6 +83,8 @@ export const parameterType = new yaml.Type("!parameter", {
  * !combine YAML tag which creates combinations of objects (configs).
  * The YAML object expects the following keys:
  *   - name: `name` property of object
+ *   - name.template: nunjucks template for name (optional)
+ *   - name.substitutions: in-place substitutions for template variables (optional)
  *   - forEach: list of parameter objects (defining key and value, see above) which is used to create combinations
  *   - config: static config to be added to every object
  * See the tests for example usage.
@@ -99,7 +102,11 @@ export const combineType = new yaml.Type("!combine", {
                 result = combineKeys(result, newCombinations);
             }
         }
-        return result.map((r) => lodash.merge(r, { name }, config));
+        result = result.map((r) => lodash.merge(r, config));
+        result.forEach(
+            (r) => (r.name = generateName(name?.template || name, r, name?.substitutions)),
+        );
+        return result;
     },
 });
 

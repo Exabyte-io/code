@@ -26,3 +26,17 @@ case4: !combine
   forEach: []
   config:
     c: 5
+# parse a custom !combine tag with forEach and config keys
+case5: !combine
+  name:
+    template: A{{ a }} with B{{ b }} and C5
+    substitutions:
+      two: 2
+      four: 4
+  forEach:
+    - key: a
+      values: [ 1 ]
+    - key: b
+      values: [ "two", "four" ]
+  config:
+    c: 5
