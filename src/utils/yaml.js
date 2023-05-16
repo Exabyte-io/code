@@ -1,8 +1,10 @@
 import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
+import path from "path";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
+import { safeMakeArray } from "./array";
 import { generateName } from "./str";
 
 /**
@@ -39,19 +41,18 @@ function splitReference(ref) {
 }
 
 /**
- * Resolve path to YAML and return values as an array.
+ * Resolve path to YAML and return containing value if available.
  * A specific key in the referenced YAML file can be specified via `#/keyName`,
  * e.g. `"/path/to/source.yml#/name"`.
  * @param {string} ref - path to YAML file (may specify key via `#/`)
  */
-function getYamlValues(ref) {
+function readFromYaml(ref) {
     const { filePath, objPath } = splitReference(ref);
-    const fileContent = fs.readFileSync(filePath, "utf8");
+    const fileContent = fs.readFileSync(path.resolve(filePath), "utf8");
     // eslint-disable-next-line no-use-before-define
     const parsedContent = yaml.load(fileContent, { schema: allYAMLSchemas });
 
-    const values = objPath ? lodash.get(parsedContent, objPath) : parsedContent;
-    return Array.isArray(values) ? values : [values];
+    return objPath ? lodash.get(parsedContent, objPath) : parsedContent;
 }
 
 /**
@@ -71,7 +72,8 @@ export const parameterType = new yaml.Type("!parameter", {
         const { key, values = [], ref, exclude, includeNull = false } = data;
 
         try {
-            let values_ = ref && !values.length ? getYamlValues(ref) : values;
+            let values_ = ref && !values.length ? readFromYaml(ref) : values;
+            values_ = safeMakeArray(values_);
             if (includeNull) values_.push(null);
             if (exclude) {
                 const regex = new RegExp(exclude);
