@@ -122,7 +122,7 @@ export const combineType = new yaml.Type("!combine", {
 });
 
 /**
- * !ESSE YAML tag which resolves an ESSE schema by id;
+ * !esse YAML tag which resolves an ESSE schema by id.
  * See the tests for example usage.
  */
 export const esseType = new yaml.Type("!esse", {
@@ -144,4 +144,24 @@ export const esseType = new yaml.Type("!esse", {
     },
 });
 
-export const allYAMLSchemas = yaml.DEFAULT_SCHEMA.extend([parameterType, combineType, esseType]);
+/**
+ * !include YAML tag which includes another Yaml file in-place.
+ * See the tests for example usage.
+ */
+export const includeType = new yaml.Type("!include", {
+    kind: "scalar",
+    construct(data) {
+        try {
+            return readFromYaml(data);
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
+export const allYAMLSchemas = yaml.DEFAULT_SCHEMA.extend([
+    parameterType,
+    combineType,
+    esseType,
+    includeType,
+]);
