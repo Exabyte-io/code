@@ -39,4 +39,9 @@ describe("YAML tag: !parameter", () => {
         const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
         expect(parsed.case6).to.be.eql({ key: "some.key", values: ["a", "b", "c", null] });
     });
+
+    it("should exclude values using regex and add null for optional parameters", () => {
+        const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
+        expect(parsed.case7).to.be.eql({ key: "some.key", values: ["a", "c", null] });
+    });
 });

@@ -29,3 +29,9 @@ case6: !parameter
     key: some.key
     values: [a, b, c]
     isOptional: true
+# exclude values using regex and add null to values array
+case7: !parameter
+    key: some.key
+    values: [a, b, c]
+    exclude: b
+    isOptional: true
