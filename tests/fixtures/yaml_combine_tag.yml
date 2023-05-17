@@ -8,25 +8,26 @@ case1: !combine
             values: [3, 4]
     config:
         c: 5
-# ----------------------
+
 # parse a custom !combine tag with only a name key
 case2: !combine
     name: mytest
-# ----------------------
+
 # parse a custom !combine tag with forEach key and no values
 case3: !combine
     name: mytest
     forEach:
         -   key: a
         -   key: b
-# ----------------------
+
 # parse a custom !combine tag with an empty forEach key and a config key
 case4: !combine
     name: mytest
     forEach: []
     config:
         c: 5
-# parse a custom !combine tag and generate name based on template
+
+# generate name based on template
 case5: !combine
     name:
         template: A{{ a }} with B{{ b }} and C5
@@ -40,6 +41,7 @@ case5: !combine
             values: ["two", "four"]
     config:
         c: 5
+
 # parse a custom !combine tag with additional property
 case6: !combine
     name: mytest
@@ -51,6 +53,7 @@ case6: !combine
     extraConfigs:
         -   name: additional property
             x: 7
+
 # parse a custom !combine tag with additional property from !combine tag
 case7: !combine
     name: mytest
@@ -66,6 +69,7 @@ case7: !combine
                 values: [7, 8]
         config:
             y: 9
+
 # create an additional config when includeNull parameter is provided
 case8: !combine
     name:
@@ -78,8 +82,19 @@ case8: !combine
             values: ["two", "four", null]
     config:
         a: 1
-# ignore certain parameter-specified combinations
+
+# create all combinations of n optional parameters
 case9: !combine
+    name: optional params
+    forEach:
+        - key: b
+          values: [2, 3, null]
+        - key: c
+          values: [4, null]
+    config:
+        a: 1
+# exclude certain parameter-specified combinations
+case10: !combine
     name: ignore test
     forEach:
         -   key: a.b
@@ -88,4 +103,5 @@ case9: !combine
             values: [3]
         -   key: d
             values: [4]
-            ignoreWith: ["a.b"]
+    exclusions:
+        - ["a.b" , "d"]

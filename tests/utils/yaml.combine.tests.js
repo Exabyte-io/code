@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";
 
@@ -18,39 +18,38 @@ describe("YAML tag: !combine", () => {
             { name: "mytest", a: 2, b: 4, c: 5 },
         ];
 
-        assert.deepEqual(parsed.case1, expectedResult);
+        expect(parsed.case1).to.have.deep.members(expectedResult);
     });
 
     it("should correctly parse a custom !combine tag with only a name key", () => {
         const parsed = yaml.load(yamlFixture, { schema: combineSchema });
         const expectedResult = [{ name: "mytest" }];
 
-        assert.deepEqual(parsed.case2, expectedResult);
+        expect(parsed.case2).to.have.deep.members(expectedResult);
     });
 
     it("should correctly parse a custom !combine tag with forEach key and no values", () => {
         const parsed = yaml.load(yamlFixture, { schema: combineSchema });
-        // const expectedResult = [{ name: "mytest", a: undefined, b: undefined }];
         const expectedResult = [{ name: "mytest" }];
 
-        assert.deepEqual(parsed.case3, expectedResult);
+        expect(parsed.case3).to.have.deep.members(expectedResult);
     });
 
     it("should correctly parse a custom !combine tag with an empty forEach key and a config key", () => {
         const parsed = yaml.load(yamlFixture, { schema: combineSchema });
         const expectedResult = [{ name: "mytest", c: 5 }];
 
-        assert.deepEqual(parsed.case4, expectedResult);
+        expect(parsed.case4).to.have.deep.members(expectedResult);
     });
 
-    it("should correctly parse a custom !combine tag and generate name based on template", () => {
+    it("should correctly generate name based on template", () => {
         const parsed = yaml.load(yamlFixture, { schema: combineSchema });
         const expectedResult = [
             { name: "A1 with B2 and C5", a: 1, b: "two", c: 5 },
             { name: "A1 with B4 and C5", a: 1, b: "four", c: 5 },
         ];
 
-        assert.deepEqual(parsed.case5, expectedResult);
+        expect(parsed.case5).to.have.deep.members(expectedResult);
     });
 
     it("should correctly parse a custom !combine tag with additional property", () => {
@@ -61,7 +60,7 @@ describe("YAML tag: !combine", () => {
             { name: "additional property", x: 7 },
         ];
 
-        assert.deepEqual(parsed.case6, expectedResult);
+        expect(parsed.case6).to.have.deep.members(expectedResult);
     });
 
     it("should correctly parse a custom !combine tag with additional property from !combine tag", () => {
@@ -73,7 +72,7 @@ describe("YAML tag: !combine", () => {
             { name: "additional property", x: 8, y: 9 },
         ];
 
-        assert.deepEqual(parsed.case7, expectedResult);
+        expect(parsed.case7).to.have.deep.members(expectedResult);
     });
 
     it("should create an additional config when falsy parameter is provided", () => {
@@ -84,17 +83,27 @@ describe("YAML tag: !combine", () => {
             { name: "A1", a: 1 },
         ];
 
-        assert.deepEqual(parsed.case8, expectedResult);
+        expect(parsed.case8).to.have.deep.members(expectedResult);
     });
 
-    it("should allow to ignore certain parameter-specified combinations", () => {
+    it("should create all combinations of n optional parameters", () => {
         const parsed = yaml.load(yamlFixture, { schema: combineSchema });
         const expectedResult = [
-            { name: "ignore test", a: { b: 1, c: 3 } },
-            { name: "ignore test", a: { b: 2, c: 3 } },
-            { name: "ignore test", a: { c: 3 }, d: 4 },
+            { name: "optional params", a: 1 },
+            { name: "optional params", a: 1, b: 2 },
+            { name: "optional params", a: 1, b: 3 },
+            { name: "optional params", a: 1, c: 4 },
+            { name: "optional params", a: 1, b: 2, c: 4 },
+            { name: "optional params", a: 1, b: 3, c: 4 },
         ];
 
-        assert.deepEqual(parsed.case9, expectedResult);
+        expect(parsed.case9).to.have.deep.members(expectedResult);
+    });
+
+    it("should allow to exclude certain parameter-specified combinations", () => {
+        const parsed = yaml.load(yamlFixture, { schema: combineSchema });
+        const expectedResult = [{ name: "ignore test", a: { c: 3 }, d: 4 }];
+
+        expect(parsed.case10).to.have.deep.members(expectedResult);
     });
 });

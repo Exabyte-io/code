@@ -8,24 +8,42 @@ import { safeMakeArray } from "./array";
 import { generateName } from "./str";
 
 /**
- * Creates combinations by merging objects given two arrays of objects.
- * @param {Object[]} accumulated - First list of objects (accumulated)
- * @param {Object[]} incoming - Second list of objects (incoming)
- * @param {string[]} ignoreWith - List of keys in accumulated which should exclude combinations with incoming
+ * Generate objects with combinations of parameters.
+ * @param {[{key: string, values: Array}]} parameterSets - Array of parameter objects
+ * @param {[[string, string]]} exclusions - Array of pairs of keys which should be excluded
+ * @return {Object[]} - Array of objects containing combinations of parameters
  * @example
- * combineKeys([{ a: 1 }], [{ b: 2 }, { b: 3 }]);
- * // [{ a: 1, b: 2 }, { a: 1, b: 3 }]
+ * generateCombinations([{key: "a", values: [1, 2]},{key: "b", values: [3, null]}]);
+ * // [{ a: 1 }, { a: 2 }, { a: 1, b: 3 }, { a: 2, b: 3 }]
  */
-function combineKeys(accumulated, incoming, ignoreWith = []) {
-    return accumulated.reduce((combined, objA) => {
-        const ignoreCombination = ignoreWith.some((key) => lodash.has(objA, key));
-        if (ignoreCombination) {
-            combined.push(objA);
-            return combined;
-        }
+function generateCombinations(parameterSets, exclusions = []) {
+    const [head, ...rest] = parameterSets.filter((pObj) => pObj.key && pObj.values?.length);
+    if (!head) {
+        return [{}];
+    }
 
-        return combined.concat(incoming.map((objB) => lodash.merge({}, objA, objB)));
+    const restCombinations = generateCombinations(rest);
+    const { key, values } = head;
+
+    let newCombinations = values.reduce((combs, value) => {
+        const valueCombinations = restCombinations.map((combination) => {
+            const newCombination = lodash.cloneDeep(combination);
+            if (value !== null) {
+                lodash.set(newCombination, key, value);
+            }
+            return newCombination;
+        });
+        return [...combs, ...valueCombinations];
     }, []);
+
+    // Filter out unwanted combinations
+    newCombinations = newCombinations.filter((combination) => {
+        return !exclusions.some(
+            ([k1, k2]) => lodash.has(combination, k1) && lodash.has(combination, k2),
+        );
+    });
+
+    return newCombinations;
 }
 
 /**
@@ -104,17 +122,9 @@ export const parameterType = new yaml.Type("!parameter", {
 export const combineType = new yaml.Type("!combine", {
     kind: "mapping",
     construct(data) {
-        const { name, forEach = [], config = {}, extraConfigs = [] } = data;
-        let combinations = [{}];
-        // eslint-disable-next-line no-restricted-syntax
-        for (const item of forEach) {
-            const { key, values = [], ignoreWith } = item;
-            if (values.length) {
-                const newCombinations = values.map((v) => (v ? lodash.set({}, key, v) : {}));
-                combinations = combineKeys(combinations, newCombinations, ignoreWith);
-            }
-        }
-        // merge static config and generate name based on config
+        const { name, forEach = [], exclusions, config = {}, extraConfigs = [] } = data;
+        const combinations = generateCombinations(forEach, exclusions);
+
         const configs = combinations.map((c) => lodash.merge(c, config));
         configs.forEach(
             (c) => (c.name = generateName(name?.template || name, c, name?.substitutions)),
