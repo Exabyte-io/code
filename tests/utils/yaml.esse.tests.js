@@ -37,4 +37,10 @@ describe("YAML tag: !esse", () => {
         const expected = ["kbar", "pa"];
         expect(parsed.case3).to.have.deep.members(expected);
     });
+
+    it("should correctly return nested value from esse schema", () => {
+        const parsed = yaml.load(yamlFixture, { schema: yamlSchema });
+        const expected = "array containing values of x Axis";
+        expect(parsed.case4).to.be.eql(expected);
+    });
 });

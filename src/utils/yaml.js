@@ -53,10 +53,9 @@ function generateCombinations(parameterSets, exclusions = []) {
  * @return {{ objPath: string, filePath: string }}
  */
 function splitReference(ref) {
-    return {
-        filePath: ref.replace(/#.*$/, ""),
-        objPath: ref.replace(/^(.*?)(?:#\/|$)/, "").replace("/", "."),
-    };
+    const filePath = ref.replace(/#.*$/, "");
+    const objPath = ref.replace(/^(.*?)(?:#\/|$)/, "").replace(/\//g, ".");
+    return { filePath, objPath };
 }
 
 /**

@@ -1,8 +1,11 @@
 # parse a custom !esse tag and return ESSE schema
-case1: !esse core/primitive/scalar
-# ----------------------
+case1: !esse "core/primitive/scalar"
+
 # return the original data when an error occurs
 case2: !esse non-existent-schema-id
-# ----------------------
+
 # parse a custom !esse tag and return a value from the ESSE schema
 case3: !esse definitions/units#/pressure/enum
+
+# return object from esse schema
+case4: !esse "core/abstract/2d-data#/properties/xDataArray/description"
