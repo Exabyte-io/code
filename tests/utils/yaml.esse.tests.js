@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";
 
@@ -24,17 +24,17 @@ describe("YAML tag: !esse", () => {
                 },
             },
         };
-        assert.deepEqual(parsed.case1, expected);
+        expect(parsed.case1).to.eql(expected);
     });
 
     it("should return the original data when an error occurs", () => {
         const parsed = yaml.load(yamlFixture, { schema: yamlSchema });
-        assert.deepEqual(parsed.case2, "non-existent-schema-id");
+        expect(parsed.case2).to.be.equal("non-existent-schema-id");
     });
 
     it("should parse a custom !esse tag and return a value from the ESSE schema", () => {
         const parsed = yaml.load(yamlFixture, { schema: yamlSchema });
         const expected = ["kbar", "pa"];
-        assert.deepEqual(parsed.case3, expected);
+        expect(parsed.case3).to.have.deep.members(expected);
     });
 });

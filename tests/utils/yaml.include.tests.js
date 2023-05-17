@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";
 
@@ -16,7 +16,7 @@ describe("YAML tag: !include", () => {
             here: "original content",
             there: ["run", "stop", "pause"],
         };
-        assert.deepEqual(parsed.case1, expected);
+        expect(parsed.case1).to.be.eql(expected);
     });
 
     it("should return the original data when an error occurs", () => {
@@ -25,6 +25,6 @@ describe("YAML tag: !include", () => {
             here: "original content",
             there: "nonexistent_file.txt",
         };
-        assert.deepEqual(parsed.case2, expected);
+        expect(parsed.case2).to.be.eql(expected);
     });
 });
