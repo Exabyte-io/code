@@ -63,23 +63,23 @@ function readFromYaml(ref) {
  *   - `key`: name or path of parameter, e.g. `job.workflow`
  *   - `values`: list of values (use either `ref` or `values`)
  *   - `ref`: reference to values in another YAML file.
- *   - `includeNull`: whether to add `null` to values array
+ *   - `isOptional`: whether parameter is optional (adds `null` to values array)
  * See the tests for example usage.
  */
 export const parameterType = new yaml.Type("!parameter", {
     kind: "mapping",
     construct(data) {
-        const { key, values = [], ref, exclude, includeNull = false } = data;
+        const { key, values = [], ref, exclude, isOptional = false, ...otherProps } = data;
 
         try {
             let values_ = ref && !values.length ? readFromYaml(ref) : values;
             values_ = safeMakeArray(values_);
-            if (includeNull) values_.push(null);
+            if (isOptional) values_.push(null);
             if (exclude) {
                 const regex = new RegExp(exclude);
                 values_ = values_.filter((v) => !regex.test(v));
             }
-            return { key, values: values_ };
+            return { key, values: values_, ...otherProps };
         } catch (e) {
             return data;
         }

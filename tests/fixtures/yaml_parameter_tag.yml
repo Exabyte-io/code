@@ -28,4 +28,4 @@ case5: !parameter
 case6: !parameter
     key: some.key
     values: [a, b, c]
-    includeNull: true
+    isOptional: true
