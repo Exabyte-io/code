@@ -78,3 +78,14 @@ case8: !combine
             values: ["two", "four", null]
     config:
         a: 1
+# ignore certain parameter-specified combinations
+case9: !combine
+    name: ignore test
+    forEach:
+        -   key: a.b
+            values: [1, 2, null]
+        -   key: a.c
+            values: [3]
+        -   key: d
+            values: [4]
+            ignoreWith: ["a.b"]

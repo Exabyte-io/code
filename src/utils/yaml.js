@@ -9,22 +9,23 @@ import { generateName } from "./str";
 
 /**
  * Creates combinations by merging objects given two arrays of objects.
- * @param {Object[]} a - First list of objects
- * @param {Object[]} b - Second list of objects
+ * @param {Object[]} accumulated - First list of objects (accumulated)
+ * @param {Object[]} incoming - Second list of objects (incoming)
+ * @param {string[]} ignoreWith - List of keys in accumulated which should exclude combinations with incoming
  * @example
  * combineKeys([{ a: 1 }], [{ b: 2 }, { b: 3 }]);
  * // [{ a: 1, b: 2 }, { a: 1, b: 3 }]
  */
-function combineKeys(a, b) {
-    const combined = [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const objA of a) {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const objB of b) {
-            combined.push(lodash.merge({}, objA, objB));
+function combineKeys(accumulated, incoming, ignoreWith = []) {
+    return accumulated.reduce((combined, objA) => {
+        const ignoreCombination = ignoreWith.some((key) => lodash.has(objA, key));
+        if (ignoreCombination) {
+            combined.push(objA);
+            return combined;
         }
-    }
-    return combined;
+
+        return combined.concat(incoming.map((objB) => lodash.merge({}, objA, objB)));
+    }, []);
 }
 
 /**
@@ -93,6 +94,9 @@ export const parameterType = new yaml.Type("!parameter", {
  *   - name.template: nunjucks template for name (optional)
  *   - name.substitutions: in-place substitutions for template variables (optional)
  *   - forEach: list of parameter objects (defining key and value, see above) which is used to create combinations
+ *   - forEach.key: object path to key
+ *   - forEach.values: list of values
+ *   - forEach.ignoreWith: list of keys for which combination with current key should be ignored
  *   - config: static config to be added to every object
  *   - extraConfigs: sequence of additional configs
  * See the tests for example usage.
@@ -104,16 +108,14 @@ export const combineType = new yaml.Type("!combine", {
         let combinations = [{}];
         // eslint-disable-next-line no-restricted-syntax
         for (const item of forEach) {
-            const { key, values = [] } = item;
+            const { key, values = [], ignoreWith } = item;
             if (values.length) {
-                const newCombinations = values.map((v) => lodash.set({}, key, v));
-                combinations = combineKeys(combinations, newCombinations);
+                const newCombinations = values.map((v) => (v ? lodash.set({}, key, v) : {}));
+                combinations = combineKeys(combinations, newCombinations, ignoreWith);
             }
         }
-        // merge static config and remove any properties which are null
-        const configs = combinations.map((c) =>
-            lodash.chain(c).merge(config).omitBy(lodash.isNull).value(),
-        );
+        // merge static config and generate name based on config
+        const configs = combinations.map((c) => lodash.merge(c, config));
         configs.forEach(
             (c) => (c.name = generateName(name?.template || name, c, name?.substitutions)),
         );

@@ -86,4 +86,15 @@ describe("YAML tag: !combine", () => {
 
         assert.deepEqual(parsed.case8, expectedResult);
     });
+
+    it("should allow to ignore certain parameter-specified combinations", () => {
+        const parsed = yaml.load(yamlFixture, { schema: combineSchema });
+        const expectedResult = [
+            { name: "ignore test", a: { b: 1, c: 3 } },
+            { name: "ignore test", a: { b: 2, c: 3 } },
+            { name: "ignore test", a: { c: 3 }, d: 4 },
+        ];
+
+        assert.deepEqual(parsed.case9, expectedResult);
+    });
 });
