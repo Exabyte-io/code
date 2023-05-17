@@ -93,11 +93,11 @@ export const parameterType = new yaml.Type("!parameter", {
         try {
             let values_ = ref && !values.length ? readFromYaml(ref) : values;
             values_ = safeMakeArray(values_);
-            if (isOptional) values_.push(null);
             if (exclude) {
                 const regex = new RegExp(exclude);
                 values_ = values_.filter((v) => !regex.test(v));
             }
+            if (isOptional) values_.push(null);
             return { key, values: values_, ...otherProps };
         } catch (e) {
             return data;
