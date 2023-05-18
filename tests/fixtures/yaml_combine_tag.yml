@@ -93,6 +93,7 @@ case9: !combine
           values: [4, null]
     config:
         a: 1
+
 # exclude certain parameter-specified combinations
 case10: !combine
     name: ignore test
@@ -105,3 +106,19 @@ case10: !combine
             values: [4]
     exclusions:
         - ["a.b" , "d"]
+
+# use the push action to add value to an array parameter
+case11: !combine
+    name: push test
+    forEach:
+        -   key: units
+            action: push
+            values:
+                - a: 1
+                - a: 2
+                - a: 3
+        -   key: units
+            action: push
+            values:
+                - b: 4
+                - b: 5

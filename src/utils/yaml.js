@@ -23,13 +23,20 @@ function generateCombinations(parameterSets, exclusions = []) {
     }
 
     const restCombinations = generateCombinations(rest);
-    const { key, values } = head;
+    const { key, values, action = "set" } = head;
 
     let newCombinations = values.reduce((combs, value) => {
         const valueCombinations = restCombinations.map((combination) => {
             const newCombination = lodash.cloneDeep(combination);
-            if (value !== null) {
+            if (value !== null && action === "set") {
                 lodash.set(newCombination, key, value);
+            } else if (value !== null && action === "push") {
+                const arr = lodash.get(newCombination, key);
+                if (Array.isArray(arr)) {
+                    arr.push(value);
+                } else {
+                    lodash.set(newCombination, key, [value]);
+                }
             }
             return newCombination;
         });

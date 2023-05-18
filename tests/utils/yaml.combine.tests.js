@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";
+import lodash from "lodash";
 
 import { combineType } from "../../src/utils/yaml";
 import { YAML_COMBINE_FILE } from "../enums";
@@ -105,5 +106,23 @@ describe("YAML tag: !combine", () => {
         const expectedResult = [{ name: "ignore test", a: { c: 3 }, d: 4 }];
 
         expect(parsed.case10).to.have.deep.members(expectedResult);
+    });
+
+    it("use the push action to add value to an array parameter", () => {
+        const parsed = yaml.load(yamlFixture, { schema: combineSchema });
+        const expectedResult = [
+            { name: "push test", units: [{ a: 1 }, { b: 4 }] },
+            { name: "push test", units: [{ a: 2 }, { b: 4 }] },
+            { name: "push test", units: [{ a: 3 }, { b: 4 }] },
+            { name: "push test", units: [{ a: 1 }, { b: 5 }] },
+            { name: "push test", units: [{ a: 2 }, { b: 5 }] },
+            { name: "push test", units: [{ a: 3 }, { b: 5 }] },
+        ];
+
+        // sort units before comparing
+        parsed.case11.forEach((c) => (c.units = lodash.sortBy(c.units, ["a", "b"])));
+        expectedResult.forEach((c) => (c.units = lodash.sortBy(c.units, ["a", "b"])));
+
+        expect(parsed.case11).to.have.deep.members(expectedResult);
     });
 });
