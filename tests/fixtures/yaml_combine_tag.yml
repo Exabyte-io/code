@@ -122,3 +122,24 @@ case11: !combine
             values:
                 - b: 4
                 - b: 5
+# use cloned objects when pushing to array
+case12: !combine
+    name: push test
+    forEach:
+        -   key: units
+            action: push
+            values: !combine
+                name: "Wave function: Plane wave"
+                config:
+                    categories:
+                        tier1: qm
+                        tier2: wf
+                        type: pw
+                    tags:
+                        - plane wave
+                    schema: !esse "methods-directory/physical/pw"
+        -   key: units
+            action: push
+            values:
+                - b: 4
+                - b: 5

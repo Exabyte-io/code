@@ -33,7 +33,7 @@ function generateCombinations(parameterSets, exclusions = []) {
             } else if (value !== null && action === "push") {
                 const arr = lodash.get(newCombination, key);
                 if (Array.isArray(arr)) {
-                    arr.push(value);
+                    arr.push(lodash.cloneDeep(value));
                 } else {
                     lodash.set(newCombination, key, [value]);
                 }

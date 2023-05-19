@@ -3,10 +3,10 @@ import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
 
-import { combineType } from "../../src/utils/yaml";
+import { combineType, esseType } from "../../src/utils/yaml";
 import { YAML_COMBINE_FILE } from "../enums";
 
-const combineSchema = yaml.DEFAULT_SCHEMA.extend([combineType]);
+const combineSchema = yaml.DEFAULT_SCHEMA.extend([combineType, esseType]);
 
 describe("YAML tag: !combine", () => {
     const yamlFixture = fs.readFileSync(YAML_COMBINE_FILE, "utf8");
@@ -108,7 +108,7 @@ describe("YAML tag: !combine", () => {
         expect(parsed.case10).to.have.deep.members(expectedResult);
     });
 
-    it("use the push action to add value to an array parameter", () => {
+    it("should use the push action to add value to an array parameter", () => {
         const parsed = yaml.load(yamlFixture, { schema: combineSchema });
         const expectedResult = [
             { name: "push test", units: [{ a: 1 }, { b: 4 }] },
@@ -124,5 +124,16 @@ describe("YAML tag: !combine", () => {
         expectedResult.forEach((c) => (c.units = lodash.sortBy(c.units, ["a", "b"])));
 
         expect(parsed.case11).to.have.deep.members(expectedResult);
+    });
+
+    it("should use cloned objects when pushing to array", () => {
+        const parsed = yaml.load(yamlFixture, { schema: combineSchema });
+        const [config1, config2] = parsed.case12;
+
+        // deleting property in one should not affect the other
+        delete config1.units[1].schema;
+
+        expect(config1.units[1].schema).to.be.undefined;
+        expect(config2.units[1].schema).not.to.be.undefined;
     });
 });
