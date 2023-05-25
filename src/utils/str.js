@@ -114,10 +114,8 @@ export function generateName(template, data, substitutionMap = {}) {
     function substituteNested(obj) {
         lodash.forIn(obj, (value, key) => {
             if (lodash.isPlainObject(value)) {
-                // If value is an object, recurse
                 substituteNested(value);
             } else if (substitutionMap[value]) {
-                // If value is in substitution map, replace it
                 obj[key] = substitutionMap[value];
             }
         });
