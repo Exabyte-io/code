@@ -40,7 +40,7 @@
     "license": "Apache-2.0",
     "homepage": "https://github.com/Exabyte-io/code.js",
     "dependencies": {
-        "@exabyte-io/esse.js": "https://github.com/Exabyte-io/esse.js.git#2a20d7c08e6c00d75a3c9bc29b8373101cfeec4b",
+        "@exabyte-io/esse.js": "https://github.com/Exabyte-io/esse.git#2a20d7c08e6c00d75a3c9bc29b8373101cfeec4b",
         "crypto-js": "^4.1.1",
         "json-schema-merge-allof": "^0.8.1",
         "mathjs": "^3.9.0",
