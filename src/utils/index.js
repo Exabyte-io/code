@@ -4,6 +4,7 @@ import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./c
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import { formatFileSize, getProgrammingLanguageFromFileExtension } from "./file";
+import { filterEntityList } from "./filter";
 import { addUnit, removeUnit, replaceUnit, setNextLinks, setUnitsHead } from "./graph";
 import {
     calculateHashFromObject,
@@ -81,4 +82,5 @@ export {
     esseType,
     includeType,
     generateName,
+    filterEntityList,
 };
