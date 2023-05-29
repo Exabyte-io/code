@@ -39,4 +39,20 @@ describe("entity filter", () => {
         ];
         expect(filtered).to.have.deep.members(expected);
     });
+
+    it("should filter an entity list containing concatenated paths", () => {
+        const filterObjects = [{ path: "/root/entity/b" }, { path: "/root/entity/c" }];
+        const multiPathEntities = [
+            { name: "AB", path: "/root/entity/a::/root/entity/b" },
+            { name: "BC", path: "/root/entity/b::/root/entity/c" },
+        ];
+        const multiPathSeparator = "::";
+        const filtered = filterEntityList({
+            filterObjects,
+            entitiesOrPaths: multiPathEntities,
+            multiPathSeparator,
+        });
+        const expected = [{ name: "BC", path: "/root/entity/b::/root/entity/c" }];
+        expect(filtered).to.have.deep.members(expected);
+    });
 });
