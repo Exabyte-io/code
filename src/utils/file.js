@@ -46,3 +46,15 @@ export function getFilesInDirectory(dirPath, fileExtensions = [], resolvePath = 
     if (resolvePath) return fileNames.map((fileName) => path.resolve(dirPath, fileName));
     return fileNames;
 }
+
+/**
+ * Get list of directories contained in current directory.
+ * @param {string} currentPath - current directory
+ * @return {*}
+ */
+export function getDirectories(currentPath) {
+    return fs
+        .readdirSync(currentPath, { withFileTypes: true })
+        .filter((dirent) => dirent.isDirectory())
+        .map((dirent) => dirent.name);
+}

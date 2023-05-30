@@ -5,6 +5,7 @@ import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import {
     formatFileSize,
+    getDirectories,
     getFilesInDirectory,
     getProgrammingLanguageFromFileExtension,
 } from "./file";
@@ -88,4 +89,5 @@ export {
     generateName,
     filterEntityList,
     getFilesInDirectory,
+    getDirectories,
 };
