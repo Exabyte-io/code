@@ -1,6 +1,35 @@
 import lodash from "lodash";
 
-import { isContainedByProperty } from "./array";
+/**
+ * Check if one path matches regular expression or exact string.
+ * @param {{path: string}} pathObject - Entity or object with path property
+ * @param {Array<{path: string}|{regex: RegExp}>} filterObjects - Filter conditions
+ * @return {boolean}
+ */
+function isPathSupported(pathObject, filterObjects) {
+    return (
+        lodash.find(filterObjects, (filterObj) => {
+            if (filterObj.path) {
+                return filterObj.path === pathObject.path;
+            }
+            if (filterObj.regex) {
+                return filterObj.regex.test(pathObject.path);
+            }
+        }) !== undefined
+    );
+}
+
+/**
+ * Check if _all_ paths in concatenated path match filtering conditions.
+ * @param {{path: string}} pathObject - Path object with concatenated path (multipath)
+ * @param {string} multiPathSeparator - String sequence used for concatenation of paths
+ * @param {Array<{path: string}|{regex: RegExp}>} filterObjects - Filter conditions
+ * @return {boolean}
+ */
+function isMultiPathSupported(pathObject, multiPathSeparator, filterObjects) {
+    const expandedPaths = pathObject.path.split(multiPathSeparator).map((p) => ({ path: p }));
+    return lodash.every(expandedPaths, (obj) => isPathSupported(obj, filterObjects));
+}
 
 /**
  * Filter list of entity paths or entities by paths and regular expressions.
@@ -10,23 +39,16 @@ import { isContainedByProperty } from "./array";
  * @return {Object[]} - filtered entity path objects or entities
  */
 export function filterEntityList({ entitiesOrPaths, filterObjects = [], multiPathSeparator = "" }) {
-    const pathList = filterObjects.filter((o) => o.path);
-    const regexList = filterObjects.filter((o) => o.regex);
+    const filterObjects_ = filterObjects.map((o) => (o.regex ? { regex: new RegExp(o.regex) } : o));
 
-    const filteredByRegex = regexList.flatMap((r) => {
-        const regex = new RegExp(r.regex);
-        return entitiesOrPaths.filter((o) => regex.test(o.path));
-    });
-
-    let filteredByPath;
+    let filtered;
     if (multiPathSeparator) {
-        filteredByPath = entitiesOrPaths.filter((e) => {
-            const expandedPaths = e.path.split(multiPathSeparator).map((p) => ({ path: p }));
-            return isContainedByProperty(expandedPaths, pathList, "path");
-        });
+        filtered = entitiesOrPaths.filter((e) =>
+            isMultiPathSupported(e, multiPathSeparator, filterObjects_),
+        );
     } else {
-        filteredByPath = lodash.intersectionBy(entitiesOrPaths, pathList, "path");
+        filtered = entitiesOrPaths.filter((e) => isPathSupported(e, filterObjects_));
     }
 
-    return lodash.uniqBy(filteredByRegex.concat(filteredByPath), "path");
+    return lodash.uniqBy(filtered, "path");
 }
