@@ -1,9 +1,13 @@
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
-import { convertToCompactCSVArrayOfObjects, isContainedByProperty, safeMakeArray } from "./array";
+import { convertToCompactCSVArrayOfObjects, safeMakeArray } from "./array";
 import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./class";
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
-import { formatFileSize, getProgrammingLanguageFromFileExtension } from "./file";
+import {
+    formatFileSize,
+    getFilesInDirectory,
+    getProgrammingLanguageFromFileExtension,
+} from "./file";
 import { filterEntityList } from "./filter";
 import { addUnit, removeUnit, replaceUnit, setNextLinks, setUnitsHead } from "./graph";
 import {
@@ -83,5 +87,5 @@ export {
     includeType,
     generateName,
     filterEntityList,
-    isContainedByProperty,
+    getFilesInDirectory,
 };
