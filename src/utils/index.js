@@ -24,11 +24,11 @@ import { getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
-    generateName,
     randomAlphanumeric,
     removeCommentsFromSourceCode,
     removeEmptyLinesFromString,
     removeNewLinesAndExtraSpaces,
+    renderTextWithSubstitutes,
     toFixedLocale,
 } from "./str";
 import { mapTree } from "./tree";
@@ -77,5 +77,5 @@ export {
     mergeTerminalNodes,
     JsYamlTypes,
     JsYamlAllSchemas,
-    generateName,
+    renderTextWithSubstitutes,
 };

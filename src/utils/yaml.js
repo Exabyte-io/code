@@ -5,7 +5,7 @@ import path from "path";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 import { safeMakeArray } from "./array";
-import { generateName } from "./str";
+import { renderTextWithSubstitutes } from "./str";
 
 /**
  * Generate objects with combinations of parameters.
@@ -133,7 +133,12 @@ export const combineType = new yaml.Type("!combine", {
 
         const configs = combinations.map((c) => lodash.merge(c, config));
         configs.forEach(
-            (c) => (c.name = generateName(name?.template || name, c, name?.substitutions)),
+            (c) =>
+                (c.name = renderTextWithSubstitutes(
+                    name?.template || name,
+                    c,
+                    name?.substitutions,
+                )),
         );
         return extraConfigs.length ? configs.concat(extraConfigs.flat()) : configs;
     },
