@@ -75,7 +75,7 @@ function readFromYaml(ref) {
     const { filePath, objPath } = splitReference(ref);
     const fileContent = fs.readFileSync(path.resolve(filePath), "utf8");
     // eslint-disable-next-line no-use-before-define
-    const parsedContent = yaml.load(fileContent, { schema: allYAMLSchemas });
+    const parsedContent = yaml.load(fileContent, { schema: JsYamlAllSchemas });
 
     return objPath ? lodash.get(parsedContent, objPath) : parsedContent;
 }
@@ -177,7 +177,14 @@ export const includeType = new yaml.Type("!include", {
     },
 });
 
-export const allYAMLSchemas = yaml.DEFAULT_SCHEMA.extend([
+export const JsYamlTypes = {
+    include: includeType,
+    parameter: parameterType,
+    combine: combineType,
+    esse: esseType,
+};
+
+export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
     parameterType,
     combineType,
     esseType,

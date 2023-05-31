@@ -34,7 +34,7 @@ import {
 import { mapTree } from "./tree";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
-import { allYAMLSchemas, combineType, esseType, includeType, parameterType } from "./yaml";
+import { JsYamlAllSchemas, JsYamlTypes } from "./yaml";
 
 export {
     compareEntitiesInOrderedSetForSorting,
@@ -75,10 +75,7 @@ export {
     mapTree,
     getSchemaWithDependencies,
     mergeTerminalNodes,
-    combineType,
-    parameterType,
-    allYAMLSchemas,
-    esseType,
-    includeType,
+    JsYamlTypes,
+    JsYamlAllSchemas,
     generateName,
 };
