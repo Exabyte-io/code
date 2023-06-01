@@ -1,14 +1,14 @@
 import { expect } from "chai";
 
-import { generateName } from "../../src/utils";
+import { renderTextWithSubstitutes } from "../../src/utils";
 
-describe("generateName", () => {
+describe("renderTextWithSubstitutes", () => {
     it("should substitute flat properties", () => {
         const template = "Hello {{ user }}!";
         const data = { user: "user001" };
         const substitutionMap = { user001: "John Doe" };
 
-        const result = generateName(template, data, substitutionMap);
+        const result = renderTextWithSubstitutes(template, data, substitutionMap);
 
         expect(result).to.be.equal("Hello John Doe!");
     });
@@ -18,7 +18,7 @@ describe("generateName", () => {
         const data = { parameters: { user: "user001" } };
         const substitutionMap = { user001: "John Doe" };
 
-        const result = generateName(template, data, substitutionMap);
+        const result = renderTextWithSubstitutes(template, data, substitutionMap);
 
         expect(result).to.be.equal("Hello John Doe!");
     });
@@ -28,7 +28,7 @@ describe("generateName", () => {
         const data = { user: "user001" };
         const substitutionMap = {};
 
-        const result = generateName(template, data, substitutionMap);
+        const result = renderTextWithSubstitutes(template, data, substitutionMap);
 
         expect(result).to.be.equal("Hello user001!");
     });
@@ -38,7 +38,7 @@ describe("generateName", () => {
         const data = { user: "user001" };
         const substitutionMap = {};
 
-        const result = generateName(template, data, substitutionMap);
+        const result = renderTextWithSubstitutes(template, data, substitutionMap);
 
         expect(result).to.be.equal("Hello world!");
     });
@@ -48,7 +48,7 @@ describe("generateName", () => {
         const data = { user: "user001" };
         const substitutionMap = {};
 
-        const result = generateName(template, data, substitutionMap);
+        const result = renderTextWithSubstitutes(template, data, substitutionMap);
 
         expect(result).to.be.equal("");
     });
@@ -58,7 +58,7 @@ describe("generateName", () => {
         const data = { user: null };
         const substitutionMap = {};
 
-        const result = generateName(template, data, substitutionMap);
+        const result = renderTextWithSubstitutes(template, data, substitutionMap);
 
         expect(result).to.be.equal("Hello !");
     });

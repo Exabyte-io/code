@@ -30,17 +30,17 @@ import { getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
-    generateName,
     randomAlphanumeric,
     removeCommentsFromSourceCode,
     removeEmptyLinesFromString,
     removeNewLinesAndExtraSpaces,
+    renderTextWithSubstitutes,
     toFixedLocale,
 } from "./str";
 import { mapTree } from "./tree";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
-import { allYAMLSchemas, combineType, esseType, includeType, parameterType } from "./yaml";
+import { JsYamlAllSchemas, JsYamlTypes } from "./yaml";
 
 export {
     compareEntitiesInOrderedSetForSorting,
@@ -81,12 +81,9 @@ export {
     mapTree,
     getSchemaWithDependencies,
     mergeTerminalNodes,
-    combineType,
-    parameterType,
-    allYAMLSchemas,
-    esseType,
-    includeType,
-    generateName,
+    JsYamlTypes,
+    JsYamlAllSchemas,
+    renderTextWithSubstitutes,
     filterEntityList,
     getFilesInDirectory,
     getDirectories,

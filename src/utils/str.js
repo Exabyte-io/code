@@ -105,7 +105,7 @@ export function convertArabicToRoman(num) {
  *     {user001: "John Doe"}
  * ); // "Hello John Doe!"
  */
-export function generateName(template, data, substitutionMap = {}) {
+export function renderTextWithSubstitutes(template, data, substitutionMap = {}) {
     if (!template) return "";
     // Create a copy of data to avoid modifying the original
     const renderData = lodash.cloneDeep(data);
