@@ -7,8 +7,8 @@ import {
     InMemoryEntity,
     NamedInMemoryEntity,
     RuntimeItemsMixin,
-} from "../src/entity";
-import { extendClass, extendThis } from "../src/utils/class";
+} from "../../src/entity";
+import { extendClass, extendThis } from "../../src/utils/class";
 
 class BaseEntity extends mix(InMemoryEntity).with(RuntimeItemsMixin) {
     baseMethod() {

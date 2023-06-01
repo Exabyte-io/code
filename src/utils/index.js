@@ -28,11 +28,13 @@ import {
     removeCommentsFromSourceCode,
     removeEmptyLinesFromString,
     removeNewLinesAndExtraSpaces,
+    renderTextWithSubstitutes,
     toFixedLocale,
 } from "./str";
 import { mapTree } from "./tree";
 import { containsEncodedComponents } from "./url";
 import { getUUID } from "./uuid";
+import { JsYamlAllSchemas, JsYamlTypes } from "./yaml";
 
 export {
     compareEntitiesInOrderedSetForSorting,
@@ -73,4 +75,7 @@ export {
     mapTree,
     getSchemaWithDependencies,
     mergeTerminalNodes,
+    JsYamlTypes,
+    JsYamlAllSchemas,
+    renderTextWithSubstitutes,
 };

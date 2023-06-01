@@ -1,6 +1,10 @@
 import { expect } from "chai";
 
-import { buildDependencies, getSchemaWithDependencies, typeofSchema } from "../src/utils/schemas";
+import {
+    buildDependencies,
+    getSchemaWithDependencies,
+    typeofSchema,
+} from "../../src/utils/schemas";
 
 describe("RJSF schema", () => {
     const TREE = {

@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { mapTree } from "../src/utils";
+import { mapTree } from "../../src/utils";
 
 describe("Tree data structure", () => {
     const TREE = {

@@ -22,11 +22,13 @@
         "./utils": "./dist/utils/index.js",
         "./constants": "./dist/constants.js",
         "./math": "./dist/math.js",
+        "./JSONSchemasInterface": "./dist/JSONSchemasInterface.js",
         "./dist/context": "./dist/context/index.js",
         "./dist/entity": "./dist/entity/index.js",
         "./dist/utils": "./dist/utils/index.js",
         "./dist/constants": "./dist/constants.js",
-        "./dist/math": "./dist/math.js"
+        "./dist/math": "./dist/math.js",
+        "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js"
     },
     "files": [
         "/dist",
@@ -48,12 +50,15 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "@exabyte-io/esse.js": "2023.5.29-0",
+        "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#b4bbdad0cdb4f3417b51cbb420eace2bfbb7b38a",
+        "ajv": "4.1.7",
         "crypto-js": "^4.1.1",
+        "js-yaml": "^4.1.0",
         "json-schema-merge-allof": "^0.8.1",
         "lodash": "^4.17.21",
         "mathjs": "^3.9.0",
         "mixwith": "^0.1.1",
+        "nunjucks": "^3.2.4",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4",
         "uuid": "8.3.2"
