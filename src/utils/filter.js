@@ -7,16 +7,15 @@ import lodash from "lodash";
  * @return {boolean}
  */
 function isPathSupported(pathObject, filterObjects) {
-    return (
-        lodash.find(filterObjects, (filterObj) => {
-            if (filterObj.path) {
-                return filterObj.path === pathObject.path;
-            }
-            if (filterObj.regex) {
-                return filterObj.regex.test(pathObject.path);
-            }
-        }) !== undefined
-    );
+    return filterObjects.some((filterObj) => {
+        if (filterObj.path) {
+            return filterObj.path === pathObject.path;
+        }
+        if (filterObj.regex) {
+            return filterObj.regex.test(pathObject.path);
+        }
+        return false;
+    });
 }
 
 /**
@@ -28,7 +27,7 @@ function isPathSupported(pathObject, filterObjects) {
  */
 function isMultiPathSupported(pathObject, multiPathSeparator, filterObjects) {
     const expandedPaths = pathObject.path.split(multiPathSeparator).map((p) => ({ path: p }));
-    return lodash.every(expandedPaths, (obj) => isPathSupported(obj, filterObjects));
+    return expandedPaths.every((expandedPath) => isPathSupported(expandedPath, filterObjects));
 }
 
 /**
