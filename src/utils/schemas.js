@@ -37,14 +37,14 @@ export function typeofSchema(schema) {
 function getEnumValues(nodes) {
     if (!nodes.length) return {};
     return {
-        enum: nodes.map((node) => lodash.get(node, node.dataSelector.value)),
+        enum: nodes.map((node) => node.data.value),
     };
 }
 
 function getEnumNames(nodes) {
     if (!nodes.length) return {};
     return {
-        enumNames: nodes.map((node) => lodash.get(node, node.dataSelector.name)),
+        enumNames: nodes.map((node) => node.data.name),
     };
 }
 
@@ -55,8 +55,8 @@ function getEnumNames(nodes) {
  */
 export function buildDependencies(nodes) {
     if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
-    const parentKey = nodes[0].dataSelector.key;
-    const childKey = nodes[0].children[0].dataSelector.key;
+    const parentKey = nodes[0].data.key;
+    const childKey = nodes[0].children[0].data.key;
     return {
         dependencies: {
             [parentKey]: {
@@ -104,7 +104,7 @@ export function getSchemaWithDependencies({
     // RJSF does not automatically render dropdown widget if `enum` is not present
     if (modifyProperties && nodes.length) {
         const mod = {
-            [nodes[0].dataSelector.key]: {
+            [nodes[0].data.key]: {
                 ...getEnumNames(nodes),
                 ...getEnumValues(nodes),
             },

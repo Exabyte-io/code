@@ -9,98 +9,56 @@ import {
 describe("RJSF schema", () => {
     const TREE = {
         path: "/dft",
-        dataSelector: { key: "type", value: "data.type.slug", name: "data.type.name" },
-        data: {
-            type: {
-                slug: "dft",
-                name: "Density Functional Theory",
-            },
-        },
+        data: { key: "type", value: "dft", name: "Density Functional Theory" },
         children: [
             {
                 path: "/dft/lda",
-                dataSelector: {
-                    key: "subtype",
-                    value: "data.subtype.slug",
-                    name: "data.subtype.name",
-                },
                 data: {
-                    subtype: {
-                        slug: "lda",
-                        name: "LDA",
-                    },
+                    key: "subtype",
+                    value: "lda",
+                    name: "LDA",
                 },
                 children: [
                     {
                         path: "/dft/lda/svwn",
-                        dataSelector: {
-                            key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
-                        },
                         data: {
-                            functional: {
-                                slug: "svwn",
-                                name: "SVWN",
-                            },
+                            key: "functional",
+                            value: "svwn",
+                            name: "SVWN",
                         },
                     },
                     {
                         path: "/dft/lda/pz",
-                        dataSelector: {
-                            key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
-                        },
                         data: {
-                            functional: {
-                                slug: "pz",
-                                name: "PZ",
-                            },
+                            key: "functional",
+                            value: "pz",
+                            name: "PZ",
                         },
                     },
                 ],
             },
             {
                 path: "/dft/gga",
-                dataSelector: {
-                    key: "subtype",
-                    value: "data.subtype.slug",
-                    name: "data.subtype.name",
-                },
                 data: {
-                    subtype: {
-                        slug: "gga",
-                        name: "GGA",
-                    },
+                    key: "subtype",
+                    value: "gga",
+                    name: "GGA",
                 },
                 children: [
                     {
                         path: "/dft/gga/pbe",
-                        dataSelector: {
-                            key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
-                        },
                         data: {
-                            functional: {
-                                slug: "pbe",
-                                name: "PBE",
-                            },
+                            key: "functional",
+                            value: "pbe",
+                            name: "PBE",
                         },
                     },
                     {
                         path: "/dft/gga/pw91",
-                        dataSelector: {
-                            key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
-                        },
                         data: {
-                            functional: {
-                                slug: "pw91",
-                                name: "PW91",
-                            },
+                            key: "functional",
+                            value: "pw91",
+                            name: "PW91",
                         },
                     },
                 ],
