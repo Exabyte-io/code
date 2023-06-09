@@ -1,7 +1,7 @@
 import lodash from "lodash";
 
 // import { ESSE } from "@exabyte-io/esse.js";
-import { deepClone } from "../utils/clone";
+import { clone, deepClone } from "../utils/clone";
 import { getSchemaByClassName } from "../utils/schemas";
 
 // TODO: https://exabyte.atlassian.net/browse/SOF-5946
@@ -13,7 +13,7 @@ export class InMemoryEntity {
     }
 
     constructor(config = {}) {
-        this._json = this.constructor._useDeepClone ? deepClone(config) : { ...config };
+        this._json = this.constructor._useDeepClone ? deepClone(config) : clone(config);
     }
 
     /**
@@ -46,11 +46,14 @@ export class InMemoryEntity {
 
     /**
      * @summary Array of fields to exclude from resulted JSON
-     * @param exclude {String[]}
+     * @param {String[]} exclude
+     * @param {Boolean} unsafeClone use deepClone if true
      */
-    toJSON(exclude = []) {
-        const config = deepClone(lodash.omit(this._json, exclude));
-        return this.clean(config);
+    toJSON(exclude = [], unsafeClone = false) {
+        const config = lodash.omit(this._json, exclude);
+        const clonedConfig =
+            this.constructor._useDeepClone && !unsafeClone ? deepClone(config) : clone(config);
+        return this.clean(clonedConfig);
     }
 
     /**
@@ -77,7 +80,7 @@ export class InMemoryEntity {
      */
     validate() {
         if (this.schema) {
-            this.schema.validate(this.toJSON());
+            this.schema.validate(this.toJSON([], true));
         }
     }
 
@@ -90,10 +93,10 @@ export class InMemoryEntity {
 
     isValid() {
         const ctx = this.schema.newContext();
-        ctx.validate(this.toJSON());
+        ctx.validate(this.toJSON([], true));
 
         if (!ctx.isValid()) {
-            console.log(JSON.stringify(this.toJSON()));
+            console.log(JSON.stringify(this.toJSON([], true)));
             if (ctx.getErrorObject) {
                 console.log(ctx.getErrorObject());
             }
