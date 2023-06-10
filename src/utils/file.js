@@ -58,3 +58,21 @@ export function getDirectories(currentPath) {
         .filter((dirent) => dirent.isDirectory())
         .map((dirent) => dirent.name);
 }
+
+/**
+ * Construct object path compatible with lodash.get/lodash.set from file path.
+ * Note: if no root path is provided the file's dirname is taken instead.
+ * @param {string} filePath - Path to file.
+ * @param {string} root - Path to a parent directory to construct relative path.
+ * @return {string} - Object path reflecting file path.
+ * @example
+ * createObjectPathFromFilePath("/a/b/c/d/e.yml", "/a/b");
+ * // "['c']['d']['e']"
+ */
+export function createObjectPathFromFilePath(filePath, root) {
+    const dirname = path.dirname(filePath);
+    const extension = path.extname(filePath);
+    const basename = path.basename(filePath, extension);
+    const parentDirs = root ? path.relative(root, dirname).split(path.sep) : [];
+    return [...parentDirs, basename].map((item) => `['${item}']`).join("");
+}

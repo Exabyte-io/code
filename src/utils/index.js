@@ -4,6 +4,7 @@ import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./c
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import {
+    createObjectPathFromFilePath,
     formatFileSize,
     getDirectories,
     getFilesInDirectory,
@@ -87,4 +88,5 @@ export {
     filterEntityList,
     getFilesInDirectory,
     getDirectories,
+    createObjectPathFromFilePath,
 };
