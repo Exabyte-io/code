@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
     in: "fortran",
     sh: "shell",
@@ -27,4 +30,31 @@ export function formatFileSize(size, decimals = 2) {
     const index = Math.floor(Math.log(size) / Math.log(1024));
     const units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     return parseFloat((size / 1024 ** index).toFixed(decimals)) + " " + units[index];
+}
+
+/** Get list of paths for files in a directory and filter by file extensions if provided.
+ * @param {string} dirPath - Path to current directory, i.e. $PWD
+ * @param {string[]} fileExtensions - File extensions to filter, e.g. `.yml`
+ * @param {boolean} resolvePath - whether to resolve the paths of files
+ * @returns {string[]} - Array of file paths
+ */
+export function getFilesInDirectory(dirPath, fileExtensions = [], resolvePath = true) {
+    let fileNames = fs.readdirSync(dirPath);
+    if (fileExtensions.length) {
+        fileNames = fileNames.filter((dirItem) => fileExtensions.includes(path.extname(dirItem)));
+    }
+    if (resolvePath) return fileNames.map((fileName) => path.resolve(dirPath, fileName));
+    return fileNames;
+}
+
+/**
+ * Get list of directories contained in current directory.
+ * @param {string} currentPath - current directory
+ * @return {*}
+ */
+export function getDirectories(currentPath) {
+    return fs
+        .readdirSync(currentPath, { withFileTypes: true })
+        .filter((dirent) => dirent.isDirectory())
+        .map((dirent) => dirent.name);
 }
