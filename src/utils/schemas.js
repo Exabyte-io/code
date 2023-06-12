@@ -54,7 +54,8 @@ function getEnumNames(nodes) {
  * @returns {{}|{dependencies: {}}}
  */
 export function buildDependencies(nodes) {
-    if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
+    const isTerminal = nodes.every((n) => !n.children?.length);
+    if (nodes.length === 0 || isTerminal || !nodes[0].data) return {};
     const parentKey = nodes[0].data.key;
     const childKey = nodes[0].children[0].data.key;
     return {
