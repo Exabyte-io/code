@@ -13,7 +13,7 @@ export class InMemoryEntity {
     }
 
     constructor(config = {}) {
-        this._json = this.constructor._useDeepClone ? deepClone(config) : clone(config);
+        this._json = this.constructor._isDeepCloneRequired ? deepClone(config) : clone(config);
     }
 
     /**
@@ -52,7 +52,9 @@ export class InMemoryEntity {
     toJSON(exclude = [], unsafeClone = false) {
         const config = lodash.omit(this._json, exclude);
         const clonedConfig =
-            this.constructor._useDeepClone && !unsafeClone ? deepClone(config) : clone(config);
+            this.constructor._isDeepCloneRequired && !unsafeClone
+                ? deepClone(config)
+                : clone(config);
         return this.clean(clonedConfig);
     }
 
