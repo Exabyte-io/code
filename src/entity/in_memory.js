@@ -47,15 +47,23 @@ export class InMemoryEntity {
     /**
      * @summary Array of fields to exclude from resulted JSON
      * @param {String[]} exclude
-     * @param {Boolean} unsafeClone use deepClone if true
      */
-    toJSON(exclude = [], unsafeClone = false) {
+    toJSON(exclude = []) {
+        return this.constructor._isDeepCloneRequired
+            ? this.toJSONSafe(exclude)
+            : this.toJSONQuick(exclude);
+    }
+
+    toJSONSafe(exclude = []) {
         const config = lodash.omit(this._json, exclude);
-        const clonedConfig =
-            this.constructor._isDeepCloneRequired && !unsafeClone
-                ? deepClone(config)
-                : clone(config);
-        return this.clean(clonedConfig);
+
+        return this.clean(deepClone(config));
+    }
+
+    toJSONQuick(exclude = []) {
+        const config = lodash.omit(this._json, exclude);
+
+        return this.clean(clone(config));
     }
 
     /**
@@ -64,7 +72,7 @@ export class InMemoryEntity {
      * @returns {*}
      */
     clone(extraContext = {}) {
-        return new this.constructor({ ...this.toJSON(), ...extraContext });
+        return new this.constructor({ ...this.toJSONSafe(), ...extraContext });
     }
 
     // override upon inheritance
@@ -82,7 +90,7 @@ export class InMemoryEntity {
      */
     validate() {
         if (this.schema) {
-            this.schema.validate(this.toJSON([], true));
+            this.schema.validate(this.toJSONQuick([], true));
         }
     }
 
@@ -95,10 +103,10 @@ export class InMemoryEntity {
 
     isValid() {
         const ctx = this.schema.newContext();
-        ctx.validate(this.toJSON([], true));
+        ctx.validate(this.toJSONQuick([], true));
 
         if (!ctx.isValid()) {
-            console.log(JSON.stringify(this.toJSON([], true)));
+            console.log(JSON.stringify(this.toJSONQuick([], true)));
             if (ctx.getErrorObject) {
                 console.log(ctx.getErrorObject());
             }
