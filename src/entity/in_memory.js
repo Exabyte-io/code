@@ -90,7 +90,7 @@ export class InMemoryEntity {
      */
     validate() {
         if (this.schema) {
-            this.schema.validate(this.toJSONSafe());
+            this.schema.validate(this.toJSON());
         }
     }
 
@@ -103,10 +103,12 @@ export class InMemoryEntity {
 
     isValid() {
         const ctx = this.schema.newContext();
-        ctx.validate(this.toJSONSafe());
+        const json = this.toJSON();
+
+        ctx.validate(json);
 
         if (!ctx.isValid()) {
-            console.log(JSON.stringify(this.toJSONSafe()));
+            console.log(JSON.stringify(json));
             if (ctx.getErrorObject) {
                 console.log(ctx.getErrorObject());
             }
