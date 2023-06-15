@@ -72,7 +72,7 @@ export class InMemoryEntity {
      * @returns {*}
      */
     clone(extraContext = {}) {
-        return new this.constructor({ ...this.toJSONSafe(), ...extraContext });
+        return new this.constructor({ ...this.toJSON(), ...extraContext });
     }
 
     // override upon inheritance
@@ -90,7 +90,7 @@ export class InMemoryEntity {
      */
     validate() {
         if (this.schema) {
-            this.schema.validate(this.toJSONQuick([], true));
+            this.schema.validate(this.toJSONSafe());
         }
     }
 
@@ -103,10 +103,10 @@ export class InMemoryEntity {
 
     isValid() {
         const ctx = this.schema.newContext();
-        ctx.validate(this.toJSONQuick([], true));
+        ctx.validate(this.toJSONSafe());
 
         if (!ctx.isValid()) {
-            console.log(JSON.stringify(this.toJSONQuick([], true)));
+            console.log(JSON.stringify(this.toJSONSafe()));
             if (ctx.getErrorObject) {
                 console.log(ctx.getErrorObject());
             }
