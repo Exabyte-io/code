@@ -12,6 +12,9 @@ export class InMemoryEntity {
         return new this.prototype.constructor(config);
     }
 
+    // Override if config deepClone is needed
+    static _isDeepCloneRequired = false;
+
     constructor(config = {}) {
         this._json = this.constructor._isDeepCloneRequired ? deepClone(config) : clone(config);
     }
