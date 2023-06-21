@@ -1,6 +1,7 @@
 import lodash from "lodash";
 import _ from "underscore";
 
+import { safeMakeArray } from "./array";
 import { deepClone } from "./clone";
 
 /**
@@ -206,7 +207,8 @@ export function sortKeysDeepForObject(obj) {
  * mergeTerminalNodes(tree); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']
  */
 export function mergeTerminalNodes(tree, unique = false) {
-    const terminalValues = lodash.values(tree).reduce((accumulator, value) => {
+    if (!lodash.isPlainObject(tree)) return safeMakeArray(tree);
+    const terminalValues = Object.values(tree).reduce((accumulator, value) => {
         if (lodash.isPlainObject(value)) {
             return accumulator.concat(mergeTerminalNodes(value));
         }
