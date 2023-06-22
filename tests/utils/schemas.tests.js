@@ -5,83 +5,11 @@ import {
     getSchemaWithDependencies,
     typeofSchema,
 } from "../../src/utils/schemas";
+import { DFT_SCHEMA, DFT_TREE_ADVANCED, DFT_TREE_SIMPLE } from "../fixtures/schemas";
 
 describe("RJSF schema", () => {
-    const TREE = {
-        path: "/dft",
-        data: { key: "type", value: "dft", name: "Density Functional Theory" },
-        children: [
-            {
-                path: "/dft/lda",
-                data: {
-                    key: "subtype",
-                    value: "lda",
-                    name: "LDA",
-                },
-                children: [
-                    {
-                        path: "/dft/lda/svwn",
-                        data: {
-                            key: "functional",
-                            value: "svwn",
-                            name: "SVWN",
-                        },
-                    },
-                    {
-                        path: "/dft/lda/pz",
-                        data: {
-                            key: "functional",
-                            value: "pz",
-                            name: "PZ",
-                        },
-                    },
-                ],
-            },
-            {
-                path: "/dft/gga",
-                data: {
-                    key: "subtype",
-                    value: "gga",
-                    name: "GGA",
-                },
-                children: [
-                    {
-                        path: "/dft/gga/pbe",
-                        data: {
-                            key: "functional",
-                            value: "pbe",
-                            name: "PBE",
-                        },
-                    },
-                    {
-                        path: "/dft/gga/pw91",
-                        data: {
-                            key: "functional",
-                            value: "pw91",
-                            name: "PW91",
-                        },
-                    },
-                ],
-            },
-        ],
-    };
-    const DFT_SCHEMA = {
-        type: "object",
-        properties: {
-            type: {
-                type: "string",
-            },
-            subtype: {
-                type: "string",
-            },
-            functional: {
-                type: "string",
-            },
-        },
-    };
-
     it("dependencies block can be created from tree", () => {
-        const dependencies = buildDependencies([TREE]);
+        const dependencies = buildDependencies([DFT_TREE_SIMPLE]);
 
         const [dftCase] = dependencies.dependencies.type.oneOf;
         expect(dftCase.properties.subtype.enum).to.have.ordered.members(["lda", "gga"]);
@@ -99,10 +27,28 @@ describe("RJSF schema", () => {
         expect(ggaCase).to.not.have.property("dependencies");
     });
 
+    it("should create static options in dependency block if present in node", () => {
+        const dependencies = buildDependencies([DFT_TREE_ADVANCED]);
+
+        const [dftCase] = dependencies.dependencies.type.oneOf;
+        // eslint-disable-next-line no-unused-expressions
+        expect(dftCase.properties.spinOrbitCoupling.enum[0]).to.be.true;
+        expect(dftCase.properties.spinOrbitCoupling.enum).to.have.length(1);
+        // eslint-disable-next-line no-unused-expressions
+        expect(dftCase.properties.spinOrbitCoupling.enumNames[0]).to.be.eql("true");
+        expect(dftCase.properties.spinOrbitCoupling.enumNames).to.have.length(1);
+
+        const [ldaCase, ggaCase] = dftCase.dependencies.subtype.oneOf;
+        expect(ldaCase.properties).not.to.haveOwnProperty("spinPolarization");
+
+        expect(ggaCase.properties.spinPolarization.enum).to.have.members(["collinear"]);
+        expect(ggaCase.properties.spinPolarization.enumNames).to.have.members(["collinear"]);
+    });
+
     it("can be created with dependencies from schema", () => {
         const rjsfSchema = getSchemaWithDependencies({
             schema: DFT_SCHEMA,
-            nodes: [TREE],
+            nodes: [DFT_TREE_SIMPLE],
         });
         expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
         expect(rjsfSchema.properties).to.be.eql(DFT_SCHEMA.properties);
@@ -112,7 +58,7 @@ describe("RJSF schema", () => {
     it("enum and enumNames can be added to schema properties", () => {
         const rjsfSchema = getSchemaWithDependencies({
             schema: DFT_SCHEMA,
-            nodes: [TREE],
+            nodes: [DFT_TREE_SIMPLE],
             modifyProperties: true,
         });
         // console.log(JSON.stringify(rjsfSchema, null, 4));
