@@ -34,18 +34,33 @@ export function typeofSchema(schema) {
     }
 }
 
-function getEnumValues(nodes) {
+function extractEnumOptions(nodes) {
     if (!nodes.length) return {};
     return {
-        enum: nodes.map((node) => lodash.get(node, node.dataSelector.value)),
+        enum: nodes.map((node) => node.data.value),
+        enumNames: nodes.map((node) => node.data.name),
     };
 }
 
-function getEnumNames(nodes) {
-    if (!nodes.length) return {};
-    return {
-        enumNames: nodes.map((node) => lodash.get(node, node.dataSelector.name)),
-    };
+function substituteName(value, mapping) {
+    if (mapping && value in mapping) {
+        return mapping[value];
+    }
+    return typeof value !== "string" ? JSON.stringify(value) : value;
+}
+
+function createStaticFields(node) {
+    if (!node.staticOptions) return {};
+    const fields = {};
+    node.staticOptions
+        .filter((o) => o.key && o.values)
+        .forEach((o) => {
+            fields[o.key] = {
+                enum: o.values,
+                enumNames: o.values.map((v) => substituteName(v, o.namesMap)),
+            };
+        });
+    return fields;
 }
 
 /**
@@ -54,9 +69,10 @@ function getEnumNames(nodes) {
  * @returns {{}|{dependencies: {}}}
  */
 export function buildDependencies(nodes) {
-    if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
-    const parentKey = nodes[0].dataSelector.key;
-    const childKey = nodes[0].children[0].dataSelector.key;
+    const isTerminal = nodes.every((n) => !n.children?.length);
+    if (nodes.length === 0 || isTerminal || !nodes[0].data) return {};
+    const parentKey = nodes[0].data.key;
+    const childKey = nodes[0].children[0].data.key;
     return {
         dependencies: {
             [parentKey]: {
@@ -64,13 +80,12 @@ export function buildDependencies(nodes) {
                     return {
                         properties: {
                             [parentKey]: {
-                                ...getEnumValues([node]),
-                                ...getEnumNames([node]),
+                                ...extractEnumOptions([node]),
                             },
                             [childKey]: {
-                                ...getEnumValues(node.children),
-                                ...getEnumNames(node.children),
+                                ...extractEnumOptions(node.children),
                             },
+                            ...createStaticFields(node),
                         },
                         ...buildDependencies(node.children),
                     };
@@ -104,9 +119,8 @@ export function getSchemaWithDependencies({
     // RJSF does not automatically render dropdown widget if `enum` is not present
     if (modifyProperties && nodes.length) {
         const mod = {
-            [nodes[0].dataSelector.key]: {
-                ...getEnumNames(nodes),
-                ...getEnumValues(nodes),
+            [nodes[0].data.key]: {
+                ...extractEnumOptions(nodes),
             },
         };
         lodash.forEach(mod, (extraFields, key) => {

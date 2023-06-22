@@ -43,4 +43,10 @@ describe("YAML tag: !esse", () => {
         const expected = "array containing values of x Axis";
         expect(parsed.case4).to.be.eql(expected);
     });
+
+    it("should correctly return array item from esse schema", () => {
+        const parsed = yaml.load(yamlFixture, { schema: yamlSchema });
+        const expected = "yDataSeries";
+        expect(parsed.case5).to.be.eql(expected);
+    });
 });
