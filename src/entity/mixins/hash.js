@@ -30,9 +30,9 @@ export const HashedInputArrayMixin = (superclass) => {
          * @summary expects an array with elements containing field [{content: "..."}]
          */
         get hashFromArrayInputContent() {
-            const objectForHashing = this.input.map((i) =>
-                removeEmptyLinesFromString(removeCommentsFromSourceCode(i.content)),
-            );
+            const objectForHashing = this.input.map((i) => {
+                return removeEmptyLinesFromString(removeCommentsFromSourceCode(i.content));
+            });
             return calculateHashFromObject(objectForHashing);
         }
     };

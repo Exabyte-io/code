@@ -176,3 +176,41 @@ export function sortKeysDeepForObject(obj) {
     }
     return obj;
 }
+
+/**
+ * Merge terminal node values of an object tree.
+ * @param {Object} tree - Nested object
+ * @param {Boolean} unique - Whether merged list should consist of unique items
+ * @return {Array} - Merged list of values of terminal nodes.
+ * @example
+ * const tree = {
+ *     level1: {
+ *         level2a: {
+ *             level3a: {
+ *                 key1: ['a', 'b', 'c'],
+ *             },
+ *             level3b: {
+ *                 key2: ['d', 'e', 'f'],
+ *             },
+ *         },
+ *         level2b: {
+ *             level3c: {
+ *                 key3: ['g', 'h', 'i'],
+ *             },
+ *             level3d: {
+ *                 key4: ['j', 'k', 'l'],
+ *             },
+ *         },
+ *     },
+ * };
+ * mergeTerminalNodes(tree); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']
+ */
+export function mergeTerminalNodes(tree, unique = false) {
+    const terminalValues = lodash.values(tree).reduce((accumulator, value) => {
+        if (lodash.isPlainObject(value)) {
+            return accumulator.concat(mergeTerminalNodes(value));
+        }
+        return accumulator.concat(value);
+    }, []);
+    return unique ? [...new Set(terminalValues)] : terminalValues;
+}

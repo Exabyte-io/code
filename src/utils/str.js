@@ -1,3 +1,5 @@
+import lodash from "lodash";
+import nunjucks from "nunjucks";
 import _ from "underscore";
 
 export function removeNewLinesAndExtraSpaces(str) {
@@ -56,33 +58,69 @@ export function removeEmptyLinesFromString(string) {
 }
 
 /**
-* converts simple number to roman.
-* @param {Number} num 
-* @returns {String} - string
-*/
+ * converts simple number to roman.
+ * @param {Number} num
+ * @returns {String} - string
+ */
 export function convertArabicToRoman(num) {
-   var roman = {
-     M: 1000,
-     CM: 900,
-     D: 500,
-     CD: 400,
-     C: 100,
-     XC: 90,
-     L: 50,
-     XL: 40,
-     X: 10,
-     IX: 9,
-     V: 5,
-     IV: 4,
-     I: 1
-   };
-   let str = '';
- 
-   for (const i of Object.keys(roman)) {
-     const q = Math.floor(num / roman[i]);
-     num -= q * roman[i];
-     str += i.repeat(q);
-   }
- 
-   return str;
- }
+    const roman = {
+        M: 1000,
+        CM: 900,
+        D: 500,
+        CD: 400,
+        C: 100,
+        XC: 90,
+        L: 50,
+        XL: 40,
+        X: 10,
+        IX: 9,
+        V: 5,
+        IV: 4,
+        I: 1,
+    };
+    let str = "";
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const i of Object.keys(roman)) {
+        const q = Math.floor(num / roman[i]);
+        // eslint-disable-next-line no-param-reassign
+        num -= q * roman[i];
+        str += i.repeat(q);
+    }
+
+    return str;
+}
+
+/**
+ * Render name template based on config.
+ * Use substitution map to replace a config value with a more readable variant.
+ * @param {string} template - Template for the name property
+ * @param {Object} data - Entity config
+ * @param {Object} substitutionMap - Maps object value to human-readable string
+ * @return {string}
+ * @example
+ * generateName(
+ *     "Hello {{user}}!",
+ *     {user: "user001"},
+ *     {user001: "John Doe"}
+ * ); // "Hello John Doe!"
+ */
+export function renderTextWithSubstitutes(template, data, substitutionMap = {}) {
+    if (!template) return "";
+    // Create a copy of data to avoid modifying the original
+    const renderData = lodash.cloneDeep(data);
+
+    // Helper function for recursive substitution
+    function substituteNested(obj) {
+        lodash.forIn(obj, (value, key) => {
+            if (lodash.isPlainObject(value)) {
+                substituteNested(value);
+            } else if (substitutionMap[value]) {
+                obj[key] = substitutionMap[value];
+            }
+        });
+    }
+
+    substituteNested(renderData);
+    return nunjucks.renderString(template, renderData);
+}

@@ -1,9 +1,8 @@
-import mergeAllOf from "json-schema-merge-allof";
 import lodash from "lodash";
 
 // import { ESSE } from "@exabyte-io/esse.js";
-import { deepClone } from "../utils/clone";
-import { getMixSchemasByClassName, getSchemaByClassName } from "../utils/schemas";
+import { clone, deepClone } from "../utils/clone";
+import { getSchemaByClassName } from "../utils/schemas";
 
 // TODO: https://exabyte.atlassian.net/browse/SOF-5946
 // const schemas = new ESSE().schemas;
@@ -13,8 +12,11 @@ export class InMemoryEntity {
         return new this.prototype.constructor(config);
     }
 
-    constructor(config) {
-        this._json = deepClone(config || {});
+    // Override if config deepClone is needed
+    static _isDeepCloneRequired = false;
+
+    constructor(config = {}) {
+        this._json = this.constructor._isDeepCloneRequired ? deepClone(config) : clone(config);
     }
 
     /**
@@ -47,11 +49,24 @@ export class InMemoryEntity {
 
     /**
      * @summary Array of fields to exclude from resulted JSON
-     * @param exclude {String[]}
+     * @param {String[]} exclude
      */
     toJSON(exclude = []) {
-        const config = deepClone(lodash.omit(this._json, exclude));
-        return this.clean(config);
+        return this.constructor._isDeepCloneRequired
+            ? this.toJSONSafe(exclude)
+            : this.toJSONQuick(exclude);
+    }
+
+    toJSONSafe(exclude = []) {
+        const config = lodash.omit(this._json, exclude);
+
+        return this.clean(deepClone(config));
+    }
+
+    toJSONQuick(exclude = []) {
+        const config = lodash.omit(this._json, exclude);
+
+        return this.clean(clone(config));
     }
 
     /**
@@ -91,10 +106,12 @@ export class InMemoryEntity {
 
     isValid() {
         const ctx = this.schema.newContext();
-        ctx.validate(this.toJSON());
+        const json = this.toJSON();
+
+        ctx.validate(json);
 
         if (!ctx.isValid()) {
-            console.log(JSON.stringify(this.toJSON()));
+            console.log(JSON.stringify(json));
             if (ctx.getErrorObject) {
                 console.log(ctx.getErrorObject());
             }
@@ -195,42 +212,24 @@ export class InMemoryEntity {
     }
 
     /**
-     * Returns original ESSE schema with nested properties from customJsonSchemaProperties
-     * @see customJsonSchemaProperties
-     * @returns {Object} schema
-     */
-    static get baseJSONSchema() {
-        if (!this.customJsonSchemaProperties) {
-            return getSchemaByClassName(this.name);
-        }
-
-        const { properties, ...schema } = getSchemaByClassName(this.name);
-
-        return {
-            ...schema,
-            properties: {
-                ...properties,
-                ...this.customJsonSchemaProperties,
-            },
-        };
-    }
-
-    /**
-     * Returns resolved JSON schema with custom properties and all mixes from schemas.js
+     * Returns class JSON schema
      * @returns {Object} schema
      */
     static get jsonSchema() {
         try {
-            return mergeAllOf(
-                {
-                    allOf: [this.baseJSONSchema, ...getMixSchemasByClassName(this.name)],
+            if (!this.customJsonSchemaProperties) {
+                return getSchemaByClassName(this.name);
+            }
+
+            const { properties, ...schema } = getSchemaByClassName(this.name);
+
+            return {
+                ...schema,
+                properties: {
+                    ...properties,
+                    ...this.customJsonSchemaProperties,
                 },
-                {
-                    resolvers: {
-                        defaultResolver: mergeAllOf.options.resolvers.title,
-                    },
-                },
-            );
+            };
         } catch (e) {
             console.error(e.stack);
             throw e;

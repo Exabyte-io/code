@@ -1,104 +1,123 @@
+import lodash from "lodash";
+
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
-export const baseSchemas = {
-    Material: "material",
-    Entity: "system/entity",
-    BankMaterial: "material",
-    Workflow: "workflow",
-    Subworkflow: "workflow/subworkflow",
-    BankWorkflow: "workflow",
-    Job: "job",
-    Application: "software/application",
-    Executable: "software/executable",
-    Flavor: "software/flavor",
-    Template: "software/template",
-    AssertionUnit: "workflow/unit/assertion",
-    AssignmentUnit: "workflow/unit/assignment",
-    ConditionUnit: "workflow/unit/condition",
-    ExecutionUnit: "workflow/unit/execution",
-    IOUnit: "workflow/unit/io",
-    MapUnit: "workflow/unit/map",
-    ProcessingUnit: "workflow/unit/processing",
-    ReduceUnit: "workflow/unit/reduce",
-    SubworkflowUnit: "workflow/unit",
-    Unit: "workflow/unit",
-    Project: "project",
-};
+export const schemas = {};
 
-export const entityMix = [
-    "system/description-object",
-    "system/base-entity-set",
-    "system/sharing",
-    "system/metadata",
-    "system/defaultable",
-];
-
-export const subWorkflowMix = ["system/system-name", "system/is-multi-material"];
-
-export const workflowMix = ["workflow/base-flow", "system/history", "system/is-outdated"];
-
-export const bankMaterialMix = ["material/conventional", "system/creator-account"];
-
-export const bankWorkflowMix = ["system/creator-account"];
-
-export const jobMix = ["system/status", "system/job-extended"];
-
-export const unitMix = [
-    "system/unit-extended",
-    "system/status",
-    "workflow/unit/runtime/runtime-items",
-];
-
-export const assignmentUnitMix = ["system/scope"];
-
-export const flavorMix = ["system/is-multi-material"];
-
-export const systemEntityMix = ["system/entity"];
-
-export const projectMix = ["system/status"];
-
-export const mixSchemas = {
-    Entity: [...entityMix],
-    Material: [...entityMix],
-    BankMaterial: [...entityMix, ...bankMaterialMix],
-    Workflow: [...entityMix, ...subWorkflowMix, ...workflowMix],
-    Subworkflow: [...subWorkflowMix],
-    BankWorkflow: [...entityMix, ...subWorkflowMix, ...workflowMix, ...bankWorkflowMix],
-    Job: [...entityMix, ...jobMix],
-    Application: [...entityMix, ...systemEntityMix],
-    Executable: [...entityMix, ...systemEntityMix],
-    Flavor: [...entityMix, ...flavorMix, ...systemEntityMix],
-    Template: [...entityMix, ...systemEntityMix],
-    AssertionUnit: [...unitMix],
-    AssignmentUnit: [...unitMix, ...assignmentUnitMix],
-    ConditionUnit: [...unitMix],
-    ExecutionUnit: [...unitMix],
-    IOUnit: [...unitMix],
-    MapUnit: [...unitMix],
-    ProcessingUnit: [...unitMix],
-    ReduceUnit: [...unitMix],
-    SubworkflowUnit: [...unitMix],
-    Unit: [...unitMix],
-    Project: [...entityMix, ...systemEntityMix, ...projectMix],
-};
-
+/**
+ * Returns previously registered schema for InMemoryEntity
+ * @param {*} className
+ * @returns
+ */
 export function getSchemaByClassName(className) {
-    return baseSchemas[className] ? JSONSchemasInterface.schemaById(baseSchemas[className]) : null;
-}
-
-export function getMixSchemasByClassName(className) {
-    return mixSchemas[className]
-        ? mixSchemas[className].map((schemaId) => JSONSchemasInterface.schemaById(schemaId))
-        : [];
+    return schemas[className] ? JSONSchemasInterface.schemaById(schemas[className]) : null;
 }
 
 /**
  * Register additional Entity classes to be resolved with jsonSchema property
  * @param {String} className - class name derived from InMemoryEntity
- * @param {String} classBaseSchema - base schemaId
- * @param {Array} classMixSchemas - array of schemaId to mix
+ * @param {String} schemaId - class schemaId
  */
-export function registerClassName(className, classBaseSchema, classMixSchemas) {
-    baseSchemas[className] = classBaseSchema;
-    mixSchemas[className] = classMixSchemas;
+export function registerClassName(className, schemaId) {
+    schemas[className] = schemaId;
+}
+
+export function typeofSchema(schema) {
+    if (lodash.has(schema, "type")) {
+        return schema.type;
+    }
+    if (lodash.has(schema, "properties")) {
+        return "object";
+    }
+    if (lodash.has(schema, "items")) {
+        return "array";
+    }
+}
+
+function getEnumValues(nodes) {
+    if (!nodes.length) return {};
+    return {
+        enum: nodes.map((node) => lodash.get(node, node.dataSelector.value)),
+    };
+}
+
+function getEnumNames(nodes) {
+    if (!nodes.length) return {};
+    return {
+        enumNames: nodes.map((node) => lodash.get(node, node.dataSelector.name)),
+    };
+}
+
+/**
+ * @summary Recursively generate `dependencies` for RJSF schema based on tree.
+ * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)
+ * @returns {{}|{dependencies: {}}}
+ */
+export function buildDependencies(nodes) {
+    if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
+    const parentKey = nodes[0].dataSelector.key;
+    const childKey = nodes[0].children[0].dataSelector.key;
+    return {
+        dependencies: {
+            [parentKey]: {
+                oneOf: nodes.map((node) => {
+                    return {
+                        properties: {
+                            [parentKey]: {
+                                ...getEnumValues([node]),
+                                ...getEnumNames([node]),
+                            },
+                            [childKey]: {
+                                ...getEnumValues(node.children),
+                                ...getEnumNames(node.children),
+                            },
+                        },
+                        ...buildDependencies(node.children),
+                    };
+                }),
+            },
+        },
+    };
+}
+
+/**
+ * Combine schema and dependencies block for usage with react-jsonschema-form (RJSF)
+ * @param {Object} schema - Schema
+ * @param {String} schemaId - Schema id (takes precedence over `schema` when both are provided)
+ * @param {Object[]} nodes - Array of nodes
+ * @param {Boolean} modifyProperties - Whether properties in main schema should be modified (add `enum` and `enumNames`)
+ * @returns {{}|{[p: string]: *}} - RJSF schema
+ */
+export function getSchemaWithDependencies({
+    schema = {},
+    schemaId,
+    nodes,
+    modifyProperties = false,
+}) {
+    const mainSchema = schemaId ? JSONSchemasInterface.schemaById(schemaId) : schema;
+
+    if (!lodash.isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
+        console.error("getSchemaWithDependencies() only accepts schemas of type 'object'");
+        return {};
+    }
+
+    // RJSF does not automatically render dropdown widget if `enum` is not present
+    if (modifyProperties && nodes.length) {
+        const mod = {
+            [nodes[0].dataSelector.key]: {
+                ...getEnumNames(nodes),
+                ...getEnumValues(nodes),
+            },
+        };
+        lodash.forEach(mod, (extraFields, key) => {
+            if (lodash.has(mainSchema, `properties.${key}`)) {
+                mainSchema.properties[key] = { ...mainSchema.properties[key], ...extraFields };
+            }
+        });
+    }
+
+    return {
+        ...(schemaId ? mainSchema : schema),
+        ...buildDependencies(nodes),
+    };
 }
