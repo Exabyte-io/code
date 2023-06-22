@@ -38,7 +38,7 @@ function isMultiPathSupported(pathObject, multiPathSeparator, filterObjects) {
  * @return {Object[]} - filtered entity path objects or entities
  */
 export function filterEntityList({ entitiesOrPaths, filterObjects = [], multiPathSeparator = "" }) {
-    if (!filterObjects || !filterObjects.length) return entitiesOrPaths;
+    if (!filterObjects || !filterObjects.length) return [];
     const filterObjects_ = filterObjects.map((o) => (o.regex ? { regex: new RegExp(o.regex) } : o));
 
     let filtered;
