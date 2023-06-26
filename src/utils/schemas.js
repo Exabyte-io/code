@@ -69,30 +69,36 @@ function createStaticFields(node) {
  * @returns {{}|{dependencies: {}}}
  */
 export function buildDependencies(nodes) {
-    const isTerminal = nodes.every((n) => !n.children?.length);
-    if (nodes.length === 0 || isTerminal || !nodes[0].data) return {};
+    if (!nodes || nodes.length === 0 || !nodes[0].data) return {};
     const parentKey = nodes[0].data.key;
-    const childKey = nodes[0].children[0].data.key;
-    return {
-        dependencies: {
-            [parentKey]: {
-                oneOf: nodes.map((node) => {
-                    return {
-                        properties: {
-                            [parentKey]: {
-                                ...extractEnumOptions([node]),
-                            },
-                            [childKey]: {
-                                ...extractEnumOptions(node.children),
-                            },
-                            ...createStaticFields(node),
-                        },
-                        ...buildDependencies(node.children),
-                    };
-                }),
-            },
-        },
-    };
+
+    const cases = nodes
+        .filter((node) => node.children?.length && node.data)
+        .map((node) => {
+            const childKey = node.children[0].data.key;
+            return {
+                properties: {
+                    [parentKey]: {
+                        ...extractEnumOptions([node]),
+                    },
+                    [childKey]: {
+                        ...extractEnumOptions(node.children),
+                    },
+                    ...createStaticFields(node),
+                },
+                ...buildDependencies(node.children),
+            };
+        });
+
+    return cases.length
+        ? {
+              dependencies: {
+                  [parentKey]: {
+                      oneOf: cases,
+                  },
+              },
+          }
+        : {};
 }
 
 /**
