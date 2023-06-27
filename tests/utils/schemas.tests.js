@@ -76,7 +76,9 @@ describe("RJSF schema", () => {
         expect(typeCase.properties.type.enum[0]).to.be.equal("a");
         expect(typeCase.properties.subtype.enum).to.have.members(["b", "c", "d"]);
 
-        const [cCase, dCase] = typeCase.dependencies.subtype.oneOf;
+        const [bCase, cCase, dCase] = typeCase.dependencies.subtype.oneOf;
+        expect(bCase.properties.subtype.enum[0]).to.be.equal("b");
+
         expect(cCase.properties.subtype.enum[0]).to.be.equal("c");
         expect(cCase.properties.subsubtype.enum).to.have.members(["c1", "c2"]);
 

@@ -69,28 +69,23 @@ function createStaticFields(node) {
  * @returns {{}|{dependencies: {}}}
  */
 export function buildDependencies(nodes) {
-    if (!nodes || nodes.length === 0 || !nodes[0].data) return {};
+    const isEveryTerminal = nodes && nodes.every((node) => !node.children?.length);
+    if (!nodes || !nodes.length || !nodes[0].data) return {};
     const parentKey = nodes[0].data.key;
 
-    const cases = nodes
-        .filter((node) => node.children?.length && node.data)
-        .map((node) => {
-            const childKey = node.children[0].data.key;
-            return {
-                properties: {
-                    [parentKey]: {
-                        ...extractEnumOptions([node]),
-                    },
-                    [childKey]: {
-                        ...extractEnumOptions(node.children),
-                    },
-                    ...createStaticFields(node),
-                },
-                ...buildDependencies(node.children),
-            };
-        });
+    const cases = nodes.map((node) => {
+        const childKey = node.children?.length && node.children[0].data.key;
+        return {
+            properties: {
+                [parentKey]: extractEnumOptions([node]),
+                ...(childKey ? { [childKey]: extractEnumOptions(node.children) } : {}),
+                ...createStaticFields(node),
+            },
+            ...buildDependencies(node.children),
+        };
+    });
 
-    return cases.length
+    return cases.length && !isEveryTerminal
         ? {
               dependencies: {
                   [parentKey]: {
