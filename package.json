@@ -7,7 +7,7 @@
         "lint": "eslint src tests scripts && prettier --write src tests scripts",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile",
+        "postinstall": "npm run transpile && npm run buildInterfaces",
         "prettier": "prettier --check src tests",
         "prepare": "husky install",
         "buildInterfaces": "node scripts/buildInterfaces.mjs"
