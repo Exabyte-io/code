@@ -1,6 +1,5 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-/* eslint-disable import/no-extraneous-dependencies */
 import directoryTree from "directory-tree";
 import fs from "fs/promises";
 import { compileFromFile } from "json-schema-to-typescript";
