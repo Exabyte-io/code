@@ -4,12 +4,13 @@
     "description": "COre DEfinitions in JS for Mat3ra.com (Exabyte.io)",
     "scripts": {
         "test": "nyc --reporter=text mocha --recursive --bail --require @babel/register/lib --require tests/setup.js tests",
-        "lint": "eslint src tests && prettier --write src tests",
+        "lint": "eslint src tests scripts && prettier --write src tests scripts",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "transpile": "babel --out-dir dist src",
-        "postinstall": "npm run transpile",
+        "postinstall": "npm run transpile && npm run buildInterfaces",
         "prettier": "prettier --check src tests",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "buildInterfaces": "node scripts/buildInterfaces.mjs"
     },
     "repository": {
         "type": "git",
@@ -50,7 +51,7 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "@exabyte-io/esse.js": "2023.6.20-0",
+        "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#update/SOF-6535",
         "ajv": "4.1.7",
         "crypto-js": "^4.1.1",
         "js-yaml": "^4.1.0",
@@ -61,7 +62,9 @@
         "nunjucks": "^3.2.4",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4",
-        "uuid": "8.3.2"
+        "uuid": "8.3.2",
+        "directory-tree": "^3.5.1",
+        "json-schema-to-typescript": "^13.0.2"
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",
