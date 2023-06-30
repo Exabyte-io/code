@@ -29,7 +29,8 @@
         "./dist/utils": "./dist/utils/index.js",
         "./dist/constants": "./dist/constants.js",
         "./dist/math": "./dist/math.js",
-        "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js"
+        "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js",
+        "./dist/types": "./dist/types.ts"
     },
     "files": [
         "/dist",

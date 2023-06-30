@@ -5,7 +5,7 @@ import fs from "fs/promises";
 import { compileFromFile } from "json-schema-to-typescript";
 import path from "path";
 
-const typesPath = "./dist/types.d.ts";
+const typesPath = "./dist/types.ts";
 const schemaFolder = "node_modules/@exabyte-io/esse.js/schema";
 
 await fs.writeFile(typesPath, "/* eslint-disable */\n\n");
