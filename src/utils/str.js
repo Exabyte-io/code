@@ -1,5 +1,8 @@
 import lodash from "lodash";
 import nunjucks from "nunjucks";
+import semverCoerce from "semver/functions/coerce";
+import semverLt from "semver/functions/lt";
+import semverRcompare from "semver/functions/rcompare";
 import _ from "underscore";
 
 export function removeNewLinesAndExtraSpaces(str) {
@@ -123,4 +126,19 @@ export function renderTextWithSubstitutes(template, data, substitutionMap = {}) 
 
     substituteNested(renderData);
     return nunjucks.renderString(template, renderData);
+}
+
+/**
+ * Find the next smallest version from a list of semantic version strings.
+ * @param {string[]} versions - Array of semantic version strings.
+ * @param {string} inputVersion - Version to compare to.
+ * @returns {string | undefined}
+ */
+export function findPreviousVersion(versions, inputVersion) {
+    const version = semverCoerce(inputVersion);
+    const versions_ = versions
+        .map((v) => ({ raw: v, coerced: semverCoerce(v) }))
+        .sort((a, b) => semverRcompare(a.coerced, b.coerced));
+    const prev = versions_.find((o) => semverLt(o.coerced, version));
+    return prev?.raw;
 }

@@ -59,6 +59,7 @@
         "mathjs": "^3.9.0",
         "mixwith": "^0.1.1",
         "nunjucks": "^3.2.4",
+        "semver": "^7.5.3",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4",
         "uuid": "8.3.2"
