@@ -1,6 +1,5 @@
 import lodash from "lodash";
 
-// import { ESSE } from "@exabyte-io/esse.js";
 import { clone, deepClone } from "../utils/clone";
 import { getSchemaByClassName } from "../utils/schemas";
 

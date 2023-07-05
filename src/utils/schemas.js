@@ -2,6 +2,8 @@ import lodash from "lodash";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
+export * as esseSchema from "@exabyte-io/esse.js/schemas";
+
 export * from "@exabyte-io/esse.js/lib/js/esse/utils";
 
 export const schemas = {};
