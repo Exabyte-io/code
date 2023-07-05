@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { compile } = require("json-schema-to-typescript");
-const { makeSchemaId, makeSchemaRef } = require("@exabyte-io/esse.js/lib/js/esse/utils");
+const { makeFlatSchemaId, makeFlatSchemaRef } = require("@exabyte-io/esse.js/lib/js/esse/utils");
 
 /**
  * Compiles ESSE JSON schemas to TypeScript interfaces/types
@@ -22,13 +22,13 @@ async function compileTS(globalSchema, savePath) {
                             ...schema,
                             allOf: [
                                 ...schema.allOf,
-                                makeSchemaRef(`${schema.schemaId}-properties`),
+                                makeFlatSchemaRef(`${schema.schemaId}-properties`),
                             ],
                             properties: null,
                         },
                     ],
                     [
-                        makeSchemaId(`${schema.schemaId}-properties`),
+                        makeFlatSchemaId(`${schema.schemaId}-properties`),
                         {
                             schemaId: `${schema.schemaId}-properties`,
                             type: "object",
