@@ -1,4 +1,4 @@
-import { schemas } from "@exabyte-io/esse.js/schemas";
+import RefParser from "@apidevtools/json-schema-ref-parser";
 import Ajv from "ajv";
 import mergeAllOf from "json-schema-merge-allof";
 
@@ -47,15 +47,15 @@ export class JSONSchemasInterface {
      * @returns {Object.<string, any>} resolved JSON schema
      */
     static schemaById(schemaId) {
-        if (!schemasCache.has(schemaId)) {
-            const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
+        // if (!schemasCache.has(schemaId)) {
+        //     const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
 
-            if (!originalSchema) {
-                throw new Error(`Schema not found: ${schemaId}`);
-            }
+        //     if (!originalSchema) {
+        //         throw new Error(`Schema not found: ${schemaId}`);
+        //     }
 
-            this.registerSchema(originalSchema);
-        }
+        //     this.registerSchema(originalSchema);
+        // }
 
         return schemasCache.get(schemaId);
     }
@@ -64,16 +64,20 @@ export class JSONSchemasInterface {
      *
      * @param {Object} - external schema
      */
-    static registerSchema(originalSchema) {
-        const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema), {
-            resolvers: {
-                defaultResolver: mergeAllOf.options.resolvers.title,
-            },
+    static async registerGlobalSchema(globalSchema) {
+        const { definitions } = await RefParser.dereference(globalSchema);
+
+        schemasCache.clear();
+
+        Object.values(definitions).forEach((originalSchema) => {
+            const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema), {
+                resolvers: {
+                    defaultResolver: mergeAllOf.options.resolvers.title,
+                },
+            });
+
+            schemasCache.set(schema.schemaId, schema);
         });
-
-        schemasCache.set(schema.schemaId, schema);
-
-        return schema;
     }
 
     /**
@@ -99,7 +103,8 @@ export class JSONSchemasInterface {
      */
     static matchSchema(query) {
         const searchFields = Object.keys(query);
-        return schemas.find((schema) => {
+
+        return Array.from(schemasCache.values()).find((schema) => {
             return searchFields.every((field) => {
                 const { $regex } = query[field];
                 return new RegExp($regex).test(schema[field]);

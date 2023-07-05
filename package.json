@@ -10,7 +10,7 @@
         "postinstall": "npm run transpile && npm run buildInterfaces",
         "prettier": "prettier --check src tests",
         "prepare": "husky install",
-        "buildInterfaces": "node scripts/buildInterfaces.mjs"
+        "buildInterfaces": "node scripts/buildInterfaces.js"
     },
     "repository": {
         "type": "git",
@@ -45,6 +45,7 @@
     "license": "Apache-2.0",
     "homepage": "https://github.com/Exabyte-io/code.js",
     "dependencies": {
+        "@apidevtools/json-schema-ref-parser": "^10.1.0",
         "@babel/cli": "7.16.0",
         "@babel/core": "7.16.0",
         "@babel/eslint-parser": "7.16.3",
@@ -56,17 +57,17 @@
         "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#update/SOF-6535",
         "ajv": "4.1.7",
         "crypto-js": "^4.1.1",
+        "directory-tree": "^3.5.1",
         "js-yaml": "^4.1.0",
         "json-schema-merge-allof": "^0.8.1",
+        "json-schema-to-typescript": "^13.0.2",
         "lodash": "^4.17.21",
         "mathjs": "^3.9.0",
         "mixwith": "^0.1.1",
         "nunjucks": "^3.2.4",
         "underscore": "^1.13.3",
         "underscore.string": "^3.3.4",
-        "uuid": "8.3.2",
-        "directory-tree": "^3.5.1",
-        "json-schema-to-typescript": "^13.0.2"
+        "uuid": "8.3.2"
     },
     "devDependencies": {
         "@exabyte-io/eslint-config": "^2022.11.17-0",

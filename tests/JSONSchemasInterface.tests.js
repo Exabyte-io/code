@@ -1,14 +1,25 @@
+/* eslint-disable no-unused-expressions */
 import { assert, expect } from "chai";
 
 import { JSONSchemasInterface } from "../src/JSONSchemasInterface";
 
 describe("JSONSchemasInterface", () => {
-    it("can find schema", () => {
-        const schema = JSONSchemasInterface.schemaById("workflow");
-        expect(schema).to.be.an("object");
-    });
+    it("can match schemas", async () => {
+        await JSONSchemasInterface.registerGlobalSchema({
+            definitions: {
+                workflow: {
+                    schemaId: "workflow",
+                    $schema: "http://json-schema.org/draft-04/schema#",
+                    title: "System in-set schema",
+                    properties: {
+                        prop: {
+                            type: "string",
+                        },
+                    },
+                },
+            },
+        });
 
-    it("can match schemas", () => {
         const schema = JSONSchemasInterface.matchSchema({
             schemaId: {
                 $regex: "workflow",
@@ -18,60 +29,78 @@ describe("JSONSchemasInterface", () => {
         expect(schema).to.be.an("object");
     });
 
-    it("can find registered schemas; the schema is merged and clean", () => {
-        JSONSchemasInterface.registerSchema({
-            schemaId: "system/in-set",
-            $schema: "http://json-schema.org/draft-04/schema#",
-            title: "System in-set schema",
-            properties: {
-                inSet: {
-                    type: "array",
-                    items: {
-                        allOf: [
-                            {
-                                schemaId: "system/entity-reference",
-                                $schema: "http://json-schema.org/draft-04/schema#",
-                                title: "entity reference schema",
-                                properties: {
-                                    _id: {
-                                        description: "entity identity",
-                                        type: "string",
-                                    },
-                                    cls: {
-                                        description: "entity class",
-                                        type: "string",
-                                    },
-                                    slug: {
-                                        description: "entity slug",
-                                        type: "string",
-                                    },
-                                },
-                            },
-                            {
-                                type: "object",
-                                properties: {
-                                    type: {
-                                        type: "string",
-                                    },
-                                    index: {
-                                        type: "number",
-                                    },
-                                },
-                            },
-                        ],
+    it("can find registered schemas; the schema is merged and clean", async () => {
+        await JSONSchemasInterface.registerGlobalSchema({
+            definitions: {
+                "in-memory-entity-base": {
+                    schemaId: "in-memory-entity/base",
+                    $schema: "http://json-schema.org/draft-04/schema#",
+                    title: "System in-set schema",
+                    properties: {
+                        _id: {
+                            type: "string",
+                        },
+                        type: {
+                            type: "string",
+                        },
                     },
                 },
-                valueMapFunction: {
-                    description: "Specifies the function to convert the currentValue in UI.",
-                    type: "string",
-                    enum: [
-                        "toString",
-                        "toContactUs",
-                        "toPlusMinusSign",
-                        "toUnlimited",
-                        "toSupportSeverity",
-                    ],
-                    default: "toString",
+                "system-in-set": {
+                    schemaId: "system/in-set",
+                    $schema: "http://json-schema.org/draft-04/schema#",
+                    title: "System in-set schema",
+                    properties: {
+                        inSet: {
+                            type: "array",
+                            items: {
+                                allOf: [
+                                    {
+                                        schemaId: "system/entity-reference",
+                                        $schema: "http://json-schema.org/draft-04/schema#",
+                                        title: "entity reference schema",
+                                        properties: {
+                                            _id: {
+                                                description: "entity identity",
+                                                type: "string",
+                                            },
+                                            cls: {
+                                                description: "entity class",
+                                                type: "string",
+                                            },
+                                            slug: {
+                                                description: "entity slug",
+                                                type: "string",
+                                            },
+                                        },
+                                    },
+                                    {
+                                        type: "object",
+                                        properties: {
+                                            type: {
+                                                type: "string",
+                                            },
+                                            index: {
+                                                type: "number",
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                        valueMapFunction: {
+                            description:
+                                "Specifies the function to convert the currentValue in UI.",
+                            type: "string",
+                            enum: [
+                                "toString",
+                                "toContactUs",
+                                "toPlusMinusSign",
+                                "toUnlimited",
+                                "toSupportSeverity",
+                            ],
+                            default: "toString",
+                        },
+                    },
                 },
             },
         });
@@ -89,16 +118,20 @@ describe("JSONSchemasInterface", () => {
         expect(schema.properties.valueMapFunction.enum[4]).to.be.an("string");
     });
 
-    it("can create a validation function for a schema by schema id", () => {
-        JSONSchemasInterface.registerSchema({
-            schemaId: "test/person",
-            $schema: "http://json-schema.org/draft-04/schema#",
-            type: "object",
-            properties: {
-                name: { type: "string" },
-                age: { type: "integer", minimum: 18 },
+    it("can create a validation function for a schema by schema id", async () => {
+        await JSONSchemasInterface.registerGlobalSchema({
+            definitions: {
+                "test-person": {
+                    schemaId: "test/person",
+                    $schema: "http://json-schema.org/draft-04/schema#",
+                    type: "object",
+                    properties: {
+                        name: { type: "string" },
+                        age: { type: "integer", minimum: 18 },
+                    },
+                    required: ["name", "age"],
+                },
             },
-            required: ["name", "age"],
         });
         const personValid = { name: "John Doe", age: 30 };
         const personInvalid = { name: "John Doe", age: 15 };
