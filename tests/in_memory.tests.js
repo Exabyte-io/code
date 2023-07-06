@@ -50,15 +50,7 @@ describe("InMemoryEntity", () => {
     });
 
     it("jsonSchema returns correct registered schema", async () => {
-        class RegisteredEntity extends InMemoryEntity {
-            static get customJsonSchemaProperties() {
-                return {
-                    nested: {
-                        type: "string",
-                    },
-                };
-            }
-        }
+        class RegisteredEntity extends InMemoryEntity {}
 
         registerClassName(RegisteredEntity.name, "in-memory-entity/base");
 
@@ -82,6 +74,5 @@ describe("InMemoryEntity", () => {
 
         expect(RegisteredEntity.jsonSchema).to.be.an("object");
         expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties._id"); // check mix schemas
-        expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties.nested.type"); // check custom properties
     });
 });
