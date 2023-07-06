@@ -34,7 +34,6 @@
     "files": [
         "/dist",
         "/src",
-        "/scripts",
         ".babelrc"
     ],
     "author": "Exabyte Inc.",
