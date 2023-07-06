@@ -1,4 +1,5 @@
 import RefParser from "@apidevtools/json-schema-ref-parser";
+import { schemas } from "@exabyte-io/esse.js/schemas";
 import Ajv from "ajv";
 import mergeAllOf from "json-schema-merge-allof";
 
@@ -47,17 +48,33 @@ export class JSONSchemasInterface {
      * @returns {Object.<string, any>} resolved JSON schema
      */
     static schemaById(schemaId) {
-        // if (!schemasCache.has(schemaId)) {
-        //     const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
+        if (!schemasCache.has(schemaId)) {
+            const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
 
-        //     if (!originalSchema) {
-        //         throw new Error(`Schema not found: ${schemaId}`);
-        //     }
+            if (!originalSchema) {
+                throw new Error(`Schema not found: ${schemaId}`);
+            }
 
-        //     this.registerSchema(originalSchema);
-        // }
+            this.registerSchema(originalSchema);
+        }
 
         return schemasCache.get(schemaId);
+    }
+
+    /**
+     *
+     * @param {Object} - external schema
+     */
+    static registerSchema(originalSchema) {
+        const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema), {
+            resolvers: {
+                defaultResolver: mergeAllOf.options.resolvers.title,
+            },
+        });
+
+        schemasCache.set(schema.schemaId, schema);
+
+        return schema;
     }
 
     /**
