@@ -1,4 +1,4 @@
-import RefParser from "@apidevtools/json-schema-ref-parser";
+// import RefParser from "@apidevtools/json-schema-ref-parser";
 import { schemas } from "@exabyte-io/esse.js/schemas";
 import Ajv from "ajv";
 import mergeAllOf from "json-schema-merge-allof";
