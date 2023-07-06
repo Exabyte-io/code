@@ -43,7 +43,7 @@
     "license": "Apache-2.0",
     "homepage": "https://github.com/Exabyte-io/code.js",
     "dependencies": {
-        "@apidevtools/json-schema-ref-parser": "^10.1.0",
+        "@apidevtools/json-schema-ref-parser": "^10.0.1",
         "@babel/cli": "7.16.0",
         "@babel/core": "7.16.0",
         "@babel/eslint-parser": "7.16.3",
