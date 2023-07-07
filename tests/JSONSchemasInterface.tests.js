@@ -5,7 +5,7 @@ import { JSONSchemasInterface } from "../src/JSONSchemasInterface";
 
 describe("JSONSchemasInterface", () => {
     it("can match schemas", async () => {
-        await JSONSchemasInterface.registerGlobalSchema({
+        JSONSchemasInterface.registerGlobalSchema({
             definitions: {
                 workflow: {
                     schemaId: "workflow",
@@ -30,7 +30,7 @@ describe("JSONSchemasInterface", () => {
     });
 
     it("can find registered schemas; the schema is merged and clean", async () => {
-        await JSONSchemasInterface.registerGlobalSchema({
+        JSONSchemasInterface.registerGlobalSchema({
             definitions: {
                 "in-memory-entity-base": {
                     schemaId: "in-memory-entity/base",
@@ -119,7 +119,7 @@ describe("JSONSchemasInterface", () => {
     });
 
     it("can create a validation function for a schema by schema id", async () => {
-        await JSONSchemasInterface.registerGlobalSchema({
+        JSONSchemasInterface.registerGlobalSchema({
             definitions: {
                 "test-person": {
                     schemaId: "test/person",

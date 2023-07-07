@@ -54,7 +54,7 @@ export class JSONSchemasInterface {
      *
      * @param {Object} - external schema
      */
-    static async registerGlobalSchema(globalSchema) {
+    static registerGlobalSchema(globalSchema) {
         const { definitions } = deref(globalSchema);
 
         schemasCache.clear();

@@ -54,7 +54,7 @@ describe("InMemoryEntity", () => {
 
         registerClassName(RegisteredEntity.name, "in-memory-entity/base");
 
-        await JSONSchemasInterface.registerGlobalSchema({
+        JSONSchemasInterface.registerGlobalSchema({
             definitions: {
                 "in-memory-entity-base": {
                     schemaId: "in-memory-entity/base",
