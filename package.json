@@ -29,7 +29,6 @@
         "./dist/utils": "./dist/utils/index.js",
         "./dist/constants": "./dist/constants.js",
         "./dist/math": "./dist/math.js",
-        "./dist/schemas": "./dist/utils/schemas.js",
         "./dist/utils/schemas": "./dist/utils/schemas.js",
         "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js",
         "./dist/bin/compileTS": "./dist/bin/compileTS.js"
