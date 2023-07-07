@@ -29,7 +29,7 @@
         "./dist/utils": "./dist/utils/index.js",
         "./dist/constants": "./dist/constants.js",
         "./dist/math": "./dist/math.js",
-        "./dist/compileTS": "./dist/compileTS.js",
+        "./dist/compileTS": "./dist/utils/compileTS.js",
         "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js"
     },
     "files": [
