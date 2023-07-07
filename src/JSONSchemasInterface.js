@@ -1,5 +1,5 @@
-import RefParser from "@apidevtools/json-schema-ref-parser";
 import Ajv from "ajv";
+import deref from "json-schema-deref-sync";
 import mergeAllOf from "json-schema-merge-allof";
 
 const schemasCache = new Map();
@@ -55,7 +55,7 @@ export class JSONSchemasInterface {
      * @param {Object} - external schema
      */
     static async registerGlobalSchema(globalSchema) {
-        const { definitions } = await RefParser.dereference(globalSchema);
+        const { definitions } = deref(globalSchema);
 
         schemasCache.clear();
 
