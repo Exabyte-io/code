@@ -43,10 +43,16 @@ export async function compileTS(globalSchema, savePath) {
         [],
     );
 
-    const compiled = await compile({
-        ...globalSchema,
-        definitions: Object.fromEntries(preparedDefinitions),
-    });
+    const compiled = await compile(
+        {
+            ...globalSchema,
+            definitions: Object.fromEntries(preparedDefinitions),
+        },
+        "",
+        {
+            unreachableDefinitions: true,
+        },
+    );
 
     await fs.writeFile(savePath, compiled);
 }
