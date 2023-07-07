@@ -1,6 +1,6 @@
-const fs = require("fs");
-const { compile } = require("json-schema-to-typescript");
-const { makeFlatSchemaId, makeFlatSchemaRef } = require("@exabyte-io/esse.js/lib/js/esse/utils");
+import { makeFlatSchemaId, makeFlatSchemaRef } from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
+import fs from "fs/promises";
+import { compile } from "json-schema-to-typescript";
 
 /**
  * Compiles ESSE JSON schemas to TypeScript interfaces/types
@@ -10,7 +10,7 @@ const { makeFlatSchemaId, makeFlatSchemaRef } = require("@exabyte-io/esse.js/lib
  * @example
  * await compileTS(esseSchema, "./dist/types.ts");
  */
-async function compileTS(globalSchema, savePath) {
+export async function compileTS(globalSchema, savePath) {
     const preparedDefinitions = Object.entries(globalSchema.definitions).reduce(
         (newDefinitions, [key, schema]) => {
             if (schema.allOf && schema.properties) {
@@ -48,9 +48,5 @@ async function compileTS(globalSchema, savePath) {
         definitions: Object.fromEntries(preparedDefinitions),
     });
 
-    fs.writeFileSync(savePath, compiled);
+    await fs.writeFile(savePath, compiled);
 }
-
-module.exports = {
-    compileTS,
-};
