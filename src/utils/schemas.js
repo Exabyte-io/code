@@ -1,11 +1,8 @@
-import globalSchema from "@exabyte-io/esse.js/schema";
 import lodash from "lodash";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
 export * from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
-
-export const esseSchema = globalSchema;
 
 export const schemas = {};
 

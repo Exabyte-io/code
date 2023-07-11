@@ -1,6 +1,9 @@
+import baseSchema from "@exabyte-io/esse.js/schema";
 import Ajv from "ajv";
 import deref from "json-schema-deref-sync";
 import mergeAllOf from "json-schema-merge-allof";
+
+export const esseSchema = baseSchema;
 
 const schemasCache = new Map();
 
@@ -47,6 +50,10 @@ export class JSONSchemasInterface {
      * @returns {Object.<string, any>} resolved JSON schema
      */
     static schemaById(schemaId) {
+        if (schemasCache.size === 0) {
+            JSONSchemasInterface.registerGlobalSchema(esseSchema);
+        }
+
         return schemasCache.get(schemaId);
     }
 
