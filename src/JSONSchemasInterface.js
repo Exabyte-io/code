@@ -44,6 +44,8 @@ function removeSchemaIdsAfterAllOf(schema, clean = false) {
 }
 
 export class JSONSchemasInterface {
+    _schema = null;
+
     /**
      *
      * @param {string} schemaId id of JSON schema from ESSE
@@ -62,6 +64,14 @@ export class JSONSchemasInterface {
      * @param {Object} - external schema
      */
     static registerGlobalSchema(globalSchema) {
+        if (JSONSchemasInterface._schema === globalSchema) {
+            // performance optimization:
+            // skip resolving as we already did it for the same globalSchema object
+            return;
+        }
+
+        JSONSchemasInterface._schema = globalSchema;
+
         const { definitions } = deref(globalSchema);
 
         schemasCache.clear();

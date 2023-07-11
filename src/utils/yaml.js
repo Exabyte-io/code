@@ -161,7 +161,7 @@ export const esseType = new yaml.Type("!esse", {
             if (objPath) {
                 return lodash.get(schema, objPath);
             }
-            return schema;
+            return schema || data;
         } catch (e) {
             return data;
         }
