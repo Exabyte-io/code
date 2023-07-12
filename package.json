@@ -26,6 +26,7 @@
         "./dist/context": "./dist/context/index.js",
         "./dist/entity": "./dist/entity/index.js",
         "./dist/utils": "./dist/utils/index.js",
+        "./dist/utils/file": "./dist/utils/file.js",
         "./dist/constants": "./dist/constants.js",
         "./dist/math": "./dist/math.js",
         "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js"
