@@ -5,7 +5,7 @@ import {
     getSchemaWithDependencies,
     typeofSchema,
 } from "../../src/utils/schemas";
-import { DFT_SCHEMA, DFT_TREE_ADVANCED, DFT_TREE_SIMPLE } from "../fixtures/schemas";
+import { DFT_SCHEMA, DFT_TREE_ADVANCED, DFT_TREE_SIMPLE, UNEVEN_TREE } from "../fixtures/schemas";
 
 describe("RJSF schema", () => {
     it("dependencies block can be created from tree", () => {
@@ -61,13 +61,33 @@ describe("RJSF schema", () => {
             nodes: [DFT_TREE_SIMPLE],
             modifyProperties: true,
         });
-        // console.log(JSON.stringify(rjsfSchema, null, 4));
         expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
         expect(rjsfSchema.properties.type).to.have.property("enum");
         expect(rjsfSchema.properties.type.enum).to.be.eql(["dft"]);
         expect(rjsfSchema.properties.type).to.have.property("enumNames");
         expect(rjsfSchema.properties.type.enumNames).to.be.eql(["Density Functional Theory"]);
         expect(rjsfSchema).to.have.property("dependencies");
+    });
+
+    it("should correctly create dependencies from an uneven tree", () => {
+        const dependencies = buildDependencies([UNEVEN_TREE]);
+
+        const [typeCase] = dependencies.dependencies.type.oneOf;
+        expect(typeCase.properties.type.enum[0]).to.be.equal("a");
+        expect(typeCase.properties.subtype.enum).to.have.members(["b", "c", "d"]);
+
+        const [bCase, cCase, dCase] = typeCase.dependencies.subtype.oneOf;
+        expect(bCase.properties.subtype.enum[0]).to.be.equal("b");
+
+        expect(cCase.properties.subtype.enum[0]).to.be.equal("c");
+        expect(cCase.properties.subsubtype.enum).to.have.members(["c1", "c2"]);
+
+        expect(dCase.properties.subtype.enum[0]).to.be.equal("d");
+        expect(dCase.properties.subsubtype.enum).to.have.members(["d1"]);
+
+        const [xCase] = dCase.dependencies.subsubtype.oneOf;
+        expect(xCase.properties.subsubtype.enum[0]).to.be.equal("d1");
+        expect(xCase.properties.propX.enum[0]).to.be.equal("x");
     });
 });
 

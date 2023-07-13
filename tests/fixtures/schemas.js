@@ -149,3 +149,44 @@ export const DFT_TREE_ADVANCED = {
         },
     ],
 };
+
+export const UNEVEN_TREE = {
+    path: "/A",
+    data: { key: "type", value: "a", name: "A" },
+    children: [
+        {
+            path: "/A/B",
+            data: { key: "subtype", value: "b", name: "B" },
+        },
+        {
+            path: "/A/C",
+            data: { key: "subtype", value: "c", name: "C" },
+            children: [
+                {
+                    path: "/A/C/C1",
+                    data: { key: "subsubtype", value: "c1", name: "C1" },
+                },
+                {
+                    path: "/A/C/C2",
+                    data: { key: "subsubtype", value: "c2", name: "C2" },
+                },
+            ],
+        },
+        {
+            path: "/A/D",
+            data: { key: "subtype", value: "d", name: "D" },
+            children: [
+                {
+                    path: "/A/D/D1",
+                    data: { key: "subsubtype", value: "d1", name: "D1" },
+                    children: [
+                        {
+                            path: "/A/D/D1/X",
+                            data: { key: "propX", value: "x", name: "X" },
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+};
