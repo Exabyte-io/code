@@ -71,4 +71,16 @@ describe("entity filter", () => {
         const expected = [{ name: "BC", path: "/root/entity/b::/root/entity/c" }];
         expect(filtered).to.have.deep.members(expected);
     });
+
+    it("should return empty list if empty filter object array is given", () => {
+        const filterObjects = [];
+        const filtered = filterEntityList({ filterObjects, entitiesOrPaths: entities });
+        expect(filtered).to.have.length(0);
+    });
+
+    it("should return empty list if no filter object array is given", () => {
+        const filterObjects = undefined;
+        const filtered = filterEntityList({ filterObjects, entitiesOrPaths: entities });
+        expect(filtered).to.have.length(0);
+    });
 });
