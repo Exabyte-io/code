@@ -14,6 +14,10 @@ export async function compileTS(globalSchema, savePath) {
     const preparedDefinitions = Object.entries(globalSchema.definitions).reduce(
         (newDefinitions, [key, schema]) => {
             if (schema.allOf && schema.properties) {
+                /**
+                 * The current version of json-schema-to-typescript ignores properties if there is allOf array in the schema.
+                 * To fix the issue here we are creating a separate schema from properties and add it to the allOf array
+                 */
                 return [
                     ...newDefinitions,
                     [
