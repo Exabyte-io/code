@@ -1,4 +1,4 @@
-import { makeFlatSchemaId, makeFlatSchemaRef } from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
+import { makeFlatSchemaKey, makeFlatSchemaRef } from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
 import fs from "fs/promises";
 import { compile } from "json-schema-to-typescript";
 
@@ -32,7 +32,7 @@ export async function compileTS(globalSchema, savePath) {
                         },
                     ],
                     [
-                        makeFlatSchemaId(`${schema.schemaId}-properties`),
+                        makeFlatSchemaKey(`${schema.schemaId}-properties`),
                         {
                             schemaId: `${schema.schemaId}-properties`,
                             type: "object",
