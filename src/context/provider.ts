@@ -14,7 +14,7 @@ import lodash from "lodash";
 import { deepClone } from "../utils/clone";
 
 export interface ContextProviderConfig {
-    name?: string;
+    name: string;
     domain?: string;
     entityName?: string;
     data?: object;
@@ -67,9 +67,9 @@ export class ContextProvider {
     }
 
     static createConfigFromContext(config: ContextProviderConfig) {
-        const data = lodash.get(config.context, config.name || "");
-        const isEdited = lodash.get(config.context, this.getIsEditedKeyByName(config.name || ""));
-        const extraData = lodash.get(config.context, this.getExtraDataKeyByName(config.name || ""));
+        const data = lodash.get(config.context, config.name);
+        const isEdited = lodash.get(config.context, this.getIsEditedKeyByName(config.name));
+        const extraData = lodash.get(config.context, this.getExtraDataKeyByName(config.name));
         return Object.assign(
             config,
             data
