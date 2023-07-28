@@ -26,7 +26,7 @@ export interface ContextProviderConfig {
 export class ContextProvider {
     config: ContextProviderConfig;
 
-    name?: string;
+    name: string;
 
     domain?: string;
 
