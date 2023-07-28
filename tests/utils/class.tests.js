@@ -1,22 +1,21 @@
 /* eslint-disable max-classes-per-file, class-methods-use-this */
 import { expect } from "chai";
-import { mix } from "mixwith";
 
 import {
     DefaultableMixin,
     InMemoryEntity,
     NamedInMemoryEntity,
     RuntimeItemsMixin,
-} from "../../src/entity";
+} from "../../src/entity/index.ts";
 import { extendClass, extendThis } from "../../src/utils/class";
 
-class BaseEntity extends mix(InMemoryEntity).with(RuntimeItemsMixin) {
+class BaseEntity extends RuntimeItemsMixin(InMemoryEntity) {
     baseMethod() {
         return "base";
     }
 }
 
-class ExtendClassEntity extends mix(NamedInMemoryEntity).with(DefaultableMixin) {
+class ExtendClassEntity extends DefaultableMixin(NamedInMemoryEntity) {
     constructor(config, excluded = []) {
         super(config);
         extendClass(ExtendClassEntity, BaseEntity, excluded, [config]);
@@ -29,6 +28,8 @@ class ExtendClassEntity extends mix(NamedInMemoryEntity).with(DefaultableMixin) 
 
 class BaseBetweenEntity extends NamedInMemoryEntity {
     static staticAttr = "base";
+
+    instanceAttr = "base";
 
     constructor(config) {
         super(config);
@@ -53,7 +54,7 @@ class BetweenEntity extends BaseBetweenEntity {
     }
 }
 
-class ExtendThisEntity extends mix(BetweenEntity).with(DefaultableMixin) {
+class ExtendThisEntity extends DefaultableMixin(BetweenEntity) {
     constructor(config) {
         super(config);
         extendThis(ExtendThisEntity, BaseEntity, config);

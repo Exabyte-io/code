@@ -55,6 +55,7 @@ export async function compileTS(globalSchema, savePath) {
         "",
         {
             unreachableDefinitions: true,
+            additionalProperties: false,
         },
     );
 
