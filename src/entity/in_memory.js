@@ -1,6 +1,5 @@
 import lodash from "lodash";
 
-// import { ESSE } from "@exabyte-io/esse.js";
 import { clone, deepClone } from "../utils/clone";
 import { getSchemaByClassName } from "../utils/schemas";
 
@@ -192,44 +191,12 @@ export class InMemoryEntity {
     }
 
     /**
-     * @summary If there any nested in-memory entities, first resolve them
-     *          and then mix with original schema in baseJSONSchema()
-     * @returns {Object.<string,InMemoryEntity>|null}
-     * @example
-     * class Workflow extends InMemoryEntity {
-     *     get customJsonSchemaProperties() {
-     *         return {
-     *             subworkflows: {
-     *                  type: 'array',
-     *                  items: Subworkflow.jsonSchema
-     *              }
-     *         };
-     *     }
-     * }
-     */
-    static get customJsonSchemaProperties() {
-        return null;
-    }
-
-    /**
      * Returns class JSON schema
      * @returns {Object} schema
      */
     static get jsonSchema() {
         try {
-            if (!this.customJsonSchemaProperties) {
-                return getSchemaByClassName(this.name);
-            }
-
-            const { properties, ...schema } = getSchemaByClassName(this.name);
-
-            return {
-                ...schema,
-                properties: {
-                    ...properties,
-                    ...this.customJsonSchemaProperties,
-                },
-            };
+            return getSchemaByClassName(this.name);
         } catch (e) {
             console.error(e.stack);
             throw e;

@@ -2,10 +2,10 @@
 case1: !combine
     name: mytest
     forEach:
-        -   key: a
-            values: [1, 2]
-        -   key: b
-            values: [3, 4]
+        - key: a
+          values: [1, 2]
+        - key: b
+          values: [3, 4]
     config:
         c: 5
 
@@ -17,8 +17,8 @@ case2: !combine
 case3: !combine
     name: mytest
     forEach:
-        -   key: a
-        -   key: b
+        - key: a
+        - key: b
 
 # parse a custom !combine tag with an empty forEach key and a config key
 case4: !combine
@@ -35,10 +35,10 @@ case5: !combine
             two: 2
             four: 4
     forEach:
-        -   key: a
-            values: [1]
-        -   key: b
-            values: ["two", "four"]
+        - key: a
+          values: [1]
+        - key: b
+          values: ["two", "four"]
     config:
         c: 5
 
@@ -46,27 +46,27 @@ case5: !combine
 case6: !combine
     name: mytest
     forEach:
-        -   key: b
-            values: [3, 4]
+        - key: b
+          values: [3, 4]
     config:
         a: 1
     extraConfigs:
-        -   name: additional property
-            x: 7
+        - name: additional property
+          x: 7
 
 # parse a custom !combine tag with additional property from !combine tag
 case7: !combine
     name: mytest
     forEach:
-        -   key: b
-            values: [3, 4]
+        - key: b
+          values: [3, 4]
     config:
         a: 1
     extraConfigs: !combine
         name: additional property
         forEach:
-            -   key: x
-                values: [7, 8]
+            - key: x
+              values: [7, 8]
         config:
             y: 9
 
@@ -78,8 +78,8 @@ case8: !combine
             two: 2
             four: 4
     forEach:
-        -   key: b
-            values: ["two", "four", null]
+        - key: b
+          values: ["two", "four", null]
     config:
         a: 1
 
@@ -98,48 +98,48 @@ case9: !combine
 case10: !combine
     name: ignore test
     forEach:
-        -   key: a.b
-            values: [1, 2, null]
-        -   key: a.c
-            values: [3]
-        -   key: d
-            values: [4]
+        - key: a.b
+          values: [1, 2, null]
+        - key: a.c
+          values: [3]
+        - key: d
+          values: [4]
     exclusions:
-        - ["a.b" , "d"]
+        - ["a.b", "d"]
 
 # use the push action to add value to an array parameter
 case11: !combine
     name: push test
     forEach:
-        -   key: units
-            action: push
-            values:
-                - a: 1
-                - a: 2
-                - a: 3
-        -   key: units
-            action: push
-            values:
-                - b: 4
-                - b: 5
+        - key: units
+          action: push
+          values:
+              - a: 1
+              - a: 2
+              - a: 3
+        - key: units
+          action: push
+          values:
+              - b: 4
+              - b: 5
 # use cloned objects when pushing to array
 case12: !combine
     name: push test
     forEach:
-        -   key: units
-            action: push
-            values: !combine
-                name: "Wave function: Plane wave"
-                config:
-                    categories:
-                        tier1: qm
-                        tier2: wf
-                        type: pw
-                    tags:
-                        - plane wave
-                    schema: !esse "methods-directory/physical/pw"
-        -   key: units
-            action: push
-            values:
-                - b: 4
-                - b: 5
+        - key: units
+          action: push
+          values: !combine
+              name: "Wave function: Plane wave"
+              config:
+                  categories:
+                      tier1: qm
+                      tier2: wf
+                      type: pw
+                  tags:
+                      - plane wave
+                  schema: !esse "methods-directory/physical/pw"
+        - key: units
+          action: push
+          values:
+              - b: 4
+              - b: 5
