@@ -1,6 +1,9 @@
-import { schemas } from "@exabyte-io/esse.js/schemas";
+import baseSchema from "@exabyte-io/esse.js/schema";
 import Ajv from "ajv";
+import deref from "json-schema-deref-sync";
 import mergeAllOf from "json-schema-merge-allof";
+
+export const esseSchema = baseSchema;
 
 const schemasCache = new Map();
 
@@ -41,20 +44,16 @@ function removeSchemaIdsAfterAllOf(schema, clean = false) {
 }
 
 export class JSONSchemasInterface {
+    _schema = null;
+
     /**
      *
      * @param {string} schemaId id of JSON schema from ESSE
      * @returns {Object.<string, any>} resolved JSON schema
      */
     static schemaById(schemaId) {
-        if (!schemasCache.has(schemaId)) {
-            const originalSchema = schemas.find((schema) => schema.schemaId === schemaId);
-
-            if (!originalSchema) {
-                throw new Error(`Schema not found: ${schemaId}`);
-            }
-
-            this.registerSchema(originalSchema);
+        if (schemasCache.size === 0) {
+            JSONSchemasInterface.registerGlobalSchema(esseSchema);
         }
 
         return schemasCache.get(schemaId);
@@ -64,16 +63,28 @@ export class JSONSchemasInterface {
      *
      * @param {Object} - external schema
      */
-    static registerSchema(originalSchema) {
-        const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema), {
-            resolvers: {
-                defaultResolver: mergeAllOf.options.resolvers.title,
-            },
+    static registerGlobalSchema(globalSchema) {
+        if (JSONSchemasInterface._schema === globalSchema) {
+            // performance optimization:
+            // skip resolving as we already did it for the same globalSchema object
+            return;
+        }
+
+        JSONSchemasInterface._schema = globalSchema;
+
+        const { definitions } = deref(globalSchema);
+
+        schemasCache.clear();
+
+        Object.values(definitions).forEach((originalSchema) => {
+            const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema), {
+                resolvers: {
+                    defaultResolver: mergeAllOf.options.resolvers.title,
+                },
+            });
+
+            schemasCache.set(schema.schemaId, schema);
         });
-
-        schemasCache.set(schema.schemaId, schema);
-
-        return schema;
     }
 
     /**
@@ -99,7 +110,8 @@ export class JSONSchemasInterface {
      */
     static matchSchema(query) {
         const searchFields = Object.keys(query);
-        return schemas.find((schema) => {
+
+        return Array.from(schemasCache.values()).find((schema) => {
             return searchFields.every((field) => {
                 const { $regex } = query[field];
                 return new RegExp($regex).test(schema[field]);

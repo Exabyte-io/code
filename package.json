@@ -28,7 +28,9 @@
         "./dist/utils": "./dist/utils/index.js",
         "./dist/constants": "./dist/constants.js",
         "./dist/math": "./dist/math.js",
-        "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js"
+        "./dist/utils/schemas": "./dist/utils/schemas.js",
+        "./dist/JSONSchemasInterface": "./dist/JSONSchemasInterface.js",
+        "./dist/bin/compileTS": "./dist/bin/compileTS.js"
     },
     "files": [
         "/dist",
@@ -42,6 +44,7 @@
     "license": "Apache-2.0",
     "homepage": "https://github.com/Exabyte-io/code.js",
     "dependencies": {
+        "json-schema-deref-sync": "0.14.0",
         "@babel/cli": "7.16.0",
         "@babel/core": "7.16.0",
         "@babel/eslint-parser": "7.16.3",
@@ -50,11 +53,12 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "@exabyte-io/esse.js": "2023.7.14-0",
+        "@exabyte-io/esse.js": "2023.7.28-0",
         "ajv": "4.1.7",
         "crypto-js": "^4.1.1",
         "js-yaml": "^4.1.0",
         "json-schema-merge-allof": "^0.8.1",
+        "json-schema-to-typescript": "^13.0.2",
         "lodash": "^4.17.21",
         "mathjs": "^3.9.0",
         "mixwith": "^0.1.1",

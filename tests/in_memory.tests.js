@@ -2,6 +2,7 @@
 import { expect } from "chai";
 
 import { InMemoryEntity } from "../src/entity/in_memory";
+import { JSONSchemasInterface } from "../src/JSONSchemasInterface";
 import { registerClassName } from "../src/utils/schemas";
 
 describe("InMemoryEntity", () => {
@@ -48,21 +49,30 @@ describe("InMemoryEntity", () => {
         expect(JSON.stringify(entity.toJSON())).to.be.equal(JSON.stringify(obj));
     });
 
-    it("jsonSchema returns correct registered schema", () => {
-        class RegisteredEntity extends InMemoryEntity {
-            static get customJsonSchemaProperties() {
-                return {
-                    nested: {
-                        type: "string",
-                    },
-                };
-            }
-        }
+    it("jsonSchema returns correct registered schema", async () => {
+        class RegisteredEntity extends InMemoryEntity {}
 
         registerClassName(RegisteredEntity.name, "in-memory-entity/base");
 
+        JSONSchemasInterface.registerGlobalSchema({
+            definitions: {
+                "in-memory-entity-base": {
+                    schemaId: "in-memory-entity/base",
+                    $schema: "http://json-schema.org/draft-04/schema#",
+                    title: "System in-set schema",
+                    properties: {
+                        _id: {
+                            type: "string",
+                        },
+                        type: {
+                            type: "string",
+                        },
+                    },
+                },
+            },
+        });
+
         expect(RegisteredEntity.jsonSchema).to.be.an("object");
         expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties._id"); // check mix schemas
-        expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties.nested.type"); // check custom properties
     });
 });
