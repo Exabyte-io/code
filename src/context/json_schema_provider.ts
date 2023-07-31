@@ -51,7 +51,7 @@ class JSONSchemaFormDataProvider extends ContextProvider {
         return { classNames: this.defaultClassNames };
     }
 
-    fieldStyles(classNames: string, overrideDefault = false) {
+    fieldStyles(classNames: string, overrideDefault = false): { classNames: string } {
         let names = classNames;
         if (!overrideDefault) names += " " + this.defaultClassNames;
         return { classNames: names };

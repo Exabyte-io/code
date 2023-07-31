@@ -159,7 +159,7 @@ describe("RJSF schema", () => {
             nodes: [TREE],
             modifyProperties: true,
         });
-        console.log(JSON.stringify(rjsfSchema, null, 4));
+        // console.log(JSON.stringify(rjsfSchema, null, 4));
         expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
         expect(rjsfSchema.properties.type).to.have.property("enum");
         expect(rjsfSchema.properties.type.enum).to.be.eql(["dft"]);

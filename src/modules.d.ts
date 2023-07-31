@@ -52,7 +52,7 @@ declare module "@exabyte-io/esse.js/schema" {
         | "any";
 
     export type JSONSchema6Type =
-        | string //
+        | string
         | number
         | boolean
         | JSONSchema6Object

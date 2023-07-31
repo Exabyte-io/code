@@ -35,10 +35,6 @@ describe("Flowchart Mixins", () => {
         entity.addUnit(new FlowchartItem());
         entity.addUnit(new FlowchartItem());
 
-        console.log({
-            flowchartId: entity.units[1].flowchartId,
-        });
-
         if (assertString(entity.units[1].flowchartId)) {
             entity.removeUnit(entity.units[1].flowchartId);
         }

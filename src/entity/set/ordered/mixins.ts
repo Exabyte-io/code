@@ -25,9 +25,9 @@ export function OrderedInMemoryEntityInSetMixin<T extends InMemoryEntityConstruc
     return class extends superclass {
         declare inSet: Required<SystemInSetSchema>["inSet"];
 
-        getIndexByIdInOrderedSet(setId: string) {
+        getIndexByIdInOrderedSet(setId: string): number {
             const setData = this.inSet.find((s) => s._id === setId);
-            return setData ? setData.index : 0;
+            return setData?.index ? setData.index : 0;
         }
     };
 }
