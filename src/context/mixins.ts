@@ -39,7 +39,7 @@ export function MaterialContextMixin<T extends Constructor>(superclass: T) {
             materialHash: string;
         };
 
-        isEdited?: boolean;
+        declare isEdited?: boolean;
 
         constructor(...args: any) {
             super(...args);
