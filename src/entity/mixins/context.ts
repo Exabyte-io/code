@@ -6,13 +6,13 @@ export type Context = AnyObject;
 
 export function ContextAndRenderFieldsMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends superclass {
-        declare _context: Context;
+        _context: Context;
 
         /**
          * @see https://stackoverflow.com/questions/64396668/why-do-typescript-mixins-require-a-constructor-with-a-single-rest-parameter-any
          * */
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...params: any) {
+        constructor(...params: any[]) {
             super(...params);
 
             const config = params[0];
