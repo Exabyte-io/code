@@ -1,0 +1,2 @@
+# read contents of a file into a string
+case1: !readString "tests/fixtures/test_content.txt"
