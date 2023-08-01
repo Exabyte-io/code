@@ -184,7 +184,7 @@ export const includeType = new yaml.Type("!include", {
 });
 
 /**
- * !include YAML tag which includes another Yaml file in-place.
+ * !flatten YAML tag for flattening arrays
  * See the tests for example usage.
  */
 export const flattenType = new yaml.Type("!flatten", {
