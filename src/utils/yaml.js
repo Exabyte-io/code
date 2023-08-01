@@ -198,12 +198,28 @@ export const flattenType = new yaml.Type("!flatten", {
     },
 });
 
+/**
+ * !readString YAML tag for including file contents as a string.
+ * See the tests for example usage.
+ */
+export const readStringType = new yaml.Type("!readString", {
+    kind: "scalar",
+    construct(data) {
+        try {
+            return fs.readFileSync(path.resolve(data), "utf8");
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
 export const JsYamlTypes = {
     include: includeType,
     parameter: parameterType,
     combine: combineType,
     esse: esseType,
     flatten: flattenType,
+    readString: readStringType,
 };
 
 export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
@@ -212,4 +228,5 @@ export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
     esseType,
     includeType,
     flattenType,
+    readStringType,
 ]);
