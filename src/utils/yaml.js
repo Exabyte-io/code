@@ -183,11 +183,27 @@ export const includeType = new yaml.Type("!include", {
     },
 });
 
+/**
+ * !include YAML tag which includes another Yaml file in-place.
+ * See the tests for example usage.
+ */
+export const flattenType = new yaml.Type("!flatten", {
+    kind: "sequence",
+    construct(data) {
+        try {
+            return data.flat();
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
 export const JsYamlTypes = {
     include: includeType,
     parameter: parameterType,
     combine: combineType,
     esse: esseType,
+    flatten: flattenType,
 };
 
 export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
@@ -195,4 +211,5 @@ export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
     combineType,
     esseType,
     includeType,
+    flattenType,
 ]);
