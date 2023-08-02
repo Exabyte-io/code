@@ -6,4 +6,4 @@ export const YAML_PARAMETER_FILE = path.resolve(FIXTURES_DIR, "yaml_parameter_ta
 export const YAML_ESSE_FILE = path.resolve(FIXTURES_DIR, "yaml_esse_tag.yml");
 export const YAML_INCLUDE_FILE = path.resolve(FIXTURES_DIR, "yaml_include_tag.yml");
 export const YAML_FLATTEN_FILE = path.resolve(FIXTURES_DIR, "yaml_flatten_tag.yml");
-export const YAML_READ_STRING_FILE = path.resolve(FIXTURES_DIR, "yaml_readString_tag.yml");
+export const YAML_READFILE_FILE = path.resolve(FIXTURES_DIR, "yaml_readFile_tag.yml");
