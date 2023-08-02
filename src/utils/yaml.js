@@ -214,7 +214,7 @@ export const readFileType = new yaml.Type("!readFile", {
 });
 
 /**
- * !join YAML tag for joining strings.
+ * !concatString YAML tag for concatenating strings.
  * See the tests for example usage.
  */
 export const concatStringType = new yaml.Type("!concatString", {
