@@ -213,6 +213,24 @@ export const readFileType = new yaml.Type("!readFile", {
     },
 });
 
+/**
+ * !join YAML tag for joining strings.
+ * See the tests for example usage.
+ */
+export const concatStringType = new yaml.Type("!concatString", {
+    kind: "sequence",
+    resolve(data) {
+        return data.every((d) => lodash.isString(d));
+    },
+    construct(data) {
+        try {
+            return "".concat(...data);
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
 export const JsYamlTypes = {
     include: includeType,
     parameter: parameterType,
@@ -220,6 +238,7 @@ export const JsYamlTypes = {
     esse: esseType,
     flatten: flattenType,
     readFile: readFileType,
+    concatString: concatStringType,
 };
 
 export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
@@ -229,4 +248,5 @@ export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
     includeType,
     flattenType,
     readFileType,
+    concatStringType,
 ]);
