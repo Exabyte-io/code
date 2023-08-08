@@ -229,7 +229,7 @@ export function mergeTerminalNodes(tree, unique = false) {
  * @param {String} fieldName Field to search child objects for.
  * @return {Object} First child object that contains the specified field
  */
-function findValueByField(object, fieldName) {
+function findChildObjectWithField(object, fieldName) {
     for (let key in object) {
         if (typeof(object[key]) !== "object") continue;
         if (object[key][fieldName]) {
