@@ -19,6 +19,7 @@ import {
 } from "./hash";
 import {
     convertKeysToCamelCaseForObject,
+    findChildObjectWithField,
     flattenObject,
     getOneMatchFromObject,
     mergeTerminalNodes,
@@ -89,4 +90,5 @@ export {
     getFilesInDirectory,
     getDirectories,
     createObjectPathFromFilePath,
+    findChildObjectWithField,
 };
