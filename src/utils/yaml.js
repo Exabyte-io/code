@@ -3,7 +3,7 @@ import yaml from "js-yaml";
 import lodash from "lodash";
 import path from "path";
 
-import { JSONSchemasInterface } from "../JSONSchemasInterface";
+import { esseSchema, JSONSchemasInterface } from "../JSONSchemasInterface";
 import { safeMakeArray } from "./array";
 import { renderTextWithSubstitutes } from "./str";
 
@@ -168,12 +168,13 @@ export const esseType = new yaml.Type("!esse", {
     },
     construct(data) {
         try {
+            JSONSchemasInterface.registerGlobalSchema(esseSchema);
             const { filePath: schemaId, objPath } = splitReference(data);
             const schema = JSONSchemasInterface.schemaById(schemaId);
             if (objPath) {
                 return lodash.get(schema, objPath);
             }
-            return schema;
+            return schema || data;
         } catch (e) {
             return data;
         }
