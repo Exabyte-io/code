@@ -32,7 +32,7 @@ export const TaggableMixin = (superclass) => {
     };
 };
 
-export const ScopeTrackMixin = (superclass) => {
+export const HasScopeTrackMixin = (superclass) => {
     return class extends superclass {
         get scopeTrack() {
             return this.prop("scopeTrack", []);
