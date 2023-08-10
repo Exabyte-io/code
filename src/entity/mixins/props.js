@@ -32,6 +32,18 @@ export const TaggableMixin = (superclass) => {
     };
 };
 
+export const ScopeTrackMixin = (superclass) => {
+    return class extends superclass {
+        get scopeTrack() {
+            return this.prop("scopeTrack", []);
+        }
+
+        set scopeTrack(array) {
+            this.setProp("scopeTrack", array);
+        }
+    };
+};
+
 export const HasMetadataMixin = (superclass) => {
     return class extends superclass {
         get metadata() {
