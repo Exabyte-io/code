@@ -214,27 +214,3 @@ export function mergeTerminalNodes(tree, unique = false) {
     }, []);
     return unique ? [...new Set(terminalValues)] : terminalValues;
 }
-
-/**
- * @summary When given an object that contains many other objects as property values this
- * returns the first object that contains a specified field.
- * e.g.
- * MainObject: {
- *   obj1: {name: "object 1", value: 1},
- *   obj2: {name: "object 2", data: [1, 2, 3]},
- *   obj3: {},
- * }
- * findValueByField(MainObject, "value") -> obj1
- * @param {Object} object Object to stringify.
- * @param {String} fieldName Field to search child objects for.
- * @return {Object} First child object that contains the specified field
- */
-export function findChildObjectWithField(object, fieldName) {
-    for (let key in object) {
-        if (typeof(object[key]) !== "object") continue;
-        if (object[key][fieldName]) {
-            return object[key][fieldName];
-        }
-    }
-    return null;  // Field not found
-}
