@@ -53,7 +53,7 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#cf9d15780aa9221db76d579de94e0195915401ae",
+        "@exabyte-io/esse.js": "git+https://github.com/Exabyte-io/esse.git#4052268247ce961ecbb49b82cc595d54e57bc740",
         "ajv": "4.1.7",
         "crypto-js": "^4.1.1",
         "js-yaml": "^4.1.0",
