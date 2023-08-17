@@ -6,6 +6,7 @@ import {
     createAndPatchRegistry,
     MaterialContextMixin,
 } from "../src/context";
+import { ContextProviderConfig } from "../src/context/provider";
 
 class MockMaterial {
     static createDefault() {
@@ -48,7 +49,7 @@ class ApplicationContextProvider extends ApplicationContextMixin(ContextProvider
 }
 
 describe("Material & Application ContextMixin", () => {
-    const config = {};
+    const config: ContextProviderConfig = { name: "test" };
 
     it("uses static entity class", () => {
         const provider = new ProviderEntity(config);

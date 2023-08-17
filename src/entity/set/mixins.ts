@@ -26,9 +26,9 @@ export function InMemoryEntityInSetMixin<T extends InMemoryEntityConstructor>(su
 export function InMemoryEntitySetMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class InMemoryEntitySetMixin extends superclass {
         containsEntity<T extends InstanceType<ReturnType<typeof InMemoryEntityInSetMixin>>>(
-            entity: T,
+            entity?: T,
         ) {
-            return entity.inSet.some((ref) => ref._id === this.id);
+            return entity?.inSet?.some((ref) => ref._id === this.id);
         }
     };
 }
