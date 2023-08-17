@@ -1,14 +1,10 @@
+import { UiSchema } from "react-jsonschema-form";
 import _ from "underscore";
 
-import { AnyObject } from "../entity/in_memory";
 import { ContextProvider, ContextProviderConfig } from "./provider";
 
 interface JSONSchemaFormDataProviderConfig extends ContextProviderConfig {
     isUsingJinjaVariables?: boolean;
-}
-
-interface UiSchema extends AnyObject {
-    classNames: string;
 }
 
 /**
