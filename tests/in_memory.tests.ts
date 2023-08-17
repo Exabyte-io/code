@@ -56,7 +56,7 @@ describe("InMemoryEntity", () => {
         JSONSchemasInterface.registerGlobalSchema({
             definitions: {
                 "in-memory-entity-base": {
-                    schemaId: "in-memory-entity/base",
+                    $id: "in-memory-entity/base",
                     $schema: "http://json-schema.org/draft-04/schema#",
                     title: "System in-set schema",
                     properties: {

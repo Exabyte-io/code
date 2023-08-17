@@ -3,7 +3,7 @@ import { NameResultSchema, RuntimeItemSchema } from "../../types";
 import { safeMakeObject } from "../../utils/object";
 import { AnyObject, InMemoryEntityConstructor } from "../in_memory";
 
-enum ItemKey {
+export enum ItemKey {
     results = "results",
     monitors = "monitors",
     preProcessors = "preProcessors",

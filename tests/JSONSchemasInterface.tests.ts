@@ -7,10 +7,10 @@ import { assertArray, assertObject } from "./utils";
 describe("JSONSchemasInterface", () => {
     it("can match schemas", async () => {
         JSONSchemasInterface.registerGlobalSchema({
-            schemaId: "global",
+            $id: "global",
             definitions: {
                 workflow: {
-                    schemaId: "workflow",
+                    $id: "workflow",
                     $schema: "http://json-schema.org/draft-04/schema#",
                     title: "System in-set schema",
                     properties: {
@@ -23,7 +23,7 @@ describe("JSONSchemasInterface", () => {
         });
 
         const schema = JSONSchemasInterface.matchSchema({
-            schemaId: {
+            $id: {
                 $regex: "workflow",
             },
         });
@@ -33,10 +33,10 @@ describe("JSONSchemasInterface", () => {
 
     it("can find registered schemas; the schema is merged and clean", async () => {
         JSONSchemasInterface.registerGlobalSchema({
-            schemaId: "global",
+            $id: "global",
             definitions: {
                 "in-memory-entity-base": {
-                    schemaId: "in-memory-entity/base",
+                    $id: "in-memory-entity/base",
                     $schema: "http://json-schema.org/draft-04/schema#",
                     title: "System in-set schema",
                     properties: {
@@ -49,7 +49,7 @@ describe("JSONSchemasInterface", () => {
                     },
                 },
                 "system-in-set": {
-                    schemaId: "system/in-set",
+                    $id: "system/in-set",
                     $schema: "http://json-schema.org/draft-04/schema#",
                     title: "System in-set schema",
                     properties: {
@@ -58,7 +58,7 @@ describe("JSONSchemasInterface", () => {
                             items: {
                                 allOf: [
                                     {
-                                        schemaId: "system/entity-reference",
+                                        $id: "system/entity-reference",
                                         $schema: "http://json-schema.org/draft-04/schema#",
                                         title: "entity reference schema",
                                         properties: {
@@ -111,14 +111,14 @@ describe("JSONSchemasInterface", () => {
         const schema = JSONSchemasInterface.schemaById("system/in-set");
 
         expect(schema).to.be.an("object");
-        assert(schema?.schemaId, "system/in-set");
+        assert(schema?.$id, "system/in-set");
         expect(schema?.properties?.inSet).to.be.an("object");
 
         if (
             assertObject(schema?.properties?.inSet) &&
             assertObject(schema?.properties?.inSet?.items)
         ) {
-            expect(schema?.properties?.inSet?.items?.schemaId).to.be.an("undefined");
+            expect(schema?.properties?.inSet?.items?.$id).to.be.an("undefined");
             expect(schema?.properties?.inSet?.items?.properties).to.be.an("object");
         }
 
@@ -136,10 +136,10 @@ describe("JSONSchemasInterface", () => {
 
     it("can create a validation function for a schema by schema id", async () => {
         JSONSchemasInterface.registerGlobalSchema({
-            schemaId: "global",
+            $id: "global",
             definitions: {
                 "test-person": {
-                    schemaId: "test/person",
+                    $id: "test/person",
                     $schema: "http://json-schema.org/draft-04/schema#",
                     type: "object",
                     properties: {

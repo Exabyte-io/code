@@ -14,7 +14,7 @@ describe("YAML tag: !esse", () => {
     it("should correctly parse a custom !esse tag and return ESSE schema", () => {
         const parsed = yaml.load(yamlFixture, { schema: yamlSchema });
         const expected = {
-            schemaId: "core/primitive/scalar",
+            $id: "core/primitive/scalar",
             $schema: "http://json-schema.org/draft-04/schema#",
             title: "scalar schema",
             type: "object",

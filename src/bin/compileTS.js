@@ -24,17 +24,14 @@ export async function compileTS(globalSchema, savePath) {
                         key,
                         {
                             ...schema,
-                            allOf: [
-                                ...schema.allOf,
-                                makeFlatSchemaRef(`${schema.schemaId}-properties`),
-                            ],
+                            allOf: [...schema.allOf, makeFlatSchemaRef(`${schema.$id}-properties`)],
                             properties: null,
                         },
                     ],
                     [
-                        makeFlatSchemaKey(`${schema.schemaId}-properties`),
+                        makeFlatSchemaKey(`${schema.$id}-properties`),
                         {
-                            schemaId: `${schema.schemaId}-properties`,
+                            $id: `${schema.$id}-properties`,
                             type: "object",
                             properties: schema.properties,
                         },

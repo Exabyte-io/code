@@ -16,7 +16,7 @@ export const esseSchema = baseSchema;
 const schemasCache = new Map<string, JSONSchema6>();
 
 function isEsseSchema(schema: SchemaType): schema is JSONSchema6 {
-    return Boolean((schema as JSONSchema6)?.schemaId);
+    return Boolean((schema as JSONSchema6)?.$id);
 }
 
 /**
@@ -34,7 +34,7 @@ function removeSchemaIdsAfterAllOf<T extends JSONSchema6Type>(schema: T, clean?:
 function removeSchemaIdsAfterAllOf(schema: SchemaType, clean = false) {
     if (clean && isEsseSchema(schema)) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { schemaId, ...restSchema } = schema;
+        const { $id, ...restSchema } = schema;
 
         return restSchema;
     }
@@ -106,23 +106,23 @@ export class JSONSchemasInterface {
                     },
                 });
 
-                if (schema.schemaId) {
-                    schemasCache.set(schema.schemaId, schema);
+                if (schema.$id) {
+                    schemasCache.set(schema.$id, schema);
                 }
             });
     }
 
     /**
-     * @example <caption>Search by schemaId regex</caption>
+     * @example <caption>Search by $id regex</caption>
      * JSONSchemasInterface.matchSchema({
-     *   schemaId: {
+     *   $id: {
      *     $regex: 'software-application'
      *   }
      * })
      *
-     * @example <caption>Search by schemaId and title regex</caption>
+     * @example <caption>Search by $id and title regex</caption>
      * JSONSchemasInterface.matchSchema({
-     *   schemaId: {
+     *   $id: {
      *     $regex: 'software-application'
      *   },
      *   title: {

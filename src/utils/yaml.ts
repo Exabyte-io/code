@@ -1,4 +1,5 @@
 // @ts-nocheck
+// TODO: remove ts-nocheck
 import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
