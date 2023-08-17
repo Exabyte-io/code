@@ -1,4 +1,4 @@
-import { JSONSchema6 } from "@exabyte-io/esse.js/schema";
+import { JSONSchema } from "@exabyte-io/esse.js/schema";
 import forEach from "lodash/forEach";
 import getValue from "lodash/get";
 import hasProperty from "lodash/has";
@@ -40,7 +40,7 @@ export function registerClassName(className: string, schemaId: string) {
     schemas[className] = schemaId;
 }
 
-export function typeofSchema(schema: JSONSchema6) {
+export function typeofSchema(schema: JSONSchema) {
     if (schema?.type) {
         return schema.type;
     }
@@ -71,7 +71,7 @@ function getEnumNames(nodes: Node[]) {
  * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)
  * @returns {{}|{dependencies: {}}}
  */
-export function buildDependencies(nodes: Node[]): JSONSchema6 {
+export function buildDependencies(nodes: Node[]): JSONSchema {
     if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
 
     const nodesWithChildren = nodes.filter(isNodeWithChildren);
@@ -103,7 +103,7 @@ export function buildDependencies(nodes: Node[]): JSONSchema6 {
 
 interface Props {
     // Schema
-    schema?: JSONSchema6;
+    schema?: JSONSchema;
     // Schema id (takes precedence over `schema` when both are provided)
     schemaId: string;
     // Array of nodes
@@ -120,7 +120,7 @@ export function getSchemaWithDependencies({
     schemaId,
     nodes,
     modifyProperties = false,
-}: Props): JSONSchema6 {
+}: Props): JSONSchema {
     const mainSchema = schemaId ? JSONSchemasInterface.schemaById(schemaId) || {} : schema;
 
     if (!isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {

@@ -1,8 +1,8 @@
 declare module "json-schema-deref-sync" {
-    import { JSONSchema6, JSONSchema6Definition } from "@exabyte-io/esse.js/schema";
+    import { JSONSchema, JSONSchemaDefinition } from "@exabyte-io/esse.js/schema";
 
-    function deref(globalSchema: JSONSchema6): JSONSchema6;
-    function deref(globalSchema: JSONSchema6Definition): JSONSchema6Definition;
+    function deref(globalSchema: JSONSchema): JSONSchema;
+    function deref(globalSchema: JSONSchemaDefinition): JSONSchemaDefinition;
 
     export default deref;
 }
@@ -15,7 +15,7 @@ declare module "json-schema-merge-allof" {
     }
 
     interface MergeAllOf {
-        <T extends JSONSchema6Definition>(globalSchema: T, options: MergeAllOfOptions): T;
+        <T extends JSONSchemaDefinition>(globalSchema: T, options: MergeAllOfOptions): T;
         options: {
             resolvers: {
                 title: string;
@@ -30,10 +30,14 @@ declare module "json-schema-merge-allof" {
 
 /**
  * This types are originally from "@types/json-schema" npm package.
- * The one difference compared to the original implementation is schemaId property to JSONSchema6 interface
+ * The one difference compared to the original implementation is schemaId property to JSONSchema interface
  */
 declare module "@exabyte-io/esse.js/schema" {
-    export { JSONSchema6, JSONSchema6Definition, JSONSchema6Type } from "json-schema";
+    export {
+        JSONSchema6 as JSONSchema,
+        JSONSchema6Definition as JSONSchemaDefinition,
+        JSONSchema6Type as JSONSchemaType,
+    } from "json-schema";
 }
 
 declare module "@exabyte-io/esse.js/lib/js/esse/schemaUtils" {
@@ -45,5 +49,5 @@ declare module "@exabyte-io/esse.js/lib/js/esse/schemaUtils" {
 
     export function makeFlatSchemaRef(schemaId: string): string;
 
-    export function buildSchemaDefinitions(originalSchemas: JSONSchema6): JSONSchema6;
+    export function buildSchemaDefinitions(originalSchemas: JSONSchema): JSONSchema;
 }

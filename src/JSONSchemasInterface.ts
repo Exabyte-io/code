@@ -1,22 +1,22 @@
 import baseSchema, {
-    JSONSchema6,
-    JSONSchema6Definition,
-    JSONSchema6Type,
+    JSONSchema,
+    JSONSchemaDefinition,
+    JSONSchemaType,
 } from "@exabyte-io/esse.js/schema";
 import Ajv, { Options } from "ajv";
 import deref from "json-schema-deref-sync";
 import mergeAllOf from "json-schema-merge-allof";
 
-type Query = { [key in keyof JSONSchema6]: { $regex: string } };
+type Query = { [key in keyof JSONSchema]: { $regex: string } };
 
-type SchemaType = JSONSchema6Definition | JSONSchema6Definition[] | JSONSchema6Type;
+type SchemaType = JSONSchemaDefinition | JSONSchemaDefinition[] | JSONSchemaType;
 
 export const esseSchema = baseSchema;
 
-const schemasCache = new Map<string, JSONSchema6>();
+const schemasCache = new Map<string, JSONSchema>();
 
-function isEsseSchema(schema: SchemaType): schema is JSONSchema6 {
-    return Boolean((schema as JSONSchema6)?.$id);
+function isEsseSchema(schema: SchemaType): schema is JSONSchema {
+    return Boolean((schema as JSONSchema)?.$id);
 }
 
 /**
@@ -24,12 +24,12 @@ function isEsseSchema(schema: SchemaType): schema is JSONSchema6 {
  * Unfortunately, mergeAllOf keeps schemaId after merging, and this results in multiple different schemas with the same schemaId
  * Hence this function
  */
-function removeSchemaIdsAfterAllOf<T extends JSONSchema6Definition>(schema: T, clean?: boolean): T;
-function removeSchemaIdsAfterAllOf<T extends JSONSchema6Definition>(
+function removeSchemaIdsAfterAllOf<T extends JSONSchemaDefinition>(schema: T, clean?: boolean): T;
+function removeSchemaIdsAfterAllOf<T extends JSONSchemaDefinition>(
     schema: T[],
     clean?: boolean,
 ): T[];
-function removeSchemaIdsAfterAllOf<T extends JSONSchema6Type>(schema: T, clean?: boolean): T;
+function removeSchemaIdsAfterAllOf<T extends JSONSchemaType>(schema: T, clean?: boolean): T;
 
 function removeSchemaIdsAfterAllOf(schema: SchemaType, clean = false) {
     if (clean && isEsseSchema(schema)) {
@@ -40,7 +40,7 @@ function removeSchemaIdsAfterAllOf(schema: SchemaType, clean = false) {
     }
 
     if (Array.isArray(schema)) {
-        return (schema as JSONSchema6Type[]).map((item) => removeSchemaIdsAfterAllOf(item));
+        return (schema as JSONSchemaType[]).map((item) => removeSchemaIdsAfterAllOf(item));
     }
 
     if (typeof schema !== "object" || schema === null) {
@@ -51,7 +51,7 @@ function removeSchemaIdsAfterAllOf(schema: SchemaType, clean = false) {
         const { allOf, ...restSchema } = schema;
 
         return {
-            allOf: (allOf as JSONSchema6Definition[]).map((innerSchema) =>
+            allOf: (allOf as JSONSchemaDefinition[]).map((innerSchema) =>
                 removeSchemaIdsAfterAllOf(innerSchema, true),
             ),
             ...restSchema,
@@ -66,7 +66,7 @@ function removeSchemaIdsAfterAllOf(schema: SchemaType, clean = false) {
 }
 
 export class JSONSchemasInterface {
-    static _schema: JSONSchema6 | null = null;
+    static _schema: JSONSchema | null = null;
 
     static schemaById(schemaId: string) {
         if (schemasCache.size === 0) {
@@ -80,7 +80,7 @@ export class JSONSchemasInterface {
      *
      * @param {Object} - external schema
      */
-    static registerGlobalSchema(globalSchema: JSONSchema6) {
+    static registerGlobalSchema(globalSchema: JSONSchema) {
         if (JSONSchemasInterface._schema === globalSchema) {
             // performance optimization:
             // skip resolving as we already did it for the same globalSchema object
