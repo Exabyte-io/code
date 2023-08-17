@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2018",
     "jsx": "react",
     "lib": ["ES2019", "dom"],
     "allowJs": true,
-    "module": "Node16",
-    "moduleResolution": "node",
+    "module": "Node12",
+    "moduleResolution": "Node",
     "declaration": true,
     "outDir": "./dist",
     "noEmitOnError": false,

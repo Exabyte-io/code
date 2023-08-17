@@ -1,5 +1,5 @@
 import { makeFlatSchemaKey, makeFlatSchemaRef } from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
-import fs from "fs/promises";
+import fs from "fs";
 import { compile } from "json-schema-to-typescript";
 
 /**
@@ -56,5 +56,5 @@ export async function compileTS(globalSchema, savePath) {
         },
     );
 
-    await fs.writeFile(savePath, compiled);
+    await fs.promises.writeFile(savePath, compiled);
 }

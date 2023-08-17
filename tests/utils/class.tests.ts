@@ -6,7 +6,7 @@ import {
     InMemoryEntity,
     NamedInMemoryEntity,
     RuntimeItemsMixin,
-} from "../../src/entity/index.ts";
+} from "../../src/entity/index";
 import { extendClass, extendThis } from "../../src/utils/class";
 
 class BaseEntity extends RuntimeItemsMixin(InMemoryEntity) {
@@ -16,7 +16,9 @@ class BaseEntity extends RuntimeItemsMixin(InMemoryEntity) {
 }
 
 class ExtendClassEntity extends DefaultableMixin(NamedInMemoryEntity) {
-    constructor(config, excluded = []) {
+    declare results: unknown;
+
+    constructor(config: object, excluded = []) {
         super(config);
         extendClass(ExtendClassEntity, BaseEntity, excluded, [config]);
     }
@@ -31,7 +33,7 @@ class BaseBetweenEntity extends NamedInMemoryEntity {
 
     instanceAttr = "base";
 
-    constructor(config) {
+    constructor(config: object) {
         super(config);
         this.instanceAttr = "base";
     }
@@ -44,7 +46,7 @@ class BaseBetweenEntity extends NamedInMemoryEntity {
 class BetweenEntity extends BaseBetweenEntity {
     static staticAttr = "between";
 
-    constructor(config) {
+    constructor(config: object) {
         super(config);
         this.instanceAttr = "between";
     }
@@ -55,7 +57,9 @@ class BetweenEntity extends BaseBetweenEntity {
 }
 
 class ExtendThisEntity extends DefaultableMixin(BetweenEntity) {
-    constructor(config) {
+    declare results: unknown;
+
+    constructor(config: object) {
         super(config);
         extendThis(ExtendThisEntity, BaseEntity, config);
     }
@@ -94,7 +98,7 @@ describe("extendThis", () => {
     });
 
     it("remembers intermediate methods", () => {
-        const base = new BaseBetweenEntity();
+        const base = new BaseBetweenEntity({});
         expect(base.betweenMethod()).to.be.equal("base");
         const obj = new ExtendThisEntity({});
         expect(obj.betweenMethod()).to.be.equal("between");

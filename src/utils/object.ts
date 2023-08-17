@@ -105,14 +105,13 @@ interface NameValueObject {
  * @param {String} [levelSeparator] ':' by default.
  * @param {String} [keyValueSeparator] '=' by default.
  * @param {String} [prefix] Empty by default.
- * @return {String}
  */
 export function stringifyObject(
     obj: NameValueObject,
     levelSeparator = ":",
     keyValueSeparator = "=",
     prefix = "",
-) {
+): string {
     const requiredKeys = ["name", "value"];
     const allowedKeys = requiredKeys.concat(["units"]);
     const extraKeys = Object.keys(omit(obj, allowedKeys));
