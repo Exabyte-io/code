@@ -56,5 +56,6 @@ export async function compileTS(globalSchema, savePath) {
         },
     );
 
+    // keep support of node.js 12 for unit tests
     await fs.promises.writeFile(savePath, compiled);
 }
