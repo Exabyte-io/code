@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import CryptoJS from "crypto-js";
 
+import { InMemoryEntity } from "../entity";
 import { DefaultableMixin } from "../entity/mixins/props";
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
+import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "../types";
 
 type Constructor<T = any> = new (...args: any[]) => T;
 
@@ -10,7 +12,7 @@ type Defaultable = ReturnType<typeof DefaultableMixin>;
 
 export function ApplicationContextMixin<T extends Constructor>(superclass: T) {
     return class ApplicationContextMixin extends superclass {
-        _application: any;
+        _application: ApplicationSchemaBase;
 
         constructor(...args: any) {
             super(...args);
@@ -31,9 +33,14 @@ export function ApplicationContextMixin<T extends Constructor>(superclass: T) {
     };
 }
 
+type Material = InMemoryEntity &
+    MaterialSchema & {
+        hash: string;
+    };
+
 export function MaterialContextMixin<T extends Constructor>(superclass: T) {
     return class MaterialContextMixin extends superclass {
-        _material: any;
+        _material: Material;
 
         extraData?: {
             materialHash: string;
@@ -182,7 +189,7 @@ export function MethodDataContextMixin<T extends Constructor>(superclass: T) {
 
 export function WorkflowContextMixin<T extends Constructor>(superclass: T) {
     return class extends superclass {
-        _workflow: any;
+        _workflow: WorkflowSchema;
 
         isEdited: boolean;
 
@@ -203,7 +210,7 @@ export function WorkflowContextMixin<T extends Constructor>(superclass: T) {
 
 export function JobContextMixin<T extends Constructor>(superclass: T) {
     return class extends superclass {
-        _job: any;
+        _job: JobSchema;
 
         isEdited: boolean;
 

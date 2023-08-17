@@ -8,7 +8,7 @@ export function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityConstructo
     return class extends superclass {
         entitySetType: EntitySetSchema["entitySetType"];
 
-        get isOrderedSet() {
+        get isOrderedSet(): boolean {
             return this.entitySetType === ENTITY_SET_TYPES.ordered;
         }
     };

@@ -17,11 +17,11 @@ export function FlowchartItemMixin<T extends InMemoryEntityConstructor>(supercla
             }
         }
 
-        get flowchartId() {
+        get flowchartId(): string {
             return this.prop("flowchartId", "");
         }
 
-        get head() {
+        get head(): boolean {
             return this.prop("head", false);
         }
 
@@ -47,9 +47,7 @@ export function FlowchartEntityMixin<T extends InMemoryEntityConstructor>(superc
         constructor(...params: any[]) {
             super(...params);
 
-            const config = params[0];
-
-            this._units = config?.units || [];
+            this._units = params[0]?.units || [];
         }
 
         get units() {
