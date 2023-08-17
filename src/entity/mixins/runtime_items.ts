@@ -3,8 +3,12 @@ import { NameResultSchema, RuntimeItemSchema } from "../../types";
 import { safeMakeObject } from "../../utils/object";
 import { AnyObject, InMemoryEntityConstructor } from "../in_memory";
 
-type ItemKey = "results" | "monitors" | "preProcessors" | "postProcessors";
-
+enum ItemKey {
+    results = "results",
+    monitors = "monitors",
+    preProcessors = "preProcessors",
+    postProcessors = "postProcessors",
+}
 /*
  * @summary Contains runtime items: results, monitors, pre/postProcessors
  *          Is meant to work with Entity, InMemoryEntity b/c of `prop` extraction from `_json`.
@@ -63,6 +67,13 @@ export interface RuntimeItemsUILogicJSON extends AnyObject {
     postProcessors?: NameResultSchema[];
 }
 
+const allKeys: ItemKey[] = [
+    ItemKey.results,
+    ItemKey.monitors,
+    ItemKey.postProcessors,
+    ItemKey.preProcessors,
+];
+
 export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends RuntimeItemsMixin(superclass) {
         declare _json: RuntimeItemsUILogicJSON;
@@ -73,28 +84,24 @@ export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(su
 
             const config = params[0];
 
-            this._initRuntimeItems(
-                ["results", "monitors", "preProcessors", "postProcessors"],
-                config,
-            );
+            this._initRuntimeItems(allKeys, config);
         }
 
         getDefaultsByKey(key: ItemKey) {
-            if (key === "results") {
+            if (key === ItemKey.results) {
                 return this.defaultResults;
             }
-            if (key === "monitors") {
+            if (key === ItemKey.monitors) {
                 return this.defaultMonitors;
             }
-            if (key === "preProcessors") {
+            if (key === ItemKey.preProcessors) {
                 return this.defaultPreProcessors;
             }
             return this.defaultPostProcessors;
         }
 
         setRuntimeItemsToDefaultValues() {
-            const keys: ItemKey[] = ["results", "monitors", "preProcessors", "postProcessors"];
-            keys.map((name) => this.setProp(name, this.getDefaultsByKey(name)));
+            allKeys.forEach((name) => this.setProp(name, this.getDefaultsByKey(name)));
         }
 
         /**
@@ -116,7 +123,7 @@ export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(su
         }
 
         // eslint-disable-next-line default-param-last
-        _addRuntimeItem(key: ItemKey = "results", config: RuntimeItemSchema) {
+        _addRuntimeItem(key: ItemKey = ItemKey.results, config: RuntimeItemSchema) {
             const runtimeItems = this._json[key];
             if (!runtimeItems) {
                 throw new Error("not found");
@@ -125,7 +132,7 @@ export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(su
         }
 
         // eslint-disable-next-line default-param-last
-        _removeRuntimeItem(key: ItemKey = "results", config: RuntimeItemSchema) {
+        _removeRuntimeItem(key: ItemKey = ItemKey.results, config: RuntimeItemSchema) {
             const newConfig = safeMakeObject(config);
             this._removeRuntimeItemByName(key, newConfig?.name || "");
         }
@@ -136,8 +143,12 @@ export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(su
             );
         }
 
-        // eslint-disable-next-line default-param-last
-        _toggleRuntimeItem(key: ItemKey = "results", data: RuntimeItemSchema, isAdding: boolean) {
+        _toggleRuntimeItem(
+            // eslint-disable-next-line default-param-last
+            key: ItemKey = ItemKey.results,
+            data: RuntimeItemSchema,
+            isAdding: boolean,
+        ) {
             if (isAdding) {
                 this._addRuntimeItem(key, data);
             } else {
@@ -146,19 +157,19 @@ export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(su
         }
 
         toggleResult(data: RuntimeItemSchema, isAdding: boolean) {
-            this._toggleRuntimeItem("results", data, isAdding);
+            this._toggleRuntimeItem(ItemKey.results, data, isAdding);
         }
 
         toggleMonitor(data: RuntimeItemSchema, isAdding: boolean) {
-            this._toggleRuntimeItem("monitors", data, isAdding);
+            this._toggleRuntimeItem(ItemKey.monitors, data, isAdding);
         }
 
         togglePreProcessor(data: RuntimeItemSchema, isAdding: boolean) {
-            this._toggleRuntimeItem("preProcessors", data, isAdding);
+            this._toggleRuntimeItem(ItemKey.preProcessors, data, isAdding);
         }
 
         togglePostProcessor(data: RuntimeItemSchema, isAdding: boolean) {
-            this._toggleRuntimeItem("postProcessors", data, isAdding);
+            this._toggleRuntimeItem(ItemKey.postProcessors, data, isAdding);
         }
 
         get resultNames() {

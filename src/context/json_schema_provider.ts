@@ -57,7 +57,7 @@ class JSONSchemaFormDataProvider extends ContextProvider {
         return { classNames: names };
     }
 
-    get uiSchemaStyled() {
+    get uiSchemaStyled(): UiSchema {
         const schema = this.uiSchema;
         // @ts-ignore
         return _.each<UiSchema>(schema, (v: UiSchema, k: string, l: UiSchema) => {

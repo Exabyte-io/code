@@ -15,9 +15,7 @@ export function ContextAndRenderFieldsMixin<T extends InMemoryEntityConstructor>
         constructor(...params: any[]) {
             super(...params);
 
-            const config = params[0];
-
-            this._context = config.context || {};
+            this._context = params[0].context || {};
         }
 
         // in-memory, or "volatile" context that is reset when the `parent` object is destroyed

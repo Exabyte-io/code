@@ -7,7 +7,7 @@ import { InMemoryEntityConstructor } from "../in_memory";
 export function FlowchartItemMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends superclass implements UnitEntity {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...params: any) {
+        constructor(...params: any[]) {
             super(...params);
 
             const config = params[0];
@@ -44,7 +44,7 @@ export function FlowchartEntityMixin<T extends InMemoryEntityConstructor>(superc
         _units: UnitEntity[];
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...params: any) {
+        constructor(...params: any[]) {
             super(...params);
 
             const config = params[0];
