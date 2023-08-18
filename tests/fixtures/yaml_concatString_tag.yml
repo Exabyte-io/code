@@ -1,0 +1,10 @@
+# concatenate three strings
+case1: !concatString
+    - "Hello "
+    - world
+    - "!"
+# return a string if there is only a single item
+case2: !concatString
+    - Hello
+# return an empty string if the array is empty
+case3: !concatString []

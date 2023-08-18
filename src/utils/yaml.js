@@ -183,11 +183,62 @@ export const includeType = new yaml.Type("!include", {
     },
 });
 
+/**
+ * !flatten YAML tag for flattening arrays
+ * See the tests for example usage.
+ */
+export const flattenType = new yaml.Type("!flatten", {
+    kind: "sequence",
+    construct(data) {
+        try {
+            return data.flat();
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
+/**
+ * !readFile YAML tag for including file contents as a string.
+ * See the tests for example usage.
+ */
+export const readFileType = new yaml.Type("!readFile", {
+    kind: "scalar",
+    construct(data) {
+        try {
+            return fs.readFileSync(path.resolve(data), "utf8");
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
+/**
+ * !concatString YAML tag for concatenating strings.
+ * See the tests for example usage.
+ */
+export const concatStringType = new yaml.Type("!concatString", {
+    kind: "sequence",
+    resolve(data) {
+        return data.every((d) => lodash.isString(d));
+    },
+    construct(data) {
+        try {
+            return "".concat(...data);
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
 export const JsYamlTypes = {
     include: includeType,
     parameter: parameterType,
     combine: combineType,
     esse: esseType,
+    flatten: flattenType,
+    readFile: readFileType,
+    concatString: concatStringType,
 };
 
 export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
@@ -195,4 +246,7 @@ export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
     combineType,
     esseType,
     includeType,
+    flattenType,
+    readFileType,
+    concatStringType,
 ]);

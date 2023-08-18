@@ -10,7 +10,12 @@ import { YAML_COMBINE_FILE } from "../enums";
 const combineSchema = yaml.DEFAULT_SCHEMA.extend([combineType, esseType]);
 
 describe("YAML tag: !combine", () => {
-    const yamlFixture = fs.readFileSync(YAML_COMBINE_FILE, "utf8");
+    let yamlFixture;
+
+    before(() => {
+        yamlFixture = fs.readFileSync(YAML_COMBINE_FILE, "utf8");
+    });
+
     it("should correctly parse a custom !combine tag with forEach and config keys", () => {
         const parsed = yaml.load(yamlFixture, { schema: combineSchema });
         const expectedResult = [
