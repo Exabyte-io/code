@@ -1,4 +1,3 @@
-// import { makeFlatSchemaKey, makeFlatSchemaRef } from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
 import fs from "fs";
 import { compile } from "json-schema-to-typescript";
 
