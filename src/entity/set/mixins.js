@@ -2,7 +2,7 @@
 export const InMemoryEntitySetMixin = (superclass) =>
     class extends superclass {
         containsEntity(entity) {
-            return entity.inSet.some((ref) => ref._id === this.id);
+            return entity?.inSet?.some((ref) => ref._id === this.id);
         }
     };
 
