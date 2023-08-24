@@ -38,12 +38,8 @@ describe("RJSF schema", () => {
         const dependencies = buildDependencies([DFT_TREE_ADVANCED]);
 
         const [dftCase] = dependencies.dependencies.type.oneOf;
-        // eslint-disable-next-line no-unused-expressions
-        expect(dftCase.properties.spinOrbitCoupling.enum[0]).to.be.true;
-        expect(dftCase.properties.spinOrbitCoupling.enum).to.have.length(1);
-        // eslint-disable-next-line no-unused-expressions
-        expect(dftCase.properties.spinOrbitCoupling.enumNames[0]).to.be.eql("true");
-        expect(dftCase.properties.spinOrbitCoupling.enumNames).to.have.length(1);
+        expect(dftCase.properties.spinOrbitCoupling.enum).to.have.members([true]);
+        expect(dftCase.properties.spinOrbitCoupling.enumNames).to.have.members(["true"]);
 
         const [ldaCase, ggaCase] = dftCase.dependencies.subtype.oneOf;
         expect(ldaCase.properties).not.to.haveOwnProperty("spinPolarization");
@@ -102,21 +98,21 @@ describe("RJSF schema", () => {
         const dependencies = buildDependencies([UNEVEN_TREE]);
 
         const [typeCase] = dependencies.dependencies.type.oneOf;
-        expect(typeCase.properties.type.enum[0]).to.be.equal("a");
+        expect(typeCase.properties.type.enum).to.have.members(["a"]);
         expect(typeCase.properties.subtype.enum).to.have.members(["b", "c", "d"]);
 
         const [bCase, cCase, dCase] = typeCase.dependencies.subtype.oneOf;
-        expect(bCase.properties.subtype.enum[0]).to.be.equal("b");
+        expect(bCase.properties.subtype.enum).to.have.members(["b"]);
 
-        expect(cCase.properties.subtype.enum[0]).to.be.equal("c");
+        expect(cCase.properties.subtype.enum).to.have.members(["c"]);
         expect(cCase.properties.subsubtype.enum).to.have.members(["c1", "c2"]);
 
-        expect(dCase.properties.subtype.enum[0]).to.be.equal("d");
+        expect(dCase.properties.subtype.enum).to.have.members(["d"]);
         expect(dCase.properties.subsubtype.enum).to.have.members(["d1"]);
 
         const [xCase] = dCase.dependencies.subsubtype.oneOf;
-        expect(xCase.properties.subsubtype.enum[0]).to.be.equal("d1");
-        expect(xCase.properties.propX.enum[0]).to.be.equal("x");
+        expect(xCase.properties.subsubtype.enum).to.have.members(["d1"]);
+        expect(xCase.properties.propX.enum).to.have.members(["x"]);
     });
 });
 
