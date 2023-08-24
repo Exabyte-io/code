@@ -190,3 +190,32 @@ export const UNEVEN_TREE = {
         },
     ],
 };
+
+/**
+ * @summary A tree with terminal nodes that feature a `staticOptions` property.
+ */
+export const TREE_STATIC_TERMINAL = {
+    path: "/A",
+    data: { key: "type", value: "a", name: "A" },
+    children: [
+        {
+            path: "/A/B",
+            data: { key: "subtype", value: "b", name: "B" },
+        },
+        {
+            path: "/A/C",
+            data: { key: "subtype", value: "c", name: "C" },
+            children: [
+                {
+                    path: "/A/C/C1",
+                    data: { key: "subsubtype", value: "c1", name: "C1" },
+                    staticOptions: [{ key: "static", values: ["static1", "static2", "static3"] }],
+                },
+                {
+                    path: "/A/C/C2",
+                    data: { key: "subsubtype", value: "c2", name: "C2" },
+                },
+            ],
+        },
+    ],
+};

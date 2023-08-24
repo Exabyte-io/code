@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { expect } from "chai";
 
 import {
@@ -5,7 +6,13 @@ import {
     getSchemaWithDependencies,
     typeofSchema,
 } from "../../src/utils/schemas";
-import { DFT_SCHEMA, DFT_TREE_ADVANCED, DFT_TREE_SIMPLE, UNEVEN_TREE } from "../fixtures/schemas";
+import {
+    DFT_SCHEMA,
+    DFT_TREE_ADVANCED,
+    DFT_TREE_SIMPLE,
+    TREE_STATIC_TERMINAL,
+    UNEVEN_TREE,
+} from "../fixtures/schemas";
 
 describe("RJSF schema", () => {
     it("dependencies block can be created from tree", () => {
@@ -43,6 +50,28 @@ describe("RJSF schema", () => {
 
         expect(ggaCase.properties.spinPolarization.enum).to.have.members(["collinear"]);
         expect(ggaCase.properties.spinPolarization.enumNames).to.have.members(["collinear"]);
+    });
+
+    it("should create static options from terminal nodes of dependency tree", () => {
+        const dependencies = buildDependencies([TREE_STATIC_TERMINAL]);
+
+        const [typeCase] = dependencies.dependencies.type.oneOf;
+        expect(typeCase.properties.type.enum).to.have.members(["a"]);
+        expect(typeCase.properties.subtype.enum).to.have.members(["b", "c"]);
+
+        const [bCase, cCase] = typeCase.dependencies.subtype.oneOf;
+        expect(bCase.properties.subtype.enum).to.have.members(["b"]);
+
+        expect(cCase.properties.subtype.enum).to.have.members(["c"]);
+        expect(cCase.properties.subsubtype.enum).to.have.members(["c1", "c2"]);
+
+        const [c1Case, c2Case] = cCase.dependencies.subsubtype.oneOf;
+        expect(c1Case).to.not.be.undefined;
+        expect(c1Case.properties.subsubtype.enum).to.have.members(["c1"]);
+        expect(c1Case.properties.static.enum).to.have.members(["static1", "static2", "static3"]);
+
+        expect(c2Case).to.not.be.undefined;
+        expect(c2Case.properties.subsubtype.enum).to.have.members(["c2"]);
     });
 
     it("can be created with dependencies from schema", () => {
