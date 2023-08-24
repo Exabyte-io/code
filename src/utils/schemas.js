@@ -72,6 +72,7 @@ function createStaticFields(node) {
  */
 export function buildDependencies(nodes) {
     const isEveryTerminal = nodes && nodes.every((node) => !node.children?.length);
+    const isWithStaticOptions = nodes && nodes.some((node) => node?.staticOptions);
     if (!nodes || !nodes.length || !nodes[0].data) return {};
     const parentKey = nodes[0].data.key;
 
@@ -87,7 +88,7 @@ export function buildDependencies(nodes) {
         };
     });
 
-    return cases.length && !isEveryTerminal
+    return cases.length && (!isEveryTerminal || isWithStaticOptions)
         ? {
               dependencies: {
                   [parentKey]: {
