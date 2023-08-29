@@ -1,4 +1,4 @@
-export const DFT_SCHEMA = {
+export const EXAMPLE_SCHEMA = {
     type: "object",
     properties: {
         type: {
@@ -7,64 +7,64 @@ export const DFT_SCHEMA = {
         subtype: {
             type: "string",
         },
-        functional: {
+        subsubtype: {
             type: "string",
         },
     },
 };
 
-export const DFT_TREE_SIMPLE = {
-    path: "/dft",
-    data: { key: "type", value: "dft", name: "Density Functional Theory" },
+export const TREE_SIMPLE = {
+    path: "/A",
+    data: { key: "type", value: "a", name: "A" },
     children: [
         {
-            path: "/dft/lda",
+            path: "/A/B",
             data: {
                 key: "subtype",
-                value: "lda",
-                name: "LDA",
+                value: "b",
+                name: "B",
             },
             children: [
                 {
-                    path: "/dft/lda/svwn",
+                    path: "/A/B/D",
                     data: {
-                        key: "functional",
-                        value: "svwn",
-                        name: "SVWN",
+                        key: "subsubtype",
+                        value: "d",
+                        name: "D",
                     },
                 },
                 {
-                    path: "/dft/lda/pz",
+                    path: "/A/B/E",
                     data: {
-                        key: "functional",
-                        value: "pz",
-                        name: "PZ",
+                        key: "subsubtype",
+                        value: "e",
+                        name: "E",
                     },
                 },
             ],
         },
         {
-            path: "/dft/gga",
+            path: "/A/C",
             data: {
                 key: "subtype",
-                value: "gga",
-                name: "GGA",
+                value: "c",
+                name: "C",
             },
             children: [
                 {
-                    path: "/dft/gga/pbe",
+                    path: "/A/C/F",
                     data: {
-                        key: "functional",
-                        value: "pbe",
-                        name: "PBE",
+                        key: "subsubtype",
+                        value: "f",
+                        name: "F",
                     },
                 },
                 {
-                    path: "/dft/gga/pw91",
+                    path: "/A/C/G",
                     data: {
-                        key: "functional",
-                        value: "pw91",
-                        name: "PW91",
+                        key: "subsubtype",
+                        value: "g",
+                        name: "G",
                     },
                 },
             ],
@@ -72,79 +72,79 @@ export const DFT_TREE_SIMPLE = {
     ],
 };
 
-export const DFT_TREE_ADVANCED = {
-    path: "/dft",
-    data: { key: "type", value: "dft", name: "Density Functional Theory" },
+export const TREE_ADVANCED = {
+    path: "/A",
+    data: { key: "type", value: "a", name: "A" },
     children: [
         {
-            path: "/dft/lda",
+            path: "/A/B",
             data: {
                 key: "subtype",
-                value: "lda",
-                name: "LDA",
+                value: "b",
+                name: "B",
             },
             children: [
                 {
-                    path: "/dft/lda/svwn",
+                    path: "/A/B/D",
                     data: {
-                        key: "functional",
-                        value: "svwn",
-                        name: "SVWN",
+                        key: "subsubtype",
+                        value: "d",
+                        name: "D",
                     },
                 },
                 {
-                    path: "/dft/lda/pz",
+                    path: "/A/B/E",
                     data: {
-                        key: "functional",
-                        value: "pz",
-                        name: "PZ",
+                        key: "subsubtype",
+                        value: "e",
+                        name: "E",
                     },
                 },
             ],
         },
         {
-            path: "/dft/gga",
+            path: "/A/C",
             data: {
                 key: "subtype",
-                value: "gga",
-                name: "GGA",
+                value: "c",
+                name: "C",
             },
             children: [
                 {
-                    path: "/dft/gga/pbe",
+                    path: "/A/C/F",
                     data: {
-                        key: "functional",
-                        value: "pbe",
-                        name: "PBE",
+                        key: "subsubtype",
+                        value: "f",
+                        name: "F",
                     },
                 },
                 {
-                    path: "/dft/gga/pw91",
+                    path: "/A/C/G",
                     data: {
-                        key: "functional",
-                        value: "pw91",
-                        name: "PW91",
+                        key: "subsubtype",
+                        value: "g",
+                        name: "G",
                     },
                 },
             ],
             staticOptions: [
                 {
-                    key: "spinPolarization",
-                    values: ["collinear"],
+                    key: "staticC",
+                    values: ["static_c"],
                 },
             ],
         },
     ],
     staticOptions: [
         {
-            key: "dispersionCorrection",
-            values: ["dft-d3"],
+            key: "staticA1",
+            values: ["static_a1"],
             namesMap: {
-                "dft-d3": "DFT-D3",
+                static_a1: "Static A1",
             },
         },
         {
-            key: "spinOrbitCoupling",
+            key: "staticA2",
             values: [true],
         },
     ],

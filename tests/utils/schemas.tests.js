@@ -7,45 +7,45 @@ import {
     typeofSchema,
 } from "../../src/utils/schemas";
 import {
-    DFT_SCHEMA,
-    DFT_TREE_ADVANCED,
-    DFT_TREE_SIMPLE,
+    EXAMPLE_SCHEMA,
+    TREE_ADVANCED,
+    TREE_SIMPLE,
     TREE_STATIC_TERMINAL,
     UNEVEN_TREE,
 } from "../fixtures/schemas";
 
 describe("RJSF schema", () => {
     it("dependencies block can be created from tree", () => {
-        const dependencies = buildDependencies([DFT_TREE_SIMPLE]);
+        const dependencies = buildDependencies([TREE_SIMPLE]);
 
-        const [dftCase] = dependencies.dependencies.type.oneOf;
-        expect(dftCase.properties.subtype.enum).to.have.ordered.members(["lda", "gga"]);
-        expect(dftCase.properties.subtype.enumNames).to.have.ordered.members(["LDA", "GGA"]);
+        const [aCase] = dependencies.dependencies.type.oneOf;
+        expect(aCase.properties.subtype.enum).to.have.ordered.members(["b", "c"]);
+        expect(aCase.properties.subtype.enumNames).to.have.ordered.members(["B", "C"]);
 
-        const [ldaCase, ggaCase] = dftCase.dependencies.subtype.oneOf;
-        expect(ldaCase.properties.subtype.enum).to.have.length(1);
-        expect(ldaCase.properties.functional.enum).to.have.ordered.members(["svwn", "pz"]);
-        expect(ldaCase.properties.functional.enumNames).to.have.ordered.members(["SVWN", "PZ"]);
-        expect(ldaCase).to.not.have.property("dependencies");
+        const [bCase, cCase] = aCase.dependencies.subtype.oneOf;
+        expect(bCase.properties.subtype.enum).to.have.length(1);
+        expect(bCase.properties.subsubtype.enum).to.have.ordered.members(["d", "e"]);
+        expect(bCase.properties.subsubtype.enumNames).to.have.ordered.members(["D", "E"]);
+        expect(bCase).to.not.have.property("dependencies");
 
-        expect(ggaCase.properties.subtype.enum).to.have.length(1);
-        expect(ggaCase.properties.functional.enum).to.have.ordered.members(["pbe", "pw91"]);
-        expect(ggaCase.properties.functional.enumNames).to.have.ordered.members(["PBE", "PW91"]);
-        expect(ggaCase).to.not.have.property("dependencies");
+        expect(cCase.properties.subtype.enum).to.have.length(1);
+        expect(cCase.properties.subsubtype.enum).to.have.ordered.members(["f", "g"]);
+        expect(cCase.properties.subsubtype.enumNames).to.have.ordered.members(["F", "G"]);
+        expect(cCase).to.not.have.property("dependencies");
     });
 
     it("should create static options in dependency block if present in node", () => {
-        const dependencies = buildDependencies([DFT_TREE_ADVANCED]);
+        const dependencies = buildDependencies([TREE_ADVANCED]);
 
-        const [dftCase] = dependencies.dependencies.type.oneOf;
-        expect(dftCase.properties.spinOrbitCoupling.enum).to.have.members([true]);
-        expect(dftCase.properties.spinOrbitCoupling.enumNames).to.have.members(["true"]);
+        const [aCase] = dependencies.dependencies.type.oneOf;
+        expect(aCase.properties.staticA2.enum).to.have.members([true]);
+        expect(aCase.properties.staticA2.enumNames).to.have.members(["true"]);
 
-        const [ldaCase, ggaCase] = dftCase.dependencies.subtype.oneOf;
-        expect(ldaCase.properties).not.to.haveOwnProperty("spinPolarization");
+        const [bCase, cCase] = aCase.dependencies.subtype.oneOf;
+        expect(bCase.properties).not.to.haveOwnProperty("staticC");
 
-        expect(ggaCase.properties.spinPolarization.enum).to.have.members(["collinear"]);
-        expect(ggaCase.properties.spinPolarization.enumNames).to.have.members(["collinear"]);
+        expect(cCase.properties.staticC.enum).to.have.members(["static_c"]);
+        expect(cCase.properties.staticC.enumNames).to.have.members(["static_c"]);
     });
 
     it("should create static options from terminal nodes of dependency tree", () => {
@@ -72,25 +72,25 @@ describe("RJSF schema", () => {
 
     it("can be created with dependencies from schema", () => {
         const rjsfSchema = getSchemaWithDependencies({
-            schema: DFT_SCHEMA,
-            nodes: [DFT_TREE_SIMPLE],
+            schema: EXAMPLE_SCHEMA,
+            nodes: [TREE_SIMPLE],
         });
-        expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
-        expect(rjsfSchema.properties).to.be.eql(DFT_SCHEMA.properties);
+        expect(rjsfSchema.type).to.be.eql(EXAMPLE_SCHEMA.type);
+        expect(rjsfSchema.properties).to.be.eql(EXAMPLE_SCHEMA.properties);
         expect(rjsfSchema).to.have.property("dependencies");
     });
 
     it("enum and enumNames can be added to schema properties", () => {
         const rjsfSchema = getSchemaWithDependencies({
-            schema: DFT_SCHEMA,
-            nodes: [DFT_TREE_SIMPLE],
+            schema: EXAMPLE_SCHEMA,
+            nodes: [TREE_SIMPLE],
             modifyProperties: true,
         });
-        expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
+        expect(rjsfSchema.type).to.be.eql(EXAMPLE_SCHEMA.type);
         expect(rjsfSchema.properties.type).to.have.property("enum");
-        expect(rjsfSchema.properties.type.enum).to.be.eql(["dft"]);
+        expect(rjsfSchema.properties.type.enum).to.be.eql(["a"]);
         expect(rjsfSchema.properties.type).to.have.property("enumNames");
-        expect(rjsfSchema.properties.type.enumNames).to.be.eql(["Density Functional Theory"]);
+        expect(rjsfSchema.properties.type.enumNames).to.be.eql(["A"]);
         expect(rjsfSchema).to.have.property("dependencies");
     });
 
