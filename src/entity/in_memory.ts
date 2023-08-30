@@ -121,11 +121,21 @@ export class InMemoryEntity {
         }
     }
 
-    clean(config: AnyObject): AnyObject {
+    clean(config: AnyObject): any {
         if (this.isSystemEntity) {
             return config;
         }
-        return this.schema ? this.schema.clean(config) : config;
+        if (!this.schema) {
+            // @ts-ignore
+            const ajv = new Ajv({ removeAdditional: "all" });
+            const validate = ajv.compile(this.jsonSchema);
+
+            validate(config);
+
+            return config;
+        }
+
+        return this.schema.clean(config);
     }
 
     isValid() {
