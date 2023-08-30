@@ -44,7 +44,7 @@ export function HasScopeTrackMixin<T extends InMemoryEntityConstructor>(supercla
             this.setProp("scopeTrack", array);
         }
     };
-};
+}
 
 export function HasMetadataMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends superclass {
