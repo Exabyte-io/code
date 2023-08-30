@@ -98,3 +98,19 @@ export function NamedEntityMixin<T extends InMemoryEntityConstructor>(superclass
         }
     };
 }
+
+export function HasConsistencyChecksMixin<T extends InMemoryEntityConstructor>(superclass: T) {
+    return class extends superclass {
+        get consistencyChecks(): object[] {
+            return this.prop("consistencyChecks", []);
+        }
+
+        set consistencyChecks(array) {
+            this.setProp("consistencyChecks", array);
+        }
+
+        addConsistencyCheck(object: object) {
+            this.consistencyChecks = [...this.consistencyChecks, object];
+        }
+    };
+}
