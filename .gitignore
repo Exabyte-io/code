@@ -5,3 +5,5 @@ node_modules/
 .nyc_output/
 .idea/
 *.DS_Store
+src/types.ts
+.vscode/
