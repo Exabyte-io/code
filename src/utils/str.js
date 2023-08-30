@@ -97,7 +97,7 @@ export function convertArabicToRoman(num) {
 /**
  * Render name template based on config.
  * Use substitution map to replace a config value with a more readable variant.
- * @param {string} template - Template for the name property
+ * @param {string|undefined} template - Template for the name property
  * @param {Object} data - Entity config
  * @param {Object} substitutionMap - Maps object value to human-readable string
  * @return {string}

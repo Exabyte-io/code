@@ -1,5 +1,4 @@
-import { makeFlatSchemaKey, makeFlatSchemaRef } from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
-import fs from "fs/promises";
+import fs from "fs";
 import { compile } from "json-schema-to-typescript";
 
 /**
@@ -11,52 +10,18 @@ import { compile } from "json-schema-to-typescript";
  * await compileTS(esseSchema, "./dist/types.ts");
  */
 export async function compileTS(globalSchema, savePath) {
-    const preparedDefinitions = Object.entries(globalSchema.definitions).reduce(
-        (newDefinitions, [key, schema]) => {
-            if (schema.allOf && schema.properties) {
-                /**
-                 * The current version of json-schema-to-typescript ignores properties if there is allOf array in the schema.
-                 * To fix the issue here we are creating a separate schema from properties and add it to the allOf array
-                 */
-                return [
-                    ...newDefinitions,
-                    [
-                        key,
-                        {
-                            ...schema,
-                            allOf: [
-                                ...schema.allOf,
-                                makeFlatSchemaRef(`${schema.schemaId}-properties`),
-                            ],
-                            properties: null,
-                        },
-                    ],
-                    [
-                        makeFlatSchemaKey(`${schema.schemaId}-properties`),
-                        {
-                            schemaId: `${schema.schemaId}-properties`,
-                            type: "object",
-                            properties: schema.properties,
-                        },
-                    ],
-                ];
-            }
-
-            return [...newDefinitions, [key, schema]];
-        },
-        [],
-    );
-
     const compiled = await compile(
         {
             ...globalSchema,
-            definitions: Object.fromEntries(preparedDefinitions),
+            definitions: globalSchema.definitions,
         },
         "",
         {
             unreachableDefinitions: true,
+            additionalProperties: false,
         },
     );
 
-    await fs.writeFile(savePath, compiled);
+    // keep support of node.js 12 for unit tests
+    await fs.promises.writeFile(savePath, compiled);
 }
