@@ -112,4 +112,45 @@ describe("InMemoryEntity", () => {
 
         expect(validEntity.validate()).to.be.true;
     });
+
+    it("jsonSchema clean", async () => {
+        class RegisteredEntity extends InMemoryEntity {}
+
+        registerClassName(RegisteredEntity.name, "in-memory-entity/base");
+
+        JSONSchemasInterface.registerGlobalSchema({
+            definitions: {
+                "in-memory-entity-base": {
+                    $id: "in-memory-entity/base",
+                    $schema: "http://json-schema.org/draft-04/schema#",
+                    title: "System in-set schema",
+                    properties: {
+                        _id: {
+                            type: "string",
+                        },
+                        type: {
+                            type: "string",
+                        },
+                    },
+                },
+            },
+        });
+
+        const invalidEntity = new RegisteredEntity({
+            _id: "123",
+            type: false,
+            additional: "additional",
+        });
+
+        const cleanConfig = invalidEntity.clean({
+            _id: "123",
+            type: "type",
+            additional: "additional",
+        });
+
+        expect(cleanConfig).to.be.deep.equal({
+            _id: "123",
+            type: "type",
+        });
+    });
 });
