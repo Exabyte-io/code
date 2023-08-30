@@ -1,3 +1,4 @@
+import Ajv from "ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
@@ -112,6 +113,11 @@ export class InMemoryEntity {
     validate() {
         if (this.schema) {
             this.schema.validate(this.toJSON());
+        } else {
+            // @ts-ignore
+            const ajv = new Ajv({ allErrors: true });
+
+            return ajv.validate(this.jsonSchema, this.toJSON());
         }
     }
 
@@ -124,7 +130,7 @@ export class InMemoryEntity {
 
     isValid() {
         if (!this.schema) {
-            return true;
+            return this.validate();
         }
 
         const ctx = this.schema.newContext();
@@ -219,6 +225,17 @@ export class InMemoryEntity {
     static get jsonSchema() {
         try {
             return getSchemaByClassName(this.name);
+        } catch (e) {
+            if (e instanceof Error) {
+                console.error(e.stack);
+            }
+            throw e;
+        }
+    }
+
+    get jsonSchema() {
+        try {
+            return getSchemaByClassName(this.constructor.name);
         } catch (e) {
             if (e instanceof Error) {
                 console.error(e.stack);
