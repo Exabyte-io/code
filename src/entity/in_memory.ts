@@ -126,6 +126,8 @@ export class InMemoryEntity {
     }
 
     clean(config: AnyObject): any {
+        if (this.isSystemEntity || !this.schema) return config;
+
         // @ts-ignore
         const ajv = new Ajv({ removeAdditional: "all" });
         const validate = ajv.compile(this.schema);
