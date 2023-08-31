@@ -6,7 +6,7 @@ interface PathObject {
 }
 
 // Filter conditions
-interface FilterObject {
+export interface FilterObject {
     path?: string;
     regex?: RegExp;
 }
@@ -57,6 +57,7 @@ export function filterEntityList({
     filterObjects = [],
     multiPathSeparator = "",
 }: FilterEntityListProps) {
+    if (!filterObjects || !filterObjects.length) return [];
     const filterObjects_ = filterObjects.map((o) => (o.regex ? { regex: new RegExp(o.regex) } : o));
 
     let filtered;

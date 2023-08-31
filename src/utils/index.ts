@@ -31,6 +31,7 @@ import { getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
+    findPreviousVersion,
     randomAlphanumeric,
     removeCommentsFromSourceCode,
     removeEmptyLinesFromString,
@@ -89,4 +90,5 @@ export {
     getFilesInDirectory,
     getDirectories,
     createObjectPathFromFilePath,
+    findPreviousVersion,
 };

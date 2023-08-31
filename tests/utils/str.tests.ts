@@ -1,8 +1,8 @@
 import { expect } from "chai";
 
-import { renderTextWithSubstitutes } from "../../src/utils";
+import { findPreviousVersion, renderTextWithSubstitutes } from "../../src/utils";
 
-describe("renderTextWithSubstitutes", () => {
+describe("str: renderTextWithSubstitutes", () => {
     it("should substitute flat properties", () => {
         const template = "Hello {{ user }}!";
         const data = { user: "user001" };
@@ -61,5 +61,19 @@ describe("renderTextWithSubstitutes", () => {
         const result = renderTextWithSubstitutes(template, data, substitutionMap);
 
         expect(result).to.be.equal("Hello !");
+    });
+});
+
+describe("str: findPreviousVersion", () => {
+    const versions = ["5.4.2", "3.2", "6.2", "4", "7.2.1"];
+
+    it("should find a previous semantic version", () => {
+        const previous = findPreviousVersion(versions, "5.2");
+        expect(previous).to.be.equal("4");
+    });
+
+    it("should return undefined if no previous version is found", () => {
+        const previous = findPreviousVersion(versions, "2");
+        expect(previous).to.be.undefined;
     });
 });
