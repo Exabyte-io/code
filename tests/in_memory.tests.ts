@@ -1,8 +1,23 @@
 import { expect } from "chai";
+import { JSONSchema6 } from "json-schema";
 
 import { InMemoryEntity } from "../src/entity/in_memory";
 import { JSONSchemasInterface } from "../src/JSONSchemasInterface";
 import { registerClassName } from "../src/utils/schemas";
+
+const inMemoryEntitySchema: JSONSchema6 = {
+    $id: "in-memory-entity/base",
+    $schema: "http://json-schema.org/draft-04/schema#",
+    title: "System in-set schema",
+    properties: {
+        _id: {
+            type: "string",
+        },
+        type: {
+            type: "string",
+        },
+    },
+};
 
 describe("InMemoryEntity", () => {
     const obj = {
@@ -44,8 +59,16 @@ describe("InMemoryEntity", () => {
     });
 
     it("toJSON converts to JSON", () => {
-        const entity = new InMemoryEntity(obj);
-        expect(JSON.stringify(entity.toJSON())).to.be.equal(JSON.stringify(obj));
+        registerClassName(InMemoryEntity.name, "in-memory-entity/base");
+        JSONSchemasInterface.registerGlobalSchema({
+            definitions: {
+                "in-memory-entity-base": inMemoryEntitySchema,
+            },
+        });
+        const entity = new InMemoryEntity({ _id: "123", type: "type" });
+        expect(JSON.stringify(entity.toJSON())).to.be.equal(
+            JSON.stringify({ _id: "123", type: "type" }),
+        );
     });
 
     it("jsonSchema returns correct registered schema", async () => {
@@ -55,19 +78,7 @@ describe("InMemoryEntity", () => {
 
         JSONSchemasInterface.registerGlobalSchema({
             definitions: {
-                "in-memory-entity-base": {
-                    $id: "in-memory-entity/base",
-                    $schema: "http://json-schema.org/draft-04/schema#",
-                    title: "System in-set schema",
-                    properties: {
-                        _id: {
-                            type: "string",
-                        },
-                        type: {
-                            type: "string",
-                        },
-                    },
-                },
+                "in-memory-entity-base": inMemoryEntitySchema,
             },
         });
 
@@ -82,19 +93,7 @@ describe("InMemoryEntity", () => {
 
         JSONSchemasInterface.registerGlobalSchema({
             definitions: {
-                "in-memory-entity-base": {
-                    $id: "in-memory-entity/base",
-                    $schema: "http://json-schema.org/draft-04/schema#",
-                    title: "System in-set schema",
-                    properties: {
-                        _id: {
-                            type: "string",
-                        },
-                        type: {
-                            type: "string",
-                        },
-                    },
-                },
+                "in-memory-entity-base": inMemoryEntitySchema,
             },
         });
 
@@ -120,19 +119,7 @@ describe("InMemoryEntity", () => {
 
         JSONSchemasInterface.registerGlobalSchema({
             definitions: {
-                "in-memory-entity-base": {
-                    $id: "in-memory-entity/base",
-                    $schema: "http://json-schema.org/draft-04/schema#",
-                    title: "System in-set schema",
-                    properties: {
-                        _id: {
-                            type: "string",
-                        },
-                        type: {
-                            type: "string",
-                        },
-                    },
-                },
+                "in-memory-entity-base": inMemoryEntitySchema,
             },
         });
 
