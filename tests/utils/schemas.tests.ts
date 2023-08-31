@@ -1,4 +1,5 @@
 // @ts-nocheck
+/* eslint-disable no-unsafe-optional-chaining */
 import { expect } from "chai";
 
 import {
@@ -6,166 +7,113 @@ import {
     getSchemaWithDependencies,
     typeofSchema,
 } from "../../src/utils/schemas";
+import {
+    EXAMPLE_SCHEMA,
+    TREE_ADVANCED,
+    TREE_SIMPLE,
+    TREE_STATIC_TERMINAL,
+    UNEVEN_TREE,
+} from "../fixtures/schemas";
 
 describe("RJSF schema", () => {
-    const TREE = {
-        path: "/dft",
-        dataSelector: { key: "type", value: "data.type.slug", name: "data.type.name" },
-        data: {
-            type: {
-                slug: "dft",
-                name: "Density Functional Theory",
-            },
-        },
-        children: [
-            {
-                path: "/dft/lda",
-                dataSelector: {
-                    key: "subtype",
-                    value: "data.subtype.slug",
-                    name: "data.subtype.name",
-                },
-                data: {
-                    subtype: {
-                        slug: "lda",
-                        name: "LDA",
-                    },
-                },
-                children: [
-                    {
-                        path: "/dft/lda/svwn",
-                        dataSelector: {
-                            key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
-                        },
-                        data: {
-                            functional: {
-                                slug: "svwn",
-                                name: "SVWN",
-                            },
-                        },
-                    },
-                    {
-                        path: "/dft/lda/pz",
-                        dataSelector: {
-                            key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
-                        },
-                        data: {
-                            functional: {
-                                slug: "pz",
-                                name: "PZ",
-                            },
-                        },
-                    },
-                ],
-            },
-            {
-                path: "/dft/gga",
-                dataSelector: {
-                    key: "subtype",
-                    value: "data.subtype.slug",
-                    name: "data.subtype.name",
-                },
-                data: {
-                    subtype: {
-                        slug: "gga",
-                        name: "GGA",
-                    },
-                },
-                children: [
-                    {
-                        path: "/dft/gga/pbe",
-                        dataSelector: {
-                            key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
-                        },
-                        data: {
-                            functional: {
-                                slug: "pbe",
-                                name: "PBE",
-                            },
-                        },
-                    },
-                    {
-                        path: "/dft/gga/pw91",
-                        dataSelector: {
-                            key: "functional",
-                            value: "data.functional.slug",
-                            name: "data.functional.name",
-                        },
-                        data: {
-                            functional: {
-                                slug: "pw91",
-                                name: "PW91",
-                            },
-                        },
-                    },
-                ],
-            },
-        ],
-    };
-    const DFT_SCHEMA = {
-        type: "object",
-        properties: {
-            type: {
-                type: "string",
-            },
-            subtype: {
-                type: "string",
-            },
-            functional: {
-                type: "string",
-            },
-        },
-    };
-
     it("dependencies block can be created from tree", () => {
-        const dependencies = buildDependencies([TREE]);
+        const dependencies = buildDependencies([TREE_SIMPLE]);
 
-        // eslint-disable-next-line no-unsafe-optional-chaining
-        const [dftCase] = dependencies.dependencies?.type.oneOf;
-        expect(dftCase.properties.subtype.enum).to.have.ordered.members(["lda", "gga"]);
-        expect(dftCase.properties.subtype.enumNames).to.have.ordered.members(["LDA", "GGA"]);
+        const [aCase] = dependencies.dependencies.type.oneOf;
+        expect(aCase.properties.subtype.enum).to.have.ordered.members(["b", "c"]);
+        expect(aCase.properties.subtype.enumNames).to.have.ordered.members(["B", "C"]);
 
-        const [ldaCase, ggaCase] = dftCase.dependencies.subtype.oneOf;
-        expect(ldaCase.properties.subtype.enum).to.have.length(1);
-        expect(ldaCase.properties.functional.enum).to.have.ordered.members(["svwn", "pz"]);
-        expect(ldaCase.properties.functional.enumNames).to.have.ordered.members(["SVWN", "PZ"]);
-        expect(ldaCase).to.not.have.property("dependencies");
+        const [bCase, cCase] = aCase.dependencies.subtype.oneOf;
+        expect(bCase.properties.subtype.enum).to.have.length(1);
+        expect(bCase.properties.subsubtype.enum).to.have.ordered.members(["d", "e"]);
+        expect(bCase.properties.subsubtype.enumNames).to.have.ordered.members(["D", "E"]);
+        expect(bCase).to.not.have.property("dependencies");
 
-        expect(ggaCase.properties.subtype.enum).to.have.length(1);
-        expect(ggaCase.properties.functional.enum).to.have.ordered.members(["pbe", "pw91"]);
-        expect(ggaCase.properties.functional.enumNames).to.have.ordered.members(["PBE", "PW91"]);
-        expect(ggaCase).to.not.have.property("dependencies");
+        expect(cCase.properties.subtype.enum).to.have.length(1);
+        expect(cCase.properties.subsubtype.enum).to.have.ordered.members(["f", "g"]);
+        expect(cCase.properties.subsubtype.enumNames).to.have.ordered.members(["F", "G"]);
+        expect(cCase).to.not.have.property("dependencies");
+    });
+
+    it("should create static options in dependency block if present in node", () => {
+        const dependencies = buildDependencies([TREE_ADVANCED]);
+
+        const [aCase] = dependencies.dependencies.type.oneOf;
+        expect(aCase.properties.staticA2.enum).to.have.members([true]);
+        expect(aCase.properties.staticA2.enumNames).to.have.members(["true"]);
+
+        const [bCase, cCase] = aCase.dependencies.subtype.oneOf;
+        expect(bCase.properties).not.to.haveOwnProperty("staticC");
+
+        expect(cCase.properties.staticC.enum).to.have.members(["static_c"]);
+        expect(cCase.properties.staticC.enumNames).to.have.members(["static_c"]);
+    });
+
+    it("should create static options from terminal nodes of dependency tree", () => {
+        const dependencies = buildDependencies([TREE_STATIC_TERMINAL]);
+
+        const [typeCase] = dependencies.dependencies.type.oneOf;
+        expect(typeCase.properties.type.enum).to.have.members(["a"]);
+        expect(typeCase.properties.subtype.enum).to.have.members(["b", "c"]);
+
+        const [bCase, cCase] = typeCase.dependencies.subtype.oneOf;
+        expect(bCase.properties.subtype.enum).to.have.members(["b"]);
+
+        expect(cCase.properties.subtype.enum).to.have.members(["c"]);
+        expect(cCase.properties.subsubtype.enum).to.have.members(["c1", "c2"]);
+
+        const [c1Case, c2Case] = cCase.dependencies.subsubtype.oneOf;
+        expect(c1Case).to.not.be.undefined;
+        expect(c1Case.properties.subsubtype.enum).to.have.members(["c1"]);
+        expect(c1Case.properties.static.enum).to.have.members(["static1", "static2", "static3"]);
+
+        expect(c2Case).to.not.be.undefined;
+        expect(c2Case.properties.subsubtype.enum).to.have.members(["c2"]);
     });
 
     it("can be created with dependencies from schema", () => {
         const rjsfSchema = getSchemaWithDependencies({
-            schema: DFT_SCHEMA,
-            nodes: [TREE],
+            schema: EXAMPLE_SCHEMA,
+            nodes: [TREE_SIMPLE],
         });
-        expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
-        expect(rjsfSchema.properties).to.be.eql(DFT_SCHEMA.properties);
+        expect(rjsfSchema.type).to.be.eql(EXAMPLE_SCHEMA.type);
+        expect(rjsfSchema.properties).to.be.eql(EXAMPLE_SCHEMA.properties);
         expect(rjsfSchema).to.have.property("dependencies");
     });
 
     it("enum and enumNames can be added to schema properties", () => {
         const rjsfSchema = getSchemaWithDependencies({
-            schema: DFT_SCHEMA,
-            nodes: [TREE],
+            schema: EXAMPLE_SCHEMA,
+            nodes: [TREE_SIMPLE],
             modifyProperties: true,
         });
-        // console.log(JSON.stringify(rjsfSchema, null, 4));
-        expect(rjsfSchema.type).to.be.eql(DFT_SCHEMA.type);
+        expect(rjsfSchema.type).to.be.eql(EXAMPLE_SCHEMA.type);
         expect(rjsfSchema.properties.type).to.have.property("enum");
-        expect(rjsfSchema.properties.type.enum).to.be.eql(["dft"]);
+        expect(rjsfSchema.properties.type.enum).to.be.eql(["a"]);
         expect(rjsfSchema.properties.type).to.have.property("enumNames");
-        expect(rjsfSchema.properties.type.enumNames).to.be.eql(["Density Functional Theory"]);
+        expect(rjsfSchema.properties.type.enumNames).to.be.eql(["A"]);
         expect(rjsfSchema).to.have.property("dependencies");
+    });
+
+    it("should correctly create dependencies from an uneven tree", () => {
+        const dependencies = buildDependencies([UNEVEN_TREE]);
+
+        const [typeCase] = dependencies.dependencies.type.oneOf;
+        expect(typeCase.properties.type.enum).to.have.members(["a"]);
+        expect(typeCase.properties.subtype.enum).to.have.members(["b", "c", "d"]);
+
+        const [bCase, cCase, dCase] = typeCase.dependencies.subtype.oneOf;
+        expect(bCase.properties.subtype.enum).to.have.members(["b"]);
+
+        expect(cCase.properties.subtype.enum).to.have.members(["c"]);
+        expect(cCase.properties.subsubtype.enum).to.have.members(["c1", "c2"]);
+
+        expect(dCase.properties.subtype.enum).to.have.members(["d"]);
+        expect(dCase.properties.subsubtype.enum).to.have.members(["d1"]);
+
+        const [xCase] = dCase.dependencies.subsubtype.oneOf;
+        expect(xCase.properties.subsubtype.enum).to.have.members(["d1"]);
+        expect(xCase.properties.propX.enum).to.have.members(["x"]);
     });
 });
 
