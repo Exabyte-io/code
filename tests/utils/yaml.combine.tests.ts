@@ -13,7 +13,8 @@ const combineSchema = yaml.DEFAULT_SCHEMA.extend([combineType, esseType]);
 describe("YAML tag: !combine", () => {
     let yamlFixture;
 
-    before(() => {
+    // eslint-disable-next-line func-names
+    before(function () {
         this.timeout(5000);
         yamlFixture = fs.readFileSync(YAML_COMBINE_FILE, "utf8");
     });
