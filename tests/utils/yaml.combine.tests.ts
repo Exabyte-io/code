@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 // @ts-nocheck
 import { expect } from "chai";
-import fs from "fs/promises";
+import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
 
@@ -13,10 +13,9 @@ const combineSchema = yaml.DEFAULT_SCHEMA.extend([combineType, esseType]);
 describe("YAML tag: !combine", () => {
     let yamlFixture;
 
-    // eslint-disable-next-line func-names
-    before(async function () {
+    before(() => {
         this.timeout(5000);
-        yamlFixture = await fs.readFile(YAML_COMBINE_FILE, "utf8");
+        yamlFixture = fs.readFileSync(YAML_COMBINE_FILE, "utf8");
     });
 
     it("should correctly parse a custom !combine tag with forEach and config keys", () => {
