@@ -45,4 +45,9 @@ describe("YAML tag: !parameter", () => {
         const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
         expect(parsed.case7).to.be.eql({ key: "some.key", values: ["a", "c", null] });
     });
+
+    it("should merge values with locally defined items and arrays", () => {
+        const parsed = yaml.load(yamlFixture, { schema: parameterSchema });
+        expect(parsed.case8).to.be.eql({ key: "merged", values: ["a", "b", "c", "d", "e"] });
+    });
 });

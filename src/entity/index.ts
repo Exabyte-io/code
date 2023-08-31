@@ -7,6 +7,7 @@ import {
     DefaultableMixin,
     HasDescriptionMixin,
     HasMetadataMixin,
+    HasScopeTrackMixin,
     NamedEntityMixin,
     TaggableMixin,
 } from "./mixins/props";
@@ -43,6 +44,7 @@ export {
     HasDescriptionMixin,
     HasMetadataMixin,
     TaggableMixin,
+    HasScopeTrackMixin,
     NamedEntityMixin,
     RuntimeItemsMixin,
     RuntimeContextFieldMixin,
