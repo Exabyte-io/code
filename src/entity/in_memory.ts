@@ -85,8 +85,6 @@ export class InMemoryEntity {
     }
 
     toJSONQuick(exclude: string[] = []): AnyObject {
-        console.log("this._json", this._json);
-        console.log("exclude", exclude);
         return this.clean(clone(omit(this._json, exclude)));
     }
 
