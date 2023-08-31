@@ -170,7 +170,7 @@ export const esseType = new yaml.Type("!esse", {
     },
     construct(data) {
         try {
-            JSONSchemasInterface.registerGlobalSchema(esseSchema);
+            JSONSchemasInterface.registerGlobalSchemaIfEmpty(esseSchema);
             const { filePath: schemaId, objPath } = splitReference(data);
             const schema = JSONSchemasInterface.schemaById(schemaId);
             if (objPath) {
