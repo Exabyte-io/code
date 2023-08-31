@@ -3,8 +3,10 @@ import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";
 
+import { JSONSchemasInterface } from "../../src/JSONSchemasInterface";
 import { esseType } from "../../src/utils/yaml";
 import { YAML_ESSE_FILE } from "../enums";
+import { MOCK_GLOBAL_SCHEMA } from "../fixtures/mock_esse_schema";
 
 const yamlSchema = yaml.DEFAULT_SCHEMA.extend([esseType]);
 
@@ -13,6 +15,7 @@ describe("YAML tag: !esse", () => {
     let parsed;
 
     before(() => {
+        JSONSchemasInterface.registerGlobalSchema(MOCK_GLOBAL_SCHEMA);
         yamlFixture = fs.readFileSync(YAML_ESSE_FILE, "utf8");
         parsed = yaml.load(yamlFixture, { schema: yamlSchema });
     });

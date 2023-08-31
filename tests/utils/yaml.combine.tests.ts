@@ -5,8 +5,10 @@ import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
 
+import { JSONSchemasInterface } from "../../src/JSONSchemasInterface";
 import { combineType, esseType } from "../../src/utils/yaml";
 import { YAML_COMBINE_FILE } from "../enums";
+import { MOCK_GLOBAL_SCHEMA } from "../fixtures/mock_esse_schema";
 
 const combineSchema = yaml.DEFAULT_SCHEMA.extend([combineType, esseType]);
 
@@ -14,9 +16,8 @@ describe("YAML tag: !combine", () => {
     let yamlFixture;
     let parsed;
 
-    // eslint-disable-next-line func-names
-    before(function () {
-        this.timeout(5000);
+    before(() => {
+        JSONSchemasInterface.registerGlobalSchema(MOCK_GLOBAL_SCHEMA);
         yamlFixture = fs.readFileSync(YAML_COMBINE_FILE, "utf8");
         parsed = yaml.load(yamlFixture, { schema: combineSchema });
     });
