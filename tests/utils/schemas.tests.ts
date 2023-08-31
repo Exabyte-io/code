@@ -13,7 +13,7 @@ import {
     TREE_SIMPLE,
     TREE_STATIC_TERMINAL,
     UNEVEN_TREE,
-} from "../fixtures/schemas";
+} from "../fixtures/rjsf_schemas";
 
 describe("RJSF schema", () => {
     it("dependencies block can be created from tree", () => {
