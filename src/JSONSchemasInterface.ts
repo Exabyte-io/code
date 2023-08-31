@@ -159,4 +159,14 @@ export class JSONSchemasInterface {
         }
         return ajv.compile(schema);
     }
+
+    /**
+     * Register global schema only if none has been registered yet.
+     * @param globalSchema
+     */
+    static registerGlobalSchemaIfEmpty(globalSchema: JSONSchema) {
+        if (!JSONSchemasInterface._schema) {
+            JSONSchemasInterface.registerGlobalSchema(globalSchema);
+        }
+    }
 }
