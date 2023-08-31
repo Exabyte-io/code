@@ -78,7 +78,7 @@ export class JSONSchemasInterface {
 
     /**
      *
-     * @param {Object} - external schema
+     * @param globalSchema
      */
     static registerGlobalSchema(globalSchema: JSONSchema) {
         if (JSONSchemasInterface._schema === globalSchema) {
