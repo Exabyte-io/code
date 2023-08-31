@@ -1,4 +1,5 @@
 import Ajv from "ajv";
+import { JSONSchema6 } from "json-schema";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
@@ -36,7 +37,7 @@ export class InMemoryEntity {
 
     _json: AnyObject = {};
 
-    _schema: SimpleSchema | null = null;
+    _schema: JSONSchema6 | undefined | null = null;
 
     constructor(config = {}) {
         this._json = (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
@@ -84,6 +85,8 @@ export class InMemoryEntity {
     }
 
     toJSONQuick(exclude: string[] = []): AnyObject {
+        console.log("this._json", this._json);
+        console.log("exclude", exclude);
         return this.clean(clone(omit(this._json, exclude)));
     }
 
@@ -100,10 +103,17 @@ export class InMemoryEntity {
 
     // override upon inheritance
     get schema() {
-        return this._schema || null;
+        try {
+            return getSchemaByClassName(this.constructor.name);
+        } catch (e) {
+            if (e instanceof Error) {
+                console.error(e.stack);
+            }
+            throw e;
+        }
     }
 
-    set schema(schema: SimpleSchema | null) {
+    set schema(schema) {
         this._schema = schema;
     }
 
@@ -111,54 +121,24 @@ export class InMemoryEntity {
      * @summary Validate entity contents against schema
      */
     validate() {
-        if (this.schema) {
-            this.schema.validate(this.toJSON());
-        } else {
-            // @ts-ignore
-            const ajv = new Ajv({ allErrors: true });
+        // @ts-ignore
+        const ajv = new Ajv({ allErrors: true });
 
-            return ajv.validate(this.jsonSchema, this.toJSON());
-        }
+        return ajv.validate(this.schema, this.toJSON());
     }
 
     clean(config: AnyObject): any {
-        if (this.isSystemEntity) {
-            return config;
-        }
-        if (!this.schema) {
-            // @ts-ignore
-            const ajv = new Ajv({ removeAdditional: "all" });
-            const validate = ajv.compile(this.jsonSchema);
+        // @ts-ignore
+        const ajv = new Ajv({ removeAdditional: "all" });
+        const validate = ajv.compile(this.schema);
 
-            validate(config);
+        validate(config);
 
-            return config;
-        }
-
-        return this.schema.clean(config);
+        return config;
     }
 
     isValid() {
-        if (!this.schema) {
-            return this.validate();
-        }
-
-        const ctx = this.schema.newContext();
-        const json = this.toJSON();
-
-        ctx.validate(json);
-
-        if (!ctx.isValid()) {
-            console.log(JSON.stringify(json));
-            if (ctx.getErrorObject) {
-                console.log(ctx.getErrorObject());
-            }
-            if (ctx.validationErrors) {
-                console.log(ctx.validationErrors());
-            }
-        }
-
-        return ctx.isValid();
+        return this.validate();
     }
 
     get id() {
