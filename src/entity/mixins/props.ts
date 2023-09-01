@@ -105,12 +105,12 @@ export function HasConsistencyChecksMixin<T extends InMemoryEntityConstructor>(s
             return this.prop("consistencyChecks", []);
         }
 
-        set consistencyChecks(array) {
+        set consistencyChecks(array: object[]) {
             this.setProp("consistencyChecks", array);
         }
 
-        addConsistencyCheck(object: object) {
-            this.consistencyChecks = [...this.consistencyChecks, object];
+        addConsistencyChecks(array: object[]) {
+            this.consistencyChecks = [...this.consistencyChecks, ...array];
         }
     };
 }
