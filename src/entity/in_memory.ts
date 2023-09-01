@@ -99,22 +99,6 @@ export class InMemoryEntity {
         return new Entity({ ...this.toJSON(), ...extraContext });
     }
 
-    // override upon inheritance
-    get schema() {
-        try {
-            return getSchemaByClassName(this.constructor.name);
-        } catch (e) {
-            if (e instanceof Error) {
-                console.error(e.stack);
-            }
-            throw e;
-        }
-    }
-
-    set schema(schema) {
-        this._schema = schema;
-    }
-
     /**
      * @summary Validate entity contents against schema
      */
@@ -122,15 +106,15 @@ export class InMemoryEntity {
         // @ts-ignore
         const ajv = new Ajv({ allErrors: true });
 
-        return ajv.validate(this.schema, this.toJSON());
+        return ajv.validate(this.jsonSchema, this.toJSON());
     }
 
     clean(config: AnyObject): any {
-        if (this.isSystemEntity || !this.schema) return config;
+        if (this.isSystemEntity || !this.jsonSchema) return config;
 
         // @ts-ignore
         const ajv = new Ajv({ removeAdditional: "all" });
-        const validate = ajv.compile(this.schema);
+        const validate = ajv.compile(this.jsonSchema);
 
         validate(config);
 
