@@ -27,7 +27,7 @@ import {
     sortKeysDeepForObject,
     stringifyObject,
 } from "./object";
-import { getSchemaWithDependencies } from "./schemas";
+import { getSchemaWithDependencies, buildNamedEntitySchema } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
@@ -89,4 +89,5 @@ export {
     getFilesInDirectory,
     getDirectories,
     createObjectPathFromFilePath,
+    buildNamedEntitySchema,
 };
