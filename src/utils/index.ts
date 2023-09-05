@@ -31,6 +31,7 @@ import { getSchemaWithDependencies, buildNamedEntitySchema } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
+    findPreviousVersion,
     randomAlphanumeric,
     removeCommentsFromSourceCode,
     removeEmptyLinesFromString,
@@ -90,4 +91,5 @@ export {
     getDirectories,
     createObjectPathFromFilePath,
     buildNamedEntitySchema,
+    findPreviousVersion,
 };

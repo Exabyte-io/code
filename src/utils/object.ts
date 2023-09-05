@@ -10,6 +10,7 @@ import omit from "lodash/omit";
 
 import { AnyObject } from "../entity/in_memory";
 import { NameResultSchema } from "../types";
+import { safeMakeArray } from "./array";
 import { deepClone } from "./clone";
 
 /**
@@ -248,6 +249,7 @@ function isTreeObject<T>(value: unknown): value is Tree<T> {
  * mergeTerminalNodes(tree); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']
  */
 export function mergeTerminalNodes<T = string>(tree: Tree<T>, unique = false): T[] {
+    if (!isTreeObject<T>(tree)) return safeMakeArray(tree);
     const terminalValues = Object.values(tree).reduce((accumulator: T[], value) => {
         if (isTreeObject<T>(value)) {
             return accumulator.concat(mergeTerminalNodes(value));

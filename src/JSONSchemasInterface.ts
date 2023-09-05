@@ -78,7 +78,7 @@ export class JSONSchemasInterface {
 
     /**
      *
-     * @param {Object} - external schema
+     * @param globalSchema
      */
     static registerGlobalSchema(globalSchema: JSONSchema) {
         if (JSONSchemasInterface._schema === globalSchema) {
@@ -158,5 +158,15 @@ export class JSONSchemasInterface {
             return;
         }
         return ajv.compile(schema);
+    }
+
+    /**
+     * Register global schema only if none has been registered yet.
+     * @param globalSchema
+     */
+    static registerGlobalSchemaIfEmpty(globalSchema: JSONSchema) {
+        if (!JSONSchemasInterface._schema) {
+            JSONSchemasInterface.registerGlobalSchema(globalSchema);
+        }
     }
 }
