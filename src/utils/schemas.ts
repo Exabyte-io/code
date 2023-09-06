@@ -126,7 +126,7 @@ interface Props {
     // Schema
     schema?: JSONSchema;
     // Schema id (takes precedence over `schema` when both are provided)
-    schemaId: string;
+    schemaId?: string;
     // Array of nodes
     nodes: Node[];
     // Whether properties in main schema should be modified (add `enum` and `enumNames`)
