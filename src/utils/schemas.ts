@@ -25,7 +25,7 @@ interface Node {
         value: string;
         name: string;
     };
-    staticOptions: Parameter[];
+    staticOptions?: Parameter[];
     children?: Node[];
     [otherKey: string]: unknown;
 }
