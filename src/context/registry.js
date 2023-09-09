@@ -59,6 +59,7 @@ export const extendAndPatchRegistry = (
             }
         });
         // Override defaults for this particular context provider
+        console.log(defaultSettings[name]);
         const providerSpecificDefaults = defaultSettings[name] || {};
 
         const combinedConfig = {
