@@ -57,18 +57,13 @@ export const extendAndPatchRegistry = (
             if (providerCls[clsName]) {
                 providerCls[clsName] = cls;
             }
+            // Override defaults for this particular context provider
+            const providerSpecificDefaults = defaultSettings[providerCls] || {};
+            providerCls[clsName] = providerSpecificDefaults;
         });
-        // Override defaults for this particular context provider
-        console.log(defaultSettings[name]);
-        const providerSpecificDefaults = defaultSettings[name] || {};
-
-        const combinedConfig = {
-            ...config,
-            ...providerSpecificDefaults,
-        };
 
         registryContainer.addProvider({
-            instance: providerCls.getConstructorConfig(combinedConfig),
+            instance: providerCls.getConstructorConfig(config),
             name,
         });
     });
