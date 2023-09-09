@@ -57,13 +57,13 @@ export const extendAndPatchRegistry = (
             if (providerCls[clsName]) {
                 providerCls[clsName] = cls;
             }
-        });
-
-        // Override defaults for this particular context provider
-        const providerSpecificDefaults = defaultSettings[providerCls] || {};
-        Object.entries(providerSpecificDefaults).forEach(([key, value]) => {
-            if (providerCls[key]) {
-                providerCls[key] = value;
+            const providerDefaultSettings = defaultSettings[providerCls.name];
+            if (providerDefaultSettings) {
+                Object.entries(providerDefaultSettings).forEach(([key, value]) => {
+                    if (providerCls[key]) {
+                        providerCls[key] = value;
+                    }
+                });
             }
         });
 
