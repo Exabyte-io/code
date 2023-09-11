@@ -102,14 +102,14 @@ describe("InMemoryEntity", () => {
             type: false,
         });
 
-        expect(invalidEntity.validate()).to.be.false;
+        expect(invalidEntity.validate({ validationType: "ajv" })).to.be.false;
 
         const validEntity = new RegisteredEntity({
             _id: "123",
             type: "type",
         });
 
-        expect(validEntity.validate()).to.be.true;
+        expect(validEntity.validate({ validationType: "ajv" })).to.be.true;
     });
 
     it("jsonSchema clean", async () => {
@@ -129,11 +129,14 @@ describe("InMemoryEntity", () => {
             additional: "additional",
         });
 
-        const cleanConfig = invalidEntity.clean({
-            _id: "123",
-            type: "type",
-            additional: "additional",
-        });
+        const cleanConfig = invalidEntity.clean(
+            {
+                _id: "123",
+                type: "type",
+                additional: "additional",
+            },
+            { validationType: "ajv" },
+        );
 
         expect(cleanConfig).to.be.deep.equal({
             _id: "123",
