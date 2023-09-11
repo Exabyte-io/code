@@ -110,55 +110,60 @@ export class InMemoryEntity {
     /**
      * @summary Validate entity contents against schema
      */
-    validate() {
-        if (this.schema) {
-            this.schema.validate(this.toJSON());
-        } else {
+    validate(options: { validationType: "default" | "ajv" } = { validationType: "default" }) {
+        if (this.schema && options.validationType === "default") {
+            return this.schema.validate(this.toJSON());
+        }
+        if (options.validationType === "ajv") {
             // @ts-ignore
             const ajv = new Ajv({ allErrors: true });
-
             return ajv.validate(this.jsonSchema, this.toJSON());
         }
+
+        return this.toJSON();
     }
 
-    clean(config: AnyObject): any {
+    clean(
+        config: AnyObject,
+        options: { validationType: "default" | "ajv" } = { validationType: "default" },
+    ): any {
         if (this.isSystemEntity) {
             return config;
         }
-        if (!this.schema) {
+        if (this.schema && options.validationType === "default") {
+            return this.schema.clean(config);
+        }
+        if (options.validationType === "ajv") {
             // @ts-ignore
             const ajv = new Ajv({ removeAdditional: "all" });
             const validate = ajv.compile(this.jsonSchema);
-
             validate(config);
-
             return config;
         }
-
-        return this.schema.clean(config);
+        return config;
     }
 
-    isValid() {
-        if (!this.schema) {
-            return this.validate();
+    isValid(options: { validationType: "default" | "ajv" } = { validationType: "default" }) {
+        if (this.schema && options.validationType === "default") {
+            const ctx = this.schema.newContext();
+            const json = this.toJSON();
+            ctx.validate(json);
+            if (!ctx.isValid()) {
+                console.log(JSON.stringify(json));
+                if (ctx.getErrorObject) {
+                    console.log(ctx.getErrorObject());
+                }
+                if (ctx.validationErrors) {
+                    console.log(ctx.validationErrors());
+                }
+            }
+            return ctx.isValid();
+        }
+        if (options.validationType === "ajv") {
+            return this.validate({ validationType: "ajv" });
         }
 
-        const ctx = this.schema.newContext();
-        const json = this.toJSON();
-
-        ctx.validate(json);
-
-        if (!ctx.isValid()) {
-            console.log(JSON.stringify(json));
-            if (ctx.getErrorObject) {
-                console.log(ctx.getErrorObject());
-            }
-            if (ctx.validationErrors) {
-                console.log(ctx.validationErrors());
-            }
-        }
-
-        return ctx.isValid();
+        return true;
     }
 
     get id() {
