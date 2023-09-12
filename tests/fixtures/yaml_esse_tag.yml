@@ -9,3 +9,6 @@ case3: !esse definitions/units#/pressure/enum
 
 # return object from esse schema
 case4: !esse "core/abstract/2d-data#/properties/xDataArray/description"
+
+# return array item from esse schema
+case5: !esse "core/abstract/2d-data#/required[1]"

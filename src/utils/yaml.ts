@@ -90,17 +90,30 @@ function readFromYaml(ref) {
  *   - `key`: name or path of parameter, e.g. `job.workflow`
  *   - `values`: list of values (use either `ref` or `values`)
  *   - `ref`: reference to values in another YAML file.
+ *   - `exclude`: regular expression for excluding items.
  *   - `isOptional`: whether parameter is optional (adds `null` to values array)
+ *   - `merge`: arrays or values from other sources to merge
  * See the tests for example usage.
  */
 export const parameterType = new yaml.Type("!parameter", {
     kind: "mapping",
     construct(data) {
-        const { key, values = [], ref, exclude, isOptional = false, ...otherProps } = data;
+        const {
+            key,
+            values = [],
+            ref,
+            exclude,
+            isOptional = false,
+            merge = [],
+            ...otherProps
+        } = data;
 
         try {
             let values_ = ref && !values.length ? readFromYaml(ref) : values;
             values_ = safeMakeArray(values_);
+            if (Array.isArray(merge)) {
+                values_ = values_.concat(merge.flat());
+            }
             if (exclude) {
                 const regex = new RegExp(exclude);
                 values_ = values_.filter((v) => !regex.test(v));
@@ -157,7 +170,7 @@ export const esseType = new yaml.Type("!esse", {
     },
     construct(data) {
         try {
-            JSONSchemasInterface.registerGlobalSchema(esseSchema);
+            JSONSchemasInterface.registerGlobalSchemaIfEmpty(esseSchema);
             const { filePath: schemaId, objPath } = splitReference(data);
             const schema = JSONSchemasInterface.schemaById(schemaId);
             if (objPath) {

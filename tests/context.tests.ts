@@ -36,6 +36,8 @@ class ProviderEntity extends MaterialContextMixin(ApplicationContextMixin(Contex
     static Material = MockMaterial;
 
     static Application = MockApplication;
+
+    static setting = 10;
 }
 
 class DerivedProviderEntity extends ProviderEntity {
@@ -76,12 +78,24 @@ describe("ContextProviderRegistryContainer", () => {
         },
     };
 
+    const defaultSettings = {
+        ProviderEntity: {
+            setting: 100,
+        },
+    };
+
     it("can be created and patched", () => {
-        const registry = createAndPatchRegistry(classConfigObj, { Material: SpecificMockMaterial });
+        const registry = createAndPatchRegistry(
+            classConfigObj,
+            { Material: SpecificMockMaterial },
+            defaultSettings,
+        );
+
         const _dataProvider = registry.findProviderInstanceByName("DataManager");
         const dataProvider = new _dataProvider.constructor(_dataProvider.config);
         const _appProvider = registry.findProviderInstanceByName("ApplicationDataManager");
         const appProvider = new _appProvider.constructor(_appProvider.config);
+        expect(_dataProvider.constructor.setting).to.be.equal(100);
         expect(dataProvider.material).to.be.equal("defaultSpecificMockMaterial");
         expect(appProvider.application).to.be.equal("defaultSpecificMockApplication");
     });

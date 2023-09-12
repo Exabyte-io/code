@@ -82,4 +82,11 @@ describe("mergeTerminalNodes", () => {
         expect(merged).to.have.length(6);
         expect(merged.map((o) => o.path)).to.have.members(["a", "b", "c", "d", "e", "f"]);
     });
+
+    it("should only merge objects", () => {
+        const array = [{ path: "a" }, { path: "b" }, { path: "c" }];
+        // @ts-ignore
+        const merged = mergeTerminalNodes(array);
+        expect(merged).to.have.deep.members(array);
+    });
 });

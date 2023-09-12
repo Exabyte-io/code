@@ -11,10 +11,6 @@ export function DefaultableMixin<T extends InMemoryEntityConstructor>(superclass
 
         declare static readonly defaultConfig: object | null;
 
-        // Define in superclass
-        // static get defaultConfig() {
-        // }
-
         static createDefault() {
             return new this.prototype.constructor(this.defaultConfig);
         }
@@ -34,6 +30,18 @@ export function TaggableMixin<T extends InMemoryEntityConstructor>(superclass: T
         // only keep unique elements in tags
         setTags(array: string[]) {
             this.tags = array.filter((value, index, self) => self.indexOf(value) === index);
+        }
+    };
+}
+
+export function HasScopeTrackMixin<T extends InMemoryEntityConstructor>(superclass: T) {
+    return class extends superclass {
+        get scopeTrack() {
+            return this.prop("scopeTrack", []);
+        }
+
+        set scopeTrack(array: unknown[]) {
+            this.setProp("scopeTrack", array);
         }
     };
 }

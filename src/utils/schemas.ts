@@ -1,8 +1,9 @@
 import { JSONSchema } from "@exabyte-io/esse.js/schema";
 import forEach from "lodash/forEach";
-import getValue from "lodash/get";
 import hasProperty from "lodash/has";
 import isEmpty from "lodash/isEmpty";
+
+import { JSONSchema7Definition } from "json-schema";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
@@ -10,17 +11,24 @@ export * from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
 
 export const schemas: { [key: string]: string } = {};
 
+interface SubstitutionMap {
+    [key: string]: string;
+}
+
+interface Parameter {
+    key: string;
+    values: string[] | boolean[];
+    namesMap?: SubstitutionMap;
+}
+
 interface Node {
-    dataSelector: {
+    data: {
         key: string;
         value: string;
         name: string;
     };
+    staticOptions: Parameter[];
     children?: Node[];
-}
-
-function isNodeWithChildren(node: Node): node is Required<Node> {
-    return Boolean(node.children?.length);
 }
 
 /**
@@ -52,18 +60,33 @@ export function typeofSchema(schema: JSONSchema) {
     }
 }
 
-function getEnumValues(nodes: Node[]) {
-    if (!nodes.length) return {};
+function extractEnumOptions(nodes?: Node[]) {
+    if (!nodes || !nodes.length) return {};
     return {
-        enum: nodes.map((node) => getValue(node, node.dataSelector.value)),
+        enum: nodes.map((node) => node.data.value),
+        enumNames: nodes.map((node) => node.data.name),
     };
 }
 
-function getEnumNames(nodes: Node[]) {
-    if (!nodes.length) return {};
-    return {
-        enumNames: nodes.map((node) => getValue(node, node.dataSelector.name)),
-    };
+function substituteName(value: unknown, mapping?: SubstitutionMap) {
+    if (typeof value !== "string") {
+        return JSON.stringify(value);
+    }
+    return mapping ? mapping[value] : value;
+}
+
+function createStaticFields(node: Node) {
+    if (!node.staticOptions) return {};
+    const fields: { [key: string]: { enum: string[] | boolean[]; enumNames: string[] } } = {};
+    node.staticOptions
+        .filter((o) => o.key && o.values)
+        .forEach((o) => {
+            fields[o.key] = {
+                enum: o.values,
+                enumNames: o.values.map((v) => substituteName(v, o.namesMap)),
+            };
+        });
+    return fields;
 }
 
 /**
@@ -71,34 +94,33 @@ function getEnumNames(nodes: Node[]) {
  * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)
  * @returns {{}|{dependencies: {}}}
  */
-export function buildDependencies(nodes: Node[]): JSONSchema {
-    if (nodes.length === 0 || nodes.every((n) => !n.children?.length)) return {};
+export function buildDependencies(nodes?: Node[]): JSONSchema {
+    const isEveryTerminal = nodes && nodes.every((node) => !node.children?.length);
+    const isWithStaticOptions = nodes && nodes.some((node) => node?.staticOptions);
+    if (!nodes || !nodes.length || !nodes[0].data) return {};
+    const parentKey = nodes[0].data.key;
 
-    const nodesWithChildren = nodes.filter(isNodeWithChildren);
-    const parentKey = nodesWithChildren[0].dataSelector.key;
-    const childKey = nodesWithChildren[0].children[0].dataSelector.key;
-
-    return {
-        dependencies: {
-            [parentKey]: {
-                oneOf: nodesWithChildren.map((node) => {
-                    return {
-                        properties: {
-                            [parentKey]: {
-                                ...getEnumValues([node]),
-                                ...getEnumNames([node]),
-                            },
-                            [childKey]: {
-                                ...getEnumValues(node.children),
-                                ...getEnumNames(node.children),
-                            },
-                        },
-                        ...buildDependencies(node.children),
-                    };
-                }),
+    const cases = nodes.map((node) => {
+        const childKey = node.children?.length && node.children[0].data.key;
+        return {
+            properties: {
+                [parentKey]: extractEnumOptions([node]),
+                ...(childKey ? { [childKey]: extractEnumOptions(node.children) } : {}),
+                ...createStaticFields(node),
             },
-        },
-    };
+            ...buildDependencies(node.children),
+        };
+    });
+
+    return cases.length && (!isEveryTerminal || isWithStaticOptions)
+        ? {
+              dependencies: {
+                  [parentKey]: {
+                      oneOf: cases,
+                  },
+              },
+          }
+        : {};
 }
 
 interface Props {
@@ -131,9 +153,8 @@ export function getSchemaWithDependencies({
     // RJSF does not automatically render dropdown widget if `enum` is not present
     if (modifyProperties && nodes.length) {
         const mod = {
-            [nodes[0].dataSelector.key]: {
-                ...getEnumNames(nodes),
-                ...getEnumValues(nodes),
+            [nodes[0].data.key]: {
+                ...extractEnumOptions(nodes),
             },
         };
         forEach(mod, (extraFields, key) => {
@@ -151,3 +172,123 @@ export function getSchemaWithDependencies({
         ...buildDependencies(nodes),
     };
 }
+
+const DEFAULT_GENERATIVE_KEYS = ["name"];
+
+interface NamedEntity {
+    name: string;
+}
+
+const baseSchema = (definitionName: string, enforceUnique = true): JSONSchema => {
+    return {
+        type: "array",
+        items: {
+            $ref: `#/definitions/${definitionName}`,
+        },
+        uniqueItems: enforceUnique,
+    };
+};
+
+const defaultNamedEntitySchema = (name: string) => {
+    return {
+        properties: {
+            name: {
+                type: "string",
+                enum: [name],
+            },
+        },
+    } as JSONSchema;
+};
+
+/**
+ * Retrieves an RJSF schema with an id matching the provided name
+ */
+export const schemaByNamedEntityName = (name: string): JSONSchema | undefined => {
+    const translatedName = name.replace(/_/g, "-");
+    const schema = JSONSchemasInterface.matchSchema({
+        $id: {
+            $regex: `${translatedName}$`,
+        },
+    });
+    return schema;
+};
+
+/*
+ * Filters an RJSF schema for all the properties used to generate a new schema
+ */
+const filterForGenerativeProperties = (schema: JSONSchema) => {
+    if (!schema.properties || typeof schema.properties !== "object") return {};
+    const generativeFilter = ([propertyKey, property]: [string, JSONSchema7Definition]) => {
+        return (
+            (typeof property === "object" && // JSONSchema7Definition type allows for boolean
+                property?.$comment &&
+                property.$comment.includes("isGenerative:true")) ||
+            DEFAULT_GENERATIVE_KEYS.includes(propertyKey)
+        );
+    };
+    // @ts-ignore : JSONSchema6 and JSONSchema7 are incompatible
+    const generativeProperties = Object.entries(schema.properties).filter(generativeFilter);
+    const properties = Object.fromEntries(generativeProperties);
+    return { properties, required: Object.keys(properties) } as JSONSchema; // all included fields are required based on isGenerative flag
+};
+
+/*
+ * Filters an RJSF schema for all the properties used to generate a new schema
+ */
+const buildNamedEntitiesDependencies = (entities: NamedEntity[]) => {
+    return {
+        dependencies: {
+            name: {
+                oneOf: entities.map((entity) => {
+                    const schema =
+                        schemaByNamedEntityName(entity.name) ||
+                        defaultNamedEntitySchema(entity.name);
+                    return {
+
+                        ...filterForGenerativeProperties(schema),
+                    };
+                }),
+            },
+        },
+    };
+};
+
+/**
+ * Generates an RJSF definition with a list of subschemas as enumerated options
+ */
+const buildNamedEntitiesDefinitions = (
+    entities: NamedEntity[],
+    defaultEntity: NamedEntity,
+    entityType: string,
+) => {
+    if (!Array.isArray(entities) || entities.length < 1) return {};
+    return {
+        definitions: {
+            [entityType]: {
+                properties: {
+                    name: {
+                        type: "string",
+                        enum: entities.map((entity) => entity.name),
+                        default: defaultEntity.name || entities[0].name,
+                    },
+                },
+                ...buildNamedEntitiesDependencies(entities),
+            },
+        },
+    };
+};
+
+/*
+ * Generates an RJSF scheme with a list of subschemas as enumerated options
+ */
+export const buildNamedEntitySchema = (
+    entities: NamedEntity[],
+    defaultEntity: NamedEntity,
+    entityType: string,
+    enforceUnique = true,
+): JSONSchema => {
+    return {
+        ...buildNamedEntitiesDefinitions(entities, defaultEntity, entityType),
+        ...baseSchema(entityType, enforceUnique),
+    } as JSONSchema;
+};
