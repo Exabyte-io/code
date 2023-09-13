@@ -35,3 +35,10 @@ case7: !parameter
     values: [a, b, c]
     exclude: b
     isOptional: true
+# merge values with locally defined items and arrays
+case8: !parameter
+    key: merged
+    values: [a, b]
+    merge:
+        - c
+        - [d, e]
