@@ -117,7 +117,11 @@ export function renderTextWithSubstitutes(template, data, substitutionMap = {}) 
 
     // Helper function for recursive substitution
     function substituteNested(obj) {
-        lodash.forIn(obj, (value, key) => {
+        if (!lodash.isPlainObject(obj)) {
+            return;
+        }
+        // eslint-disable-next-line no-restricted-syntax
+        for (const [key, value] of Object.entries(obj)) {
             if (lodash.isPlainObject(value)) {
                 substituteNested(value);
             } else if (Array.isArray(value)) {
@@ -125,7 +129,7 @@ export function renderTextWithSubstitutes(template, data, substitutionMap = {}) 
             } else if (substitutionMap[value]) {
                 obj[key] = substitutionMap[value];
             }
-        });
+        }
     }
 
     substituteNested(renderData);
