@@ -62,6 +62,19 @@ describe("str: renderTextWithSubstitutes", () => {
 
         expect(result).to.be.equal("Hello !");
     });
+
+    it("should be able to access nested elements in template notation", () => {
+        const template = "Hello {{ user }} of {{ array[1]['planet'] }}!";
+        const data = { user: "user001", array: [{ planet: "A" }, { planet: "B" }] };
+        const substitutionMap = {
+            A: "Earth",
+            B: "Mars",
+        };
+
+        const result = renderTextWithSubstitutes(template, data, substitutionMap);
+
+        expect(result).to.be.equal("Hello user001 of Mars!");
+    });
 });
 
 describe("str: findPreviousVersion", () => {
