@@ -1,0 +1,4 @@
+# listToString content from another Yaml file
+case1:
+    here: original content
+    there: !listToString "tests/fixtures/yaml_parameter_ref.yml#/job/workflow"

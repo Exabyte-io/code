@@ -199,6 +199,21 @@ export const includeType = new yaml.Type("!include", {
 });
 
 /**
+ * !listToString YAML tag which concatenate each list item into single string value.
+ * See the tests for example usage.
+ */
+export const listToStringType = new yaml.Type("!listToString", {
+    kind: "scalar",
+    construct(data) {
+        try {
+            return readFromYaml(data);
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
+/**
  * !flatten YAML tag for flattening arrays
  * See the tests for example usage.
  */
@@ -248,6 +263,7 @@ export const concatStringType = new yaml.Type("!concatString", {
 
 export const JsYamlTypes = {
     include: includeType,
+    listToString: listToStringType,
     parameter: parameterType,
     combine: combineType,
     esse: esseType,
@@ -261,6 +277,7 @@ export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
     combineType,
     esseType,
     includeType,
+    listToStringType,
     flattenType,
     readFileType,
     concatStringType,
