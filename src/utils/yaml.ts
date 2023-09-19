@@ -1,9 +1,9 @@
 // @ts-nocheck
 // TODO: remove ts-nocheck
-import fs from "fs";
-import yaml from "js-yaml";
-import lodash from "lodash";
-import path from "path";
+import * as fs from "fs";
+import * as yaml from "js-yaml";
+import * as lodash from "lodash";
+import * as path from "path";
 
 import { esseSchema, JSONSchemasInterface } from "../JSONSchemasInterface";
 import { safeMakeArray } from "./array";
