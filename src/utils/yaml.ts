@@ -203,10 +203,10 @@ export const includeType = new yaml.Type("!include", {
  * See the tests for example usage.
  */
 export const listToStringType = new yaml.Type("!listToString", {
-    kind: "scalar",
+    kind: "sequence",
     construct(data) {
         try {
-            return readFromYaml(data);
+            return data.filter((d) => typeof d === "string").join("");
         } catch (e) {
             return data;
         }
@@ -249,7 +249,7 @@ export const readFileType = new yaml.Type("!readFile", {
  */
 export const concatStringType = new yaml.Type("!concatString", {
     kind: "sequence",
-    resolve(data) {
+    resolve(data) {        
         return data.every((d) => lodash.isString(d));
     },
     construct(data) {
