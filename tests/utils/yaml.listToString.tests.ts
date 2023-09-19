@@ -3,20 +3,31 @@ import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";
 
-import { includeType } from "../../src/utils/yaml";
-import { YAML_INCLUDE_FILE } from "../enums";
+import { listToStringType } from "../../src/utils/yaml";
+import { YAML_LIST_TO_STRING_FILE } from "../enums";
 
-const includeSchema = yaml.DEFAULT_SCHEMA.extend([includeType]);
+const includeSchema = yaml.DEFAULT_SCHEMA.extend([listToStringType]);
 
-describe.only("YAML tag: !listToString", () => {
-    const yamlFixture = fs.readFileSync(YAML_INCLUDE_FILE, "utf8");
+describe("YAML tag: !listToString", () => {
+    const yamlFixture = fs.readFileSync(YAML_LIST_TO_STRING_FILE, "utf8");
 
     it("should correctly concatenate content from list to string", () => {
         const parsed = yaml.load(yamlFixture, { schema: includeSchema });
+
         const expected = {
             here: "original content",
-            there: ["run", "stop", "pause"],
+            there: "onetwo",
         };
         expect(parsed.case1).to.be.eql(expected);
+    });
+
+    it("should correctly filter out and concatenate only strings from list", () => {
+        const parsed = yaml.load(yamlFixture, { schema: includeSchema });
+
+        const expected = {
+            here: "original content",
+            there: "onetwo",
+        };
+        expect(parsed.case2).to.be.eql(expected);
     });
 });
