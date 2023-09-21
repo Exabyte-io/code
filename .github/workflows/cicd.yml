@@ -16,7 +16,7 @@ jobs:
     if: github.repository != 'Exabyte-io/template-definitions'
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x]
 
     steps:
       - name: Checkout this repository
@@ -82,4 +82,4 @@ jobs:
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
           repository: Exabyte-io/ade.js
           source-package-name: "@exabyte-io/code.js"
-          target-version: ${{ needs.publish-js-package.outputs.tag-name }}
+          target-version: ${{ needs.publish-js-package.outputs.release-version }}
