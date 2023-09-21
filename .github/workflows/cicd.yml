@@ -77,6 +77,6 @@ jobs:
         uses: ./actions/git/pull-request
         with:
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          repository: Exabyte-io/ade.js
+          target-repository: Exabyte-io/ade.js
           source-package-name: "@exabyte-io/code.js"
           target-version: ${{ needs.publish-js-package.outputs.release-version }}
