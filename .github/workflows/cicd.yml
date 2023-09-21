@@ -61,7 +61,7 @@ jobs:
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
   create-pr-in-a-dependant:
-    needs: []
+    needs: [publish-js-package]
     runs-on: ubuntu-latest
     if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
 
