@@ -66,16 +66,6 @@ jobs:
     if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
 
     steps:
-      - name: Checkout this repository
-        uses: actions/checkout@v2
-
-      - name: Checkout actions repository
-        uses: actions/checkout@v2
-        with:
-          repository: Exabyte-io/actions
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          path: actions
-
       - name: Create a PR
         uses: ./actions/git/pull-request
         with:
