@@ -64,6 +64,18 @@ jobs:
     needs: [publish-js-package]
     runs-on: ubuntu-latest
     if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
+    strategy:
+      matrix:
+        target-repository:
+          - Exabyte-io/ade.js
+          - Exabyte-io/application-flavors
+          - Exabyte-io/ide.js
+          - Exabyte-io/made.js
+          - Exabyte-io/mode.js
+          - Exabyte-io/prode.js
+          - Exabyte-io/wode.js
+          - Exabyte-io/materials-designer
+          - Exabyte-io/web-app
 
     steps:
       - name: Checkout actions repository
@@ -77,6 +89,6 @@ jobs:
         uses: ./actions/git/pull-request
         with:
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          target-repository: Exabyte-io/ade.js
+          target-repository: ${{ matrix.target-repository }}
           source-package-name: "@exabyte-io/code.js"
           target-version: ${{ needs.publish-js-package.outputs.release-version }}
