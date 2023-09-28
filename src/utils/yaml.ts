@@ -249,7 +249,7 @@ export const readFileType = new yaml.Type("!readFile", {
  */
 export const concatStringType = new yaml.Type("!concatString", {
     kind: "sequence",
-    resolve(data) {        
+    resolve(data) {
         return data.every((d) => lodash.isString(d));
     },
     construct(data) {
