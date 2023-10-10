@@ -46,13 +46,27 @@ export class ContextProviderRegistryContainer {
  * };
  *
  */
-export const extendAndPatchRegistry = (registryContainer, classConfigMap, classesToPatch = {}) => {
+export const extendAndPatchRegistry = (
+    registryContainer,
+    classConfigMap,
+    classesToPatch = {},
+    defaultSettings = {},
+) => {
     Object.entries(classConfigMap).forEach(([name, { providerCls, config }]) => {
         Object.entries(classesToPatch).forEach(([clsName, cls]) => {
             if (providerCls[clsName]) {
                 providerCls[clsName] = cls;
             }
+            const providerDefaultSettings = defaultSettings[providerCls.name];
+            if (providerDefaultSettings) {
+                Object.entries(providerDefaultSettings).forEach(([key, value]) => {
+                    if (providerCls[key]) {
+                        providerCls[key] = value;
+                    }
+                });
+            }
         });
+
         registryContainer.addProvider({
             instance: providerCls.getConstructorConfig(config),
             name,
@@ -66,7 +80,16 @@ export const extendAndPatchRegistry = (registryContainer, classConfigMap, classe
  * @param {Object} classConfigMap
  * @param {{Material: SpecificMockMaterial}} classesToPatch
  */
-export const createAndPatchRegistry = (classConfigMap, classesToPatch = {}) => {
+export const createAndPatchRegistry = (
+    classConfigMap,
+    classesToPatch = {},
+    defaultSettings = {},
+) => {
     const registryContainer = new ContextProviderRegistryContainer();
-    return extendAndPatchRegistry(registryContainer, classConfigMap, classesToPatch);
+    return extendAndPatchRegistry(
+        registryContainer,
+        classConfigMap,
+        classesToPatch,
+        defaultSettings,
+    );
 };

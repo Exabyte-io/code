@@ -1,9 +1,9 @@
 // @ts-nocheck
 // TODO: remove ts-nocheck
-import fs from "fs";
-import yaml from "js-yaml";
-import lodash from "lodash";
-import path from "path";
+import * as fs from "fs";
+import * as yaml from "js-yaml";
+import * as lodash from "lodash";
+import * as path from "path";
 
 import { esseSchema, JSONSchemasInterface } from "../JSONSchemasInterface";
 import { safeMakeArray } from "./array";
@@ -199,6 +199,21 @@ export const includeType = new yaml.Type("!include", {
 });
 
 /**
+ * !listToString YAML tag which concatenate each list item into single string value.
+ * See the tests for example usage.
+ */
+export const listToStringType = new yaml.Type("!listToString", {
+    kind: "sequence",
+    construct(data) {
+        try {
+            return data.filter((d) => typeof d === "string").join("");
+        } catch (e) {
+            return data;
+        }
+    },
+});
+
+/**
  * !flatten YAML tag for flattening arrays
  * See the tests for example usage.
  */
@@ -248,6 +263,7 @@ export const concatStringType = new yaml.Type("!concatString", {
 
 export const JsYamlTypes = {
     include: includeType,
+    listToString: listToStringType,
     parameter: parameterType,
     combine: combineType,
     esse: esseType,
@@ -261,6 +277,7 @@ export const JsYamlAllSchemas = yaml.DEFAULT_SCHEMA.extend([
     combineType,
     esseType,
     includeType,
+    listToStringType,
     flattenType,
     readFileType,
     concatStringType,
