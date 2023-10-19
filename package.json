@@ -65,7 +65,7 @@
         "@types/node": "^20.4.2",
         "@types/react-jsonschema-form": "^1.7.8",
         "@types/underscore": "^1.11.6",
-        "ajv": "4.1.7",
+        "ajv": "^6.12.3",
         "crypto-js": "^4.1.1",
         "js-yaml": "^4.1.0",
         "json-schema": "^0.4.0",
