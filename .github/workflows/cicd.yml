@@ -16,14 +16,14 @@ jobs:
     if: github.repository != 'Exabyte-io/template-definitions'
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x]
 
     steps:
       - name: Checkout this repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Checkout actions repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: Exabyte-io/actions
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
@@ -38,22 +38,57 @@ jobs:
     needs: [run-js-tests]
     runs-on: ubuntu-latest
     if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
+    outputs:
+      release-version: ${{ steps.publish.outputs.tag-name }}
 
     steps:
       - name: Checkout this repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Checkout actions repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: Exabyte-io/actions
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
           path: actions
 
       - name: Publish JS release
+        id: publish
         uses: ./actions/js/publish
         with:
           node-version: 12.21.x
           npm-token: ${{ secrets.NPM_TOKEN }}
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
+  create-pr-in-a-dependant:
+    needs: [publish-js-package]
+    runs-on: ubuntu-latest
+    if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
+    strategy:
+      matrix:
+        target-repository:
+          - Exabyte-io/ade.js
+          - Exabyte-io/application-flavors
+          - Exabyte-io/ide.js
+          - Exabyte-io/made.js
+          - Exabyte-io/mode.js
+          - Exabyte-io/prode.js
+          - Exabyte-io/wode.js
+          - Exabyte-io/materials-designer
+          - Exabyte-io/web-app
+
+    steps:
+      - name: Checkout actions repository
+        uses: actions/checkout@v4
+        with:
+          repository: Exabyte-io/actions
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          path: actions
+
+      - name: Create a PR
+        uses: ./actions/git/pull-request
+        with:
+          github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          target-repository: ${{ matrix.target-repository }}
+          source-package-name: "@exabyte-io/code.js"
+          target-version: ${{ needs.publish-js-package.outputs.release-version }}

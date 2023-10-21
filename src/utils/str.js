@@ -97,6 +97,8 @@ export function convertArabicToRoman(num) {
 /**
  * Render name template based on config.
  * Use substitution map to replace a config value with a more readable variant.
+ * NOTE: We currently iterate through the whole object. A more efficient albeit more verbose approach would be
+ * to give the property path in the subsitution map, e.g., `{ "user.name": {"user001": "John Doe"} }`.
  * @param {string|undefined} template - Template for the name property
  * @param {Object} data - Entity config
  * @param {Object} substitutionMap - Maps object value to human-readable string
@@ -115,13 +117,19 @@ export function renderTextWithSubstitutes(template, data, substitutionMap = {}) 
 
     // Helper function for recursive substitution
     function substituteNested(obj) {
-        lodash.forIn(obj, (value, key) => {
+        if (!lodash.isPlainObject(obj)) {
+            return;
+        }
+        // eslint-disable-next-line no-restricted-syntax
+        for (const [key, value] of Object.entries(obj)) {
             if (lodash.isPlainObject(value)) {
                 substituteNested(value);
+            } else if (Array.isArray(value)) {
+                value.forEach((val) => substituteNested(val));
             } else if (substitutionMap[value]) {
                 obj[key] = substitutionMap[value];
             }
-        });
+        }
     }
 
     substituteNested(renderData);
