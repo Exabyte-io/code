@@ -6,6 +6,7 @@ import {
     MaterialsContextMixin,
     MaterialsSetContextMixin,
     MethodDataContextMixin,
+    ModelContextMixin,
     WorkflowContextMixin,
 } from "./mixins";
 import { JobContextPickKeysForMixin, WorkflowContextPickKeysForMixin } from "./pickers";
@@ -31,4 +32,5 @@ export {
     MethodDataContextMixin,
     JobContextMixin,
     WorkflowContextMixin,
+    ModelContextMixin,
 };
