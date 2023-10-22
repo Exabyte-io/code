@@ -4,7 +4,13 @@ import CryptoJS from "crypto-js";
 import { InMemoryEntity } from "../entity";
 import { DefaultableMixin } from "../entity/mixins/props";
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
-import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "../types";
+import {
+    ApplicationSchemaBase,
+    BaseModel,
+    JobSchema,
+    MaterialSchema,
+    WorkflowSchema,
+} from "../types";
 
 type Constructor<T = any> = new (...args: any[]) => T;
 
@@ -225,6 +231,29 @@ export function JobContextMixin<T extends Constructor>(superclass: T) {
 
         get job() {
             return this._job;
+        }
+    };
+}
+
+export function ModelContextMixin<T extends Constructor>(superclass: T) {
+    return class ModelContextMixin extends superclass {
+        _model: BaseModel;
+
+        constructor(...args: any) {
+            super(...args);
+            // @ts-ignore
+            if (!this.constructor.Model) {
+                throw Error("ModelContextMixin: Model is undefined");
+            }
+            const config = args[0];
+            this._model =
+                (config.context && config.context.model) ||
+                // @ts-ignore
+                (this.constructor.Model as Defaultable).createDefault();
+        }
+
+        get model() {
+            return this._model;
         }
     };
 }
