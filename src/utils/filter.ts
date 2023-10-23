@@ -1,4 +1,6 @@
 import uniqBy from "lodash/uniqBy";
+import { filter } from "underscore";
+import { pathToFileURL } from "url";
 
 // Entity or object with path property
 interface PathObject {
@@ -9,6 +11,7 @@ interface PathObject {
 export interface FilterObject {
     path?: string;
     regex?: RegExp;
+    isDefault?: boolean;
 }
 
 /**
@@ -42,6 +45,24 @@ function isMultiPathSupported(
     return expandedPaths.every((expandedPath) => isPathSupported(expandedPath, filterObjects));
 }
 
+function setDefaultAsFirst(
+    pathObjects: PathObject[],
+    filterObjects: FilterObject[],
+): PathObject[] {
+    const defaultFilter = filterObjects.find((f) => f.isDefault);
+    if (!defaultFilter) return pathObjects;
+
+    const defaultIndex = pathObjects.findIndex((pathObj) => {
+        return isPathSupported(pathObj, [defaultFilter]);
+    });
+    if (defaultIndex < 0 || pathObjects.length < 2) return pathObjects;
+
+    const tmp = pathObjects[1];
+    pathObjects[0] = pathObjects[defaultIndex];
+    pathObjects[1] = tmp;
+    return pathObjects;
+}
+
 interface FilterEntityListProps {
     entitiesOrPaths: PathObject[]; // Array of objects defining entity path
     filterObjects?: FilterObject[]; // Array of path or regular expression objects
@@ -50,13 +71,13 @@ interface FilterEntityListProps {
 
 /**
  * Filter list of entity paths or entities by paths and regular expressions.
- * @return {Object[]} - filtered entity path objects or entities
+ * @return - filtered entity path objects or entities
  */
 export function filterEntityList({
     entitiesOrPaths,
     filterObjects = [],
     multiPathSeparator = "",
-}: FilterEntityListProps) {
+}: FilterEntityListProps): PathObject[] {
     if (!filterObjects || !filterObjects.length) return [];
     const filterObjects_ = filterObjects.map((o) => (o.regex ? { regex: new RegExp(o.regex) } : o));
 
@@ -68,6 +89,8 @@ export function filterEntityList({
     } else {
         filtered = entitiesOrPaths.filter((e) => isPathSupported(e, filterObjects_));
     }
+
+    filtered = setDefaultAsFirst(filtered, filterObjects_);
 
     return uniqBy(filtered, "path");
 }
