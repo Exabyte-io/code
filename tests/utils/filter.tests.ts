@@ -40,6 +40,13 @@ describe("entity filter", () => {
         expect(filtered).to.have.deep.members(expected);
     });
 
+    it("should place the default entity as first element in list", () => {
+        const filterObjects = [{ path: "/root/entity/b" }, { path: "/root/entity/c", isDefault: true }];
+        const filtered = filterEntityList({ filterObjects, entitiesOrPaths: entities });
+        const expectedPath ="/root/entity/c";
+        expect(filtered[0].path).to.be.equal(expectedPath);
+    });
+
     it("should filter an entity list containing concatenated paths", () => {
         const filterObjects = [{ path: "/root/entity/b" }, { path: "/root/entity/c" }];
         const multiPathEntities = [
