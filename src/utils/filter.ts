@@ -1,6 +1,4 @@
 import uniqBy from "lodash/uniqBy";
-import { filter } from "underscore";
-import { pathToFileURL } from "url";
 
 // Entity or object with path property
 interface PathObject {
