@@ -135,10 +135,9 @@ export function buildJsAssetFromYaml({
     const fileContent = fs.readFileSync(assetPath);
     const obj = yaml.load(fileContent, { schema: JsYamlAllSchemas });
     const ignore = eslintDisable ? "/* eslint-disable */\n" : "";
-    fs.writeFileSync(
-        targetPath,
-        ignore + `module.exports = {${dataKey}: ` + JSON.stringify(obj) + "}\n",
-        "utf8",
-    );
+    const moduleExport = dataKey
+        ? `module.exports = {${dataKey}: ` + JSON.stringify(obj) + "}"
+        : `module.exports = ${JSON.stringify(obj)}`;
+    fs.writeFileSync(targetPath, ignore + moduleExport + "\n", "utf8");
     if (debug) console.log(`Written asset "${assetPath}" to "${targetPath}"`);
 }

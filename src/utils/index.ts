@@ -4,13 +4,13 @@ import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./c
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import {
+    buildJsAssetFromYaml,
     createObjectPathFromFilePath,
     formatFileSize,
+    getAssetDataFromPath,
     getDirectories,
     getFilesInDirectory,
     getProgrammingLanguageFromFileExtension,
-    getAssetDataFromPath,
-    buildJsAssetFromYaml,
 } from "./file";
 import { filterEntityList } from "./filter";
 import { addUnit, removeUnit, replaceUnit, setNextLinks, setUnitsHead } from "./graph";
