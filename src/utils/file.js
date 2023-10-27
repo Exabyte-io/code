@@ -1,5 +1,9 @@
 import fs from "fs";
+import yaml from "js-yaml";
+import setValue from "lodash/set";
 import path from "path";
+
+import { JsYamlAllSchemas } from "./yaml";
 
 const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
     in: "fortran",
@@ -75,4 +79,39 @@ export function createObjectPathFromFilePath(filePath, root) {
     const basename = path.basename(filePath, extension);
     const parentDirs = root ? path.relative(root, dirname).split(path.sep) : [];
     return [...parentDirs, basename].map((item) => `['${item}']`).join("");
+}
+
+/**
+ * Reads asset file and stores asset data in target object under object path which reflects the file system.
+ * @param {Object} targetObject - Object in which asset data should be stored
+ * @param {string} assetPath - Absolute path to asset file.
+ * @param {string} assetRoot - Path to asset root directory to construct relative path.
+ */
+export function loadAndInsertAssetData(targetObject, assetPath, assetRoot) {
+    const fileContent = fs.readFileSync(assetPath, "utf8");
+    const data = yaml.load(fileContent, { schema: JsYamlAllSchemas });
+    const objectPath = createObjectPathFromFilePath(assetPath, assetRoot);
+    setValue(targetObject, objectPath, data);
+}
+
+/**
+ * Traverse asset folder recursively and load Yaml asset files.
+ * @param currPath {string} - path to asset directory
+ * @param {Object} targetObj - Object in which assets are assigned
+ * @param {string} assetRoot - Path to asset root directory to construct relative path.
+ */
+export function getAssetDataFromPath(currPath, targetObj, assetRoot) {
+    const branches = getDirectories(currPath);
+    const assetFiles = getFilesInDirectory(currPath, [".yml", ".yaml"], false);
+
+    assetFiles.forEach((asset) => {
+        try {
+            loadAndInsertAssetData(targetObj, path.join(currPath, asset), assetRoot);
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    branches.forEach((b) => {
+        getAssetDataFromPath(path.resolve(currPath, b), targetObj, assetRoot);
+    });
 }
