@@ -10,6 +10,7 @@ import {
     getFilesInDirectory,
     getProgrammingLanguageFromFileExtension,
     getAssetDataFromPath,
+    buildJsAssetFromYaml,
 } from "./file";
 import { filterEntityList } from "./filter";
 import { addUnit, removeUnit, replaceUnit, setNextLinks, setUnitsHead } from "./graph";
@@ -64,6 +65,7 @@ export {
     stringifyObject,
     getProgrammingLanguageFromFileExtension,
     getAssetDataFromPath,
+    buildJsAssetFromYaml,
     formatFileSize,
     calculateHashFromObject,
     calculateHashFromString,

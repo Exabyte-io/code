@@ -115,3 +115,30 @@ export function getAssetDataFromPath(currPath, targetObj, assetRoot) {
         getAssetDataFromPath(path.resolve(currPath, b), targetObj, assetRoot);
     });
 }
+
+/**
+ * Serialize object from Yaml as JS source file.
+ * @param {object} obj
+ * @param {string} obj.assetPath - Path to Yaml asset.
+ * @param {string} obj.targetPath - Path to target JS source file.
+ * @param {string} obj.dataKey - Object key for data in target JS source file.
+ * @param {boolean} obj.debug - Whether to print messages to console.
+ * @param {boolean} obj.eslintDisable - Whether add eslint-disable flag to top of file.
+ */
+export function buildJsAssetFromYaml({
+    assetPath,
+    targetPath,
+    dataKey = "",
+    debug = true,
+    eslintDisable = true,
+}) {
+    const fileContent = fs.readFileSync(assetPath);
+    const obj = yaml.load(fileContent, { schema: JsYamlAllSchemas });
+    const ignore = eslintDisable ? "/* eslint-disable */\n" : "";
+    fs.writeFileSync(
+        targetPath,
+        ignore + `module.exports = {${dataKey}: ` + JSON.stringify(obj) + "}\n",
+        "utf8",
+    );
+    if (debug) console.log(`Written asset "${assetPath}" to "${targetPath}"`);
+}
