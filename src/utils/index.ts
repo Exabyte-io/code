@@ -9,6 +9,7 @@ import {
     getDirectories,
     getFilesInDirectory,
     getProgrammingLanguageFromFileExtension,
+    getAssetDataFromPath,
 } from "./file";
 import { filterEntityList } from "./filter";
 import { addUnit, removeUnit, replaceUnit, setNextLinks, setUnitsHead } from "./graph";
@@ -62,6 +63,7 @@ export {
     sortKeysDeepForObject,
     stringifyObject,
     getProgrammingLanguageFromFileExtension,
+    getAssetDataFromPath,
     formatFileSize,
     calculateHashFromObject,
     calculateHashFromString,
