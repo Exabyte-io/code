@@ -1,9 +1,8 @@
 import uniqBy from "lodash/uniqBy";
 
-// Entity or object with path property
-interface PathObject {
-    path: string;
-}
+import { PathSchema } from "../types";
+
+type PathObject = Required<PathSchema>;
 
 // Filter conditions
 export interface FilterObject {
