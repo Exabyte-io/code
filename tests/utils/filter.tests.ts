@@ -41,9 +41,12 @@ describe("entity filter", () => {
     });
 
     it("should place the default entity as first element in list", () => {
-        const filterObjects = [{ path: "/root/entity/b" }, { path: "/root/entity/c", isDefault: true }];
+        const filterObjects = [
+            { path: "/root/entity/b" },
+            { path: "/root/entity/c", isDefault: true },
+        ];
         const filtered = filterEntityList({ filterObjects, entitiesOrPaths: entities });
-        const expectedPath ="/root/entity/c";
+        const expectedPath = "/root/entity/c";
         expect(filtered[0].path).to.be.equal(expectedPath);
     });
 
