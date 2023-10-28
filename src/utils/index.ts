@@ -4,8 +4,11 @@ import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./c
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import {
+    buildJSAssetFromConfig,
+    buildJsAssetFromYaml,
     createObjectPathFromFilePath,
     formatFileSize,
+    getAssetDataFromPath,
     getDirectories,
     getFilesInDirectory,
     getProgrammingLanguageFromFileExtension,
@@ -27,7 +30,7 @@ import {
     sortKeysDeepForObject,
     stringifyObject,
 } from "./object";
-import { getSchemaWithDependencies, buildNamedEntitySchema } from "./schemas";
+import { buildNamedEntitySchema, getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
@@ -62,6 +65,9 @@ export {
     sortKeysDeepForObject,
     stringifyObject,
     getProgrammingLanguageFromFileExtension,
+    getAssetDataFromPath,
+    buildJSAssetFromConfig,
+    buildJsAssetFromYaml,
     formatFileSize,
     calculateHashFromObject,
     calculateHashFromString,

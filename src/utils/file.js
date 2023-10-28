@@ -1,5 +1,9 @@
 import fs from "fs";
+import yaml from "js-yaml";
+import setValue from "lodash/set";
 import path from "path";
+
+import { JsYamlAllSchemas } from "./yaml";
 
 const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
     in: "fortran",
@@ -75,4 +79,85 @@ export function createObjectPathFromFilePath(filePath, root) {
     const basename = path.basename(filePath, extension);
     const parentDirs = root ? path.relative(root, dirname).split(path.sep) : [];
     return [...parentDirs, basename].map((item) => `['${item}']`).join("");
+}
+
+/**
+ * Reads asset file and stores asset data in target object under object path which reflects the file system.
+ * @param {Object} targetObject - Object in which asset data should be stored
+ * @param {string} assetPath - Absolute path to asset file.
+ * @param {string} assetRoot - Path to asset root directory to construct relative path.
+ */
+export function loadAndInsertAssetData(targetObject, assetPath, assetRoot) {
+    const fileContent = fs.readFileSync(assetPath, "utf8");
+    const data = yaml.load(fileContent, { schema: JsYamlAllSchemas });
+    const objectPath = createObjectPathFromFilePath(assetPath, assetRoot);
+    setValue(targetObject, objectPath, data);
+}
+
+/**
+ * Traverse asset folder recursively and load Yaml asset files.
+ * @param currPath {string} - path to asset directory
+ * @param {Object} targetObj - Object in which assets are assigned
+ * @param {string} assetRoot - Path to asset root directory to construct relative path.
+ */
+export function getAssetDataFromPath(currPath, targetObj, assetRoot) {
+    const branches = getDirectories(currPath);
+    const assetFiles = getFilesInDirectory(currPath, [".yml", ".yaml"], false);
+
+    assetFiles.forEach((asset) => {
+        try {
+            loadAndInsertAssetData(targetObj, path.join(currPath, asset), assetRoot);
+        } catch (e) {
+            console.log(e);
+        }
+    });
+    branches.forEach((b) => {
+        getAssetDataFromPath(path.resolve(currPath, b), targetObj, assetRoot);
+    });
+}
+
+/**
+ * Serialize object as JS source file.
+ * @param {object} obj
+ * @param {string} obj.config - Object config to serialize.
+ * @param {string} obj.targetPath - Path to target JS source file.
+ * @param {string} obj.dataKey - Object key for data in target JS source file.
+ * @param {boolean} obj.debug - Whether to print messages to console.
+ * @param {boolean} obj.eslintDisable - Whether add eslint-disable flag to top of file.
+ */
+export function buildJSAssetFromConfig({
+    config,
+    targetPath,
+    dataKey = "",
+    debug = true,
+    eslintDisable = true,
+}) {
+    const ignore = eslintDisable ? "/* eslint-disable */\n" : "";
+    const moduleExport = dataKey
+        ? `module.exports = {${dataKey}: ` + JSON.stringify(config) + "}"
+        : `module.exports = ${JSON.stringify(config)}`;
+    fs.writeFileSync(targetPath, ignore + moduleExport + "\n", "utf8");
+    if (debug) console.log(`Written config to "${targetPath}"`);
+}
+
+/**
+ * Serialize object from Yaml as JS source file.
+ * @param {object} obj
+ * @param {string} obj.assetPath - Path to Yaml asset.
+ * @param {string} obj.targetPath - Path to target JS source file.
+ * @param {string} obj.dataKey - Object key for data in target JS source file.
+ * @param {boolean} obj.debug - Whether to print messages to console.
+ * @param {boolean} obj.eslintDisable - Whether add eslint-disable flag to top of file.
+ */
+export function buildJsAssetFromYaml({
+    assetPath,
+    targetPath,
+    dataKey = "",
+    debug = true,
+    eslintDisable = true,
+}) {
+    const fileContent = fs.readFileSync(assetPath);
+    const config = yaml.load(fileContent, { schema: JsYamlAllSchemas });
+    buildJSAssetFromConfig({ config, targetPath, dataKey, debug: false, eslintDisable });
+    if (debug) console.log(`Written asset "${assetPath}" to "${targetPath}"`);
 }

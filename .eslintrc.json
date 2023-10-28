@@ -1,4 +1,7 @@
 {
-    "extends": ["@exabyte-io/eslint-config"]
+    "extends": [
+        "@exabyte-io/eslint-config",
+        "plugin:import/typescript"
+    ]
 }
 
