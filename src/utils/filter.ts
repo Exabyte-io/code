@@ -42,21 +42,20 @@ function isMultiPathSupported(
     return expandedPaths.every((expandedPath) => isPathSupported(expandedPath, filterObjects));
 }
 
-function setDefaultAsFirst(
-    pathObjects: PathObject[],
-    filterObjects: FilterObject[],
-): PathObject[] {
+function setDefaultAsFirst(pathObjects: PathObject[], filterObjects: FilterObject[]): PathObject[] {
     const defaultFilter = filterObjects.find((f) => f.isDefault);
     if (!defaultFilter) return pathObjects;
 
     const defaultIndex = pathObjects.findIndex((pathObj) => {
         return isPathSupported(pathObj, [defaultFilter]);
     });
-    if (defaultIndex < 0 || pathObjects.length < 2) return pathObjects;
+    // minimum of two path objects needed to swap
+    if (defaultIndex <= 0 || pathObjects.length < 2) return pathObjects;
 
-    const tmp = pathObjects[1];
+    // swap default to first position in array
+    const tmp = pathObjects[0];
     pathObjects[0] = pathObjects[defaultIndex];
-    pathObjects[1] = tmp;
+    pathObjects[defaultIndex] = tmp;
     return pathObjects;
 }
 
