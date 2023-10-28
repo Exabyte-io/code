@@ -1,9 +1,8 @@
 import { JSONSchema } from "@exabyte-io/esse.js/schema";
+import { JSONSchema7Definition } from "json-schema";
 import forEach from "lodash/forEach";
 import hasProperty from "lodash/has";
 import isEmpty from "lodash/isEmpty";
-
-import { JSONSchema7Definition } from "json-schema";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
@@ -245,7 +244,6 @@ const buildNamedEntitiesDependencies = (entities: NamedEntity[]) => {
                         schemaByNamedEntityName(entity.name) ||
                         defaultNamedEntitySchema(entity.name);
                     return {
-
                         ...filterForGenerativeProperties(schema),
                     };
                 }),

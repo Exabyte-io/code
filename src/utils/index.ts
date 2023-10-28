@@ -27,7 +27,7 @@ import {
     sortKeysDeepForObject,
     stringifyObject,
 } from "./object";
-import { getSchemaWithDependencies, buildNamedEntitySchema } from "./schemas";
+import { buildNamedEntitySchema, getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,
