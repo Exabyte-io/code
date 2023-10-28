@@ -4,6 +4,7 @@ import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./c
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import {
+    buildJSAssetFromConfig,
     buildJsAssetFromYaml,
     createObjectPathFromFilePath,
     formatFileSize,
@@ -65,6 +66,7 @@ export {
     stringifyObject,
     getProgrammingLanguageFromFileExtension,
     getAssetDataFromPath,
+    buildJSAssetFromConfig,
     buildJsAssetFromYaml,
     formatFileSize,
     calculateHashFromObject,

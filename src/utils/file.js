@@ -117,6 +117,30 @@ export function getAssetDataFromPath(currPath, targetObj, assetRoot) {
 }
 
 /**
+ * Serialize object as JS source file.
+ * @param {object} obj
+ * @param {string} obj.config - Object config to serialize.
+ * @param {string} obj.targetPath - Path to target JS source file.
+ * @param {string} obj.dataKey - Object key for data in target JS source file.
+ * @param {boolean} obj.debug - Whether to print messages to console.
+ * @param {boolean} obj.eslintDisable - Whether add eslint-disable flag to top of file.
+ */
+export function buildJSAssetFromConfig({
+    config,
+    targetPath,
+    dataKey = "",
+    debug = true,
+    eslintDisable = true,
+}) {
+    const ignore = eslintDisable ? "/* eslint-disable */\n" : "";
+    const moduleExport = dataKey
+        ? `module.exports = {${dataKey}: ` + JSON.stringify(config) + "}"
+        : `module.exports = ${JSON.stringify(config)}`;
+    fs.writeFileSync(targetPath, ignore + moduleExport + "\n", "utf8");
+    if (debug) console.log(`Written config to "${targetPath}"`);
+}
+
+/**
  * Serialize object from Yaml as JS source file.
  * @param {object} obj
  * @param {string} obj.assetPath - Path to Yaml asset.
@@ -133,11 +157,7 @@ export function buildJsAssetFromYaml({
     eslintDisable = true,
 }) {
     const fileContent = fs.readFileSync(assetPath);
-    const obj = yaml.load(fileContent, { schema: JsYamlAllSchemas });
-    const ignore = eslintDisable ? "/* eslint-disable */\n" : "";
-    const moduleExport = dataKey
-        ? `module.exports = {${dataKey}: ` + JSON.stringify(obj) + "}"
-        : `module.exports = ${JSON.stringify(obj)}`;
-    fs.writeFileSync(targetPath, ignore + moduleExport + "\n", "utf8");
+    const config = yaml.load(fileContent, { schema: JsYamlAllSchemas });
+    buildJSAssetFromConfig({ config, targetPath, dataKey, debug: false, eslintDisable });
     if (debug) console.log(`Written asset "${assetPath}" to "${targetPath}"`);
 }
