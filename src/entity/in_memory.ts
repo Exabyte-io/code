@@ -71,7 +71,6 @@ export class InMemoryEntity {
 
     /**
      * @summary Array of fields to exclude from resulted JSON
-     * @param {String[]} exclude
      */
     toJSON(exclude: string[] = []) {
         return (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
@@ -89,13 +88,17 @@ export class InMemoryEntity {
 
     /**
      * @summary Clone this entity
-     * @param extraContext {Object}
-     * @returns {*}
      */
-    clone(extraContext: object = {}): InMemoryEntity {
+    clone(extraContext: object = {}): this {
         const Entity = this.constructor as typeof InMemoryEntity;
 
-        return new Entity({ ...this.toJSON(), ...extraContext });
+        // @ts-ignore
+        const object: typeof this = new Entity({
+            ...this.toJSON(),
+            ...extraContext,
+        });
+
+        return object;
     }
 
     // override upon inheritance
