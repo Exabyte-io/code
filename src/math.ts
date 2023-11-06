@@ -11,39 +11,36 @@ import { tolerance as TOLERANCE } from "./constants";
 const EPSILON = 1e-8;
 /**
  * @summary Returns scalar product of vectors
- * @param v1 {Number[]} Vector 1
- * @param v2 {Number[]} Vector 2
- * @return {Number}
+ * @param v1 Vector 1
+ * @param v2 Vector 2
  */
-
-const product = (v1, v2) => {
+const product = (v1: number[], v2: number[])  => {
     return math.multiply(v1, math.transpose(v2));
 };
 
 /**
  * @summary Returns length of a vector.
- * @param v {Number[]} Vector
- * @return {Number}
+ * @param v Vector
  */
-const vlen = (v) => {
+const vlen = (v: number[]) => {
     return math.sqrt(product(v, v));
 };
 
 /**
  * @summary Returns angle between `a` and `b` vectors.
- * @param a {Number[]} Vector a
- * @param b {Number[]} Vector b
- * @param [unit] {String} `rad`, `deg`
- * @return {Number}
+ * @param a Vector a
+ * @param b Vector b
+ * @param unit `rad`, `deg`
  */
-const angle = (a, b, unit) => {
+const angle = (a:number[], b:number[], unit: string) => {
     const lenA = vlen(a);
     const lenB = vlen(b);
+    // @ts-ignore
     return math.unit(math.acos(product(a, b) / (lenA * lenB)), "rad").toNumber(unit || "deg");
 };
 
-const angleUpTo90 = (...args) => {
-    const angleUpTo180 = angle(...args);
+const angleUpTo90 = (a:number[], b:number[], unit: string) => {
+    const angleUpTo180 = angle(a,b, unit);
     return angleUpTo180 < 90 ? angleUpTo180 : 180 - angleUpTo180;
 };
 
@@ -53,7 +50,7 @@ const angleUpTo90 = (...args) => {
  * @param v2 {Number[]} Vector
  * @return {Number}
  */
-const vDist = (v1, v2) => {
+const vDist = (v1:number[], v2:number[]) => {
     if (v1.length !== v2.length) {
         console.error(
             "Attempting to calculate distance between vectors of different dimensionality",
@@ -70,35 +67,36 @@ const vDist = (v1, v2) => {
  * @param tolerance {Number} Tolerance
  * @return {Number}
  */
-const vEqualWithTolerance = (vec1, vec2, tolerance = TOLERANCE.pointsDistance) =>
-    vDist(vec1, vec2) <= tolerance;
+const vEqualWithTolerance = (vec1:number[], vec2:number[], tolerance = TOLERANCE.pointsDistance): boolean => {
+    const val = vDist(vec1, vec2);
+    if (typeof val === "undefined") {
+        return false;
+    }
+    // @ts-ignore
+    return val <= tolerance;
+}
+   
 
 /**
  * @summary Returns 0 if passed number is less than Made.math.EPSILON.
  * @param n {Number}
  * @return {Number}
  */
-const roundToZero = (n) => {
+const roundToZero = (n: number) => {
     return Math.abs(n) < EPSILON ? 0 : n;
 };
 
 /**
  * @summary Returns number with specified precision.
- * @param x {Number}
- * @param n {Number}
- * @return {Number}
  */
-const precise = (x, n = 7) => {
+const precise = (x: number, n = 7) => {
     return Number(x.toPrecision(n));
 };
 
 /**
  * @summary Returns mod of the passed value with the specified tolerance.
- * @param num {Number}
- * @param tolerance {Number}
- * @return {Number}
  */
-const mod = (num, tolerance = 0.001) => {
+const mod = (num: number, tolerance = 0.001): number => {
     const m = num % 1;
     const x = num >= 0 ? m : 1 + m;
 
@@ -112,11 +110,11 @@ const mod = (num, tolerance = 0.001) => {
  * @summary Returns cartesian of passed arrays.
  * @example combinations([1,2], [4,5], [6]) = [[1,4,6], [1,5,6], [2,4,6], [2,5,6]];
  */
-const cartesianProduct = (...arg) => {
-    const r = [];
+const cartesianProduct = (...arg: number[][]):number[][] => {
+    const r: number[][] = [];
     const max = arg.length - 1;
 
-    const helper = (arr, i) => {
+    const helper = (arr: number[], i: number) => {
         for (let j = 0, l = arg[i].length; j < l; j++) {
             const a = arr.slice(0); // clone arr
             a.push(arg[i][j]);
@@ -134,20 +132,16 @@ const cartesianProduct = (...arg) => {
 
 /**
  * @summary Returns all possible positive integer combinations where each value changes from 0 to a, b, c.
- * @param a {Number}
- * @param b {Number}
- * @param tolerance {Number}
  */
-const almostEqual = (a, b, tolerance = TOLERANCE.pointsDistance) => {
+const almostEqual = (a: number, b: number, tolerance = TOLERANCE.pointsDistance): boolean => {
     return Math.abs(a - b) < tolerance;
 };
 
 /**
  * @summary Returns true if number is 0 <= x < 1, inclusive, otherwise false.
  * Helper to deal with JS arithmetic artifacts.
- * @number number {Number}
  */
-const isBetweenZeroInclusiveAndOne = (number, tolerance = TOLERANCE.length) => {
+const isBetweenZeroInclusiveAndOne = (number: number, tolerance = TOLERANCE.length): boolean => {
     return roundToZero(number) >= 0 && !almostEqual(number, 1, tolerance) && number < 1;
 };
 
@@ -160,7 +154,7 @@ const isBetweenZeroInclusiveAndOne = (number, tolerance = TOLERANCE.length) => {
  * @param b
  * @param c
  */
-const combinations = (a, b, c) => {
+const combinations = (a: number, b: number, c: number) => {
     const combs = [];
     for (let i = 0; i <= a; i++) {
         for (let j = 0; j <= b; j++) {
@@ -175,7 +169,7 @@ const combinations = (a, b, c) => {
 /*
  * @summary Same as `combinations` but accepting intervals (tuples) of integers: eg. [-3, 4]
  */
-const combinationsFromIntervals = (arrA, arrB, arrC) => {
+const combinationsFromIntervals = (arrA: number[], arrB:number[], arrC: number[]) => {
     const combs = [];
     for (let i = arrA[0]; i <= arrA[1]; i++) {
         for (let j = arrB[0]; j <= arrB[1]; j++) {
@@ -187,21 +181,18 @@ const combinationsFromIntervals = (arrA, arrB, arrC) => {
     return combs;
 };
 
-const roundValueToNDecimals = (value, decimals = 3) => {
+const roundValueToNDecimals = (value: number, decimals = 3) => {
     return parseFloat(value.toFixed(decimals));
 };
 
 /**
  * @summary Returns n splits of the passed segment.
- * @param point1 {Number[]}
- * @param point2 {Number[]}
- * @param n {Number}
  */
-const calculateSegmentsBetweenPoints3D = (point1, point2, n) => {
+const calculateSegmentsBetweenPoints3D = (point1: (string | number)[], point2:(string | number)[], n: number | string) => {
     // safely parse if passed strings
-    const point1_ = point1.map((x) => parseFloat(x));
-    const point2_ = point2.map((x) => parseFloat(x));
-    const n_ = parseInt(n);
+    const point1_ = point1.map((x) => typeof x === "string" ? parseFloat(x) : x);
+    const point2_ = point2.map((x) => typeof x === "string" ? parseFloat(x) : x);
+    const n_ = typeof n === "string" ? parseInt(n) : n;
 
     const result = [];
     for (let i = 1; i < n_; i++) {
@@ -223,10 +214,10 @@ const calculateSegmentsBetweenPoints3D = (point1, point2, n) => {
  * @locus Client
  * @method
  * @name toPrecision
- * @param {Number} number
- * @param {Number} precision Optional. An integer specifying the number of significant digits.
+ * @param number
+ * @param precision Optional. An integer specifying the number of significant digits.
  */
-export function numberToPrecision(number, precision) {
+export function numberToPrecision(number: number | string, precision?: number): string {
     if (_.isNumber(number)) {
         return number.toPrecision(precision);
     }

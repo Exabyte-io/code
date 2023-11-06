@@ -1,3 +1,4 @@
+import { JSONSchema6 } from "json-schema";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
@@ -216,7 +217,7 @@ export class InMemoryEntity {
     /**
      * Returns class JSON schema
      */
-    static get jsonSchema() {
+    static get jsonSchema(): JSONSchema6 | undefined {
         try {
             return getSchemaByClassName(this.name);
         } catch (e) {
