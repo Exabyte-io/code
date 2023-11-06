@@ -89,11 +89,9 @@ export class InMemoryEntity {
     /**
      * @summary Clone this entity
      */
-    clone(extraContext: object = {}): this {
-        const Entity = this.constructor as typeof InMemoryEntity;
-
+    clone<T extends InMemoryEntity>(extraContext?: object): T {
         // @ts-ignore
-        const object: typeof this = new Entity({
+        const object: T = new this.constructor({
             ...this.toJSON(),
             ...extraContext,
         });
