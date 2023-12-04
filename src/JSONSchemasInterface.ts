@@ -100,16 +100,20 @@ export class JSONSchemasInterface {
         Object.values(definitions)
             .filter(isEsseSchema)
             .forEach((originalSchema) => {
-                const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema, false), {
-                    resolvers: {
-                        defaultResolver: mergeAllOf.options.resolvers.title,
-                    },
-                });
+                // const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema, false), {
+                //     resolvers: {
+                //         defaultResolver: mergeAllOf.options.resolvers.title,
+                //     },
+                // });
+
+                const schema = removeSchemaIdsAfterAllOf(originalSchema, false);
 
                 if (schema.$id) {
                     schemasCache.set(schema.$id, schema);
                 }
             });
+
+        console.timeEnd("registerGlobalSchema");
     }
 
     /**

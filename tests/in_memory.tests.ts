@@ -1,3 +1,4 @@
+import baseSchema from "@exabyte-io/esse.js/schema";
 import { expect } from "chai";
 
 import { InMemoryEntity } from "../src/entity/in_memory";
@@ -53,23 +54,7 @@ describe("InMemoryEntity", () => {
 
         registerClassName(RegisteredEntity.name, "in-memory-entity/base");
 
-        JSONSchemasInterface.registerGlobalSchema({
-            definitions: {
-                "in-memory-entity-base": {
-                    $id: "in-memory-entity/base",
-                    $schema: "http://json-schema.org/draft-04/schema#",
-                    title: "System in-set schema",
-                    properties: {
-                        _id: {
-                            type: "string",
-                        },
-                        type: {
-                            type: "string",
-                        },
-                    },
-                },
-            },
-        });
+        JSONSchemasInterface.registerGlobalSchema(baseSchema);
 
         expect(RegisteredEntity.jsonSchema).to.be.an("object");
         expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties._id"); // check mix schemas
