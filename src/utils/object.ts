@@ -92,7 +92,7 @@ export function renameKeysForObject(
     return result;
 }
 
-interface NameValueObject {
+export interface NameValueObject {
     name: string;
     value: unknown;
     [key: string]: unknown;

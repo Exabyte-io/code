@@ -1,3 +1,4 @@
+import { JSONSchema6 } from "json-schema";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
@@ -70,7 +71,6 @@ export class InMemoryEntity {
 
     /**
      * @summary Array of fields to exclude from resulted JSON
-     * @param {String[]} exclude
      */
     toJSON(exclude: string[] = []) {
         return (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
@@ -88,13 +88,17 @@ export class InMemoryEntity {
 
     /**
      * @summary Clone this entity
-     * @param extraContext {Object}
-     * @returns {*}
      */
-    clone(extraContext: object = {}): InMemoryEntity {
-        const Entity = this.constructor as typeof InMemoryEntity;
+    clone(extraContext?: object): this {
+        type ThisType = typeof this;
+        type ThisConstructor = { new (o: object): ThisType };
 
-        return new Entity({ ...this.toJSON(), ...extraContext });
+        const object = new (this.constructor as ThisConstructor)({
+            ...this.toJSON(),
+            ...extraContext,
+        });
+
+        return object;
     }
 
     // override upon inheritance
@@ -216,7 +220,7 @@ export class InMemoryEntity {
     /**
      * Returns class JSON schema
      */
-    static get jsonSchema() {
+    static get jsonSchema(): JSONSchema6 | undefined {
         try {
             return getSchemaByClassName(this.name);
         } catch (e) {
