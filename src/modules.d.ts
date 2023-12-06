@@ -7,27 +7,6 @@ declare module "json-schema-deref-sync" {
     export default deref;
 }
 
-declare module "json-schema-merge-allof" {
-    interface MergeAllOfOptions {
-        resolvers: {
-            defaultResolver: string;
-        };
-    }
-
-    interface MergeAllOf {
-        <T extends JSONSchemaDefinition>(globalSchema: T, options: MergeAllOfOptions): T;
-        options: {
-            resolvers: {
-                title: string;
-            };
-        };
-    }
-
-    const mergeAllOf: MergeAllOf;
-
-    export default mergeAllOf;
-}
-
 /**
  * This types are originally from "@types/json-schema" npm package.
  * The one difference compared to the original implementation is schemaId property to JSONSchema interface

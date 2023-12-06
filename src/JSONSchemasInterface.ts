@@ -5,7 +5,6 @@ import baseSchema, {
 } from "@exabyte-io/esse.js/schema";
 import Ajv, { Options } from "ajv";
 import deref from "json-schema-deref-sync";
-import mergeAllOf from "json-schema-merge-allof";
 
 type Query = { [key in keyof JSONSchema]: { $regex: string } };
 
