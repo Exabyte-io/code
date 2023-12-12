@@ -3,6 +3,7 @@ import { convertToCompactCSVArrayOfObjects, safeMakeArray } from "./array";
 import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./class";
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
+import { fetchFilesFromGitHubAPI } from "./fetchFromGitHubAPI";
 import {
     createObjectPathFromFilePath,
     formatFileSize,
@@ -92,4 +93,5 @@ export {
     createObjectPathFromFilePath,
     buildNamedEntitySchema,
     findPreviousVersion,
+    fetchFilesFromGitHubAPI,
 };
