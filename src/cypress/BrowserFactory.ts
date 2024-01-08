@@ -9,6 +9,9 @@ export default class BrowserFactory {
     }
 
     static getBrowser() {
+        if (!BrowserFactory.browser) {
+            throw new Error("Provide browser settings first");
+        }
         return BrowserFactory.browser;
     }
 }

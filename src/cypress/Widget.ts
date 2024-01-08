@@ -10,11 +10,7 @@ export default class Widget {
 
     constructor(selector: string) {
         this.selector = selector;
-        const browser = BrowserFactory.getBrowser();
-        if (!browser) {
-            throw new Error("Provide browser settings first");
-        }
-        this.browser = browser;
+        this.browser = BrowserFactory.getBrowser();
     }
 
     waitForVisible() {
