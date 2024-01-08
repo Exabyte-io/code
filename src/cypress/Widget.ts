@@ -4,10 +4,6 @@ import { BrowserFactory } from "./BrowserFactory";
 
 const modalBackdrop = ".modal-backdrop.fade";
 
-export interface Selectors {
-    [key: string]: string | ((...args: unknown[]) => string);
-}
-
 export default class Widget {
     selector: string;
 
@@ -41,8 +37,9 @@ export default class Widget {
     /**
      * @summary Wraps the selectors, including functions, passed at the top level of config object
      */
-    getWrappedSelectors<T extends Selectors>(config: T): T {
+    getWrappedSelectors<T extends object>(config: T): T {
         const entries = Object.keys(config).map((key) => {
+            // @ts-ignore
             const value = config[key];
             let newValue;
             switch (typeof value) {
