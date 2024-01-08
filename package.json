@@ -24,7 +24,7 @@
         "./constants": "./dist/constants.js",
         "./math": "./dist/math.js",
         "./JSONSchemasInterface": "./dist/JSONSchemasInterface.js",
-        "./dist/cypress": "./cypress",
+        "./dist/cypress/*": "./dist/cypress/*",
         "./dist/context": "./dist/context/index.js",
         "./dist/entity": "./dist/entity/index.js",
         "./dist/utils": "./dist/utils/index.js",
