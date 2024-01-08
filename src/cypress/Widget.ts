@@ -1,6 +1,5 @@
-// import browser from "./Browser";
 import { Browser } from "./Browser";
-import { BrowserFactory } from "./BrowserFactory";
+import BrowserFactory from "./BrowserFactory";
 
 const modalBackdrop = ".modal-backdrop.fade";
 
