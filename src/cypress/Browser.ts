@@ -123,7 +123,7 @@ export class Browser {
         return cy.get(selector).invoke("val");
     }
 
-    geInputValueByXpath(path: string) {
+    getInputValueByXpath(path: string) {
         return cy.xpath(path).invoke("val");
     }
 
