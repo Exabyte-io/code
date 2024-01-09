@@ -3,6 +3,8 @@ import "@cypress/xpath";
 
 export interface BrowserSettings {
     renderTimeoutShort: number;
+    renderTimeoutMedium: number;
+    renderTimeoutLong: number;
 }
 
 export class IframeBrowser {
