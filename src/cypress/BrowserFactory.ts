@@ -2,20 +2,22 @@
 import { Browser, BrowserSettings } from "./Browser";
 
 export default class BrowserFactory {
-    private static browser?: Browser;
-
     static setBrowserSettings(settings: BrowserSettings) {
-        BrowserFactory.browser = new Browser(settings);
+        // @ts-ignore
+        window.browser = new Browser(settings);
     }
 
     static setBrowser(browser: Browser) {
-        BrowserFactory.browser = browser;
+        // @ts-ignore
+        window.browser = browser;
     }
 
     static getBrowser() {
-        if (!BrowserFactory.browser) {
+        // @ts-ignore
+        if (!window.browser) {
             throw new Error("No browser object found");
         }
-        return BrowserFactory.browser;
+        // @ts-ignore
+        return window.browser;
     }
 }
