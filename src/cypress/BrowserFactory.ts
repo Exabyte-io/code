@@ -7,17 +7,12 @@ export default class BrowserFactory {
         window.browser = new Browser(settings);
     }
 
-    static setBrowser(browser: Browser) {
-        // @ts-ignore
-        window.browser = browser;
-    }
-
-    static getBrowser() {
+    static getBrowser(): Browser {
         // @ts-ignore
         if (!window.browser) {
             throw new Error("No browser object found");
         }
         // @ts-ignore
-        return window.browser;
+        return window.browser as Browser;
     }
 }
