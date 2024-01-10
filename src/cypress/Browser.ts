@@ -29,14 +29,19 @@ export class IframeBrowser {
         return this.#body.find(selector, { timeout }).should("be.visible");
     }
 
-    setInputValue(selector: string, value: string | number, clear = true) {
+    setInputValue(
+        selector: string,
+        value: string | number,
+        clear = true,
+        options: Partial<Cypress.TypeOptions> = {},
+    ) {
         const input = this.#body.find(selector);
 
         if (clear) {
-            return input.clear().type(value.toString());
+            return input.clear().type(value.toString(), options);
         }
 
-        return input.type(value.toString());
+        return input.type(value.toString(), options);
     }
 
     select(selector: string, value: string) {
@@ -84,24 +89,34 @@ export class Browser {
      * @param selector {String} CSS selector for the field in question
      * @param value {String} The final value to be left in the field
      */
-    setInputValue(selector: string, value: string | number, clear = true) {
+    setInputValue(
+        selector: string,
+        value: string | number,
+        clear = true,
+        options: Partial<Cypress.TypeOptions> = {},
+    ) {
         const input = cy.get(selector);
 
         if (clear) {
-            return input.clear().type(value.toString());
+            return input.clear().type(value.toString(), options);
         }
 
-        return input.type(value.toString());
+        return input.type(value.toString(), options);
     }
 
-    setInputValueByXpath(selector: string, value: string | number, clear = true) {
+    setInputValueByXpath(
+        selector: string,
+        value: string | number,
+        clear = true,
+        options: Partial<Cypress.TypeOptions> = {},
+    ) {
         const input = cy.xpath(selector);
 
         if (clear) {
-            return input.clear().type(value.toString());
+            return input.clear().type(value.toString(), options);
         }
 
-        return input.type(value.toString());
+        return input.type(value.toString(), options);
     }
 
     select(selector: string, value: string) {
