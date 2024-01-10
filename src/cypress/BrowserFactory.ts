@@ -8,9 +8,13 @@ export default class BrowserFactory {
         BrowserFactory.browser = new Browser(settings);
     }
 
+    static setBrowser(browser: Browser) {
+        BrowserFactory.browser = browser;
+    }
+
     static getBrowser() {
         if (!BrowserFactory.browser) {
-            throw new Error("Provide browser settings first");
+            throw new Error("No browser object found");
         }
         return BrowserFactory.browser;
     }
