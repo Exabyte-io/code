@@ -160,6 +160,10 @@ export class Browser {
         return cy.get(selector).then(($el): boolean => $el.is(":visible"));
     }
 
+    getElement(selector: string) {
+        return cy.get(selector);
+    }
+
     uploadFileFromFilePath(selector: string, filePath: string) {
         return cy.get(selector).selectFile(filePath, { force: true });
     }
