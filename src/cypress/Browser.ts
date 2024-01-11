@@ -160,6 +160,10 @@ export class Browser {
         return cy.get(selector).then(($el): boolean => $el.is(":visible"));
     }
 
+    isSelected(selector: string) {
+        return cy.get(selector).then((elem) => elem.is(":selected"));
+    }
+
     getElement(selector: string) {
         return cy.get(selector);
     }
