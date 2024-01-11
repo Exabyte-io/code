@@ -55,4 +55,8 @@ export default class Widget {
     waitForModalBackdropDisappear() {
         this.browser.waitForDisappear(modalBackdrop);
     }
+
+    isVisible() {
+        return this.browser.isVisible(this.selector);
+    }
 }
