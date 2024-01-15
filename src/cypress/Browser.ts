@@ -164,6 +164,10 @@ export class Browser {
         return cy.get(selector).then((elem) => elem.is(":selected"));
     }
 
+    isChecked(selector: string) {
+        return cy.get(selector).then((elem) => elem.is(":checked"));
+    }
+
     getElement(selector: string) {
         return cy.get(selector);
     }
