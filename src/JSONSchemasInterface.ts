@@ -1,8 +1,4 @@
-import baseSchema, {
-    JSONSchema,
-    JSONSchemaDefinition,
-    JSONSchemaType,
-} from "@exabyte-io/esse.js/schema";
+import baseSchema, { JSONSchema, JSONSchemaDefinition, JSONSchemaType } from "@mat3ra/esse/schema";
 import Ajv, { Options } from "ajv";
 import deref from "json-schema-deref-sync";
 import mergeAllOf from "json-schema-merge-allof";
