@@ -20,7 +20,7 @@
     "exports": {
         "./context": "./dist/context/index.js",
         "./entity": "./dist/entity/index.js",
-        "./utils": "./dist/utils/index.js",
+        "./utils/*": "./dist/utils/*.js",
         "./constants": "./dist/constants.js",
         "./math": "./dist/math.js",
         "./JSONSchemasInterface": "./dist/JSONSchemasInterface.js",
