@@ -1,5 +1,5 @@
 declare module "json-schema-deref-sync" {
-    import { JSONSchema, JSONSchemaDefinition } from "@exabyte-io/esse.js/schema";
+    import { JSONSchema, JSONSchemaDefinition } from "@mat3ra/esse/schema";
 
     function deref(globalSchema: JSONSchema): JSONSchema;
     function deref(globalSchema: JSONSchemaDefinition): JSONSchemaDefinition;
@@ -32,7 +32,7 @@ declare module "json-schema-merge-allof" {
  * This types are originally from "@types/json-schema" npm package.
  * The one difference compared to the original implementation is schemaId property to JSONSchema interface
  */
-declare module "@exabyte-io/esse.js/schema" {
+declare module "@mat3ra/esse/schema" {
     export {
         JSONSchema6 as JSONSchema,
         JSONSchema6Definition as JSONSchemaDefinition,
@@ -40,7 +40,7 @@ declare module "@exabyte-io/esse.js/schema" {
     } from "json-schema";
 }
 
-declare module "@exabyte-io/esse.js/lib/js/esse/schemaUtils" {
+declare module "@mat3ra/esse/lib/js/esse/schemaUtils" {
     // TODO: add TS to esse.js
 
     export function mapObjectDeep(object: object, mapValue: () => unknown): object;

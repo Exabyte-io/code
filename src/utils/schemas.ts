@@ -1,4 +1,4 @@
-import { JSONSchema } from "@exabyte-io/esse.js/schema";
+import { JSONSchema } from "@mat3ra/esse/schema";
 import { JSONSchema7Definition } from "json-schema";
 import forEach from "lodash/forEach";
 import hasProperty from "lodash/has";
@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty";
 
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
-export * from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
+export * from "@mat3ra/esse/lib/js/esse/schemaUtils";
 
 export const schemas: { [key: string]: string } = {};
 
