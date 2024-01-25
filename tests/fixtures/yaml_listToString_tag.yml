@@ -1,0 +1,14 @@
+# listToString content from another Yaml file
+case1:
+    here: original content
+    there: !listToString
+        - one # comment 1
+        - two # comment 2
+case2:
+    here: original content
+    there: !listToString
+        - one # comment 1
+        - 1 # non-string ignored
+        - some: 1 # object also skipped
+          other: "object"
+        - two # comment 2

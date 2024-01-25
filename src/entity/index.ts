@@ -5,6 +5,7 @@ import { FlowchartEntityMixin, FlowchartItemMixin } from "./mixins/flowchart";
 import { HashedInputArrayMixin } from "./mixins/hash";
 import {
     DefaultableMixin,
+    HasConsistencyChecksMixin,
     HasDescriptionMixin,
     HasMetadataMixin,
     HasScopeTrackMixin,
@@ -14,6 +15,7 @@ import {
 import { RuntimeItemsMixin } from "./mixins/runtime_items";
 import {
     DefaultableInMemoryEntity,
+    HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
@@ -40,6 +42,8 @@ export {
     NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
     NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
     NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
+    HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity,
+    HasConsistencyChecksMixin,
     DefaultableMixin,
     HasDescriptionMixin,
     HasMetadataMixin,

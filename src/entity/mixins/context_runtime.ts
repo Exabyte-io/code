@@ -29,8 +29,8 @@ export function RuntimeContextFieldMixin<T extends InMemoryEntityConstructor>(su
             this.runtimeContext = Object.assign(this._runtimeContext, ctx);
         }
 
-        toJSON() {
-            return { ...super.toJSON(), runtimeContext: this._runtimeContext };
+        toJSON(exclude: string[] = []) {
+            return { ...super.toJSON(exclude), runtimeContext: this._runtimeContext };
         }
     };
 }

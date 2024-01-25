@@ -1,13 +1,12 @@
-import { JSONSchema } from "@exabyte-io/esse.js/schema";
+import { JSONSchema } from "@mat3ra/esse/schema";
+import { JSONSchema7Definition } from "json-schema";
 import forEach from "lodash/forEach";
 import hasProperty from "lodash/has";
 import isEmpty from "lodash/isEmpty";
 
-import { JSONSchema7Definition } from "json-schema";
-
 import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
-export * from "@exabyte-io/esse.js/lib/js/esse/schemaUtils";
+export * from "@mat3ra/esse/lib/js/esse/schemaUtils";
 
 export const schemas: { [key: string]: string } = {};
 
@@ -27,8 +26,9 @@ interface Node {
         value: string;
         name: string;
     };
-    staticOptions: Parameter[];
+    staticOptions?: Parameter[];
     children?: Node[];
+    [otherKey: string]: unknown;
 }
 
 /**
@@ -36,7 +36,7 @@ interface Node {
  * @returns
  */
 export function getSchemaByClassName(className: string) {
-    return schemas[className] ? JSONSchemasInterface.schemaById(schemas[className]) : null;
+    return schemas[className] ? JSONSchemasInterface.schemaById(schemas[className]) : undefined;
 }
 
 /**
@@ -127,7 +127,7 @@ interface Props {
     // Schema
     schema?: JSONSchema;
     // Schema id (takes precedence over `schema` when both are provided)
-    schemaId: string;
+    schemaId?: string;
     // Array of nodes
     nodes: Node[];
     // Whether properties in main schema should be modified (add `enum` and `enumNames`)
@@ -244,7 +244,6 @@ const buildNamedEntitiesDependencies = (entities: NamedEntity[]) => {
                         schemaByNamedEntityName(entity.name) ||
                         defaultNamedEntitySchema(entity.name);
                     return {
-
                         ...filterForGenerativeProperties(schema),
                     };
                 }),
