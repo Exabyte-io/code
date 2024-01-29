@@ -11,7 +11,7 @@ describe("JSONSchemasInterface", () => {
             definitions: {
                 workflow: {
                     $id: "workflow",
-                    $schema: "http://json-schema.org/draft-04/schema#",
+                    $schema: "http://json-schema.org/draft-07/schema#",
                     title: "System in-set schema",
                     properties: {
                         prop: {
@@ -37,7 +37,7 @@ describe("JSONSchemasInterface", () => {
             definitions: {
                 "in-memory-entity-base": {
                     $id: "in-memory-entity/base",
-                    $schema: "http://json-schema.org/draft-04/schema#",
+                    $schema: "http://json-schema.org/draft-07/schema#",
                     title: "System in-set schema",
                     properties: {
                         _id: {
@@ -50,7 +50,7 @@ describe("JSONSchemasInterface", () => {
                 },
                 "system-in-set": {
                     $id: "system/in-set",
-                    $schema: "http://json-schema.org/draft-04/schema#",
+                    $schema: "http://json-schema.org/draft-07/schema#",
                     title: "System in-set schema",
                     properties: {
                         inSet: {
@@ -59,7 +59,7 @@ describe("JSONSchemasInterface", () => {
                                 allOf: [
                                     {
                                         $id: "system/entity-reference",
-                                        $schema: "http://json-schema.org/draft-04/schema#",
+                                        $schema: "http://json-schema.org/draft-07/schema#",
                                         title: "entity reference schema",
                                         properties: {
                                             _id: {
@@ -140,7 +140,7 @@ describe("JSONSchemasInterface", () => {
             definitions: {
                 "test-person": {
                     $id: "test/person",
-                    $schema: "http://json-schema.org/draft-04/schema#",
+                    $schema: "http://json-schema.org/draft-07/schema#",
                     type: "object",
                     properties: {
                         name: { type: "string" },

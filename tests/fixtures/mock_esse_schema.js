@@ -1,12 +1,12 @@
 export const MOCK_GLOBAL_SCHEMA = {
     $id: "esse-global-schema",
-    $schema: "http://json-schema.org/draft-04/schema#",
+    $schema: "http://json-schema.org/draft-07/schema#",
     title: "Global schema",
     type: "object",
     definitions: {
         "core:primitive:scalar": {
             $id: "core/primitive/scalar",
-            $schema: "http://json-schema.org/draft-04/schema#",
+            $schema: "http://json-schema.org/draft-07/schema#",
             title: "scalar schema",
             type: "object",
             required: ["value"],
@@ -24,7 +24,7 @@ export const MOCK_GLOBAL_SCHEMA = {
         },
         "core:abstract::d-data": {
             $id: "core/abstract/2d-data",
-            $schema: "http://json-schema.org/draft-04/schema#",
+            $schema: "http://json-schema.org/draft-07/schema#",
             title: "2 dimension data schema",
             type: "object",
             properties: {
@@ -40,7 +40,7 @@ export const MOCK_GLOBAL_SCHEMA = {
         },
         "core:primitive::d-data-series": {
             $id: "core/primitive/1d-data-series",
-            $schema: "http://json-schema.org/draft-04/schema#",
+            $schema: "http://json-schema.org/draft-07/schema#",
             title: "1 dimension data series schema",
             type: "array",
             items: {
@@ -53,7 +53,7 @@ export const MOCK_GLOBAL_SCHEMA = {
         },
         "methods-directory:physical:pw": {
             $id: "methods-directory/physical/pw",
-            $schema: "http://json-schema.org/draft-04/schema#",
+            $schema: "http://json-schema.org/draft-07/schema#",
             title: "Plane wave method unit schema",
             description: "Approximating the electronic wave function with a plane wave basis",
             type: "object",

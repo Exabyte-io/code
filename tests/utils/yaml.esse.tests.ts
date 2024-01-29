@@ -23,7 +23,7 @@ describe("YAML tag: !esse", () => {
     it("should correctly parse a custom !esse tag and return ESSE schema", () => {
         const expected = {
             $id: "core/primitive/scalar",
-            $schema: "http://json-schema.org/draft-04/schema#",
+            $schema: "http://json-schema.org/draft-07/schema#",
             title: "scalar schema",
             type: "object",
             required: ["value"],

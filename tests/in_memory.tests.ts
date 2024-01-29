@@ -1,23 +1,22 @@
+/* eslint-disable no-unused-expressions */
+import inMemoryEntitySchema from "@mat3ra/esse/lib/js/schema/in_memory-entity/base.json";
 import { expect } from "chai";
-import { JSONSchema6 } from "json-schema";
 
+// import { JSONSchema6 } from "json-schema";
 import { InMemoryEntity } from "../src/entity/in_memory";
-import { JSONSchemasInterface } from "../src/JSONSchemasInterface";
-import { registerClassName } from "../src/utils/schemas";
 
-const inMemoryEntitySchema: JSONSchema6 = {
-    $id: "in-memory-entity/base",
-    $schema: "http://json-schema.org/draft-04/schema#",
-    title: "System in-set schema",
-    properties: {
-        _id: {
-            type: "string",
-        },
-        type: {
-            type: "string",
-        },
-    },
-};
+class DerivedInMemoryEntity extends InMemoryEntity {
+    static readonly jsonSchema = inMemoryEntitySchema;
+}
+
+function validateEntity(entity: DerivedInMemoryEntity) {
+    try {
+        entity.validate();
+    } catch (err) {
+        return false;
+    }
+    return true;
+}
 
 describe("InMemoryEntity", () => {
     const obj = {
@@ -59,88 +58,37 @@ describe("InMemoryEntity", () => {
     });
 
     it("toJSON converts to JSON", () => {
-        registerClassName(InMemoryEntity.name, "in-memory-entity/base");
-        JSONSchemasInterface.registerGlobalSchema({
-            definitions: {
-                "in-memory-entity-base": inMemoryEntitySchema,
-            },
-        });
-        const entity = new InMemoryEntity({ _id: "123", type: "type" });
+        const entity = new DerivedInMemoryEntity({ _id: "123", type: "type" });
         expect(JSON.stringify(entity.toJSON())).to.be.equal(
-            JSON.stringify({ _id: "123", type: "type" }),
+            JSON.stringify({ _id: "123", schemaVersion: "2022.8.16" }),
         );
     });
 
     it("jsonSchema returns correct registered schema", async () => {
-        class RegisteredEntity extends InMemoryEntity {}
-
-        registerClassName(RegisteredEntity.name, "in-memory-entity/base");
-
-        JSONSchemasInterface.registerGlobalSchema({
-            definitions: {
-                "in-memory-entity-base": inMemoryEntitySchema,
-            },
-        });
-
-        expect(RegisteredEntity.jsonSchema).to.be.an("object");
-        expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties._id"); // check mix schemas
+        expect(DerivedInMemoryEntity.jsonSchema).to.be.an("object");
+        expect(DerivedInMemoryEntity.jsonSchema).to.have.nested.property("properties._id"); // check mix schemas
     });
 
     it("jsonSchema validate", async () => {
-        class RegisteredEntity extends InMemoryEntity {}
+        const validEntity = new DerivedInMemoryEntity({ _id: "123", slug: "slug" });
+        const invalidEntity = new DerivedInMemoryEntity({ _id: "123", slug: ["slug"] });
 
-        registerClassName(RegisteredEntity.name, "in-memory-entity/base");
-
-        JSONSchemasInterface.registerGlobalSchema({
-            definitions: {
-                "in-memory-entity-base": inMemoryEntitySchema,
-            },
-        });
-
-        const invalidEntity = new RegisteredEntity({
-            _id: "123",
-            type: false,
-        });
-
-        expect(invalidEntity.validate({ validationType: "ajv" })).to.be.false;
-
-        const validEntity = new RegisteredEntity({
-            _id: "123",
-            type: "type",
-        });
-
-        expect(validEntity.validate({ validationType: "ajv" })).to.be.true;
+        expect(validateEntity(validEntity)).to.be.true;
+        expect(validateEntity(invalidEntity)).to.be.false;
     });
 
     it("jsonSchema clean", async () => {
-        class RegisteredEntity extends InMemoryEntity {}
-
-        registerClassName(RegisteredEntity.name, "in-memory-entity/base");
-
-        JSONSchemasInterface.registerGlobalSchema({
-            definitions: {
-                "in-memory-entity-base": inMemoryEntitySchema,
-            },
-        });
-
-        const invalidEntity = new RegisteredEntity({
+        const config = {
             _id: "123",
-            type: false,
+            slug: "slug",
             additional: "additional",
-        });
-
-        const cleanConfig = invalidEntity.clean(
-            {
-                _id: "123",
-                type: "type",
-                additional: "additional",
-            },
-            { validationType: "ajv" },
-        );
+        };
+        const cleanConfig = new DerivedInMemoryEntity().clean({ ...config });
 
         expect(cleanConfig).to.be.deep.equal({
             _id: "123",
-            type: "type",
+            slug: "slug",
+            schemaVersion: "2022.8.16", // schema's default value
         });
     });
 });

@@ -1,31 +1,36 @@
-import Ajv from "ajv";
-import { JSONSchema6 } from "json-schema";
+import Ajv, { SchemaObject } from "ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
 import { EntityReferenceSchema } from "../types";
 import { clone, deepClone } from "../utils/clone";
-import { getSchemaByClassName } from "../utils/schemas";
 
-// TODO: https://exabyte.atlassian.net/browse/SOF-5946
-// const schemas = new ESSE().schemas;
+export enum ValidationErrorCode {
+    IN_MEMORY_ENTITY_AJV_INTERNAL_ERROR = "IN_MEMORY_ENTITY_AJV_INTERNAL_ERROR",
+    IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
+}
 
 export interface AnyObject {
     [key: string]: unknown;
 }
 
-export interface SimpleSchemaContext {
-    validate: (config: object) => void;
-    isValid: () => boolean;
-    getErrorObject?: () => object;
-    validationErrors?: () => object;
+export class EntityError extends Error {
+    code: string;
+
+    error?: object | null;
+
+    constructor({ code, error }: { code: ValidationErrorCode; error?: object | null }) {
+        super(code);
+        this.code = code;
+        this.error = error;
+    }
 }
 
-export interface SimpleSchema {
-    validate: (config: AnyObject) => void;
-    clean: (config: AnyObject) => AnyObject;
-    newContext: () => SimpleSchemaContext;
-}
+const ajv = new Ajv({
+    removeAdditional: true,
+    useDefaults: true,
+    coerceTypes: true, // convert "true" => true for boolean or "4" => 4 for integer
+});
 
 export class InMemoryEntity {
     static create(config: object) {
@@ -35,9 +40,9 @@ export class InMemoryEntity {
     // Override if deepClone of config is required
     static _isDeepCloneRequired = false;
 
-    _json: AnyObject = {};
+    static readonly jsonSchema: SchemaObject;
 
-    _schema: SimpleSchema | null = null;
+    _json: AnyObject = {};
 
     constructor(config = {}) {
         this._json = (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
@@ -102,72 +107,55 @@ export class InMemoryEntity {
         return object;
     }
 
-    // override upon inheritance
-    get schema() {
-        return this._schema || null;
+    private static getAjvValidator() {
+        let validate = ajv.getSchema(this.cls);
+
+        if (!validate) {
+            ajv.addSchema(this.jsonSchema, this.cls);
+            validate = ajv.getSchema(this.cls);
+        }
+
+        if (!validate) {
+            throw new EntityError({
+                code: ValidationErrorCode.IN_MEMORY_ENTITY_AJV_INTERNAL_ERROR,
+            });
+        }
+
+        return validate;
     }
 
-    set schema(schema: SimpleSchema | null) {
-        this._schema = schema;
+    static validateAndCleanData(data: AnyObject) {
+        const validator = this.getAjvValidator();
+        const isValid = validator(data);
+        if (!isValid) {
+            throw new EntityError({
+                code: ValidationErrorCode.IN_MEMORY_ENTITY_DATA_INVALID,
+                error: validator.errors,
+            });
+        }
+        return data;
     }
 
     /**
      * @summary Validate entity contents against schema
      */
-    validate(options: { validationType: "default" | "ajv" } = { validationType: "default" }) {
-        if (this.schema && options.validationType === "default") {
-            return this.schema.validate(this.toJSON());
+    validate() {
+        if (this._json) {
+            (this.constructor as typeof InMemoryEntity).validateAndCleanData(this._json);
         }
-        if (options.validationType === "ajv") {
-            // @ts-ignore
-            const ajv = new Ajv({ allErrors: true });
-            return ajv.validate(this.jsonSchema, this.toJSON());
-        }
-
-        return this.toJSON();
     }
 
-    clean(
-        config: AnyObject,
-        options: { validationType: "default" | "ajv" } = { validationType: "default" },
-    ): any {
-        if (this.isSystemEntity) {
-            return config;
-        }
-        if (this.schema && options.validationType === "default") {
-            return this.schema.clean(config);
-        }
-        if (options.validationType === "ajv") {
-            // @ts-ignore
-            const ajv = new Ajv({ removeAdditional: "all" });
-            const validate = ajv.compile(this.jsonSchema);
-            validate(config);
-            return config;
-        }
-        return config;
+    clean(config: AnyObject) {
+        return (this.constructor as typeof InMemoryEntity).validateAndCleanData(config);
     }
 
-    isValid(options: { validationType: "default" | "ajv" } = { validationType: "default" }) {
-        if (this.schema && options.validationType === "default") {
-            const ctx = this.schema.newContext();
-            const json = this.toJSON();
-            ctx.validate(json);
-            if (!ctx.isValid()) {
-                console.log(JSON.stringify(json));
-                if (ctx.getErrorObject) {
-                    console.log(ctx.getErrorObject());
-                }
-                if (ctx.validationErrors) {
-                    console.log(ctx.validationErrors());
-                }
-            }
-            return ctx.isValid();
+    isValid(): boolean {
+        try {
+            this.validate();
+            return true;
+        } catch (err) {
+            return false;
         }
-        if (options.validationType === "ajv") {
-            return this.validate({ validationType: "ajv" });
-        }
-
-        return true;
     }
 
     get id() {
@@ -201,8 +189,8 @@ export class InMemoryEntity {
 
     /**
      * @summary get small identifying payload of object
-     * @param byIdOnly {boolean} if true, return only the id
-     * @returns {Object} identifying data
+     * @param byIdOnly if true, return only the id
+     * @returns identifying data
      */
     getAsEntityReference(byIdOnly = false): EntityReferenceSchema {
         if (byIdOnly) {
@@ -218,10 +206,9 @@ export class InMemoryEntity {
     /**
      * @summary Pluck an entity from a collection by name.
      *          If no name is provided and no entity has prop isDefault, return the first entity
-     * @param entities {Array} the entities
-     * @param entity {string} the kind of entities
-     * @param name {string} the name of the entity to choose
-     * @returns {*}
+     * @param entities the entities
+     * @param entity the kind of entities
+     * @param name the name of the entity to choose
      */
     // eslint-disable-next-line class-methods-use-this
     getEntityByName(entities: InMemoryEntity[], entity: string, name: string) {
@@ -236,31 +223,6 @@ export class InMemoryEntity {
             console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
         }
         return filtered[0];
-    }
-
-    /**
-     * Returns class JSON schema
-     */
-    static get jsonSchema(): JSONSchema6 | undefined {
-        try {
-            return getSchemaByClassName(this.name);
-        } catch (e) {
-            if (e instanceof Error) {
-                console.error(e.stack);
-            }
-            throw e;
-        }
-    }
-
-    get jsonSchema() {
-        try {
-            return getSchemaByClassName(this.constructor.name);
-        } catch (e) {
-            if (e instanceof Error) {
-                console.error(e.stack);
-            }
-            throw e;
-        }
     }
 }
 

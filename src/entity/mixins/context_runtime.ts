@@ -1,7 +1,7 @@
-import { BaseJobSchema } from "../../types";
+import { JobBaseSchema } from "../../types";
 import { InMemoryEntityConstructor } from "../in_memory";
 
-type RuntimeContext = Required<BaseJobSchema>["runtimeContext"];
+type RuntimeContext = Required<JobBaseSchema>["runtimeContext"];
 
 export function RuntimeContextFieldMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends superclass {
