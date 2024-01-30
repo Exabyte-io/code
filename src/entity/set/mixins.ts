@@ -1,4 +1,5 @@
-import { SystemInSetSchema } from "../../types";
+import { SystemInSetSchema } from "@mat3ra/esse/lib/js/types";
+
 import { InMemoryEntityConstructor } from "../in_memory";
 
 export function InMemoryEntityInSetMixin<T extends InMemoryEntityConstructor>(superclass: T) {

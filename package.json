@@ -7,10 +7,9 @@
         "lint": "eslint src tests && prettier --write src tests",
         "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
         "transpile": "tsc",
-        "postinstall": "npm run compileTS && npm run transpile",
+        "postinstall": "npm run transpile",
         "prettier": "prettier --check src tests",
-        "prepare": "husky install",
-        "compileTS": "ts-node ./compileTS.ts"
+        "prepare": "husky install"
     },
     "repository": {
         "type": "git",
@@ -38,7 +37,6 @@
         "/src",
         ".babelrc",
         "modules.d.ts",
-        "compileTS.ts",
         "tsconfig.json"
     ],
     "author": "Exabyte Inc.",

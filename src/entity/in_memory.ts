@@ -1,8 +1,8 @@
+import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
 import Ajv, { SchemaObject } from "ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
-import { EntityReferenceSchema } from "../types";
 import { clone, deepClone } from "../utils/clone";
 
 export enum ValidationErrorCode {
