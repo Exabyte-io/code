@@ -5,7 +5,7 @@ import * as yaml from "js-yaml";
 import * as lodash from "lodash";
 import * as path from "path";
 
-import { esseSchema, JSONSchemasInterface } from "../JSONSchemasInterface";
+import { JSONSchemasInterface } from "../JSONSchemasInterface";
 import { safeMakeArray } from "./array";
 import { renderTextWithSubstitutes } from "./str";
 
@@ -170,7 +170,6 @@ export const esseType = new yaml.Type("!esse", {
     },
     construct(data) {
         try {
-            JSONSchemasInterface.registerGlobalSchemaIfEmpty(esseSchema);
             const { filePath: schemaId, objPath } = splitReference(data);
             const schema = JSONSchemasInterface.schemaById(schemaId);
             if (objPath) {

@@ -51,3 +51,7 @@ declare module "@mat3ra/esse/lib/js/esse/schemaUtils" {
 
     export function buildSchemaDefinitions(originalSchemas: JSONSchema): JSONSchema;
 }
+
+declare module "@mat3ra/esse/lib/js/scripts/utils" {
+    export function walkDirSync(path: string, cb: (path: string) => void): void;
+}

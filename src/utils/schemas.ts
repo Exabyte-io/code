@@ -31,23 +31,6 @@ interface Node {
     [otherKey: string]: unknown;
 }
 
-/**
- * Returns previously registered schema for InMemoryEntity
- * @returns
- */
-export function getSchemaByClassName(className: string) {
-    return schemas[className] ? JSONSchemasInterface.schemaById(schemas[className]) : undefined;
-}
-
-/**
- * Register additional Entity classes to be resolved with jsonSchema property
- * @param {String} className - class name derived from InMemoryEntity
- * @param {String} schemaId - class schemaId
- */
-export function registerClassName(className: string, schemaId: string) {
-    schemas[className] = schemaId;
-}
-
 export function typeofSchema(schema: JSONSchema) {
     if (schema?.type) {
         return schema.type;
@@ -126,8 +109,6 @@ export function buildDependencies(nodes?: Node[]): JSONSchema {
 interface Props {
     // Schema
     schema?: JSONSchema;
-    // Schema id (takes precedence over `schema` when both are provided)
-    schemaId?: string;
     // Array of nodes
     nodes: Node[];
     // Whether properties in main schema should be modified (add `enum` and `enumNames`)
@@ -139,13 +120,10 @@ interface Props {
  */
 export function getSchemaWithDependencies({
     schema = {},
-    schemaId,
     nodes,
     modifyProperties = false,
 }: Props): JSONSchema {
-    const mainSchema = schemaId ? JSONSchemasInterface.schemaById(schemaId) || {} : schema;
-
-    if (!isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
+    if (!isEmpty(schema) && typeofSchema(schema) !== "object") {
         console.error("getSchemaWithDependencies() only accepts schemas of type 'object'");
         return {};
     }
@@ -158,9 +136,9 @@ export function getSchemaWithDependencies({
             },
         };
         forEach(mod, (extraFields, key) => {
-            if (mainSchema.properties && hasProperty(mainSchema, `properties.${key}`)) {
-                mainSchema.properties[key] = {
-                    ...(mainSchema.properties[key] as object),
+            if (schema.properties && hasProperty(schema, `properties.${key}`)) {
+                schema.properties[key] = {
+                    ...(schema.properties[key] as object),
                     ...extraFields,
                 };
             }
@@ -168,7 +146,7 @@ export function getSchemaWithDependencies({
     }
 
     return {
-        ...(schemaId ? mainSchema : schema),
+        ...schema,
         ...buildDependencies(nodes),
     };
 }

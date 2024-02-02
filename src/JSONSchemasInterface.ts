@@ -1,111 +1,53 @@
-import baseSchema, { JSONSchema, JSONSchemaDefinition, JSONSchemaType } from "@mat3ra/esse/schema";
-import Ajv, { Options } from "ajv";
-import deref from "json-schema-deref-sync";
-import mergeAllOf from "json-schema-merge-allof";
+import { walkDirSync } from "@mat3ra/esse/lib/js/scripts/utils";
+import { JSONSchema } from "@mat3ra/esse/schema";
+import Ajv, { Options, SchemaObject } from "ajv";
+import fs from "fs";
+import path from "path";
 
 type Query = { [key in keyof JSONSchema]: { $regex: string } };
 
-type SchemaType = JSONSchemaDefinition | JSONSchemaDefinition[] | JSONSchemaType;
-
-export const esseSchema = baseSchema;
-
 const schemasCache = new Map<string, JSONSchema>();
 
-function isEsseSchema(schema: SchemaType): schema is JSONSchema {
-    return Boolean((schema as JSONSchema)?.$id);
-}
+export function readSchemaFolderSync(folderPath: string) {
+    const schemas: SchemaObject[] = [];
 
-/**
- * We assume that each schema in the application has its own unique schemaId
- * Unfortunately, mergeAllOf keeps schemaId after merging, and this results in multiple different schemas with the same schemaId
- * Hence this function
- */
-function removeSchemaIdsAfterAllOf<T extends JSONSchemaDefinition>(schema: T, clean?: boolean): T;
-function removeSchemaIdsAfterAllOf<T extends JSONSchemaDefinition>(
-    schema: T[],
-    clean?: boolean,
-): T[];
-function removeSchemaIdsAfterAllOf<T extends JSONSchemaType>(schema: T, clean?: boolean): T;
+    walkDirSync(folderPath, (filePath: string) => {
+        if (path.extname(filePath) !== ".json") {
+            return;
+        }
+        const schema = JSON.parse(fs.readFileSync(filePath).toString());
+        schemas.push(schema);
+    });
 
-function removeSchemaIdsAfterAllOf(schema: SchemaType, clean = false) {
-    if (clean && isEsseSchema(schema)) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { $id, ...restSchema } = schema;
-
-        return restSchema;
-    }
-
-    if (Array.isArray(schema)) {
-        return (schema as JSONSchemaType[]).map((item) => removeSchemaIdsAfterAllOf(item));
-    }
-
-    if (typeof schema !== "object" || schema === null) {
-        return schema;
-    }
-
-    if (schema.allOf) {
-        const { allOf, ...restSchema } = schema;
-
-        return {
-            allOf: (allOf as JSONSchemaDefinition[]).map((innerSchema) =>
-                removeSchemaIdsAfterAllOf(innerSchema, true),
-            ),
-            ...restSchema,
-        };
-    }
-
-    return Object.fromEntries(
-        Object.entries(schema).map(([key, value]) => {
-            return [key, removeSchemaIdsAfterAllOf(value)];
-        }),
-    );
+    return schemas;
 }
 
 export class JSONSchemasInterface {
-    static _schema: JSONSchema | null = null;
+    static _schema: SchemaObject | null = null;
+
+    static schemaFolder = path.resolve("node_modules/@mat3ra/esse/lib/js/schema");
+
+    static setSchemaFolder(schemaFolder: string) {
+        this.schemaFolder = schemaFolder;
+        this.readSchemaFolder();
+    }
+
+    static readSchemaFolder() {
+        const schemas = readSchemaFolderSync(this.schemaFolder);
+
+        schemas.forEach((schema) => {
+            if (schema.$id) {
+                schemasCache.set(schema.$id, schema);
+            }
+        });
+    }
 
     static schemaById(schemaId: string) {
         if (schemasCache.size === 0) {
-            JSONSchemasInterface.registerGlobalSchema(esseSchema);
+            this.readSchemaFolder();
         }
 
         return schemasCache.get(schemaId);
-    }
-
-    /**
-     *
-     * @param globalSchema
-     */
-    static registerGlobalSchema(globalSchema: JSONSchema) {
-        if (JSONSchemasInterface._schema === globalSchema) {
-            // performance optimization:
-            // skip resolving as we already did it for the same globalSchema object
-            return;
-        }
-
-        JSONSchemasInterface._schema = globalSchema;
-
-        const { definitions } = deref(globalSchema);
-
-        schemasCache.clear();
-
-        if (!definitions) {
-            return;
-        }
-
-        Object.values(definitions)
-            .filter(isEsseSchema)
-            .forEach((originalSchema) => {
-                const schema = mergeAllOf(removeSchemaIdsAfterAllOf(originalSchema, false), {
-                    resolvers: {
-                        defaultResolver: mergeAllOf.options.resolvers.title,
-                    },
-                });
-
-                if (schema.$id) {
-                    schemasCache.set(schema.$id, schema);
-                }
-            });
     }
 
     /**
@@ -141,28 +83,5 @@ export class JSONSchemasInterface {
                 return new RegExp(queryField.$regex).test(schemaField);
             });
         });
-    }
-
-    /**
-     * Create validation function for schema with schemaId
-     */
-    static resolveJsonValidator(schemaId: string, options: Options = {}) {
-        // @ts-ignore TODO: update Ajv validator
-        const ajv = new Ajv(options);
-        const schema = this.schemaById(schemaId);
-        if (!schema) {
-            return;
-        }
-        return ajv.compile(schema);
-    }
-
-    /**
-     * Register global schema only if none has been registered yet.
-     * @param globalSchema
-     */
-    static registerGlobalSchemaIfEmpty(globalSchema: JSONSchema) {
-        if (!JSONSchemasInterface._schema) {
-            JSONSchemasInterface.registerGlobalSchema(globalSchema);
-        }
     }
 }
