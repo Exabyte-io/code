@@ -12,8 +12,5 @@
             "$ref": "#/definitions/core:primitive::d-data-series"
         }
     },
-    "required": [
-        "xDataArray",
-        "yDataSeries"
-    ]
+    "required": ["xDataArray", "yDataSeries"]
 }

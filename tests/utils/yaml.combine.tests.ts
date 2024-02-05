@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-expressions */
 // @ts-nocheck
+import { JSONSchemasInterface } from "@mat3ra/esse/lib/js/esse/JSONSchemasInterface";
 import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
 import path from "path";
 
-import { JSONSchemasInterface } from "../../src/JSONSchemasInterface";
 import { combineType, esseType } from "../../src/utils/yaml";
 import { YAML_COMBINE_FILE } from "../enums";
 
@@ -17,7 +17,7 @@ describe("YAML tag: !combine", () => {
     let parsed;
 
     before(() => {
-        JSONSchemasInterface.setSchemaFolder(path.join(__dirname, "./../fixtures/json/example2"));
+        JSONSchemasInterface.setSchemaFolder(path.join(__dirname, "./../fixtures/json/example"));
         yamlFixture = fs.readFileSync(YAML_COMBINE_FILE, "utf8");
         parsed = yaml.load(yamlFixture, { schema: combineSchema });
     });

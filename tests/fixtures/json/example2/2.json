@@ -1,9 +1,0 @@
-{
-    "$id": "definitions/units",
-    "pressure": {
-        "enum": [
-            "kbar",
-            "pa"
-        ]
-    }
-}

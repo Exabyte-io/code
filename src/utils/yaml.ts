@@ -1,11 +1,11 @@
 // @ts-nocheck
 // TODO: remove ts-nocheck
+import { JSONSchemasInterface } from "@mat3ra/esse/lib/js/esse/JSONSchemasInterface";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as lodash from "lodash";
 import * as path from "path";
 
-import { JSONSchemasInterface } from "../JSONSchemasInterface";
 import { safeMakeArray } from "./array";
 import { renderTextWithSubstitutes } from "./str";
 

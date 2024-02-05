@@ -1,3 +1,4 @@
+import { addAdditionalPropertiesToSchema } from "@mat3ra/esse/lib/js/esse/schemaUtils";
 import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
 import Ajv, { SchemaObject } from "ajv";
 import getValue from "lodash/get";
@@ -108,11 +109,13 @@ export class InMemoryEntity {
     }
 
     private static getAjvValidator() {
-        let validate = ajv.getSchema(this.cls);
+        const schemaKey = this.jsonSchema.$id || this.cls;
+
+        let validate = ajv.getSchema(schemaKey);
 
         if (!validate) {
-            ajv.addSchema(this.jsonSchema, this.cls);
-            validate = ajv.getSchema(this.cls);
+            ajv.addSchema(addAdditionalPropertiesToSchema(this.jsonSchema), schemaKey);
+            validate = ajv.getSchema(schemaKey);
         }
 
         if (!validate) {
