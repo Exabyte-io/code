@@ -52,7 +52,6 @@
         "@babel/preset-react": "7.16.7",
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
-        "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#b583d576d4e816f09a3aecb8b09e5b93f401286e",
         "@types/chai": "^4.3.5",
         "@types/crypto-js": "^4.1.1",
         "@types/js-yaml": "^4.0.5",
@@ -81,6 +80,7 @@
     "devDependencies": {
         "@babel/preset-typescript": "^7.22.5",
         "@exabyte-io/eslint-config": "^2023.8.29-1",
+        "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#f30e4b7391dba0ba87e4c46a55e0486acab96433",
         "@typescript-eslint/eslint-plugin": "^5.56.0",
         "@typescript-eslint/parser": "^5.56.0",
         "chai": "^4.3.4",
@@ -100,6 +100,9 @@
         "mocha": "^9.1.3",
         "nyc": "^15.1.0",
         "prettier": "^2.7.1"
+    },
+    "peerDependencies": {
+        "@mat3ra/esse": "*"
     },
     "engines": {
         "node": ">=12.0.0"
