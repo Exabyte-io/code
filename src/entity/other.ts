@@ -16,6 +16,10 @@ export const NamedInMemoryEntity = NamedEntityMixin(InMemoryEntity);
 
 export const NamedDefaultableInMemoryEntity = NamedEntityMixin(DefaultableMixin(InMemoryEntity));
 
+export const NamedDefaultableHashedInMemoryEntity = HashedEntityMixin(
+    NamedEntityMixin(DefaultableMixin(InMemoryEntity)),
+);
+
 export const HasMetadataNamedDefaultableInMemoryEntity = HasMetadataMixin(
     NamedEntityMixin(DefaultableMixin(InMemoryEntity)),
 );
