@@ -39,7 +39,7 @@ export function HashedInputArrayMixin<T extends InMemoryEntityConstructor>(super
             return calculateHashFromObject(objectForHashing);
         }
 
-        hashContent(content: string) {
+        static hashContent(content: string) {
             const objectForHashing = removeEmptyLinesFromString(removeCommentsFromSourceCode(content));
             return calculateHashFromObject({content: objectForHashing});
         }
