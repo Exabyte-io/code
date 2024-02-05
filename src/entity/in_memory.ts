@@ -41,7 +41,7 @@ export class InMemoryEntity {
     // Override if deepClone of config is required
     static _isDeepCloneRequired = false;
 
-    static readonly jsonSchema: SchemaObject;
+    static readonly jsonSchema?: SchemaObject;
 
     _json: AnyObject = {};
 
@@ -109,6 +109,10 @@ export class InMemoryEntity {
     }
 
     private static getAjvValidator() {
+        if (!this.jsonSchema) {
+            return;
+        }
+
         const schemaKey = this.jsonSchema.$id || this.cls;
 
         let validate = ajv.getSchema(schemaKey);
@@ -129,11 +133,11 @@ export class InMemoryEntity {
 
     static validateAndCleanData(data: AnyObject) {
         const validator = this.getAjvValidator();
-        const isValid = validator(data);
+        const isValid = validator ? validator(data) : true;
         if (!isValid) {
             throw new EntityError({
                 code: ValidationErrorCode.IN_MEMORY_ENTITY_DATA_INVALID,
-                error: validator.errors,
+                error: validator?.errors,
             });
         }
         return data;
@@ -143,8 +147,9 @@ export class InMemoryEntity {
      * @summary Validate entity contents against schema
      */
     validate() {
+        const ctr = this.constructor as typeof InMemoryEntity;
         if (this._json) {
-            (this.constructor as typeof InMemoryEntity).validateAndCleanData(this._json);
+            ctr.validateAndCleanData(this._json);
         }
     }
 
