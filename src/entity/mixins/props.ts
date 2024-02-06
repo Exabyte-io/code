@@ -1,4 +1,4 @@
-import { ExtendedBaseEntitySchema } from "../../types";
+import { ConsistencyCheck, ExtendedBaseEntitySchema } from "../../types";
 import { InMemoryEntityConstructor } from "../in_memory";
 
 type ExtendedBaseEntity = Required<ExtendedBaseEntitySchema>;
@@ -101,15 +101,15 @@ export function NamedEntityMixin<T extends InMemoryEntityConstructor>(superclass
 
 export function HasConsistencyChecksMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends superclass {
-        get consistencyChecks(): object[] {
+        get consistencyChecks(): ConsistencyCheck[] {
             return this.prop("consistencyChecks", []);
         }
 
-        set consistencyChecks(array: object[]) {
+        set consistencyChecks(array: ConsistencyCheck[]) {
             this.setProp("consistencyChecks", array);
         }
 
-        addConsistencyChecks(array: object[]) {
+        addConsistencyChecks(array: ConsistencyCheck[]) {
             this.consistencyChecks = [...this.consistencyChecks, ...array];
         }
     };
