@@ -29,6 +29,7 @@ export class EntityError extends Error {
 
 const ajv = new Ajv({
     removeAdditional: true,
+    strict: false,
     useDefaults: true,
     /**
      * discriminator fixes default values in oneOf
