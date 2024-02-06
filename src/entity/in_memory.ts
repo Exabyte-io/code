@@ -30,6 +30,11 @@ export class EntityError extends Error {
 const ajv = new Ajv({
     removeAdditional: true,
     useDefaults: true,
+    /**
+     * discriminator fixes default values in oneOf
+     * @see https://ajv.js.org/guide/modifying-data.html#assigning-defaults
+     */
+    discriminator: true,
     coerceTypes: true, // convert "true" => true for boolean or "4" => 4 for integer
 });
 
