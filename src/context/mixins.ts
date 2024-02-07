@@ -6,7 +6,7 @@ import { DefaultableMixin } from "../entity/mixins/props";
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
 import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "../types";
 
-type Constructor<T = any> = new (...args: any[]) => T;
+export type Constructor<T = any> = new (...args: any[]) => T;
 
 type Defaultable = ReturnType<typeof DefaultableMixin>;
 
@@ -38,9 +38,9 @@ type Material = InMemoryEntity &
         hash: string;
     };
 
-export function MaterialContextMixin<T extends Constructor>(superclass: T) {
+export function MaterialContextMixin<T extends Constructor, E extends Material>(superclass: T) {
     return class MaterialContextMixin extends superclass {
-        _material: Material;
+        _material: E;
 
         extraData?: {
             materialHash: string;
