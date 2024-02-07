@@ -7,6 +7,7 @@ import {
     MaterialsSetContextMixin,
     MethodDataContextMixin,
     WorkflowContextMixin,
+    type Constructor,
 } from "./mixins";
 import { JobContextPickKeysForMixin, WorkflowContextPickKeysForMixin } from "./pickers";
 import { ContextProvider } from "./provider";
@@ -17,6 +18,7 @@ import {
 } from "./registry";
 
 export {
+    type Constructor,
     ContextProvider,
     ContextProviderRegistryContainer,
     extendAndPatchRegistry,
