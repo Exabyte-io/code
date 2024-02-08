@@ -5,6 +5,7 @@ import { InMemoryEntity } from "../entity";
 import { DefaultableMixin } from "../entity/mixins/props";
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
 import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "../types";
+import { OrderedInMemoryEntityInSet } from "src/entity/set/ordered/mixins";
 
 export type Constructor<T = any> = new (...args: any[]) => T;
 
@@ -38,7 +39,7 @@ type Material = InMemoryEntity &
         hash: string;
     };
 
-export function MaterialContextMixin<T extends Constructor, E extends Material>(superclass: T) {
+export function MaterialContextMixin<T extends Constructor, E = Material>(superclass: T) {
     return class MaterialContextMixin extends superclass {
         _material: E;
 
@@ -89,20 +90,20 @@ export function MaterialContextMixin<T extends Constructor, E extends Material>(
     };
 }
 
-export function MaterialsSetContextMixin<T extends Constructor>(superclass: T) {
+export function MaterialsSetContextMixin<T extends Constructor, E extends OrderedInMemoryEntityInSet = any>(superclass: T) {
     return class MaterialsSetContextMixin extends superclass {
-        _materialsSet: any;
+        _materialsSet: E;
 
         constructor(...params: any) {
             super(...params);
             this._materialsSet = this.config.context && this.config.context.materialsSet;
         }
 
-        get materialsSet() {
+        get materialsSet(): E {
             return this._materialsSet;
         }
 
-        sortMaterialsByIndexInSet(materials = []) {
+        sortMaterialsByIndexInSet(materials: E[] = []) {
             // DO NOT SORT IN PLACE AS IT CHANGES THE ORDER IN `this.materials` AND HAS SIDE EFFECTS (MaterialViewer).
             return materials.concat().sort((a, b) => {
                 return compareEntitiesInOrderedSetForSorting(a, b, this.materialsSet._id, false);
@@ -111,9 +112,9 @@ export function MaterialsSetContextMixin<T extends Constructor>(superclass: T) {
     };
 }
 
-export function MaterialsContextMixin<T extends Constructor>(superclass: T) {
+export function MaterialsContextMixin<T extends Constructor, E = any>(superclass: T) {
     return class MaterialsContextMixin extends superclass {
-        _materials: any;
+        _materials: E;
 
         constructor(...params: any) {
             super(...params);
