@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-expressions */
+import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
 import inMemoryEntitySchema from "@mat3ra/esse/lib/js/schema/in_memory_entity/base.json";
 import { expect } from "chai";
 
 import { InMemoryEntity } from "../src/entity/in_memory";
 
 class DerivedInMemoryEntity extends InMemoryEntity {
-    static readonly jsonSchema = inMemoryEntitySchema;
+    static readonly jsonSchema = inMemoryEntitySchema as JSONSchema;
 }
 
 function validateEntity(entity: DerivedInMemoryEntity) {

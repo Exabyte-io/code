@@ -1,6 +1,6 @@
-import { addAdditionalPropertiesToSchema } from "@mat3ra/esse/lib/js/esse/schemaUtils";
+import * as ajv from "@mat3ra/esse/lib/js/ajv/utils";
+import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
 import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
-import Ajv, { SchemaObject } from "ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
@@ -27,18 +27,6 @@ export class EntityError extends Error {
     }
 }
 
-const ajv = new Ajv({
-    removeAdditional: true,
-    strict: false,
-    useDefaults: true,
-    /**
-     * discriminator fixes default values in oneOf
-     * @see https://ajv.js.org/guide/modifying-data.html#assigning-defaults
-     */
-    discriminator: true,
-    coerceTypes: true, // convert "true" => true for boolean or "4" => 4 for integer
-});
-
 export class InMemoryEntity {
     static create(config: object) {
         return new (this.prototype.constructor as typeof InMemoryEntity)(config);
@@ -47,7 +35,7 @@ export class InMemoryEntity {
     // Override if deepClone of config is required
     static _isDeepCloneRequired = false;
 
-    static readonly jsonSchema?: SchemaObject;
+    static readonly jsonSchema?: JSONSchema;
 
     _json: AnyObject = {};
 
@@ -114,36 +102,15 @@ export class InMemoryEntity {
         return object;
     }
 
-    private static getAjvValidator() {
-        if (!this.jsonSchema) {
-            return;
-        }
-
-        const schemaKey = this.jsonSchema.$id || this.cls;
-
-        let validate = ajv.getSchema(schemaKey);
-
-        if (!validate) {
-            ajv.addSchema(addAdditionalPropertiesToSchema(this.jsonSchema), schemaKey);
-            validate = ajv.getSchema(schemaKey);
-        }
-
-        if (!validate) {
-            throw new EntityError({
-                code: ValidationErrorCode.IN_MEMORY_ENTITY_AJV_INTERNAL_ERROR,
-            });
-        }
-
-        return validate;
-    }
-
     static validateAndCleanData(data: AnyObject) {
-        const validator = this.getAjvValidator();
-        const isValid = validator ? validator(data) : true;
-        if (!isValid) {
+        if (!this.jsonSchema) {
+            return data;
+        }
+        const result = ajv.validate(data, this.jsonSchema);
+        if (!result.isValid) {
             throw new EntityError({
                 code: ValidationErrorCode.IN_MEMORY_ENTITY_DATA_INVALID,
-                error: validator?.errors,
+                error: result?.errors,
             });
         }
         return data;
