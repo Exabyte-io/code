@@ -39,7 +39,7 @@ type Material = InMemoryEntity &
         hash: string;
     };
 
-export function MaterialContextMixin<T extends Constructor, E extends Material = Material>(superclass: T) {
+export function MaterialContextMixin<T extends Constructor, E extends {hash: string} = Material>(superclass: T) {
     return class MaterialContextMixin extends superclass {
         _material: E;
 
@@ -112,7 +112,7 @@ export function MaterialsSetContextMixin<T extends Constructor, E extends Ordere
     };
 }
 
-export function MaterialsContextMixin<T extends Constructor, E extends Material = any>(superclass: T) {
+export function MaterialsContextMixin<T extends Constructor, E = any>(superclass: T) {
     return class MaterialsContextMixin extends superclass {
         _materials: E;
 
