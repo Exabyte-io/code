@@ -1,6 +1,6 @@
 // @ts-nocheck
 // TODO: remove ts-nocheck
-import { JSONSchemasInterface } from "@mat3ra/esse/lib/js/esse/JSONSchemasInterface";
+import JSONSchemasInterface from "@mat3ra/esse/lib/js/esse/JSONSchemasInterfaceServer";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as lodash from "lodash";
@@ -171,7 +171,7 @@ export const esseType = new yaml.Type("!esse", {
     construct(data) {
         try {
             const { filePath: schemaId, objPath } = splitReference(data);
-            const schema = JSONSchemasInterface.schemaById(schemaId);
+            const schema = JSONSchemasInterface.getSchemaById(schemaId);
             if (objPath) {
                 return lodash.get(schema, objPath);
             }

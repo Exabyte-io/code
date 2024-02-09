@@ -1,4 +1,4 @@
-import { JSONSchemasInterface } from "@mat3ra/esse/lib/js/esse/JSONSchemasInterface";
+import JSONSchemasInterface from "@mat3ra/esse/lib/js/esse/JSONSchemasInterface";
 import { JSONSchema7 } from "json-schema";
 import forEach from "lodash/forEach";
 import hasProperty from "lodash/has";
