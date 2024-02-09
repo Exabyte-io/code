@@ -7,7 +7,6 @@ import omit from "lodash/omit";
 import { clone, deepClone } from "../utils/clone";
 
 export enum ValidationErrorCode {
-    IN_MEMORY_ENTITY_AJV_INTERNAL_ERROR = "IN_MEMORY_ENTITY_AJV_INTERNAL_ERROR",
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
 }
 
@@ -15,15 +14,20 @@ export interface AnyObject {
     [key: string]: unknown;
 }
 
+interface ErrorDetails {
+    error?: object | null;
+    json: AnyObject;
+}
+
 export class EntityError extends Error {
     code: string;
 
-    error?: object | null;
+    details?: ErrorDetails;
 
-    constructor({ code, error }: { code: ValidationErrorCode; error?: object | null }) {
+    constructor({ code, details }: { code: ValidationErrorCode; details?: ErrorDetails }) {
         super(code);
         this.code = code;
-        this.error = error;
+        this.details = details;
     }
 }
 
@@ -110,7 +114,10 @@ export class InMemoryEntity {
         if (!result.isValid) {
             throw new EntityError({
                 code: ValidationErrorCode.IN_MEMORY_ENTITY_DATA_INVALID,
-                error: result?.errors,
+                details: {
+                    error: result?.errors,
+                    json: data,
+                },
             });
         }
         return data;
