@@ -107,11 +107,14 @@ export class InMemoryEntity {
         return object;
     }
 
-    static validateAndCleanData(data: AnyObject) {
+    static validateData(data: AnyObject, clean = false) {
         if (!this.jsonSchema) {
             return data;
         }
-        const result = ajv.validate(data, this.jsonSchema);
+        const result = clean
+            ? ajv.validateAndClean(data, this.jsonSchema)
+            : ajv.validate(data, this.jsonSchema);
+
         if (!result.isValid) {
             throw new EntityError({
                 code: ValidationErrorCode.IN_MEMORY_ENTITY_DATA_INVALID,
@@ -131,12 +134,12 @@ export class InMemoryEntity {
     validate() {
         const ctr = this.constructor as typeof InMemoryEntity;
         if (this._json) {
-            ctr.validateAndCleanData(this._json);
+            ctr.validateData(this._json);
         }
     }
 
     clean(config: AnyObject) {
-        return (this.constructor as typeof InMemoryEntity).validateAndCleanData(config);
+        return (this.constructor as typeof InMemoryEntity).validateData(config, true);
     }
 
     isValid(): boolean {

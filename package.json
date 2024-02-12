@@ -80,7 +80,7 @@
     "devDependencies": {
         "@babel/preset-typescript": "^7.22.5",
         "@exabyte-io/eslint-config": "^2023.8.29-1",
-        "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#ec69a50cd01bb741f2eb6b613ea601131891e1c9",
+        "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#33f3c221536f75a93291a65289c75a0043ddbbd6",
         "@typescript-eslint/eslint-plugin": "^5.56.0",
         "@typescript-eslint/parser": "^5.56.0",
         "chai": "^4.3.4",
