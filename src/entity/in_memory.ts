@@ -17,6 +17,7 @@ export interface AnyObject {
 interface ErrorDetails {
     error?: object | null;
     json: AnyObject;
+    schema: JSONSchema;
 }
 
 export class EntityError extends Error {
@@ -117,6 +118,7 @@ export class InMemoryEntity {
                 details: {
                     error: result?.errors,
                     json: data,
+                    schema: this.jsonSchema,
                 },
             });
         }
