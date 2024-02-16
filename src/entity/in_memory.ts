@@ -40,6 +40,8 @@ export class InMemoryEntity {
     // Override if deepClone of config is required
     static _isDeepCloneRequired = false;
 
+    static allowJsonSchemaTypesCoercing = false;
+
     static readonly jsonSchema?: JSONSchema;
 
     _json: AnyObject = {};
@@ -112,7 +114,9 @@ export class InMemoryEntity {
             return data;
         }
         const result = clean
-            ? ajv.validateAndClean(data, this.jsonSchema)
+            ? ajv.validateAndClean(data, this.jsonSchema, {
+                  coerceTypes: this.allowJsonSchemaTypesCoercing,
+              })
             : ajv.validate(data, this.jsonSchema);
 
         if (!result.isValid) {
