@@ -3,7 +3,6 @@ import { convertToCompactCSVArrayOfObjects, safeMakeArray } from "./array";
 import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./class";
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
-import { fetchFilesFromGitHubAPI } from "./github";
 import {
     createObjectPathFromFilePath,
     formatFileSize,
@@ -12,6 +11,7 @@ import {
     getProgrammingLanguageFromFileExtension,
 } from "./file";
 import { filterEntityList } from "./filter";
+import { fetchFilesFromGitHubAPI } from "./github";
 import { addUnit, removeUnit, replaceUnit, setNextLinks, setUnitsHead } from "./graph";
 import {
     calculateHashFromObject,
@@ -28,7 +28,7 @@ import {
     sortKeysDeepForObject,
     stringifyObject,
 } from "./object";
-import { getSchemaWithDependencies, buildNamedEntitySchema } from "./schemas";
+import { buildNamedEntitySchema, getSchemaWithDependencies } from "./schemas";
 import { getSearchQuerySelector } from "./selector";
 import {
     convertArabicToRoman,

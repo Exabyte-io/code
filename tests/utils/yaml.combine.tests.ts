@@ -1,14 +1,14 @@
 /* eslint-disable no-unused-expressions */
 // @ts-nocheck
+import JSONSchemasInterface from "@mat3ra/esse/lib/js/esse/JSONSchemasInterfaceServer";
 import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";
 import lodash from "lodash";
+import path from "path";
 
-import { JSONSchemasInterface } from "../../src/JSONSchemasInterface";
 import { combineType, esseType } from "../../src/utils/yaml";
 import { YAML_COMBINE_FILE } from "../enums";
-import { MOCK_GLOBAL_SCHEMA } from "../fixtures/mock_esse_schema";
 
 const combineSchema = yaml.DEFAULT_SCHEMA.extend([combineType, esseType]);
 
@@ -17,7 +17,7 @@ describe("YAML tag: !combine", () => {
     let parsed;
 
     before(() => {
-        JSONSchemasInterface.registerGlobalSchema(MOCK_GLOBAL_SCHEMA);
+        JSONSchemasInterface.setSchemaFolder(path.join(__dirname, "./../fixtures/json/example"));
         yamlFixture = fs.readFileSync(YAML_COMBINE_FILE, "utf8");
         parsed = yaml.load(yamlFixture, { schema: combineSchema });
     });

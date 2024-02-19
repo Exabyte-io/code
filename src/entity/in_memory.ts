@@ -1,29 +1,35 @@
-import { JSONSchema6 } from "json-schema";
+import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
+import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
+import * as ajv from "@mat3ra/esse/lib/js/utils/ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
-import { EntityReferenceSchema } from "../types";
 import { clone, deepClone } from "../utils/clone";
-import { getSchemaByClassName } from "../utils/schemas";
 
-// TODO: https://exabyte.atlassian.net/browse/SOF-5946
-// const schemas = new ESSE().schemas;
+export enum ValidationErrorCode {
+    IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
+}
 
 export interface AnyObject {
     [key: string]: unknown;
 }
 
-export interface SimpleSchemaContext {
-    validate: (config: object) => void;
-    isValid: () => boolean;
-    getErrorObject?: () => object;
-    validationErrors?: () => object;
+interface ErrorDetails {
+    error?: object | null;
+    json: AnyObject;
+    schema: JSONSchema;
 }
 
-export interface SimpleSchema {
-    validate: (config: AnyObject) => void;
-    clean: (config: AnyObject) => AnyObject;
-    newContext: () => SimpleSchemaContext;
+export class EntityError extends Error {
+    code: string;
+
+    details?: ErrorDetails;
+
+    constructor({ code, details }: { code: ValidationErrorCode; details?: ErrorDetails }) {
+        super(code);
+        this.code = code;
+        this.details = details;
+    }
 }
 
 export class InMemoryEntity {
@@ -34,9 +40,11 @@ export class InMemoryEntity {
     // Override if deepClone of config is required
     static _isDeepCloneRequired = false;
 
-    _json: AnyObject = {};
+    static allowJsonSchemaTypesCoercing = false;
 
-    _schema: SimpleSchema | null = null;
+    static readonly jsonSchema?: JSONSchema;
+
+    _json: AnyObject = {};
 
     constructor(config = {}) {
         this._json = (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
@@ -101,52 +109,50 @@ export class InMemoryEntity {
         return object;
     }
 
-    // override upon inheritance
-    get schema() {
-        return this._schema || null;
-    }
+    static validateData(data: AnyObject, clean = false) {
+        if (!this.jsonSchema) {
+            return data;
+        }
+        const result = clean
+            ? ajv.validateAndClean(data, this.jsonSchema, {
+                  coerceTypes: this.allowJsonSchemaTypesCoercing,
+              })
+            : ajv.validate(data, this.jsonSchema);
 
-    set schema(schema: SimpleSchema | null) {
-        this._schema = schema;
+        if (!result.isValid) {
+            throw new EntityError({
+                code: ValidationErrorCode.IN_MEMORY_ENTITY_DATA_INVALID,
+                details: {
+                    error: result?.errors,
+                    json: data,
+                    schema: this.jsonSchema,
+                },
+            });
+        }
+        return data;
     }
 
     /**
      * @summary Validate entity contents against schema
      */
     validate() {
-        if (this.schema) {
-            this.schema.validate(this.toJSON());
+        const ctr = this.constructor as typeof InMemoryEntity;
+        if (this._json) {
+            ctr.validateData(this._json);
         }
     }
 
-    clean(config: AnyObject): AnyObject {
-        if (this.isSystemEntity) {
-            return config;
-        }
-        return this.schema ? this.schema.clean(config) : config;
+    clean(config: AnyObject) {
+        return (this.constructor as typeof InMemoryEntity).validateData(config, true);
     }
 
-    isValid() {
-        if (!this.schema) {
+    isValid(): boolean {
+        try {
+            this.validate();
             return true;
+        } catch (err) {
+            return false;
         }
-
-        const ctx = this.schema.newContext();
-        const json = this.toJSON();
-
-        ctx.validate(json);
-
-        if (!ctx.isValid()) {
-            console.log(JSON.stringify(json));
-            if (ctx.getErrorObject) {
-                console.log(ctx.getErrorObject());
-            }
-            if (ctx.validationErrors) {
-                console.log(ctx.validationErrors());
-            }
-        }
-
-        return ctx.isValid();
     }
 
     get id() {
@@ -180,8 +186,8 @@ export class InMemoryEntity {
 
     /**
      * @summary get small identifying payload of object
-     * @param byIdOnly {boolean} if true, return only the id
-     * @returns {Object} identifying data
+     * @param byIdOnly if true, return only the id
+     * @returns identifying data
      */
     getAsEntityReference(byIdOnly = false): EntityReferenceSchema {
         if (byIdOnly) {
@@ -197,10 +203,9 @@ export class InMemoryEntity {
     /**
      * @summary Pluck an entity from a collection by name.
      *          If no name is provided and no entity has prop isDefault, return the first entity
-     * @param entities {Array} the entities
-     * @param entity {string} the kind of entities
-     * @param name {string} the name of the entity to choose
-     * @returns {*}
+     * @param entities the entities
+     * @param entity the kind of entities
+     * @param name the name of the entity to choose
      */
     // eslint-disable-next-line class-methods-use-this
     getEntityByName(entities: InMemoryEntity[], entity: string, name: string) {
@@ -215,20 +220,6 @@ export class InMemoryEntity {
             console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
         }
         return filtered[0];
-    }
-
-    /**
-     * Returns class JSON schema
-     */
-    static get jsonSchema(): JSONSchema6 | undefined {
-        try {
-            return getSchemaByClassName(this.name);
-        } catch (e) {
-            if (e instanceof Error) {
-                console.error(e.stack);
-            }
-            throw e;
-        }
     }
 }
 

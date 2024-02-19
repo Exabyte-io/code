@@ -1,10 +1,8 @@
-import { JSONSchema } from "@mat3ra/esse/schema";
-import { JSONSchema7Definition } from "json-schema";
+import JSONSchemasInterface from "@mat3ra/esse/lib/js/esse/JSONSchemasInterface";
+import { JSONSchema7 } from "json-schema";
 import forEach from "lodash/forEach";
 import hasProperty from "lodash/has";
 import isEmpty from "lodash/isEmpty";
-
-import { JSONSchemasInterface } from "../JSONSchemasInterface";
 
 export * from "@mat3ra/esse/lib/js/esse/schemaUtils";
 
@@ -31,24 +29,7 @@ interface Node {
     [otherKey: string]: unknown;
 }
 
-/**
- * Returns previously registered schema for InMemoryEntity
- * @returns
- */
-export function getSchemaByClassName(className: string) {
-    return schemas[className] ? JSONSchemasInterface.schemaById(schemas[className]) : undefined;
-}
-
-/**
- * Register additional Entity classes to be resolved with jsonSchema property
- * @param {String} className - class name derived from InMemoryEntity
- * @param {String} schemaId - class schemaId
- */
-export function registerClassName(className: string, schemaId: string) {
-    schemas[className] = schemaId;
-}
-
-export function typeofSchema(schema: JSONSchema) {
+export function typeofSchema(schema: JSONSchema7) {
     if (schema?.type) {
         return schema.type;
     }
@@ -94,7 +75,7 @@ function createStaticFields(node: Node) {
  * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)
  * @returns {{}|{dependencies: {}}}
  */
-export function buildDependencies(nodes?: Node[]): JSONSchema {
+export function buildDependencies(nodes?: Node[]): JSONSchema7 {
     const isEveryTerminal = nodes && nodes.every((node) => !node.children?.length);
     const isWithStaticOptions = nodes && nodes.some((node) => node?.staticOptions);
     if (!nodes || !nodes.length || !nodes[0].data) return {};
@@ -125,9 +106,7 @@ export function buildDependencies(nodes?: Node[]): JSONSchema {
 
 interface Props {
     // Schema
-    schema?: JSONSchema;
-    // Schema id (takes precedence over `schema` when both are provided)
-    schemaId?: string;
+    schema?: JSONSchema7;
     // Array of nodes
     nodes: Node[];
     // Whether properties in main schema should be modified (add `enum` and `enumNames`)
@@ -139,13 +118,10 @@ interface Props {
  */
 export function getSchemaWithDependencies({
     schema = {},
-    schemaId,
     nodes,
     modifyProperties = false,
-}: Props): JSONSchema {
-    const mainSchema = schemaId ? JSONSchemasInterface.schemaById(schemaId) || {} : schema;
-
-    if (!isEmpty(mainSchema) && typeofSchema(mainSchema) !== "object") {
+}: Props): JSONSchema7 {
+    if (!isEmpty(schema) && typeofSchema(schema) !== "object") {
         console.error("getSchemaWithDependencies() only accepts schemas of type 'object'");
         return {};
     }
@@ -158,9 +134,9 @@ export function getSchemaWithDependencies({
             },
         };
         forEach(mod, (extraFields, key) => {
-            if (mainSchema.properties && hasProperty(mainSchema, `properties.${key}`)) {
-                mainSchema.properties[key] = {
-                    ...(mainSchema.properties[key] as object),
+            if (schema.properties && hasProperty(schema, `properties.${key}`)) {
+                schema.properties[key] = {
+                    ...(schema.properties[key] as object),
                     ...extraFields,
                 };
             }
@@ -168,7 +144,7 @@ export function getSchemaWithDependencies({
     }
 
     return {
-        ...(schemaId ? mainSchema : schema),
+        ...schema,
         ...buildDependencies(nodes),
     };
 }
@@ -179,7 +155,7 @@ interface NamedEntity {
     name: string;
 }
 
-const baseSchema = (definitionName: string, enforceUnique = true): JSONSchema => {
+const baseSchema = (definitionName: string, enforceUnique = true): JSONSchema7 => {
     return {
         type: "array",
         items: {
@@ -197,13 +173,13 @@ const defaultNamedEntitySchema = (name: string) => {
                 enum: [name],
             },
         },
-    } as JSONSchema;
+    } as JSONSchema7;
 };
 
 /**
  * Retrieves an RJSF schema with an id matching the provided name
  */
-export const schemaByNamedEntityName = (name: string): JSONSchema | undefined => {
+export const schemaByNamedEntityName = (name: string): JSONSchema7 | undefined => {
     const translatedName = name.replace(/_/g, "-");
     const schema = JSONSchemasInterface.matchSchema({
         $id: {
@@ -216,9 +192,9 @@ export const schemaByNamedEntityName = (name: string): JSONSchema | undefined =>
 /*
  * Filters an RJSF schema for all the properties used to generate a new schema
  */
-const filterForGenerativeProperties = (schema: JSONSchema) => {
+const filterForGenerativeProperties = (schema: JSONSchema7) => {
     if (!schema.properties || typeof schema.properties !== "object") return {};
-    const generativeFilter = ([propertyKey, property]: [string, JSONSchema7Definition]) => {
+    const generativeFilter = ([propertyKey, property]: [string, JSONSchema7]) => {
         return (
             (typeof property === "object" && // JSONSchema7Definition type allows for boolean
                 property?.$comment &&
@@ -229,7 +205,7 @@ const filterForGenerativeProperties = (schema: JSONSchema) => {
     // @ts-ignore : JSONSchema6 and JSONSchema7 are incompatible
     const generativeProperties = Object.entries(schema.properties).filter(generativeFilter);
     const properties = Object.fromEntries(generativeProperties);
-    return { properties, required: Object.keys(properties) } as JSONSchema; // all included fields are required based on isGenerative flag
+    return { properties, required: Object.keys(properties) } as JSONSchema7; // all included fields are required based on isGenerative flag
 };
 
 /*
@@ -285,9 +261,9 @@ export const buildNamedEntitySchema = (
     defaultEntity: NamedEntity,
     entityType: string,
     enforceUnique = true,
-): JSONSchema => {
+): JSONSchema7 => {
     return {
         ...buildNamedEntitiesDefinitions(entities, defaultEntity, entityType),
         ...baseSchema(entityType, enforceUnique),
-    } as JSONSchema;
+    } as JSONSchema7;
 };

@@ -1,8 +1,22 @@
+/* eslint-disable no-unused-expressions */
+import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
+import inMemoryEntitySchema from "@mat3ra/esse/lib/js/schema/in_memory_entity/base.json";
 import { expect } from "chai";
 
 import { InMemoryEntity } from "../src/entity/in_memory";
-import { JSONSchemasInterface } from "../src/JSONSchemasInterface";
-import { registerClassName } from "../src/utils/schemas";
+
+class DerivedInMemoryEntity extends InMemoryEntity {
+    static readonly jsonSchema = inMemoryEntitySchema as JSONSchema;
+}
+
+function validateEntity(entity: DerivedInMemoryEntity) {
+    try {
+        entity.validate();
+    } catch (err) {
+        return false;
+    }
+    return true;
+}
 
 describe("InMemoryEntity", () => {
     const obj = {
@@ -44,34 +58,37 @@ describe("InMemoryEntity", () => {
     });
 
     it("toJSON converts to JSON", () => {
-        const entity = new InMemoryEntity(obj);
-        expect(JSON.stringify(entity.toJSON())).to.be.equal(JSON.stringify(obj));
+        const entity = new DerivedInMemoryEntity({ _id: "123", type: "type" });
+        expect(JSON.stringify(entity.toJSON())).to.be.equal(
+            JSON.stringify({ _id: "123", schemaVersion: "2022.8.16" }),
+        );
     });
 
     it("jsonSchema returns correct registered schema", async () => {
-        class RegisteredEntity extends InMemoryEntity {}
+        expect(DerivedInMemoryEntity.jsonSchema).to.be.an("object");
+        expect(DerivedInMemoryEntity.jsonSchema).to.have.nested.property("properties._id"); // check mix schemas
+    });
 
-        registerClassName(RegisteredEntity.name, "in-memory-entity/base");
+    it("jsonSchema validate", async () => {
+        const validEntity = new DerivedInMemoryEntity({ _id: "123", slug: "slug" });
+        const invalidEntity = new DerivedInMemoryEntity({ _id: "123", slug: ["slug"] });
 
-        JSONSchemasInterface.registerGlobalSchema({
-            definitions: {
-                "in-memory-entity-base": {
-                    $id: "in-memory-entity/base",
-                    $schema: "http://json-schema.org/draft-04/schema#",
-                    title: "System in-set schema",
-                    properties: {
-                        _id: {
-                            type: "string",
-                        },
-                        type: {
-                            type: "string",
-                        },
-                    },
-                },
-            },
+        expect(validateEntity(validEntity)).to.be.true;
+        expect(validateEntity(invalidEntity)).to.be.false;
+    });
+
+    it("jsonSchema clean", async () => {
+        const config = {
+            _id: "123",
+            slug: "slug",
+            additional: "additional",
+        };
+        const cleanConfig = new DerivedInMemoryEntity().clean({ ...config });
+
+        expect(cleanConfig).to.be.deep.equal({
+            _id: "123",
+            slug: "slug",
+            schemaVersion: "2022.8.16", // schema's default value
         });
-
-        expect(RegisteredEntity.jsonSchema).to.be.an("object");
-        expect(RegisteredEntity.jsonSchema).to.have.nested.property("properties._id"); // check mix schemas
     });
 });

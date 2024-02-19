@@ -16,7 +16,7 @@ jobs:
     if: github.repository != 'Exabyte-io/template-definitions'
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [14.x, 20.x]
 
     steps:
       - name: Checkout this repository
@@ -28,6 +28,9 @@ jobs:
           repository: Exabyte-io/actions
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
           path: actions
+
+      - name: Run JS validate
+        uses: ./actions/js/validate
 
       - name: Run JS tests
         uses: ./actions/js/test
@@ -56,7 +59,7 @@ jobs:
         id: publish
         uses: ./actions/js/publish
         with:
-          node-version: 12.21.x
+          node-version: 14.19.x
           npm-token: ${{ secrets.NPM_TOKEN }}
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
 

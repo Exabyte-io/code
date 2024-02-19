@@ -1,4 +1,5 @@
-import { EntitySetSchema } from "../../types";
+import { EntitySetSchema } from "@mat3ra/esse/lib/js/types";
+
 import { AnyObject } from "../in_memory";
 import { InMemoryEntitySet } from "../set";
 import { ENTITY_SET_TYPES } from "./enums";

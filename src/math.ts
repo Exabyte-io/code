@@ -14,7 +14,7 @@ const EPSILON = 1e-8;
  * @param v1 Vector 1
  * @param v2 Vector 2
  */
-const product = (v1: number[], v2: number[])  => {
+const product = (v1: number[], v2: number[]) => {
     return math.multiply(v1, math.transpose(v2));
 };
 
@@ -32,15 +32,15 @@ const vlen = (v: number[]) => {
  * @param b Vector b
  * @param unit `rad`, `deg`
  */
-const angle = (a:number[], b:number[], unit: string) => {
+const angle = (a: number[], b: number[], unit: string) => {
     const lenA = vlen(a);
     const lenB = vlen(b);
     // @ts-ignore
     return math.unit(math.acos(product(a, b) / (lenA * lenB)), "rad").toNumber(unit || "deg");
 };
 
-const angleUpTo90 = (a:number[], b:number[], unit: string) => {
-    const angleUpTo180 = angle(a,b, unit);
+const angleUpTo90 = (a: number[], b: number[], unit: string) => {
+    const angleUpTo180 = angle(a, b, unit);
     return angleUpTo180 < 90 ? angleUpTo180 : 180 - angleUpTo180;
 };
 
@@ -50,7 +50,7 @@ const angleUpTo90 = (a:number[], b:number[], unit: string) => {
  * @param v2 {Number[]} Vector
  * @return {Number}
  */
-const vDist = (v1:number[], v2:number[]) => {
+const vDist = (v1: number[], v2: number[]) => {
     if (v1.length !== v2.length) {
         console.error(
             "Attempting to calculate distance between vectors of different dimensionality",
@@ -67,15 +67,18 @@ const vDist = (v1:number[], v2:number[]) => {
  * @param tolerance {Number} Tolerance
  * @return {Number}
  */
-const vEqualWithTolerance = (vec1:number[], vec2:number[], tolerance = TOLERANCE.pointsDistance): boolean => {
+const vEqualWithTolerance = (
+    vec1: number[],
+    vec2: number[],
+    tolerance = TOLERANCE.pointsDistance,
+): boolean => {
     const val = vDist(vec1, vec2);
     if (typeof val === "undefined") {
         return false;
     }
     // @ts-ignore
     return val <= tolerance;
-}
-   
+};
 
 /**
  * @summary Returns 0 if passed number is less than Made.math.EPSILON.
@@ -110,7 +113,7 @@ const mod = (num: number, tolerance = 0.001): number => {
  * @summary Returns cartesian of passed arrays.
  * @example combinations([1,2], [4,5], [6]) = [[1,4,6], [1,5,6], [2,4,6], [2,5,6]];
  */
-const cartesianProduct = (...arg: number[][]):number[][] => {
+const cartesianProduct = (...arg: number[][]): number[][] => {
     const r: number[][] = [];
     const max = arg.length - 1;
 
@@ -169,7 +172,7 @@ const combinations = (a: number, b: number, c: number) => {
 /*
  * @summary Same as `combinations` but accepting intervals (tuples) of integers: eg. [-3, 4]
  */
-const combinationsFromIntervals = (arrA: number[], arrB:number[], arrC: number[]) => {
+const combinationsFromIntervals = (arrA: number[], arrB: number[], arrC: number[]) => {
     const combs = [];
     for (let i = arrA[0]; i <= arrA[1]; i++) {
         for (let j = arrB[0]; j <= arrB[1]; j++) {
@@ -188,10 +191,14 @@ const roundValueToNDecimals = (value: number, decimals = 3) => {
 /**
  * @summary Returns n splits of the passed segment.
  */
-const calculateSegmentsBetweenPoints3D = (point1: (string | number)[], point2:(string | number)[], n: number | string) => {
+const calculateSegmentsBetweenPoints3D = (
+    point1: (string | number)[],
+    point2: (string | number)[],
+    n: number | string,
+) => {
     // safely parse if passed strings
-    const point1_ = point1.map((x) => typeof x === "string" ? parseFloat(x) : x);
-    const point2_ = point2.map((x) => typeof x === "string" ? parseFloat(x) : x);
+    const point1_ = point1.map((x) => (typeof x === "string" ? parseFloat(x) : x));
+    const point2_ = point2.map((x) => (typeof x === "string" ? parseFloat(x) : x));
     const n_ = typeof n === "string" ? parseInt(n) : n;
 
     const result = [];

@@ -1,0 +1,42 @@
+{
+    "$id": "methods-directory/physical/pw",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Plane wave method unit schema",
+    "description": "Approximating the electronic wave function with a plane wave basis",
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "categories": {
+            "properties": {
+                "tier1": {
+                    "description": "top-level category",
+                    "type": "string"
+                },
+                "tier2": {
+                    "description": "second level category",
+                    "type": "string"
+                },
+                "tier3": {
+                    "description": "third level category",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "general type of the entity",
+                    "type": "string"
+                },
+                "subtype": {
+                    "description": "general subtype of the entity",
+                    "type": "string"
+                }
+            }
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}
