@@ -1,10 +1,12 @@
 import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
-import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
 import * as ajv from "@mat3ra/esse/lib/js/utils/ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 
+import { EntityReferenceSchema } from "../esse/types";
 import { clone, deepClone } from "../utils/clone";
+
+export type {} from "@mat3ra/esse/lib/js/esse/utils";
 
 export enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
