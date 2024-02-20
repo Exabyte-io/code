@@ -87,6 +87,7 @@ describe("str: findPreviousVersion", () => {
 
     it("should return undefined if no previous version is found", () => {
         const previous = findPreviousVersion(versions, "2");
+        // eslint-disable-next-line no-unused-expressions
         expect(previous).to.be.undefined;
     });
 });
