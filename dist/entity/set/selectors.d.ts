@@ -16,8 +16,8 @@ declare const getInSetEntrySelectorByIds: (ids: string[]) => {
 declare const getInSetEntrySelector: (cls?: string, _id?: string) => {
     inSet: {
         $elemMatch: {
-            _id?: string;
-            cls?: string;
+            _id?: string | undefined;
+            cls?: string | undefined;
         };
     };
 };

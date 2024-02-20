@@ -41,7 +41,7 @@ export function convertArabicToRoman(num: number): string;
  *     {user001: "John Doe"}
  * ); // "Hello John Doe!"
  */
-export function renderTextWithSubstitutes(template: string | undefined, data: any, substitutionMap?: any): string;
+export function renderTextWithSubstitutes(template: string | undefined, data: Object, substitutionMap?: Object): string;
 /**
  * Find the next smallest version from a list of semantic version strings.
  * @param {string[]} versions - Array of semantic version strings.

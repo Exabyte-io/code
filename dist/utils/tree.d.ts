@@ -5,4 +5,4 @@
  * @param {Function} fn - function to be applied to each node
  * @returns {Object[]} - Result of map
  */
-export function mapTree(nodes: any[], fn: Function): any[];
+export function mapTree(nodes: Object[], fn: Function): Object[];

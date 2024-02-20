@@ -21,7 +21,7 @@ interface Node {
     children?: Node[];
     [otherKey: string]: unknown;
 }
-export declare function typeofSchema(schema: JSONSchema7): import("json-schema").JSONSchema7TypeName | import("json-schema").JSONSchema7TypeName[];
+export declare function typeofSchema(schema: JSONSchema7): import("json-schema").JSONSchema7TypeName | import("json-schema").JSONSchema7TypeName[] | undefined;
 /**
  * @summary Recursively generate `dependencies` for RJSF schema based on tree.
  * @param {Object[]} nodes - Array of nodes (e.g. `[tree]` or `node.children`)

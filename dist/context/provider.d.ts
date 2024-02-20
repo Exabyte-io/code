@@ -35,10 +35,10 @@ export declare class ContextProvider {
     get defaultData(): void;
     transformData(data: object): object;
     yieldData(...transformDataArgs: any): {
-        [x: string]: boolean | object;
+        [x: string]: boolean | object | undefined;
     };
     yieldDataForRendering(): {
-        [x: string]: boolean | object;
+        [x: string]: boolean | object | undefined;
     };
     get extraDataKey(): string;
     static getExtraDataKeyByName(name: string): string;

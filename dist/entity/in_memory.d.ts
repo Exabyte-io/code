@@ -1,6 +1,5 @@
 import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
 import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
-export type {} from "@mat3ra/esse/lib/js/esse/utils";
 export declare enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID"
 }
@@ -73,6 +72,7 @@ export declare class InMemoryEntity {
      * @param entity the kind of entities
      * @param name the name of the entity to choose
      */
-    getEntityByName(entities: InMemoryEntity[], entity: string, name: string): any;
+    getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
 }
 export type InMemoryEntityConstructor<T extends InMemoryEntity = InMemoryEntity> = new (...args: any[]) => T;
+export {};

@@ -3,13 +3,13 @@ export declare function DefaultableMixin<T extends InMemoryEntityConstructor>(su
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -19,7 +19,7 @@ export declare function DefaultableMixin<T extends InMemoryEntityConstructor>(su
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
     readonly defaultConfig: object | null;
     createDefault(): any;
@@ -29,13 +29,13 @@ export declare function TaggableMixin<T extends InMemoryEntityConstructor>(super
         tags: string[];
         setTags(array: string[]): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -45,20 +45,20 @@ export declare function TaggableMixin<T extends InMemoryEntityConstructor>(super
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export declare function HasScopeTrackMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
         scopeTrack: unknown[];
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -68,7 +68,7 @@ export declare function HasScopeTrackMixin<T extends InMemoryEntityConstructor>(
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export declare function HasMetadataMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -76,13 +76,13 @@ export declare function HasMetadataMixin<T extends InMemoryEntityConstructor>(su
         metadata: object;
         updateMetadata(object: object): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -92,7 +92,7 @@ export declare function HasMetadataMixin<T extends InMemoryEntityConstructor>(su
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export declare function HasDescriptionMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -100,13 +100,13 @@ export declare function HasDescriptionMixin<T extends InMemoryEntityConstructor>
         description: string;
         descriptionObject: {};
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -116,7 +116,7 @@ export declare function HasDescriptionMixin<T extends InMemoryEntityConstructor>
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export declare function NamedEntityMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -124,13 +124,13 @@ export declare function NamedEntityMixin<T extends InMemoryEntityConstructor>(su
         name: string;
         setName(name: string): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -140,7 +140,7 @@ export declare function NamedEntityMixin<T extends InMemoryEntityConstructor>(su
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export declare function HasConsistencyChecksMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -148,13 +148,13 @@ export declare function HasConsistencyChecksMixin<T extends InMemoryEntityConstr
         consistencyChecks: object[];
         addConsistencyChecks(array: object[]): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -164,6 +164,6 @@ export declare function HasConsistencyChecksMixin<T extends InMemoryEntityConstr
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;

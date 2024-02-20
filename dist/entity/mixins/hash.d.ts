@@ -10,13 +10,13 @@ export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(s
          */
         calculateHash(): string;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -26,7 +26,7 @@ export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(s
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -34,13 +34,13 @@ export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructo
         input: ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines[];
         readonly hashFromArrayInputContent: string;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: import("../in_memory").AnyObject): import("../in_memory").AnyObject;
         isValid(): boolean;
@@ -50,6 +50,6 @@ export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructo
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;

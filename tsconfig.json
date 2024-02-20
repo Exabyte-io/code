@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": false,
+    "strict": true,
     "skipLibCheck": true,
     "types": ["mocha", "node"],
     "rootDir": "./src",

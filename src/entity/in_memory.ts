@@ -6,8 +6,6 @@ import omit from "lodash/omit";
 
 import { clone, deepClone } from "../utils/clone";
 
-export type {} from "@mat3ra/esse/lib/js/esse/utils";
-
 export enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
 }

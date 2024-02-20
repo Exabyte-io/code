@@ -22,13 +22,13 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
             postProcessors: NameResultSchema[];
         };
         _json: AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
@@ -38,7 +38,7 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export interface RuntimeItemsUILogicJSON extends AnyObject {
@@ -59,10 +59,10 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
          * @private
          */
         _initRuntimeItems(keys: ItemKey[], config: object): void;
-        _addRuntimeItem(key: ItemKey, config: RuntimeItemSchema): void;
-        _removeRuntimeItem(key: ItemKey, config: RuntimeItemSchema): void;
+        _addRuntimeItem(key: ItemKey | undefined, config: RuntimeItemSchema): void;
+        _removeRuntimeItem(key: ItemKey | undefined, config: RuntimeItemSchema): void;
         _removeRuntimeItemByName(key: ItemKey, name: string): void;
-        _toggleRuntimeItem(key: ItemKey, data: RuntimeItemSchema, isAdding: boolean): void;
+        _toggleRuntimeItem(key: ItemKey | undefined, data: RuntimeItemSchema, isAdding: boolean): void;
         toggleResult(data: RuntimeItemSchema, isAdding: boolean): void;
         toggleMonitor(data: RuntimeItemSchema, isAdding: boolean): void;
         togglePreProcessor(data: RuntimeItemSchema, isAdding: boolean): void;
@@ -71,7 +71,7 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
         readonly monitorNames: string[];
         readonly postProcessorNames: string[];
         readonly preProcessorNames: string[];
-        getResultByName(name: string): NameResultSchema;
+        getResultByName(name: string): NameResultSchema | undefined;
         readonly results: NameResultSchema[];
         readonly monitors: NameResultSchema[];
         readonly preProcessors: NameResultSchema[];
@@ -85,13 +85,13 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
             preProcessors: NameResultSchema[];
             postProcessors: NameResultSchema[];
         };
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
@@ -101,22 +101,22 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
-        readonly allowedResults: any[];
-        readonly allowedMonitors: any[];
-        readonly allowedPostProcessors: any[];
+        readonly allowedResults: never[];
+        readonly allowedMonitors: never[];
+        readonly allowedPostProcessors: never[];
         _json: AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
@@ -126,6 +126,6 @@ export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConst
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;

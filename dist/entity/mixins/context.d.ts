@@ -12,13 +12,13 @@ export declare function ContextAndRenderFieldsMixin<T extends InMemoryEntityCons
         };
         render(context?: AnyObject): void;
         _json: AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
@@ -28,7 +28,7 @@ export declare function ContextAndRenderFieldsMixin<T extends InMemoryEntityCons
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export interface ContextProvider {
@@ -39,13 +39,13 @@ export declare function DomainContextProviderMixin<T extends InMemoryEntityConst
         _contextProviders: ContextProvider[];
         readonly contextProviders: ContextProvider[];
         _json: AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
@@ -55,7 +55,7 @@ export declare function DomainContextProviderMixin<T extends InMemoryEntityConst
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
 export declare function ImportantSettingsProviderMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -67,13 +67,13 @@ export declare function ImportantSettingsProviderMixin<T extends InMemoryEntityC
         _contextProviders: ContextProvider[];
         readonly contextProviders: ContextProvider[];
         _json: AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1): T_1;
+        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object): any;
+        clone(extraContext?: object | undefined): any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
@@ -83,6 +83,6 @@ export declare function ImportantSettingsProviderMixin<T extends InMemoryEntityC
         readonly slug: string;
         readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
-        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): any;
+        getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;

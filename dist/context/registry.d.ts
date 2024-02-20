@@ -10,7 +10,7 @@ export class ContextProviderRegistryContainer {
     removeProvider(providerCls: any): void;
     removeProviderByName(name: any): void;
 }
-export function extendAndPatchRegistry(registryContainer: ContextProviderRegistryContainer, classConfigMap: any, classesToPatch?: any, defaultSettings?: {}): ContextProviderRegistryContainer;
-export function createAndPatchRegistry(classConfigMap: any, classesToPatch?: {
+export function extendAndPatchRegistry(registryContainer: ContextProviderRegistryContainer, classConfigMap: Object, classesToPatch?: Object, defaultSettings?: {}): ContextProviderRegistryContainer;
+export function createAndPatchRegistry(classConfigMap: Object, classesToPatch?: {
     Material: SpecificMockMaterial;
 }, defaultSettings?: {}): ContextProviderRegistryContainer;

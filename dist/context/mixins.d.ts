@@ -17,8 +17,8 @@ export declare function MaterialContextMixin<T extends Constructor>(superclass: 
         _material: Material;
         extraData?: {
             materialHash: string;
-        };
-        isEdited?: boolean;
+        } | undefined;
+        isEdited?: boolean | undefined;
         readonly isEditedIsSetToFalseOnMaterialUpdate: boolean;
         updateMaterialHash(): void;
         readonly isMaterialCreatedDefault: boolean;
@@ -31,7 +31,7 @@ export declare function MaterialsSetContextMixin<T extends Constructor>(supercla
         [x: string]: any;
         _materialsSet: any;
         readonly materialsSet: any;
-        sortMaterialsByIndexInSet(materials?: any[]): any[];
+        sortMaterialsByIndexInSet(materials?: never[]): never[];
     };
 } & T;
 export declare function MaterialsContextMixin<T extends Constructor>(superclass: T): {
@@ -46,10 +46,10 @@ export declare function MethodDataContextMixin<T extends Constructor>(superclass
         [x: string]: any;
         _methodData: any;
         isEdited: boolean;
-        methodDataHash?: string;
+        methodDataHash?: string | undefined;
         extraData?: {
-            methodDataHash?: string;
-        };
+            methodDataHash?: string | undefined;
+        } | undefined;
         _initMethodDataHash(): void;
         readonly methodData: any;
         readonly isMethodDataUpdated: boolean;

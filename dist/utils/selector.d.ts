@@ -4,4 +4,4 @@
  * @param {Array[String]} fields - keys in the target document to search for
  * @return {Object}
  */
-export function getSearchQuerySelector(searchQuery: any, fields?: any): any;
+export function getSearchQuerySelector(searchQuery: Object, fields?: any): Object;

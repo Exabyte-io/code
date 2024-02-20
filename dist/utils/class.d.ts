@@ -9,7 +9,7 @@ export function cloneClass(classToClone: any): any;
  * @param excludedProps {Array} properties to exclude.
  * @param args {Array} args to pass to the constructor of the parent class.
  */
-export function extendClass(childClass: any, parentClass: any, excludedProps?: any[], ...args: any[]): void;
+export function extendClass(childClass: Object, parentClass: Object, excludedProps?: any[], ...args: any[]): void;
 export function extendClassStaticProps(childClass: any, parentClass: any, excludedProps?: any[]): void;
 /**
  * Slightly different implementation of extendClass assuming excludedProps
