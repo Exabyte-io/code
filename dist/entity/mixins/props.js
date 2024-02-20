@@ -1,13 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HasConsistencyChecksMixin =
-    exports.NamedEntityMixin =
-    exports.HasDescriptionMixin =
-    exports.HasMetadataMixin =
-    exports.HasScopeTrackMixin =
-    exports.TaggableMixin =
-    exports.DefaultableMixin =
-        void 0;
+exports.HasConsistencyChecksMixin = exports.NamedEntityMixin = exports.HasDescriptionMixin = exports.HasMetadataMixin = exports.HasScopeTrackMixin = exports.TaggableMixin = exports.DefaultableMixin = void 0;
 function DefaultableMixin(superclass) {
     return class extends superclass {
         get isDefault() {

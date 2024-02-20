@@ -3,9 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InMemoryEntitySet = void 0;
 const in_memory_1 = require("./in_memory");
 const mixins_1 = require("./set/mixins");
-class InMemoryEntitySet extends (0, mixins_1.InMemoryEntitySetMixin)(
-    (0, mixins_1.InMemoryEntityInSetMixin)(in_memory_1.InMemoryEntity),
-) {
+class InMemoryEntitySet extends (0, mixins_1.InMemoryEntitySetMixin)((0, mixins_1.InMemoryEntityInSetMixin)(in_memory_1.InMemoryEntity)) {
     get isEntitySet() {
         return this.prop("isEntitySet", false);
     }

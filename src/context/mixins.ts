@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+    ApplicationSchemaBase,
+    JobSchema,
+    MaterialSchema,
+    WorkflowSchema,
+} from "@mat3ra/esse/lib/js/types";
 import CryptoJS from "crypto-js";
 
 import { InMemoryEntity } from "../entity";
 import { DefaultableMixin } from "../entity/mixins/props";
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
-import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "@mat3ra/esse/lib/js/types";
 
 type Constructor<T = any> = new (...args: any[]) => T;
 

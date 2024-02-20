@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.math = exports.numberToPrecision = void 0;
 /* eslint-disable */
@@ -40,9 +38,7 @@ const angle = (a, b, unit) => {
     const lenA = vlen(a);
     const lenB = vlen(b);
     // @ts-ignore
-    return exports.math
-        .unit(exports.math.acos(product(a, b) / (lenA * lenB)), "rad")
-        .toNumber(unit || "deg");
+    return exports.math.unit(exports.math.acos(product(a, b) / (lenA * lenB)), "rad").toNumber(unit || "deg");
 };
 const angleUpTo90 = (a, b, unit) => {
     const angleUpTo180 = angle(a, b, unit);
@@ -56,9 +52,7 @@ const angleUpTo90 = (a, b, unit) => {
  */
 const vDist = (v1, v2) => {
     if (v1.length !== v2.length) {
-        console.error(
-            "Attempting to calculate distance between vectors of different dimensionality",
-        );
+        console.error("Attempting to calculate distance between vectors of different dimensionality");
         return;
     }
     return vlen(v1.map((coordinate, index) => coordinate - v2[index]));
@@ -98,10 +92,7 @@ const precise = (x, n = 7) => {
 const mod = (num, tolerance = 0.001) => {
     const m = num % 1;
     const x = num >= 0 ? m : 1 + m;
-    if (
-        exports.math.smallerEq(Math.abs(x - 1), tolerance) ||
-        exports.math.smallerEq(Math.abs(x), tolerance)
-    ) {
+    if (exports.math.smallerEq(Math.abs(x - 1), tolerance) || exports.math.smallerEq(Math.abs(x), tolerance)) {
         return 0;
     }
     return x;
@@ -119,7 +110,8 @@ const cartesianProduct = (...arg) => {
             a.push(arg[i][j]);
             if (i === max) {
                 r.push(a);
-            } else {
+            }
+            else {
                 helper(a, i + 1);
             }
         }

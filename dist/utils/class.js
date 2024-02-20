@@ -1,10 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.extendThis =
-    exports.extendClassStaticProps =
-    exports.extendClass =
-    exports.cloneClass =
-        void 0;
+exports.extendThis = exports.extendClassStaticProps = exports.extendClass = exports.cloneClass = void 0;
 function cloneClass(classToClone) {
     return Object.assign(Object.create(Object.getPrototypeOf(classToClone)), classToClone);
 }
@@ -24,29 +20,29 @@ function extendClass(childClass, parentClass, excludedProps = [], ...args) {
     parentNonStaticProps
         .filter((p) => !excludedProps.includes(p))
         .forEach((prop) => {
-            if (prop === "constructor") {
-                Object.assign(childClass.prototype, new parentClass.prototype.constructor(...args));
-            } else {
-                const get = parentClass.prototype.__lookupGetter__(prop);
-                const set = parentClass.prototype.__lookupSetter__(prop);
-                if (get || set) {
-                    Object.defineProperty(childClass.prototype, prop, { get, set });
-                } else {
-                    childClass.prototype[prop] = parentClass.prototype[prop];
-                }
+        if (prop === "constructor") {
+            Object.assign(childClass.prototype, new parentClass.prototype.constructor(...args));
+        }
+        else {
+            const get = parentClass.prototype.__lookupGetter__(prop);
+            const set = parentClass.prototype.__lookupSetter__(prop);
+            if (get || set) {
+                Object.defineProperty(childClass.prototype, prop, { get, set });
             }
-        });
+            else {
+                childClass.prototype[prop] = parentClass.prototype[prop];
+            }
+        }
+    });
 }
 exports.extendClass = extendClass;
 function extendClassStaticProps(childClass, parentClass, excludedProps = []) {
-    const parentStaticProps = Object.getOwnPropertyNames(parentClass).filter(
-        (p) => !["length", "name", "prototype"].includes(p),
-    );
+    const parentStaticProps = Object.getOwnPropertyNames(parentClass).filter((p) => !["length", "name", "prototype"].includes(p));
     parentStaticProps
         .filter((p) => !excludedProps.includes(p))
         .forEach((prop) => {
-            childClass[prop] = parentClass[prop];
-        });
+        childClass[prop] = parentClass[prop];
+    });
 }
 exports.extendClassStaticProps = extendClassStaticProps;
 /**
@@ -67,17 +63,19 @@ function extendThis(childClass, parentClass, config) {
             .filter((p) => !exclude.includes(p))
             // eslint-disable-next-line no-loop-func
             .map((prop) => {
-                if (seen.includes(prop)) return;
-                const get = protos.__lookupGetter__(prop);
-                const set = protos.__lookupSetter__(prop);
-                if (get || set) {
-                    Object.defineProperty(childClass.prototype, prop, { get, set });
-                } else {
-                    childClass.prototype[prop] = parentClass.prototype[prop];
-                }
-                seen.push(prop); // don't override with older definition in hierarchy
-                return null;
-            });
+            if (seen.includes(prop))
+                return;
+            const get = protos.__lookupGetter__(prop);
+            const set = protos.__lookupSetter__(prop);
+            if (get || set) {
+                Object.defineProperty(childClass.prototype, prop, { get, set });
+            }
+            else {
+                childClass.prototype[prop] = parentClass.prototype[prop];
+            }
+            seen.push(prop); // don't override with older definition in hierarchy
+            return null;
+        });
         obj = protos;
     }
 }

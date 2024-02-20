@@ -1,67 +1,35 @@
 "use strict";
-var __createBinding =
-    (this && this.__createBinding) ||
-    (Object.create
-        ? function (o, m, k, k2) {
-              if (k2 === undefined) k2 = k;
-              var desc = Object.getOwnPropertyDescriptor(m, k);
-              if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-                  desc = {
-                      enumerable: true,
-                      get: function () {
-                          return m[k];
-                      },
-                  };
-              }
-              Object.defineProperty(o, k2, desc);
-          }
-        : function (o, m, k, k2) {
-              if (k2 === undefined) k2 = k;
-              o[k2] = m[k];
-          });
-var __setModuleDefault =
-    (this && this.__setModuleDefault) ||
-    (Object.create
-        ? function (o, v) {
-              Object.defineProperty(o, "default", { enumerable: true, value: v });
-          }
-        : function (o, v) {
-              o["default"] = v;
-          });
-var __importStar =
-    (this && this.__importStar) ||
-    function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null)
-            for (var k in mod)
-                if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-                    __createBinding(result, mod, k);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JsYamlAllSchemas =
-    exports.JsYamlTypes =
-    exports.concatStringType =
-    exports.readFileType =
-    exports.flattenType =
-    exports.listToStringType =
-    exports.includeType =
-    exports.esseType =
-    exports.combineType =
-    exports.parameterType =
-        void 0;
+exports.JsYamlAllSchemas = exports.JsYamlTypes = exports.concatStringType = exports.readFileType = exports.flattenType = exports.listToStringType = exports.includeType = exports.esseType = exports.combineType = exports.parameterType = void 0;
 // @ts-nocheck
 // TODO: remove ts-nocheck
-const JSONSchemasInterfaceServer_1 = __importDefault(
-    require("@mat3ra/esse/lib/js/esse/JSONSchemasInterfaceServer"),
-);
+const JSONSchemasInterfaceServer_1 = __importDefault(require("@mat3ra/esse/lib/js/esse/JSONSchemasInterfaceServer"));
 const fs = __importStar(require("fs"));
 const yaml = __importStar(require("js-yaml"));
 const lodash = __importStar(require("lodash"));
@@ -78,10 +46,7 @@ const str_1 = require("./str");
  * // [{ a: 1 }, { a: 2 }, { a: 1, b: 3 }, { a: 2, b: 3 }]
  */
 function generateCombinations(parameterSets, exclusions = []) {
-    const [head, ...rest] = parameterSets.filter((pObj) => {
-        var _a;
-        return pObj.key && ((_a = pObj.values) === null || _a === void 0 ? void 0 : _a.length);
-    });
+    const [head, ...rest] = parameterSets.filter((pObj) => { var _a; return pObj.key && ((_a = pObj.values) === null || _a === void 0 ? void 0 : _a.length); });
     if (!head) {
         return [{}];
     }
@@ -92,11 +57,13 @@ function generateCombinations(parameterSets, exclusions = []) {
             const newCombination = lodash.cloneDeep(combination);
             if (value !== null && action === "set") {
                 lodash.set(newCombination, key, value);
-            } else if (value !== null && action === "push") {
+            }
+            else if (value !== null && action === "push") {
                 const arr = lodash.get(newCombination, key);
                 if (Array.isArray(arr)) {
                     arr.push(lodash.cloneDeep(value));
-                } else {
+                }
+                else {
                     lodash.set(newCombination, key, [value]);
                 }
             }
@@ -106,9 +73,7 @@ function generateCombinations(parameterSets, exclusions = []) {
     }, []);
     // Filter out unwanted combinations
     newCombinations = newCombinations.filter((combination) => {
-        return !exclusions.some(
-            ([k1, k2]) => lodash.has(combination, k1) && lodash.has(combination, k2),
-        );
+        return !exclusions.some(([k1, k2]) => lodash.has(combination, k1) && lodash.has(combination, k2));
     });
     return newCombinations;
 }
@@ -152,15 +117,7 @@ function readFromYaml(ref) {
 exports.parameterType = new yaml.Type("!parameter", {
     kind: "mapping",
     construct(data) {
-        const {
-            key,
-            values = [],
-            ref,
-            exclude,
-            isOptional = false,
-            merge = [],
-            ...otherProps
-        } = data;
+        const { key, values = [], ref, exclude, isOptional = false, merge = [], ...otherProps } = data;
         try {
             let values_ = ref && !values.length ? readFromYaml(ref) : values;
             values_ = (0, array_1.safeMakeArray)(values_);
@@ -171,9 +128,11 @@ exports.parameterType = new yaml.Type("!parameter", {
                 const regex = new RegExp(exclude);
                 values_ = values_.filter((v) => !regex.test(v));
             }
-            if (isOptional) values_.push(null);
+            if (isOptional)
+                values_.push(null);
             return { key, values: values_, ...otherProps };
-        } catch (e) {
+        }
+        catch (e) {
             return data;
         }
     },
@@ -198,14 +157,7 @@ exports.combineType = new yaml.Type("!combine", {
         const { name, forEach = [], exclusions, config = {}, extraConfigs = [] } = data;
         const combinations = generateCombinations(forEach, exclusions);
         const configs = combinations.map((c) => lodash.merge(c, config));
-        configs.forEach(
-            (c) =>
-                (c.name = (0, str_1.renderTextWithSubstitutes)(
-                    (name === null || name === void 0 ? void 0 : name.template) || name,
-                    c,
-                    name === null || name === void 0 ? void 0 : name.substitutions,
-                )),
-        );
+        configs.forEach((c) => (c.name = (0, str_1.renderTextWithSubstitutes)((name === null || name === void 0 ? void 0 : name.template) || name, c, name === null || name === void 0 ? void 0 : name.substitutions)));
         return extraConfigs.length ? configs.concat(extraConfigs.flat()) : configs;
     },
 });
@@ -226,7 +178,8 @@ exports.esseType = new yaml.Type("!esse", {
                 return lodash.get(schema, objPath);
             }
             return schema || data;
-        } catch (e) {
+        }
+        catch (e) {
             return data;
         }
     },
@@ -240,7 +193,8 @@ exports.includeType = new yaml.Type("!include", {
     construct(data) {
         try {
             return readFromYaml(data);
-        } catch (e) {
+        }
+        catch (e) {
             return data;
         }
     },
@@ -254,7 +208,8 @@ exports.listToStringType = new yaml.Type("!listToString", {
     construct(data) {
         try {
             return data.filter((d) => typeof d === "string").join("");
-        } catch (e) {
+        }
+        catch (e) {
             return data;
         }
     },
@@ -268,7 +223,8 @@ exports.flattenType = new yaml.Type("!flatten", {
     construct(data) {
         try {
             return data.flat();
-        } catch (e) {
+        }
+        catch (e) {
             return data;
         }
     },
@@ -282,7 +238,8 @@ exports.readFileType = new yaml.Type("!readFile", {
     construct(data) {
         try {
             return fs.readFileSync(path.resolve(data), "utf8");
-        } catch (e) {
+        }
+        catch (e) {
             return data;
         }
     },
@@ -299,7 +256,8 @@ exports.concatStringType = new yaml.Type("!concatString", {
     construct(data) {
         try {
             return "".concat(...data);
-        } catch (e) {
+        }
+        catch (e) {
             return data;
         }
     },

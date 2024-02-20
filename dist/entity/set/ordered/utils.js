@@ -10,14 +10,14 @@ const compareEntitiesInOrderedSetForSorting = (a, b, setId, descending = true) =
     const aIndex = a
         ? a.getIndexByIdInOrderedSet(setId)
         : descending
-        ? Number.POSITIVE_INFINITY
-        : Number.NEGATIVE_INFINITY;
+            ? Number.POSITIVE_INFINITY
+            : Number.NEGATIVE_INFINITY;
     // eslint-disable-next-line no-nested-ternary
     const bIndex = b
         ? b.getIndexByIdInOrderedSet(setId)
         : descending
-        ? Number.POSITIVE_INFINITY
-        : Number.NEGATIVE_INFINITY;
+            ? Number.POSITIVE_INFINITY
+            : Number.NEGATIVE_INFINITY;
     return descending ? bIndex - aIndex : aIndex - bIndex;
 };
 exports.compareEntitiesInOrderedSetForSorting = compareEntitiesInOrderedSetForSorting;

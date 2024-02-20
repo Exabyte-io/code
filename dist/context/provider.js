@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContextProvider = void 0;
 /*
@@ -26,7 +24,8 @@ class ContextProvider {
         this.domain = config.domain || "default";
         // if context is passed inside config, treat it as additional config
         // eslint-disable-next-line no-param-reassign
-        if (config.context) config = ContextProvider.createConfigFromContext(config);
+        if (config.context)
+            config = ContextProvider.createConfigFromContext(config);
         this.entityName = config.entityName || "unit"; // entity this provider yields data to, eg. "unit", "subworkflow"
         this.data = config.data; // property data container
         this.extraData = config.extraData; // property extraData container, used track changes to data, for example
@@ -45,24 +44,15 @@ class ContextProvider {
     }
     static createConfigFromContext(config) {
         const data = lodash_1.default.get(config.context, config.name);
-        const isEdited = lodash_1.default.get(
-            config.context,
-            this.getIsEditedKeyByName(config.name),
-        );
-        const extraData = lodash_1.default.get(
-            config.context,
-            this.getExtraDataKeyByName(config.name),
-        );
-        return Object.assign(
-            config,
-            data
-                ? {
-                      data,
-                      extraData,
-                      isEdited,
-                  }
-                : {},
-        );
+        const isEdited = lodash_1.default.get(config.context, this.getIsEditedKeyByName(config.name));
+        const extraData = lodash_1.default.get(config.context, this.getExtraDataKeyByName(config.name));
+        return Object.assign(config, data
+            ? {
+                data,
+                extraData,
+                isEdited,
+            }
+            : {});
     }
     setIsEdited(isEdited) {
         this.isEdited = isEdited;

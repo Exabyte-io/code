@@ -1,11 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.replaceUnit =
-    exports.removeUnit =
-    exports.addUnit =
-    exports.setNextLinks =
-    exports.setUnitsHead =
-        void 0;
+exports.replaceUnit = exports.removeUnit = exports.addUnit = exports.setNextLinks = exports.setUnitsHead = void 0;
 /**
  * @summary Set the head of an array of units
  */
@@ -27,8 +22,10 @@ function setNextLinks(units) {
         if (!units[i].next) {
             // newly added units don't have next set yet => set it
             units[i].next = units[i + 1].flowchartId;
-            if (i > 0) units[i - 1].next = units[i].flowchartId;
-        } else if (!flowchartIds.includes(units[i].next)) {
+            if (i > 0)
+                units[i - 1].next = units[i].flowchartId;
+        }
+        else if (!flowchartIds.includes(units[i].next)) {
             // newly removed units may create broken next links => fix it
             units[i].next = units[i + 1].flowchartId;
         }
@@ -42,7 +39,8 @@ exports.setNextLinks = setNextLinks;
 function addUnit(units, unit, index = -1) {
     if (index >= 0 && index < units.length) {
         units.splice(index, 0, unit);
-    } else {
+    }
+    else {
         units.push(unit);
     }
     return setNextLinks(setUnitsHead(units));
@@ -56,7 +54,8 @@ exports.addUnit = addUnit;
  */
 function removeUnit(units, flowchartId) {
     const previousUnit = units.find((x) => x.next === flowchartId);
-    if (previousUnit) previousUnit.unsetProp("next");
+    if (previousUnit)
+        previousUnit.unsetProp("next");
     // TODO: remove the setNextLinks and setUnitsHead and handle the logic via flowchart designer
     return setNextLinks(setUnitsHead(units.filter((x) => x.flowchartId !== flowchartId)));
 }

@@ -1,11 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HASH_TOLERANCE =
-    exports.ATOMIC_COORD_UNITS =
-    exports.units =
-    exports.tolerance =
-    exports.coefficients =
-        void 0;
+exports.HASH_TOLERANCE = exports.ATOMIC_COORD_UNITS = exports.units = exports.tolerance = exports.coefficients = void 0;
 exports.coefficients = {
     EV_TO_RY: 0.0734986176,
     BOHR_TO_ANGSTROM: 0.52917721092,

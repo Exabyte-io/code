@@ -1,9 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImportantSettingsProviderMixin =
-    exports.DomainContextProviderMixin =
-    exports.ContextAndRenderFieldsMixin =
-        void 0;
+exports.ImportantSettingsProviderMixin = exports.DomainContextProviderMixin = exports.ContextAndRenderFieldsMixin = void 0;
 const clone_1 = require("../../utils/clone");
 function ContextAndRenderFieldsMixin(superclass) {
     return class extends superclass {
@@ -24,7 +21,8 @@ function ContextAndRenderFieldsMixin(superclass) {
         }
         updateContext(ctx = {}, executeRender = false) {
             this._context = { ...this.context, ...ctx };
-            if (executeRender) this.render();
+            if (executeRender)
+                this.render();
         }
         // to get "persistent" context, that is stored in database and further should be provided to constructor
         // when the `parent` object is re-created

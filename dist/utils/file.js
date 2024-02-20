@@ -1,16 +1,9 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createObjectPathFromFilePath =
-    exports.getDirectories =
-    exports.getFilesInDirectory =
-    exports.formatFileSize =
-    exports.getProgrammingLanguageFromFileExtension =
-        void 0;
+exports.createObjectPathFromFilePath = exports.getDirectories = exports.getFilesInDirectory = exports.formatFileSize = exports.getProgrammingLanguageFromFileExtension = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
@@ -37,7 +30,8 @@ exports.getProgrammingLanguageFromFileExtension = getProgrammingLanguageFromFile
  * @param decimals {Number} number of decimals to round.
  */
 function formatFileSize(size, decimals = 2) {
-    if (size === 0) return "0 Bytes";
+    if (size === 0)
+        return "0 Bytes";
     const index = Math.floor(Math.log(size) / Math.log(1024));
     const units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     return parseFloat((size / 1024 ** index).toFixed(decimals)) + " " + units[index];
@@ -52,11 +46,10 @@ exports.formatFileSize = formatFileSize;
 function getFilesInDirectory(dirPath, fileExtensions = [], resolvePath = true) {
     let fileNames = fs_1.default.readdirSync(dirPath);
     if (fileExtensions.length) {
-        fileNames = fileNames.filter((dirItem) =>
-            fileExtensions.includes(path_1.default.extname(dirItem)),
-        );
+        fileNames = fileNames.filter((dirItem) => fileExtensions.includes(path_1.default.extname(dirItem)));
     }
-    if (resolvePath) return fileNames.map((fileName) => path_1.default.resolve(dirPath, fileName));
+    if (resolvePath)
+        return fileNames.map((fileName) => path_1.default.resolve(dirPath, fileName));
     return fileNames;
 }
 exports.getFilesInDirectory = getFilesInDirectory;

@@ -34,7 +34,8 @@ async function fetchFilesFromGitHubAPI(url) {
             name: file.name,
             download_url: file.download_url,
         }));
-    } catch (error) {
+    }
+    catch (error) {
         console.error("Error fetching files:", error);
         throw error;
     }

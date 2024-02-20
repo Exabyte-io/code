@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.filterEntityList = void 0;
 const uniqBy_1 = __importDefault(require("lodash/uniqBy"));
@@ -36,15 +34,15 @@ function isMultiPathSupported(pathObject, multiPathSeparator, filterObjects) {
  * Filter list of entity paths or entities by paths and regular expressions.
  * @return {Object[]} - filtered entity path objects or entities
  */
-function filterEntityList({ entitiesOrPaths, filterObjects = [], multiPathSeparator = "" }) {
-    if (!filterObjects || !filterObjects.length) return [];
+function filterEntityList({ entitiesOrPaths, filterObjects = [], multiPathSeparator = "", }) {
+    if (!filterObjects || !filterObjects.length)
+        return [];
     const filterObjects_ = filterObjects.map((o) => (o.regex ? { regex: new RegExp(o.regex) } : o));
     let filtered;
     if (multiPathSeparator) {
-        filtered = entitiesOrPaths.filter((e) =>
-            isMultiPathSupported(e, multiPathSeparator, filterObjects_),
-        );
-    } else {
+        filtered = entitiesOrPaths.filter((e) => isMultiPathSupported(e, multiPathSeparator, filterObjects_));
+    }
+    else {
         filtered = entitiesOrPaths.filter((e) => isPathSupported(e, filterObjects_));
     }
     return (0, uniqBy_1.default)(filtered, "path");

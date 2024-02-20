@@ -1,19 +1,9 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findPreviousVersion =
-    exports.renderTextWithSubstitutes =
-    exports.convertArabicToRoman =
-    exports.removeEmptyLinesFromString =
-    exports.removeCommentsFromSourceCode =
-    exports.toFixedLocale =
-    exports.randomAlphanumeric =
-    exports.removeNewLinesAndExtraSpaces =
-        void 0;
+exports.findPreviousVersion = exports.renderTextWithSubstitutes = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
 const lodash_1 = __importDefault(require("lodash"));
 const nunjucks_1 = __importDefault(require("nunjucks"));
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
@@ -37,12 +27,10 @@ function randomAlphanumeric(length) {
     // Random letter is required in generated string because of when
     // the result is used as username and contains only numbers, the
     // slug will be inappropriate (e.g., "user-1232", "user-12" both have "user" as slug).
-    return (
-        randomLetter +
+    return (randomLetter +
         Math.random()
             .toString(36)
-            .substring(2, 2 + length - 1)
-    );
+            .substring(2, 2 + length - 1));
 }
 exports.randomAlphanumeric = randomAlphanumeric;
 function toFixedLocale(number, precision) {
@@ -124,7 +112,8 @@ exports.convertArabicToRoman = convertArabicToRoman;
  * ); // "Hello John Doe!"
  */
 function renderTextWithSubstitutes(template, data, substitutionMap = {}) {
-    if (!template) return "";
+    if (!template)
+        return "";
     // Create a copy of data to avoid modifying the original
     const renderData = lodash_1.default.cloneDeep(data);
     // Helper function for recursive substitution
@@ -136,9 +125,11 @@ function renderTextWithSubstitutes(template, data, substitutionMap = {}) {
         for (const [key, value] of Object.entries(obj)) {
             if (lodash_1.default.isPlainObject(value)) {
                 substituteNested(value);
-            } else if (Array.isArray(value)) {
+            }
+            else if (Array.isArray(value)) {
                 value.forEach((val) => substituteNested(val));
-            } else if (substitutionMap[value]) {
+            }
+            else if (substitutionMap[value]) {
                 obj[key] = substitutionMap[value];
             }
         }

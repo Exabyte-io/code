@@ -1,50 +1,30 @@
 "use strict";
-var __createBinding =
-    (this && this.__createBinding) ||
-    (Object.create
-        ? function (o, m, k, k2) {
-              if (k2 === undefined) k2 = k;
-              var desc = Object.getOwnPropertyDescriptor(m, k);
-              if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-                  desc = {
-                      enumerable: true,
-                      get: function () {
-                          return m[k];
-                      },
-                  };
-              }
-              Object.defineProperty(o, k2, desc);
-          }
-        : function (o, m, k, k2) {
-              if (k2 === undefined) k2 = k;
-              o[k2] = m[k];
-          });
-var __setModuleDefault =
-    (this && this.__setModuleDefault) ||
-    (Object.create
-        ? function (o, v) {
-              Object.defineProperty(o, "default", { enumerable: true, value: v });
-          }
-        : function (o, v) {
-              o["default"] = v;
-          });
-var __importStar =
-    (this && this.__importStar) ||
-    function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null)
-            for (var k in mod)
-                if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-                    __createBinding(result, mod, k);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InMemoryEntity = exports.EntityError = exports.ValidationErrorCode = void 0;
 const ajv = __importStar(require("@mat3ra/esse/lib/js/utils/ajv"));
@@ -54,7 +34,7 @@ const clone_1 = require("../utils/clone");
 var ValidationErrorCode;
 (function (ValidationErrorCode) {
     ValidationErrorCode["IN_MEMORY_ENTITY_DATA_INVALID"] = "IN_MEMORY_ENTITY_DATA_INVALID";
-})((ValidationErrorCode = exports.ValidationErrorCode || (exports.ValidationErrorCode = {})));
+})(ValidationErrorCode = exports.ValidationErrorCode || (exports.ValidationErrorCode = {}));
 class EntityError extends Error {
     constructor({ code, details }) {
         super(code);
@@ -123,8 +103,8 @@ class InMemoryEntity {
         }
         const result = clean
             ? ajv.validateAndClean(data, this.jsonSchema, {
-                  coerceTypes: this.allowJsonSchemaTypesCoercing,
-              })
+                coerceTypes: this.allowJsonSchemaTypesCoercing,
+            })
             : ajv.validate(data, this.jsonSchema);
         if (!result.isValid) {
             throw new EntityError({
@@ -154,7 +134,8 @@ class InMemoryEntity {
         try {
             this.validate();
             return true;
-        } catch (err) {
+        }
+        catch (err) {
             return false;
         }
     }
@@ -207,8 +188,10 @@ class InMemoryEntity {
         let filtered;
         if (!name) {
             filtered = entities.filter((ent) => ent.prop("isDefault") === true);
-            if (!filtered.length) filtered = [entities[0]];
-        } else {
+            if (!filtered.length)
+                filtered = [entities[0]];
+        }
+        else {
             filtered = entities.filter((ent) => ent.prop("name") === name);
         }
         if (filtered.length !== 1) {

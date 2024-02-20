@@ -1,19 +1,9 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.JobContextMixin =
-    exports.WorkflowContextMixin =
-    exports.MethodDataContextMixin =
-    exports.MaterialsContextMixin =
-    exports.MaterialsSetContextMixin =
-    exports.MaterialContextMixin =
-    exports.ApplicationContextMixin =
-        void 0;
-/* eslint-disable @typescript-eslint/no-explicit-any */
+exports.JobContextMixin = exports.WorkflowContextMixin = exports.MethodDataContextMixin = exports.MaterialsContextMixin = exports.MaterialsSetContextMixin = exports.MaterialContextMixin = exports.ApplicationContextMixin = void 0;
 const crypto_js_1 = __importDefault(require("crypto-js"));
 const utils_1 = require("../entity/set/ordered/utils");
 function ApplicationContextMixin(superclass) {
@@ -27,8 +17,8 @@ function ApplicationContextMixin(superclass) {
             const config = args[0];
             this._application =
                 (config.context && config.context.application) ||
-                // @ts-ignore
-                this.constructor.Application.createDefault();
+                    // @ts-ignore
+                    this.constructor.Application.createDefault();
         }
         get application() {
             return this._application;
@@ -57,7 +47,8 @@ function MaterialContextMixin(superclass) {
             return false;
         }
         updateMaterialHash() {
-            if (this.isEditedIsSetToFalseOnMaterialUpdate) this.isEdited = false;
+            if (this.isEditedIsSetToFalseOnMaterialUpdate)
+                this.isEdited = false;
             this.extraData = { materialHash: this.material.hash };
         }
         // Workaround: Material.createDefault() used to initiate workflow reducer and hence here too
@@ -86,12 +77,7 @@ function MaterialsSetContextMixin(superclass) {
         sortMaterialsByIndexInSet(materials = []) {
             // DO NOT SORT IN PLACE AS IT CHANGES THE ORDER IN `this.materials` AND HAS SIDE EFFECTS (MaterialViewer).
             return materials.concat().sort((a, b) => {
-                return (0, utils_1.compareEntitiesInOrderedSetForSorting)(
-                    a,
-                    b,
-                    this.materialsSet._id,
-                    false,
-                );
+                return (0, utils_1.compareEntitiesInOrderedSetForSorting)(a, b, this.materialsSet._id, false);
             });
         }
     };
@@ -110,7 +96,7 @@ function MaterialsContextMixin(superclass) {
                 materials && materials.length
                     ? materials
                     : // @ts-ignore
-                      [this.constructor.Material.createDefault()];
+                        [this.constructor.Material.createDefault()];
         }
         get materials() {
             return this._materials;
@@ -130,9 +116,7 @@ function MethodDataContextMixin(superclass) {
          *          subsequent initializations of the derived class. Not used at present and kept for the record.
          */
         _initMethodDataHash() {
-            this.methodDataHash = crypto_js_1.default
-                .MD5(JSON.stringify(this.methodData))
-                .toString();
+            this.methodDataHash = crypto_js_1.default.MD5(JSON.stringify(this.methodData)).toString();
             this.extraData = { methodDataHash: this.methodDataHash };
             if (!this._methodData) {
                 this._methodData = {};
@@ -140,9 +124,11 @@ function MethodDataContextMixin(superclass) {
                 // Commented out to reduce effect on performance. Uncomment for debugging purposes.
                 // TODO: remove on next refactoring or convert to log
                 // console.warn("MethodDataContextMixin: methodData is undefined or null");
-            } else if (this.isMethodDataUpdated) {
+            }
+            else if (this.isMethodDataUpdated) {
                 this.isEdited = false;
-            } else {
+            }
+            else {
                 // @ts-ignore
                 // eslint-disable-next-line no-undef
                 this.isEdited = config.isEdited;

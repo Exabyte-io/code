@@ -12,12 +12,7 @@ function mapTree(nodes, fn) {
     return nodes.map((node) => {
         var _a;
         const mappedNode = fn(node);
-        if (
-            (_a = node === null || node === void 0 ? void 0 : node.children) === null ||
-            _a === void 0
-                ? void 0
-                : _a.length
-        ) {
+        if ((_a = node === null || node === void 0 ? void 0 : node.children) === null || _a === void 0 ? void 0 : _a.length) {
             mappedNode.children = mapTree(node.children, fn);
         }
         return mappedNode;

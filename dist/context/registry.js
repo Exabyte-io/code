@@ -1,9 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createAndPatchRegistry =
-    exports.extendAndPatchRegistry =
-    exports.ContextProviderRegistryContainer =
-        void 0;
+exports.createAndPatchRegistry = exports.extendAndPatchRegistry = exports.ContextProviderRegistryContainer = void 0;
 class ContextProviderRegistryContainer {
     constructor() {
         this._providers = [];
@@ -46,12 +43,7 @@ exports.ContextProviderRegistryContainer = ContextProviderRegistryContainer;
  * };
  *
  */
-const extendAndPatchRegistry = (
-    registryContainer,
-    classConfigMap,
-    classesToPatch = {},
-    defaultSettings = {},
-) => {
+const extendAndPatchRegistry = (registryContainer, classConfigMap, classesToPatch = {}, defaultSettings = {}) => {
     Object.entries(classConfigMap).forEach(([name, { providerCls, config }]) => {
         Object.entries(classesToPatch).forEach(([clsName, cls]) => {
             if (providerCls[clsName]) {
@@ -81,11 +73,6 @@ exports.extendAndPatchRegistry = extendAndPatchRegistry;
  */
 const createAndPatchRegistry = (classConfigMap, classesToPatch = {}, defaultSettings = {}) => {
     const registryContainer = new ContextProviderRegistryContainer();
-    return (0, exports.extendAndPatchRegistry)(
-        registryContainer,
-        classConfigMap,
-        classesToPatch,
-        defaultSettings,
-    );
+    return (0, exports.extendAndPatchRegistry)(registryContainer, classConfigMap, classesToPatch, defaultSettings);
 };
 exports.createAndPatchRegistry = createAndPatchRegistry;

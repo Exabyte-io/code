@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JSONSchemaFormDataProvider = void 0;
 const underscore_1 = __importDefault(require("underscore"));
@@ -22,9 +20,7 @@ class JSONSchemaFormDataProvider extends provider_1.ContextProvider {
     constructor(config) {
         super(config);
         this.defaultClassNames = "col-xs-12 col-sm-6 col-md-4 col-lg-3";
-        this.isUsingJinjaVariables = Boolean(
-            config === null || config === void 0 ? void 0 : config.isUsingJinjaVariables,
-        );
+        this.isUsingJinjaVariables = Boolean(config === null || config === void 0 ? void 0 : config.isUsingJinjaVariables);
     }
     // eslint-disable-next-line class-methods-use-this
     get jsonSchema() {
@@ -43,7 +39,8 @@ class JSONSchemaFormDataProvider extends provider_1.ContextProvider {
     }
     fieldStyles(classNames, overrideDefault = false) {
         let names = classNames;
-        if (!overrideDefault) names += " " + this.defaultClassNames;
+        if (!overrideDefault)
+            names += " " + this.defaultClassNames;
         return { classNames: names };
     }
     get uiSchemaStyled() {

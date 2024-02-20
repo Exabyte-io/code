@@ -31,9 +31,7 @@ function HashedInputArrayMixin(superclass) {
          */
         get hashFromArrayInputContent() {
             const objectForHashing = this.input.map((i) => {
-                return (0, str_1.removeEmptyLinesFromString)(
-                    (0, str_1.removeCommentsFromSourceCode)(i.content),
-                );
+                return (0, str_1.removeEmptyLinesFromString)((0, str_1.removeCommentsFromSourceCode)(i.content));
             });
             return (0, hash_1.calculateHashFromObject)(objectForHashing);
         }

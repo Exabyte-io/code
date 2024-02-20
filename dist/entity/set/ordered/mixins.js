@@ -15,9 +15,7 @@ function OrderedInMemoryEntityInSetMixin(superclass) {
     return class extends superclass {
         getIndexByIdInOrderedSet(setId) {
             const setData = this.inSet.find((s) => s._id === setId);
-            return (setData === null || setData === void 0 ? void 0 : setData.index)
-                ? setData.index
-                : 0;
+            return (setData === null || setData === void 0 ? void 0 : setData.index) ? setData.index : 0;
         }
     };
 }

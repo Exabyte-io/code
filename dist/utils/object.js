@@ -1,19 +1,9 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mergeTerminalNodes =
-    exports.sortKeysDeepForObject =
-    exports.flattenObject =
-    exports.stringifyObject =
-    exports.renameKeysForObject =
-    exports.convertKeysToCamelCaseForObject =
-    exports.getOneMatchFromObject =
-    exports.safeMakeObject =
-        void 0;
+exports.mergeTerminalNodes = exports.sortKeysDeepForObject = exports.flattenObject = exports.stringifyObject = exports.renameKeysForObject = exports.convertKeysToCamelCaseForObject = exports.getOneMatchFromObject = exports.safeMakeObject = void 0;
 const camelCase_1 = __importDefault(require("lodash/camelCase"));
 const filter_1 = __importDefault(require("lodash/filter"));
 const isArray_1 = __importDefault(require("lodash/isArray"));
@@ -64,11 +54,8 @@ function convertKeysToCamelCaseForObject(obj) {
 }
 exports.convertKeysToCamelCaseForObject = convertKeysToCamelCaseForObject;
 function renameKeysForObject(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    o,
-    keysOriginal = [],
-    keysRenamed = [],
-) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+o, keysOriginal = [], keysRenamed = []) {
     if (!(0, isObject_1.default)(o)) {
         return o;
     }
@@ -80,10 +67,9 @@ function renameKeysForObject(
         // Get the destination key
         const idx = keysOriginal.indexOf(origKey);
         const destKey = idx === -1 ? origKey : keysRenamed[idx];
-        const destValue =
-            typeof origValue === "object"
-                ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
-                : origValue;
+        const destValue = typeof origValue === "object"
+            ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
+            : origValue;
         result[destKey] = destValue;
         return null;
     });
@@ -153,8 +139,7 @@ function flattenObject(obj, levelSeparator = ":", keyValueSeparator = "=", suffi
     const extraPropertyValue = obj[extraKeys[0]];
     if (!(0, isObject_1.default)(extraPropertyValue)) {
         return {
-            [`${obj.name}${levelSeparator}${extraPropertyKey}=${extraPropertyValue}${tailSuffix}`]:
-                obj.value,
+            [`${obj.name}${levelSeparator}${extraPropertyKey}=${extraPropertyValue}${tailSuffix}`]: obj.value,
         };
     }
     const flatSubObj = stringifyObject(extraPropertyValue, levelSeparator, keyValueSeparator);
@@ -210,7 +195,8 @@ function isTreeObject(value) {
  * mergeTerminalNodes(tree); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']
  */
 function mergeTerminalNodes(tree, unique = false) {
-    if (!isTreeObject(tree)) return (0, array_1.safeMakeArray)(tree);
+    if (!isTreeObject(tree))
+        return (0, array_1.safeMakeArray)(tree);
     const terminalValues = Object.values(tree).reduce((accumulator, value) => {
         if (isTreeObject(value)) {
             return accumulator.concat(mergeTerminalNodes(value));

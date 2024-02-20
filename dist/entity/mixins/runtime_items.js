@@ -1,10 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RuntimeItemsUIAllowedMixin =
-    exports.RuntimeItemsUILogicMixin =
-    exports.RuntimeItemsMixin =
-    exports.ItemKey =
-        void 0;
+exports.RuntimeItemsUIAllowedMixin = exports.RuntimeItemsUILogicMixin = exports.RuntimeItemsMixin = exports.ItemKey = void 0;
 const object_1 = require("../../utils/object");
 var ItemKey;
 (function (ItemKey) {
@@ -12,7 +8,7 @@ var ItemKey;
     ItemKey["monitors"] = "monitors";
     ItemKey["preProcessors"] = "preProcessors";
     ItemKey["postProcessors"] = "postProcessors";
-})((ItemKey = exports.ItemKey || (exports.ItemKey = {})));
+})(ItemKey = exports.ItemKey || (exports.ItemKey = {}));
 /*
  * @summary Contains runtime items: results, monitors, pre/postProcessors
  *          Is meant to work with Entity, InMemoryEntity b/c of `prop` extraction from `_json`.
@@ -27,15 +23,11 @@ function RuntimeItemsMixin(superclass) {
         }
         get preProcessors() {
             // TODO: safeMakeObject could return null. Should we throw an error here?
-            return this.prop("preProcessors", this.defaultPreProcessors).map(
-                object_1.safeMakeObject,
-            );
+            return this.prop("preProcessors", this.defaultPreProcessors).map(object_1.safeMakeObject);
         }
         get postProcessors() {
             // TODO: safeMakeObject could return null. Should we throw an error here?
-            return this.prop("postProcessors", this.defaultPostProcessors).map(
-                object_1.safeMakeObject,
-            );
+            return this.prop("postProcessors", this.defaultPostProcessors).map(object_1.safeMakeObject);
         }
         get defaultResults() {
             return [];
@@ -59,7 +51,12 @@ function RuntimeItemsMixin(superclass) {
     };
 }
 exports.RuntimeItemsMixin = RuntimeItemsMixin;
-const allKeys = [ItemKey.results, ItemKey.monitors, ItemKey.postProcessors, ItemKey.preProcessors];
+const allKeys = [
+    ItemKey.results,
+    ItemKey.monitors,
+    ItemKey.postProcessors,
+    ItemKey.preProcessors,
+];
 function RuntimeItemsUILogicMixin(superclass) {
     return class extends RuntimeItemsMixin(superclass) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -111,23 +108,18 @@ function RuntimeItemsUILogicMixin(superclass) {
         // eslint-disable-next-line default-param-last
         _removeRuntimeItem(key = ItemKey.results, config) {
             const newConfig = (0, object_1.safeMakeObject)(config);
-            this._removeRuntimeItemByName(
-                key,
-                (newConfig === null || newConfig === void 0 ? void 0 : newConfig.name) || "",
-            );
+            this._removeRuntimeItemByName(key, (newConfig === null || newConfig === void 0 ? void 0 : newConfig.name) || "");
         }
         _removeRuntimeItemByName(key, name) {
             this._json[key] = this._json[key].filter((x) => x.name !== name);
         }
         _toggleRuntimeItem(
-            // eslint-disable-next-line default-param-last
-            key = ItemKey.results,
-            data,
-            isAdding,
-        ) {
+        // eslint-disable-next-line default-param-last
+        key = ItemKey.results, data, isAdding) {
             if (isAdding) {
                 this._addRuntimeItem(key, data);
-            } else {
+            }
+            else {
                 this._removeRuntimeItem(key, data);
             }
         }
@@ -149,18 +141,16 @@ function RuntimeItemsUILogicMixin(superclass) {
             });
         }
         get monitorNames() {
-            return this.monitors.map((r) => (r === null || r === void 0 ? void 0 : r.name));
+            return this.monitors.map((r) => r === null || r === void 0 ? void 0 : r.name);
         }
         get postProcessorNames() {
-            return this.postProcessors.map((r) => (r === null || r === void 0 ? void 0 : r.name));
+            return this.postProcessors.map((r) => r === null || r === void 0 ? void 0 : r.name);
         }
         get preProcessorNames() {
-            return this.preProcessors.map((r) => (r === null || r === void 0 ? void 0 : r.name));
+            return this.preProcessors.map((r) => r === null || r === void 0 ? void 0 : r.name);
         }
         getResultByName(name) {
-            return this.results.find(
-                (r) => (r === null || r === void 0 ? void 0 : r.name) === name,
-            );
+            return this.results.find((r) => (r === null || r === void 0 ? void 0 : r.name) === name);
         }
     };
 }
