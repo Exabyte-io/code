@@ -1,4 +1,4 @@
-import { ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines } from "../../esse/types";
+import { ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines } from "@mat3ra/esse/lib/js/types";
 import { InMemoryEntityConstructor } from "../in_memory";
 export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {

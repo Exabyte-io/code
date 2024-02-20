@@ -1,6 +1,6 @@
 import type {} from "@mat3ra/esse/lib/js/types";
 
-import { EntitySetSchema } from "../esse/types";
+import { EntitySetSchema } from "@mat3ra/esse/lib/js/types";
 import { InMemoryEntity } from "./in_memory";
 import { InMemoryEntityInSetMixin, InMemoryEntitySetMixin } from "./set/mixins";
 

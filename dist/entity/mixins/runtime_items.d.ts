@@ -1,4 +1,4 @@
-import { NameResultSchema, RuntimeItemSchema } from "../../esse/types";
+import { NameResultSchema, RuntimeItemSchema } from "@mat3ra/esse/lib/js/types";
 import { AnyObject, InMemoryEntityConstructor } from "../in_memory";
 export declare enum ItemKey {
     results = "results",

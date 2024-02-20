@@ -1,4 +1,4 @@
-import { EntitySetSchema, SystemInSetSchema } from "../../../esse/types";
+import { EntitySetSchema, SystemInSetSchema } from "@mat3ra/esse/lib/js/types";
 import { InMemoryEntityConstructor } from "../../in_memory";
 export declare function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {

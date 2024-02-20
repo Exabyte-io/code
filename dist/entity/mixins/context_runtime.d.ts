@@ -1,4 +1,4 @@
-import { JobBaseSchema } from "../../esse/types";
+import { JobBaseSchema } from "@mat3ra/esse/lib/js/types";
 import { InMemoryEntityConstructor } from "../in_memory";
 type RuntimeContext = Required<JobBaseSchema>["runtimeContext"];
 export declare function RuntimeContextFieldMixin<T extends InMemoryEntityConstructor>(superclass: T): {

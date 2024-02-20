@@ -9,7 +9,7 @@ import mapKeys from "lodash/mapKeys";
 import omit from "lodash/omit";
 
 import { AnyObject } from "../entity/in_memory";
-import { NameResultSchema } from "../esse/types";
+import { NameResultSchema } from "@mat3ra/esse/lib/js/types";
 import { safeMakeArray } from "./array";
 import { deepClone } from "./clone";
 
