@@ -1,3 +1,5 @@
+import type {} from "@mat3ra/esse/lib/js/types";
+
 import { ExtendedBaseEntitySchema } from "../../esse/types";
 import { InMemoryEntityConstructor } from "../in_memory";
 

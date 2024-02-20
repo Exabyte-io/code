@@ -1,3 +1,5 @@
+import type {} from "@mat3ra/esse/lib/js/types";
+
 import { ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines } from "../../esse/types";
 import { calculateHashFromObject } from "../../utils/hash";
 import { removeCommentsFromSourceCode, removeEmptyLinesFromString } from "../../utils/str";

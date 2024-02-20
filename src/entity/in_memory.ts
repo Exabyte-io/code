@@ -1,4 +1,5 @@
 import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
+import type {} from "@mat3ra/esse/lib/js/types";
 import * as ajv from "@mat3ra/esse/lib/js/utils/ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
