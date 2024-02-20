@@ -2,6 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm run lint:fix
-npm run lint
 npm run transpile
 git add dist
