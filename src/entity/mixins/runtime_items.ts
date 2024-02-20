@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import type {} from "@mat3ra/esse/lib/js/types";
 import { NameResultSchema, RuntimeItemSchema } from "@mat3ra/esse/lib/js/types";
 
 import { safeMakeObject } from "../../utils/object";
