@@ -256,5 +256,6 @@ export function mergeTerminalNodes<T = string>(tree: Tree<T>, unique = false): T
         }
         return accumulator.concat(value);
     }, [] as T[]);
+    // @ts-ignore
     return unique ? [...new Set(terminalValues)] : terminalValues;
 }
