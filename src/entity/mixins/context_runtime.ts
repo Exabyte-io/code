@@ -1,3 +1,5 @@
+import type {} from "@mat3ra/esse/lib/js/types";
+
 import { JobBaseSchema } from "../../esse/types";
 import { InMemoryEntityConstructor } from "../in_memory";
 
