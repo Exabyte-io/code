@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 // @ts-nocheck
 /* eslint-disable no-unsafe-optional-chaining */
 import { expect } from "chai";
