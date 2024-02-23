@@ -8,7 +8,8 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             entitySetType: string | undefined;
             readonly isOrderedSet: boolean;
             _json: AnyObject;
-            prop<T = null>(name: string, defaultValue?: T | undefined): T;
+            prop<T = undefined>(name: string, defaultValue: T): T;
+            prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
             toJSON(exclude?: string[]): AnyObject;
@@ -37,7 +38,8 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             }[];
             getIndexByIdInOrderedSet(setId: string): number;
             _json: AnyObject;
-            prop<T = null>(name: string, defaultValue?: T | undefined): T;
+            prop<T = undefined>(name: string, defaultValue: T): T;
+            prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
             toJSON(exclude?: string[]): AnyObject;

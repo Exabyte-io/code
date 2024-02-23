@@ -51,7 +51,7 @@ describe("Flowchart Mixins", () => {
             entity.removeUnit(entity.units[2].flowchartId);
         }
         // eslint-disable-next-line no-unused-expressions
-        expect(entity.units[1].next).to.be.null;
+        expect(entity.units[1].next).to.be.undefined;
     });
 
     it("flowchart item can be removed", () => {

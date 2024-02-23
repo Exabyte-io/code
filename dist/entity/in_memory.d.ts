@@ -26,7 +26,8 @@ export declare class InMemoryEntity {
     static readonly jsonSchema?: JSONSchema;
     _json: AnyObject;
     constructor(config?: {});
-    prop<T = null>(name: string, defaultValue?: T): T;
+    prop<T = undefined>(name: string, defaultValue: T): T;
+    prop<T = undefined>(name: string): T | undefined;
     /**
      * @summary Set a prop
      */

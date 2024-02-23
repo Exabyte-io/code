@@ -33,7 +33,7 @@ export function FlowchartItemMixin<T extends InMemoryEntityConstructor>(supercla
             return this.prop("next");
         }
 
-        set next(flowchartId: string) {
+        set next(flowchartId: string | undefined) {
             this.setProp("next", flowchartId);
         }
     };

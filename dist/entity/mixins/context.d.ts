@@ -5,14 +5,15 @@ export declare function ContextAndRenderFieldsMixin<T extends InMemoryEntityCons
         _context: Context;
         context: AnyObject;
         updateContext(ctx?: {}, executeRender?: boolean): void;
-        getPersistentContext(): object;
+        getPersistentContext(): object | undefined;
         updatePersistentContext(ctx?: object): void;
         getCombinedContext(): {
             [x: string]: unknown;
         };
         render(context?: AnyObject): void;
         _json: AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;
@@ -39,7 +40,8 @@ export declare function DomainContextProviderMixin<T extends InMemoryEntityConst
         _contextProviders: ContextProvider[];
         readonly contextProviders: ContextProvider[];
         _json: AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;
@@ -63,11 +65,12 @@ export declare function ImportantSettingsProviderMixin<T extends InMemoryEntityC
         readonly important: any;
         setImportant(key: string, value: unknown): void;
         readonly importantSettingsProviders: ContextProvider[];
-        isImportantEdited: boolean;
+        isImportantEdited: boolean | undefined;
         _contextProviders: ContextProvider[];
         readonly contextProviders: ContextProvider[];
         _json: AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): AnyObject;

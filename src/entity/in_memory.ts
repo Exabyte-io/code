@@ -52,15 +52,16 @@ export class InMemoryEntity {
             : clone(config);
     }
 
-    prop<T = null>(name: string, defaultValue?: T): T;
+    prop<T = undefined>(name: string, defaultValue: T): T;
+
+    prop<T = undefined>(name: string): T | undefined;
 
     /**
      * @summary Return a prop or the default
-     * @returns {*}
      */
-    prop<T>(name: string, defaultValue: T | null = null): unknown {
+    prop<T = undefined>(name: string, defaultValue?: T): T | undefined {
         // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
-        return getValue(this._json, name, defaultValue) || defaultValue;
+        return (getValue(this._json, name, defaultValue) as T) || defaultValue;
     }
 
     /**

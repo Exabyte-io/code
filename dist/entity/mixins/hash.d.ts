@@ -10,7 +10,8 @@ export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(s
          */
         calculateHash(): string;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -34,7 +35,8 @@ export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructo
         input: ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines[];
         readonly hashFromArrayInputContent: string;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;

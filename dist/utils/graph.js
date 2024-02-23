@@ -25,7 +25,7 @@ function setNextLinks(units) {
             if (i > 0)
                 units[i - 1].next = units[i].flowchartId;
         }
-        else if (!flowchartIds.includes(units[i].next)) {
+        else if (!flowchartIds.includes(units[i].next || "")) {
             // newly removed units may create broken next links => fix it
             units[i].next = units[i + 1].flowchartId;
         }
