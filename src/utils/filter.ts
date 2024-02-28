@@ -1,7 +1,7 @@
 import uniqBy from "lodash/uniqBy";
 
 // Entity or object with path property
-interface PathObject {
+export interface PathObject {
     path: string;
 }
 
