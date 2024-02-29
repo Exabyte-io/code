@@ -2,7 +2,7 @@ import { InMemoryEntity } from "../entity/in_memory";
 
 export type UnitEntity = InMemoryEntity & {
     head: boolean;
-    next: string;
+    next?: string;
     flowchartId: string;
 };
 
@@ -28,7 +28,7 @@ export function setNextLinks(units: UnitEntity[]): UnitEntity[] {
             // newly added units don't have next set yet => set it
             units[i].next = units[i + 1].flowchartId;
             if (i > 0) units[i - 1].next = units[i].flowchartId;
-        } else if (!flowchartIds.includes(units[i].next)) {
+        } else if (!flowchartIds.includes(units[i].next || "")) {
             // newly removed units may create broken next links => fix it
             units[i].next = units[i + 1].flowchartId;
         }

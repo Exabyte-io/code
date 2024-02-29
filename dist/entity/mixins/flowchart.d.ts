@@ -4,9 +4,10 @@ export declare function FlowchartItemMixin<T extends InMemoryEntityConstructor>(
     new (...params: any[]): {
         readonly flowchartId: string;
         head: boolean;
-        next: string;
+        next: string | undefined;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -36,7 +37,8 @@ export declare function FlowchartEntityMixin<T extends InMemoryEntityConstructor
         getUnit(flowchartId: string): UnitEntity | undefined;
         getUnitIndexByFlowchartId(flowchartId: string): number;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;

@@ -3,7 +3,8 @@ export declare function DefaultableMixin<T extends InMemoryEntityConstructor>(su
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -29,7 +30,8 @@ export declare function TaggableMixin<T extends InMemoryEntityConstructor>(super
         tags: string[];
         setTags(array: string[]): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -52,7 +54,8 @@ export declare function HasScopeTrackMixin<T extends InMemoryEntityConstructor>(
     new (...args: any[]): {
         scopeTrack: unknown[];
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -76,7 +79,8 @@ export declare function HasMetadataMixin<T extends InMemoryEntityConstructor>(su
         metadata: object;
         updateMetadata(object: object): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -98,9 +102,10 @@ export declare function HasMetadataMixin<T extends InMemoryEntityConstructor>(su
 export declare function HasDescriptionMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
         description: string;
-        descriptionObject: {};
+        descriptionObject: {} | undefined;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -124,7 +129,8 @@ export declare function NamedEntityMixin<T extends InMemoryEntityConstructor>(su
         name: string;
         setName(name: string): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -148,7 +154,8 @@ export declare function HasConsistencyChecksMixin<T extends InMemoryEntityConstr
         consistencyChecks: object[];
         addConsistencyChecks(array: object[]): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;

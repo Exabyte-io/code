@@ -1,7 +1,7 @@
 import { InMemoryEntity } from "../entity/in_memory";
 export type UnitEntity = InMemoryEntity & {
     head: boolean;
-    next: string;
+    next?: string;
     flowchartId: string;
 };
 /**

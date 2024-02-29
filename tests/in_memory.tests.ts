@@ -36,7 +36,7 @@ describe("InMemoryEntity", () => {
     it("prop gets props", () => {
         const entity = new InMemoryEntity(obj);
         expect(entity.prop("a")).to.equal("b");
-        expect(entity.prop("b")).to.equal(null);
+        expect(entity.prop("b")).to.equal(undefined);
         expect(entity.prop("b", "a")).to.equal("a");
     });
 

@@ -55,9 +55,8 @@ class InMemoryEntity {
     }
     /**
      * @summary Return a prop or the default
-     * @returns {*}
      */
-    prop(name, defaultValue = null) {
+    prop(name, defaultValue) {
         // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
         return (0, get_1.default)(this._json, name, defaultValue) || defaultValue;
     }

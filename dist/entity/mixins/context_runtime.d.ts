@@ -10,7 +10,8 @@ export declare function RuntimeContextFieldMixin<T extends InMemoryEntityConstru
             runtimeContext: {};
         };
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = null>(name: string, defaultValue?: T_1 | undefined): T_1;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;

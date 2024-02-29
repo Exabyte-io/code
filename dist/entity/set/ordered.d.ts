@@ -4,7 +4,8 @@ export declare const OrderedInMemoryEntitySet: {
         entitySetType: string | undefined;
         readonly isOrderedSet: boolean;
         _json: import("../in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
@@ -33,7 +34,8 @@ export declare const OrderedInMemoryEntitySet: {
         }[];
         getIndexByIdInOrderedSet(setId: string): number;
         _json: import("../in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;

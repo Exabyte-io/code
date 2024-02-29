@@ -3,7 +3,8 @@ export declare const DefaultableInMemoryEntity: {
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -29,7 +30,8 @@ export declare const NamedInMemoryEntity: {
         name: string;
         setName(name: string): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -53,7 +55,8 @@ export declare const NamedDefaultableInMemoryEntity: {
         name: string;
         setName(name: string): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -75,7 +78,8 @@ export declare const NamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -101,7 +105,8 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         metadata: object;
         updateMetadata(object: object): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -124,7 +129,8 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         name: string;
         setName(name: string): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -146,7 +152,8 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -172,7 +179,8 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         consistencyChecks: object[];
         addConsistencyChecks(array: object[]): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -195,7 +203,8 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         metadata: object;
         updateMetadata(object: object): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -218,7 +227,8 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         name: string;
         setName(name: string): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -240,7 +250,8 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -266,11 +277,12 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         readonly important: any;
         setImportant(key: string, value: unknown): void;
         readonly importantSettingsProviders: import("./mixins/context").ContextProvider[];
-        isImportantEdited: boolean;
+        isImportantEdited: boolean | undefined;
         _contextProviders: import("./mixins/context").ContextProvider[];
         readonly contextProviders: import("./mixins/context").ContextProvider[];
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -300,7 +312,8 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         readonly totalRepetitions: number;
         setTotalRepetitions(totalRepetition: number): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -323,7 +336,8 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         name: string;
         setName(name: string): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -345,7 +359,8 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -371,14 +386,15 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         _context: import("./in_memory").AnyObject;
         context: import("./in_memory").AnyObject;
         updateContext(ctx?: {}, executeRender?: boolean): void;
-        getPersistentContext(): object;
+        getPersistentContext(): object | undefined;
         updatePersistentContext(ctx?: object): void;
         getCombinedContext(): {
             [x: string]: unknown;
         };
         render(context?: import("./in_memory").AnyObject): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -408,7 +424,8 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         readonly totalRepetitions: number;
         setTotalRepetitions(totalRepetition: number): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -431,7 +448,8 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         name: string;
         setName(name: string): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -453,7 +471,8 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -479,7 +498,8 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getHashObject(): {};
         calculateHash(): string;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -502,14 +522,15 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         _context: import("./in_memory").AnyObject;
         context: import("./in_memory").AnyObject;
         updateContext(ctx?: {}, executeRender?: boolean): void;
-        getPersistentContext(): object;
+        getPersistentContext(): object | undefined;
         updatePersistentContext(ctx?: object): void;
         getCombinedContext(): {
             [x: string]: unknown;
         };
         render(context?: import("./in_memory").AnyObject): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -532,11 +553,12 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         readonly important: any;
         setImportant(key: string, value: unknown): void;
         readonly importantSettingsProviders: import("./mixins/context").ContextProvider[];
-        isImportantEdited: boolean;
+        isImportantEdited: boolean | undefined;
         _contextProviders: import("./mixins/context").ContextProvider[];
         readonly contextProviders: import("./mixins/context").ContextProvider[];
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -560,7 +582,8 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         readonly allowedMonitors: never[];
         readonly allowedPostProcessors: never[];
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -610,7 +633,8 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
             preProcessors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
             postProcessors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
         };
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -640,7 +664,8 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         readonly totalRepetitions: number;
         setTotalRepetitions(totalRepetition: number): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -663,7 +688,8 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         name: string;
         setName(name: string): void;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
@@ -685,7 +711,8 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
     new (...args: any[]): {
         readonly isDefault: boolean;
         _json: import("./in_memory").AnyObject;
-        prop<T = null>(name: string, defaultValue?: T | undefined): T;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
