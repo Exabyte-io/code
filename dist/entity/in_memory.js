@@ -30,6 +30,7 @@ exports.InMemoryEntity = exports.EntityError = exports.ValidationErrorCode = voi
 const ajv = __importStar(require("@mat3ra/esse/lib/js/utils/ajv"));
 const get_1 = __importDefault(require("lodash/get"));
 const omit_1 = __importDefault(require("lodash/omit"));
+const set_1 = __importDefault(require("lodash/set"));
 const clone_1 = require("../utils/clone");
 var ValidationErrorCode;
 (function (ValidationErrorCode) {
@@ -64,13 +65,22 @@ class InMemoryEntity {
      * @summary Set a prop
      */
     setProp(name, value) {
-        this._json[name] = value;
+        // lodash.set is required to support dot-notation in keys (e.g. "compute.cluster.fqdn")
+        (0, set_1.default)(this._json, name, value);
     }
     /**
      * @summary Remove a prop
      */
     unsetProp(name) {
         delete this._json[name];
+    }
+    /**
+     * Updates internal JSON. Works the same as Mongo's $set operator
+     * @see https://www.mongodb.com/docs/manual/reference/operator/update/set/#-set
+     */
+    setProps(json = {}) {
+        Object.entries(json).forEach(([key, value]) => this.setProp(key, value));
+        return this;
     }
     /**
      * @summary Array of fields to exclude from resulted JSON

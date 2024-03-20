@@ -16,6 +16,7 @@ export declare function ContextAndRenderFieldsMixin<T extends InMemoryEntityCons
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: AnyObject): any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
@@ -44,6 +45,7 @@ export declare function DomainContextProviderMixin<T extends InMemoryEntityConst
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: AnyObject): any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
@@ -73,6 +75,7 @@ export declare function ImportantSettingsProviderMixin<T extends InMemoryEntityC
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: AnyObject): any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;

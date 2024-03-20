@@ -14,6 +14,7 @@ export declare function RuntimeContextFieldMixin<T extends InMemoryEntityConstru
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../in_memory").AnyObject): any;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
         clone(extraContext?: object | undefined): any;

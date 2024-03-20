@@ -8,6 +8,7 @@ export declare const OrderedInMemoryEntitySet: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
@@ -38,6 +39,7 @@ export declare const OrderedInMemoryEntitySet: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;

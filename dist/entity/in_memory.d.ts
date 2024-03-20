@@ -37,6 +37,11 @@ export declare class InMemoryEntity {
      */
     unsetProp(name: string): void;
     /**
+     * Updates internal JSON. Works the same as Mongo's $set operator
+     * @see https://www.mongodb.com/docs/manual/reference/operator/update/set/#-set
+     */
+    setProps(json?: AnyObject): this;
+    /**
      * @summary Array of fields to exclude from resulted JSON
      */
     toJSON(exclude?: string[]): AnyObject;

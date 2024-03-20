@@ -12,6 +12,7 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
+            setProps(json?: AnyObject): any;
             toJSON(exclude?: string[]): AnyObject;
             toJSONSafe(exclude?: string[]): AnyObject;
             toJSONQuick(exclude?: string[]): AnyObject;
@@ -42,6 +43,7 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
+            setProps(json?: AnyObject): any;
             toJSON(exclude?: string[]): AnyObject;
             toJSONSafe(exclude?: string[]): AnyObject;
             toJSONQuick(exclude?: string[]): AnyObject;

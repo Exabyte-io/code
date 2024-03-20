@@ -26,6 +26,7 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: AnyObject): any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
@@ -90,6 +91,7 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: AnyObject): any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
@@ -116,6 +118,7 @@ export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConst
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: AnyObject): any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;

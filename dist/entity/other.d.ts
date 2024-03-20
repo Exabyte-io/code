@@ -7,6 +7,7 @@ export declare const DefaultableInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -34,6 +35,7 @@ export declare const NamedInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -59,6 +61,7 @@ export declare const NamedDefaultableInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -82,6 +85,7 @@ export declare const NamedDefaultableInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -109,6 +113,7 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -133,6 +138,7 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -156,6 +162,7 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -183,6 +190,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -207,6 +215,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -231,6 +240,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -254,6 +264,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -285,6 +296,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -316,6 +328,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -340,6 +353,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -363,6 +377,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -397,6 +412,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -428,6 +444,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -452,6 +469,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -475,6 +493,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -502,6 +521,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -533,6 +553,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -561,6 +582,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -586,6 +608,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -637,6 +660,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -668,6 +692,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -692,6 +717,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -715,6 +741,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;

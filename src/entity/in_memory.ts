@@ -3,6 +3,7 @@ import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
 import * as ajv from "@mat3ra/esse/lib/js/utils/ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
+import set from "lodash/set";
 
 import { clone, deepClone } from "../utils/clone";
 
@@ -68,7 +69,8 @@ export class InMemoryEntity {
      * @summary Set a prop
      */
     setProp(name: string, value: unknown) {
-        this._json[name] = value;
+        // lodash.set is required to support dot-notation in keys (e.g. "compute.cluster.fqdn")
+        set(this._json, name, value);
     }
 
     /**
@@ -76,6 +78,15 @@ export class InMemoryEntity {
      */
     unsetProp(name: string) {
         delete this._json[name];
+    }
+
+    /**
+     * Updates internal JSON. Works the same as Mongo's $set operator
+     * @see https://www.mongodb.com/docs/manual/reference/operator/update/set/#-set
+     */
+    setProps(json: AnyObject = {}) {
+        Object.entries(json).forEach(([key, value]) => this.setProp(key, value));
+        return this;
     }
 
     /**

@@ -14,6 +14,7 @@ export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(s
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
@@ -39,6 +40,7 @@ export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructo
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
