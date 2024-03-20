@@ -144,7 +144,19 @@ export class InMemoryEntity {
     }
 
     clean(config: AnyObject) {
-        return (this.constructor as typeof InMemoryEntity).validateData(config, true);
+        try {
+            return (this.constructor as typeof InMemoryEntity).validateData(config, true);
+        } catch (err) {
+            if (err instanceof EntityError) {
+                console.error({
+                    error: JSON.stringify(err.details?.error),
+                    json: JSON.stringify(err.details?.json),
+                    schema: JSON.stringify(err.details?.schema),
+                });
+            }
+
+            throw err;
+        }
     }
 
     isValid(): boolean {

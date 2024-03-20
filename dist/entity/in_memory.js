@@ -127,7 +127,20 @@ class InMemoryEntity {
         }
     }
     clean(config) {
-        return this.constructor.validateData(config, true);
+        var _a, _b, _c;
+        try {
+            return this.constructor.validateData(config, true);
+        }
+        catch (err) {
+            if (err instanceof EntityError) {
+                console.error({
+                    error: JSON.stringify((_a = err.details) === null || _a === void 0 ? void 0 : _a.error),
+                    json: JSON.stringify((_b = err.details) === null || _b === void 0 ? void 0 : _b.json),
+                    schema: JSON.stringify((_c = err.details) === null || _c === void 0 ? void 0 : _c.schema),
+                });
+            }
+            throw err;
+        }
     }
     isValid() {
         try {
