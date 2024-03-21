@@ -38,8 +38,8 @@ function ContextAndRenderFieldsMixin(superclass) {
             return { ...this.getPersistentContext(), ...this.context };
         }
         // override in subclasses
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        render(context = this.context) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        render(_context = this.context) {
             throw new Error("RenderInitMixin: render not implemented in derived class");
         }
     };

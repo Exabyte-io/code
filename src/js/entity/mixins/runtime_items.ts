@@ -107,13 +107,10 @@ export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(su
 
         /**
          * @summary Must pass config for subclasses to override and use initialization logic
-         * @param keys
-         * @param config
          * @private
          */
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        // @ts-ignore
-        _initRuntimeItems(keys: ItemKey[], config: object) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _initRuntimeItems(keys: ItemKey[], _config: object) {
             // keeping this separate from constructor so that it can be overridden in mixing (eg. in `ExecutionUnit`)
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const me = this;

@@ -4,7 +4,6 @@ import fs from "fs";
 import yaml from "js-yaml";
 
 import { includeType } from "../../../src/js/utils/yaml";
-// @ts-ignore
 import { YAML_INCLUDE_FILE } from "../enums";
 
 const includeSchema = yaml.DEFAULT_SCHEMA.extend([includeType]);
