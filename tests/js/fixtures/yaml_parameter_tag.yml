@@ -6,18 +6,18 @@ case1: !parameter
 # parse a custom !parameter tag with a ref
 case2: !parameter
     key: job.workflow
-    ref: tests/fixtures/yaml_parameter_ref.yml#/job.workflow # must be relative to package directory
+    ref: tests/js/fixtures/yaml_parameter_ref.yml#/job.workflow # must be relative to package directory
 # ----------------------
 # parse a custom !parameter tag with a ref and exclude
 case3: !parameter
     key: workflow
-    ref: tests/fixtures/yaml_parameter_ref.yml#/job.workflow
+    ref: tests/js/fixtures/yaml_parameter_ref.yml#/job.workflow
     exclude: run
 # ----------------------
 # parse a custom !parameter tag with a ref and exclude using a regular expression
 case4: !parameter
     key: job.workflow
-    ref: tests/fixtures/yaml_parameter_ref.yml#/job.workflow
+    ref: tests/js/fixtures/yaml_parameter_ref.yml#/job.workflow
     exclude: (run|pause)
 # ----------------------
 # return the original data when an error occurs

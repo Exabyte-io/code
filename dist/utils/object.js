@@ -50,7 +50,7 @@ exports.getOneMatchFromObject = getOneMatchFromObject;
  */
 function convertKeysToCamelCaseForObject(obj) {
     const newObj = (0, clone_1.deepClone)(obj);
-    return (0, mapKeys_1.default)(newObj, (v, k) => (0, camelCase_1.default)(k));
+    return (0, mapKeys_1.default)(newObj, (_v, k) => (0, camelCase_1.default)(k));
 }
 exports.convertKeysToCamelCaseForObject = convertKeysToCamelCaseForObject;
 function renameKeysForObject(

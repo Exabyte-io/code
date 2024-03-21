@@ -82,12 +82,10 @@ function RuntimeItemsUILogicMixin(superclass) {
         }
         /**
          * @summary Must pass config for subclasses to override and use initialization logic
-         * @param keys
-         * @param config
          * @private
          */
-        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-        _initRuntimeItems(keys, config) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        _initRuntimeItems(keys, _config) {
             // keeping this separate from constructor so that it can be overridden in mixing (eg. in `ExecutionUnit`)
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const me = this;
