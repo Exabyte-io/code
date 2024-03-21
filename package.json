@@ -1,14 +1,16 @@
 {
-    "name": "@exabyte-io/code.js",
+    "name": "@mat3ra/code",
     "version": "0.0.0",
-    "description": "COre DEfinitions in JS for Mat3ra.com (Exabyte.io)",
+    "description": "COre DEfinitions",
     "scripts": {
-        "test": "mocha",
-        "lint": "eslint src tests && prettier --write src tests",
-        "lint:fix": "eslint --fix --cache src tests && prettier --write src tests",
-        "transpile": "tsc",
-        "prettier": "prettier --check src tests",
-        "prepare": "husky install"
+        "lint": "eslint --cache src/js tests/js && prettier --write src/js tests/js",
+        "lint:fix": "eslint --fix --cache src/js tests/js && prettier --write src/js tests/js",
+        "lint:staged": "lint-staged",
+        "postinstall": "npm run transpile",
+        "prepare": "husky install",
+        "prettier": "prettier --check src/js tests/js",
+        "test": "nyc --reporter=text mocha --recursive --bail tests/js",
+        "transpile": "tsc"
     },
     "repository": {
         "type": "git",
@@ -31,7 +33,7 @@
     },
     "files": [
         "/dist",
-        "/src",
+        "/src/js",
         ".babelrc",
         "modules.d.ts",
         "tsconfig.json"
