@@ -1,0 +1,9 @@
+export declare const FIXTURES_DIR: string;
+export declare const YAML_COMBINE_FILE: string;
+export declare const YAML_LIST_TO_STRING_FILE: string;
+export declare const YAML_PARAMETER_FILE: string;
+export declare const YAML_ESSE_FILE: string;
+export declare const YAML_INCLUDE_FILE: string;
+export declare const YAML_FLATTEN_FILE: string;
+export declare const YAML_READFILE_FILE: string;
+export declare const YAML_CONCAT_STRING_FILE: string;
