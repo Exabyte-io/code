@@ -1,33 +1,48 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "jsx": "react",
-    "lib": ["ES2019", "dom"],
+    /* Basic Options */
+    "target": "es2019",
+    "module": "esNext",
     "allowJs": true,
-    "module": "commonjs",
-    "moduleResolution": "Node",
-    "declaration": true,
+    "jsx": "react",
+    "incremental": true,
+    "noEmit": true,
     "outDir": "./dist",
-    "noEmitOnError": false,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+
+    /* Strict Type-Checking Options */
     "strict": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false,
+
+    /* Module Resolution Options */
+    "baseUrl": "./src/js",
+    "rootDir": "./src/js",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "types": ["mocha", "node"],
-    "rootDir": "./src",
-    "baseUrl": "./",
-    "resolveJsonModule": true
+    "types": ["mocha", "node"]
   },
   "include": [
-      "./src"
+    "./src/js"
   ],
   "exclude": [
-      "node_modules",
-      "dist"
+    "node_modules",
+    "dist",
+    "lib"
   ],
   "ts-node": {
     "files": true,
     "compilerOptions": {}
-  },
+  }
 }
