@@ -1,0 +1,44 @@
+# parse a custom !parameter tag with a key and values
+case1: !parameter
+    key: some.key
+    values: [a, b, c]
+# ----------------------
+# parse a custom !parameter tag with a ref
+case2: !parameter
+    key: job.workflow
+    ref: tests/js/fixtures/yaml_parameter_ref.yml#/job.workflow # must be relative to package directory
+# ----------------------
+# parse a custom !parameter tag with a ref and exclude
+case3: !parameter
+    key: workflow
+    ref: tests/js/fixtures/yaml_parameter_ref.yml#/job.workflow
+    exclude: run
+# ----------------------
+# parse a custom !parameter tag with a ref and exclude using a regular expression
+case4: !parameter
+    key: job.workflow
+    ref: tests/js/fixtures/yaml_parameter_ref.yml#/job.workflow
+    exclude: (run|pause)
+# ----------------------
+# return the original data when an error occurs
+case5: !parameter
+    key: error.key
+    ref: non_existent_file.yaml
+# add null to values array
+case6: !parameter
+    key: some.key
+    values: [a, b, c]
+    isOptional: true
+# exclude values using regex and add null to values array
+case7: !parameter
+    key: some.key
+    values: [a, b, c]
+    exclude: b
+    isOptional: true
+# merge values with locally defined items and arrays
+case8: !parameter
+    key: merged
+    values: [a, b]
+    merge:
+        - c
+        - [d, e]
