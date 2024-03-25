@@ -35,7 +35,7 @@ const clone_1 = require("../utils/clone");
 var ValidationErrorCode;
 (function (ValidationErrorCode) {
     ValidationErrorCode["IN_MEMORY_ENTITY_DATA_INVALID"] = "IN_MEMORY_ENTITY_DATA_INVALID";
-})(ValidationErrorCode = exports.ValidationErrorCode || (exports.ValidationErrorCode = {}));
+})(ValidationErrorCode || (exports.ValidationErrorCode = ValidationErrorCode = {}));
 class EntityError extends Error {
     constructor({ code, details }) {
         super(code);

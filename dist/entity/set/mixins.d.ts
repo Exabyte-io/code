@@ -23,8 +23,8 @@ export declare function InMemoryEntityInSetMixin<T extends InMemoryEntityConstru
             index?: number | undefined;
         } | undefined;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../in_memory").AnyObject): any;
@@ -43,10 +43,10 @@ export declare function InMemoryEntityInSetMixin<T extends InMemoryEntityConstru
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T;
+} & T_2;
 export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
-        containsEntity<T_3 extends {
+        containsEntity<T_2 extends {
             inSet: {
                 _id?: string | undefined;
                 cls?: string | undefined;
@@ -69,8 +69,8 @@ export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstruct
                 index?: number | undefined;
             } | undefined;
             _json: import("../in_memory").AnyObject;
-            prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-            prop<T_2 = undefined>(name: string): T_2 | undefined;
+            prop<T = undefined>(name: string, defaultValue: T): T;
+            prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
             setProps(json?: import("../in_memory").AnyObject): any;
@@ -88,10 +88,10 @@ export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstruct
             readonly isSystemEntity: boolean;
             getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
             getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
-        } & import("../in_memory").InMemoryEntity>(entity?: T_3 | undefined): boolean | undefined;
+        } & import("../in_memory").InMemoryEntity>(entity?: T_2 | undefined): boolean | undefined;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../in_memory").AnyObject): any;
@@ -110,4 +110,4 @@ export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstruct
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T;
+} & T_3;

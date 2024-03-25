@@ -17,8 +17,8 @@ export declare function HasRepetitionMixin<T extends InMemoryEntityConstructor>(
         readonly totalRepetitions: number;
         setTotalRepetitions(totalRepetition: number): void;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../in_memory").AnyObject): any;
@@ -37,5 +37,5 @@ export declare function HasRepetitionMixin<T extends InMemoryEntityConstructor>(
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T;
+} & T_2;
 export {};

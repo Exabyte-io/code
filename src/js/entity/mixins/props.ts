@@ -13,6 +13,7 @@ export function DefaultableMixin<T extends InMemoryEntityConstructor>(superclass
         declare static readonly defaultConfig: object | null;
 
         static createDefault() {
+            // @ts-ignore
             return new this.prototype.constructor(this.defaultConfig);
         }
     };

@@ -6,8 +6,8 @@ export declare function FlowchartItemMixin<T extends InMemoryEntityConstructor>(
         head: boolean;
         next: string | undefined;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../in_memory").AnyObject): any;
@@ -26,7 +26,7 @@ export declare function FlowchartItemMixin<T extends InMemoryEntityConstructor>(
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T;
+} & T_2;
 export declare function FlowchartEntityMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...params: any[]): {
         _units: UnitEntity[];
@@ -38,8 +38,8 @@ export declare function FlowchartEntityMixin<T extends InMemoryEntityConstructor
         getUnit(flowchartId: string): UnitEntity | undefined;
         getUnitIndexByFlowchartId(flowchartId: string): number;
         _json: import("../in_memory").AnyObject;
-        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../in_memory").AnyObject): any;
@@ -58,4 +58,4 @@ export declare function FlowchartEntityMixin<T extends InMemoryEntityConstructor
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T;
+} & T_2;

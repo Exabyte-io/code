@@ -5,8 +5,8 @@ export declare function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityCo
         entitySetType: EntitySetSchema["entitySetType"];
         readonly isOrderedSet: boolean;
         _json: import("../../in_memory").AnyObject;
-        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../../in_memory").AnyObject): any;
@@ -25,7 +25,7 @@ export declare function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityCo
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../../in_memory").InMemoryEntity[], entity: string, name: string): import("../../in_memory").InMemoryEntity;
     };
-} & T;
+} & T_2;
 export interface OrderedInMemoryEntityInSet {
     inSet: SystemInSetSchema["inSet"];
     getIndexByIdInOrderedSet(setId: string): number;
@@ -35,8 +35,8 @@ export declare function OrderedInMemoryEntityInSetMixin<T extends InMemoryEntity
         inSet: Required<SystemInSetSchema>["inSet"];
         getIndexByIdInOrderedSet(setId: string): number;
         _json: import("../../in_memory").AnyObject;
-        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T = undefined>(name: string, defaultValue: T): T;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../../in_memory").AnyObject): any;
@@ -55,4 +55,4 @@ export declare function OrderedInMemoryEntityInSetMixin<T extends InMemoryEntity
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../../in_memory").InMemoryEntity[], entity: string, name: string): import("../../in_memory").InMemoryEntity;
     };
-} & T;
+} & T_2;
