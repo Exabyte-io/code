@@ -1,4 +1,4 @@
-import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "@mat3ra/esse/lib/js/types";
+import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "@mat3ra/esse/dist/js/types";
 import { InMemoryEntity } from "../entity";
 type Constructor<T = any> = new (...args: any[]) => T;
 export declare function ApplicationContextMixin<T extends Constructor>(superclass: T): {

@@ -1,4 +1,4 @@
-import { JobBaseSchema } from "@mat3ra/esse/lib/js/types";
+import { JobBaseSchema } from "@mat3ra/esse/dist/js/types";
 import { InMemoryEntityConstructor } from "../in_memory";
 type RuntimeContext = Required<JobBaseSchema>["runtimeContext"];
 export declare function RuntimeContextFieldMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -26,7 +26,7 @@ export declare function RuntimeContextFieldMixin<T extends InMemoryEntityConstru
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;

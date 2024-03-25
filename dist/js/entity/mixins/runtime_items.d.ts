@@ -1,4 +1,4 @@
-import { NameResultSchema, RuntimeItemSchema } from "@mat3ra/esse/lib/js/types";
+import { NameResultSchema, RuntimeItemSchema } from "@mat3ra/esse/dist/js/types";
 import { AnyObject, InMemoryEntityConstructor } from "../in_memory";
 export declare enum ItemKey {
     results = "results",
@@ -39,7 +39,7 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
@@ -102,7 +102,7 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
@@ -129,7 +129,7 @@ export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConst
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;

@@ -27,7 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InMemoryEntity = exports.EntityError = exports.ValidationErrorCode = void 0;
-const ajv = __importStar(require("@mat3ra/esse/lib/js/utils/ajv"));
+const ajv = __importStar(require("@mat3ra/esse/dist/js/utils/ajv"));
 const get_1 = __importDefault(require("lodash/get"));
 const omit_1 = __importDefault(require("lodash/omit"));
 const set_1 = __importDefault(require("lodash/set"));

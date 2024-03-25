@@ -29,7 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JsYamlAllSchemas = exports.JsYamlTypes = exports.concatStringType = exports.readFileType = exports.flattenType = exports.listToStringType = exports.includeType = exports.esseType = exports.combineType = exports.parameterType = void 0;
 // @ts-nocheck
 // TODO: remove ts-nocheck
-const JSONSchemasInterfaceServer_1 = __importDefault(require("@mat3ra/esse/lib/js/esse/JSONSchemasInterfaceServer"));
+const JSONSchemasInterfaceServer_1 = __importDefault(require("@mat3ra/esse/dist/js/esse/JSONSchemasInterfaceServer"));
 const fs = __importStar(require("fs"));
 const yaml = __importStar(require("js-yaml"));
 const lodash = __importStar(require("lodash"));

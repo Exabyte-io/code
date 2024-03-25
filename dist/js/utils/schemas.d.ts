@@ -1,5 +1,5 @@
 import { JSONSchema7 } from "json-schema";
-export * from "@mat3ra/esse/lib/js/esse/schemaUtils";
+export * from "@mat3ra/esse/dist/js/esse/schemaUtils";
 export declare const schemas: {
     [key: string]: string;
 };

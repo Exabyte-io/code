@@ -41,7 +41,7 @@ declare const InMemoryEntitySet_base: {
             getClsName(): string;
             readonly slug: string;
             readonly isSystemEntity: boolean;
-            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
             getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         } & InMemoryEntity>(entity?: T_2 | undefined): boolean | undefined;
         _json: import("./in_memory").AnyObject;
@@ -62,7 +62,7 @@ declare const InMemoryEntitySet_base: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -106,7 +106,7 @@ declare const InMemoryEntitySet_base: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & typeof InMemoryEntity;
