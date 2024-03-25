@@ -10,8 +10,8 @@ export declare function RuntimeContextFieldMixin<T extends InMemoryEntityConstru
             runtimeContext: {};
         };
         _json: import("../in_memory").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T_1 = undefined>(name: string): T_1 | undefined;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../in_memory").AnyObject): any;
@@ -29,5 +29,5 @@ export declare function RuntimeContextFieldMixin<T extends InMemoryEntityConstru
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T_2;
+} & T;
 export {};

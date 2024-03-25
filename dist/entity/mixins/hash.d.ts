@@ -10,8 +10,8 @@ export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(s
          */
         calculateHash(): string;
         _json: import("../in_memory").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T_1 = undefined>(name: string): T_1 | undefined;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../in_memory").AnyObject): any;
@@ -30,14 +30,14 @@ export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(s
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T_2;
+} & T;
 export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
         input: ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines[];
         readonly hashFromArrayInputContent: string;
         _json: import("../in_memory").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T_1 = undefined>(name: string): T_1 | undefined;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("../in_memory").AnyObject): any;
@@ -56,4 +56,4 @@ export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructo
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T_2;
+} & T;

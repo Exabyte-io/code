@@ -22,8 +22,8 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
             postProcessors: NameResultSchema[];
         };
         _json: AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T_1 = undefined>(name: string): T_1 | undefined;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: AnyObject): any;
@@ -42,7 +42,7 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T_2;
+} & T;
 export interface RuntimeItemsUILogicJSON extends AnyObject {
     results?: NameResultSchema[];
     monitors?: NameResultSchema[];
@@ -85,8 +85,8 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
             preProcessors: NameResultSchema[];
             postProcessors: NameResultSchema[];
         };
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T_1 = undefined>(name: string): T_1 | undefined;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: AnyObject): any;
@@ -105,15 +105,15 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T_2;
+} & T;
 export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
         readonly allowedResults: never[];
         readonly allowedMonitors: never[];
         readonly allowedPostProcessors: never[];
         _json: AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T_1 = undefined>(name: string): T_1 | undefined;
+        prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
+        prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: AnyObject): any;
@@ -132,4 +132,4 @@ export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConst
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
-} & T_2;
+} & T;

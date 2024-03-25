@@ -8,7 +8,7 @@ var ItemKey;
     ItemKey["monitors"] = "monitors";
     ItemKey["preProcessors"] = "preProcessors";
     ItemKey["postProcessors"] = "postProcessors";
-})(ItemKey || (exports.ItemKey = ItemKey = {}));
+})(ItemKey = exports.ItemKey || (exports.ItemKey = {}));
 /*
  * @summary Contains runtime items: results, monitors, pre/postProcessors
  *          Is meant to work with Entity, InMemoryEntity b/c of `prop` extraction from `_json`.
