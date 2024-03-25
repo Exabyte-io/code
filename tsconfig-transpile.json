@@ -1,17 +1,3 @@
 {
-    "extends": "@mat3ra/tsconfig/tsconfig.json",
-    "compilerOptions": {
-        "outDir": "./dist",
-        "baseUrl": "./",          // Base directory for the parent project
-        "rootDir": "./src/js",    // Root directory containing the sources
-        "resolveJsonModule": true
-    },
-    "exclude": [
-        "./node_modules",
-        "./dist"
-    ],
-    "include": [
-        "./src/js",
-        "./tests/js"
-    ],
+    "extends": "@mat3ra/tsconfig/tsconfig-js-py-transpile.json"
 }
