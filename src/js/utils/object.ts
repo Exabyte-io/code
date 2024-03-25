@@ -1,41 +1,42 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.mergeTerminalNodes = exports.sortKeysDeepForObject = exports.flattenObject = exports.stringifyObject = exports.renameKeysForObject = exports.convertKeysToCamelCaseForObject = exports.getOneMatchFromObject = exports.safeMakeObject = void 0;
-const camelCase_1 = __importDefault(require("lodash/camelCase"));
-const filter_1 = __importDefault(require("lodash/filter"));
-const isArray_1 = __importDefault(require("lodash/isArray"));
-const isEmpty_1 = __importDefault(require("lodash/isEmpty"));
-const isObject_1 = __importDefault(require("lodash/isObject"));
-const isPlainObject_1 = __importDefault(require("lodash/isPlainObject"));
-const isString_1 = __importDefault(require("lodash/isString"));
-const mapKeys_1 = __importDefault(require("lodash/mapKeys"));
-const omit_1 = __importDefault(require("lodash/omit"));
-const array_1 = require("./array");
-const clone_1 = require("./clone");
+import { NameResultSchema } from "@mat3ra/esse/lib/js/types";
+import camelCase from "lodash/camelCase";
+import filterObject from "lodash/filter";
+import isArray from "lodash/isArray";
+import isEmpty from "lodash/isEmpty";
+import isObject from "lodash/isObject";
+import isPlainObject from "lodash/isPlainObject";
+import isString from "lodash/isString";
+import mapKeys from "lodash/mapKeys";
+import omit from "lodash/omit";
+
+import { AnyObject } from "../entity/in_memory";
+import { safeMakeArray } from "./array";
+import { deepClone } from "./clone";
+
 /**
  * @summary Safely convert input to { name: str } if it is not already
  * @param name {String|Object} the input to convert
  * @returns result {Object|null} converted object if any
  */
-function safeMakeObject(name) {
+export function safeMakeObject(name: string | NameResultSchema): NameResultSchema {
     if (!name) {
         throw new Error("safeMakeObject: name is required");
     }
-    const result = (0, isString_1.default)(name) ? { name } : name;
-    if (!(0, isObject_1.default)(result) || (0, isArray_1.default)(result) || !result.name) {
+
+    const result: NameResultSchema = isString(name) ? { name } : name;
+
+    if (!isObject(result) || isArray(result) || !result.name) {
         throw new Error(`safeMakeObject: failed creating named object, found ${result}`);
     }
+
     return result;
 }
-exports.safeMakeObject = safeMakeObject;
+
 /**
  * @summary Pluck a single entry out of an iterable according to an attribute and match condition
  */
-function getOneMatchFromObject(obj, attribute, value) {
-    const filtered = (0, filter_1.default)(obj, [attribute, value]);
+export function getOneMatchFromObject(obj: object, attribute: string, value: unknown): unknown {
+    const filtered = filterObject(obj, [attribute, value]);
     if (filtered.length !== 1) {
         console.log(`found ${filtered.length} ${attribute} matching ${value}, expected 1.`);
     }
@@ -44,38 +45,58 @@ function getOneMatchFromObject(obj, attribute, value) {
     }
     return filtered[0];
 }
-exports.getOneMatchFromObject = getOneMatchFromObject;
+
 /**
  * @summary Converts all keys of object to camelCase.
  */
-function convertKeysToCamelCaseForObject(obj) {
-    const newObj = (0, clone_1.deepClone)(obj);
-    return (0, mapKeys_1.default)(newObj, (_v, k) => (0, camelCase_1.default)(k));
+export function convertKeysToCamelCaseForObject(obj: object) {
+    const newObj = deepClone(obj);
+    return mapKeys(newObj, (_v, k) => camelCase(k));
 }
-exports.convertKeysToCamelCaseForObject = convertKeysToCamelCaseForObject;
-function renameKeysForObject(
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-o, keysOriginal = [], keysRenamed = []) {
-    if (!(0, isObject_1.default)(o)) {
+
+/*
+ * Renames keys inside the object. Looks for keys from keysOriginal above and uses the corresponding keysRenamed entry
+ * @param {Object} object - Object to rename keys in
+ * @param {Array} keysOriginal - List of keys to rename
+ * @param {Array} keysRenamed - List of keys to rename original keys to, in the same order
+ */
+export function renameKeysForObject<T>(o: T, keysOriginal: string[], keysRenamed: string[]): T;
+
+export function renameKeysForObject(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    o: any,
+    keysOriginal: string[] = [],
+    keysRenamed: string[] = [],
+): AnyObject | AnyObject[] {
+    if (!isObject(o)) {
         return o;
     }
-    if ((0, isArray_1.default)(o)) {
+
+    if (isArray(o)) {
         return o.map((x) => renameKeysForObject(x, keysOriginal, keysRenamed));
     }
-    const result = {};
+
+    const result: AnyObject = {};
+
     Object.entries(o).map(([origKey, origValue]) => {
         // Get the destination key
         const idx = keysOriginal.indexOf(origKey);
         const destKey = idx === -1 ? origKey : keysRenamed[idx];
-        const destValue = typeof origValue === "object"
-            ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
-            : origValue;
+        const destValue =
+            typeof origValue === "object"
+                ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
+                : origValue;
         result[destKey] = destValue;
         return null;
     });
     return result;
 }
-exports.renameKeysForObject = renameKeysForObject;
+
+export interface NameValueObject {
+    name: string;
+    value: unknown;
+    [key: string]: unknown;
+}
 /**
  * @summary Converts object into string. Recursive. Required properties for object: "name", "value".
  * "units" property is ignored. Only one extra property is allowed. Function is called recursively on extraProperty.
@@ -86,31 +107,42 @@ exports.renameKeysForObject = renameKeysForObject;
  * @param {String} [keyValueSeparator] '=' by default.
  * @param {String} [prefix] Empty by default.
  */
-function stringifyObject(obj, levelSeparator = ":", keyValueSeparator = "=", prefix = "") {
+export function stringifyObject(
+    obj: NameValueObject,
+    levelSeparator = ":",
+    keyValueSeparator = "=",
+    prefix = "",
+): string {
     const requiredKeys = ["name", "value"];
     const allowedKeys = requiredKeys.concat(["units"]);
-    const extraKeys = Object.keys((0, omit_1.default)(obj, allowedKeys));
+    const extraKeys = Object.keys(omit(obj, allowedKeys));
+
     // If there is more than one extra key, raise an exception
     if (extraKeys.length > 1) {
         throw new Error("stringifyObject: more than one extra property");
     }
+
     if (extraKeys.length === 0) {
         return `${obj.name}${keyValueSeparator}${obj.value}`;
     }
+
     const extraPropertyKey = extraKeys[0];
     // @ts-ignore
     const extraPropertyValue = obj[extraKeys[0]];
+
     // eslint-disable-next-line no-param-reassign
-    prefix = (0, isEmpty_1.default)(prefix)
+    prefix = isEmpty(prefix)
         ? `${obj.name}${keyValueSeparator}${obj.value}`
         : `${prefix}${levelSeparator}${obj.name}${keyValueSeparator}${obj.value}`;
-    if (!(0, isObject_1.default)(extraPropertyValue)) {
+
+    if (!isObject(extraPropertyValue)) {
         return `${prefix}:${extraPropertyKey}${keyValueSeparator}${extraPropertyValue}`;
     }
+
     // @ts-ignore
     return stringifyObject(extraPropertyValue, levelSeparator, keyValueSeparator, prefix);
 }
-exports.stringifyObject = stringifyObject;
+
 /**
  * @summary Flattens complex object into object with single key-value pair.  Required properties for object: "name", "value".
  * "units" property is ignored. Only one extra property is allowed. E.g.
@@ -123,36 +155,53 @@ exports.stringifyObject = stringifyObject;
  * @return {Object}
  */
 // eslint-disable-next-line default-param-last
-function flattenObject(obj, levelSeparator = ":", keyValueSeparator = "=", suffix = undefined) {
+export function flattenObject(
+    obj: NameValueObject,
+    levelSeparator = ":",
+    keyValueSeparator = "=",
+    suffix: string | undefined = undefined,
+) {
     const requiredKeys = ["name", "value"];
     const allowedKeys = requiredKeys.concat(["units"]);
-    const extraKeys = Object.keys((0, omit_1.default)(obj, allowedKeys));
+    const extraKeys = Object.keys(omit(obj, allowedKeys));
+
     // If there is more than one extra key, raise an exception
     if (extraKeys.length > 1) {
         throw new Error("flattenObject: more than one extra property");
     }
-    const tailSuffix = (0, isEmpty_1.default)(suffix) ? "" : `${levelSeparator}${suffix}`;
+
+    const tailSuffix = isEmpty(suffix) ? "" : `${levelSeparator}${suffix}`;
+
     if (extraKeys.length === 0) {
         return { [`${obj.name}${tailSuffix}`]: obj.value };
     }
+
     const extraPropertyKey = extraKeys[0];
-    const extraPropertyValue = obj[extraKeys[0]];
-    if (!(0, isObject_1.default)(extraPropertyValue)) {
+    const extraPropertyValue = obj[extraKeys[0]] as NameValueObject;
+
+    if (!isObject(extraPropertyValue)) {
         return {
-            [`${obj.name}${levelSeparator}${extraPropertyKey}=${extraPropertyValue}${tailSuffix}`]: obj.value,
+            [`${obj.name}${levelSeparator}${extraPropertyKey}=${extraPropertyValue}${tailSuffix}`]:
+                obj.value,
         };
     }
+
     const flatSubObj = stringifyObject(extraPropertyValue, levelSeparator, keyValueSeparator);
     const key = `${obj.name}${levelSeparator}${flatSubObj}${tailSuffix}`;
     return { [key]: obj.value };
 }
-exports.flattenObject = flattenObject;
+
+/**
+ * Sort object keys alphabetically
+ */
+export function sortKeysDeepForObject<T>(obj: T): T;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function sortKeysDeepForObject(obj) {
+export function sortKeysDeepForObject(obj: any): any {
     if (Array.isArray(obj)) {
         return obj.map(sortKeysDeepForObject);
     }
-    if ((0, isObject_1.default)(obj)) {
+    if (isObject(obj)) {
         const sortedObject = {};
         Object.keys(obj)
             .sort()
@@ -162,10 +211,15 @@ function sortKeysDeepForObject(obj) {
     }
     return obj;
 }
-exports.sortKeysDeepForObject = sortKeysDeepForObject;
-function isTreeObject(value) {
-    return (0, isPlainObject_1.default)(value);
+
+interface Tree<T = string> {
+    [key: string]: Tree<T> | T[];
 }
+
+function isTreeObject<T>(value: unknown): value is Tree<T> {
+    return isPlainObject(value);
+}
+
 /**
  * Merge terminal node values of an object tree.
  * @param tree - Nested object
@@ -194,16 +248,14 @@ function isTreeObject(value) {
  * };
  * mergeTerminalNodes(tree); // ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l']
  */
-function mergeTerminalNodes(tree, unique = false) {
-    if (!isTreeObject(tree))
-        return (0, array_1.safeMakeArray)(tree);
-    const terminalValues = Object.values(tree).reduce((accumulator, value) => {
-        if (isTreeObject(value)) {
+export function mergeTerminalNodes<T = string>(tree: Tree<T>, unique = false): T[] {
+    if (!isTreeObject<T>(tree)) return safeMakeArray(tree);
+    const terminalValues = Object.values(tree).reduce((accumulator: T[], value) => {
+        if (isTreeObject<T>(value)) {
             return accumulator.concat(mergeTerminalNodes(value));
         }
         return accumulator.concat(value);
-    }, []);
+    }, [] as T[]);
     // @ts-ignore
     return unique ? [...new Set(terminalValues)] : terminalValues;
 }
-exports.mergeTerminalNodes = mergeTerminalNodes;

@@ -1,46 +1,56 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.RuntimeItemsUIAllowedMixin = exports.RuntimeItemsUILogicMixin = exports.RuntimeItemsMixin = exports.ItemKey = void 0;
-const object_1 = require("../../utils/object");
-var ItemKey;
-(function (ItemKey) {
-    ItemKey["results"] = "results";
-    ItemKey["monitors"] = "monitors";
-    ItemKey["preProcessors"] = "preProcessors";
-    ItemKey["postProcessors"] = "postProcessors";
-})(ItemKey = exports.ItemKey || (exports.ItemKey = {}));
+/* eslint-disable class-methods-use-this */
+import { NameResultSchema, RuntimeItemSchema } from "@mat3ra/esse/lib/js/types";
+
+import { safeMakeObject } from "../../utils/object";
+import { AnyObject, InMemoryEntityConstructor } from "../in_memory";
+
+export enum ItemKey {
+    results = "results",
+    monitors = "monitors",
+    preProcessors = "preProcessors",
+    postProcessors = "postProcessors",
+}
 /*
  * @summary Contains runtime items: results, monitors, pre/postProcessors
  *          Is meant to work with Entity, InMemoryEntity b/c of `prop` extraction from `_json`.
  */
-function RuntimeItemsMixin(superclass) {
+
+export function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends superclass {
-        get results() {
-            return this.prop("results", this.defaultResults).map(object_1.safeMakeObject);
+        get results(): NameResultSchema[] {
+            return this.prop("results", this.defaultResults).map(safeMakeObject);
         }
-        get monitors() {
-            return this.prop("monitors", this.defaultMonitors).map(object_1.safeMakeObject);
+
+        get monitors(): NameResultSchema[] {
+            return this.prop("monitors", this.defaultMonitors).map(safeMakeObject);
         }
-        get preProcessors() {
+
+        get preProcessors(): NameResultSchema[] {
             // TODO: safeMakeObject could return null. Should we throw an error here?
-            return this.prop("preProcessors", this.defaultPreProcessors).map(object_1.safeMakeObject);
+            return this.prop("preProcessors", this.defaultPreProcessors).map(safeMakeObject);
         }
-        get postProcessors() {
+
+        get postProcessors(): NameResultSchema[] {
             // TODO: safeMakeObject could return null. Should we throw an error here?
-            return this.prop("postProcessors", this.defaultPostProcessors).map(object_1.safeMakeObject);
+            return this.prop("postProcessors", this.defaultPostProcessors).map(safeMakeObject);
         }
-        get defaultResults() {
+
+        get defaultResults(): NameResultSchema[] {
             return [];
         }
-        get defaultMonitors() {
+
+        get defaultMonitors(): NameResultSchema[] {
             return [];
         }
-        get defaultPreProcessors() {
+
+        get defaultPreProcessors(): NameResultSchema[] {
             return [];
         }
-        get defaultPostProcessors() {
+
+        get defaultPostProcessors(): NameResultSchema[] {
             return [];
         }
+
         get hashObjectFromRuntimeItems() {
             return {
                 results: this.results,
@@ -50,22 +60,35 @@ function RuntimeItemsMixin(superclass) {
         }
     };
 }
-exports.RuntimeItemsMixin = RuntimeItemsMixin;
-const allKeys = [
+
+export interface RuntimeItemsUILogicJSON extends AnyObject {
+    results?: NameResultSchema[];
+    monitors?: NameResultSchema[];
+    preProcessors?: NameResultSchema[];
+    postProcessors?: NameResultSchema[];
+}
+
+const allKeys: ItemKey[] = [
     ItemKey.results,
     ItemKey.monitors,
     ItemKey.postProcessors,
     ItemKey.preProcessors,
 ];
-function RuntimeItemsUILogicMixin(superclass) {
+
+export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends RuntimeItemsMixin(superclass) {
+        declare _json: RuntimeItemsUILogicJSON;
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...params) {
+        constructor(...params: any) {
             super(...params);
+
             const config = params[0];
+
             this._initRuntimeItems(allKeys, config);
         }
-        getDefaultsByKey(key) {
+
+        getDefaultsByKey(key: ItemKey) {
             if (key === ItemKey.results) {
                 return this.defaultResults;
             }
@@ -77,15 +100,17 @@ function RuntimeItemsUILogicMixin(superclass) {
             }
             return this.defaultPostProcessors;
         }
+
         setRuntimeItemsToDefaultValues() {
             allKeys.forEach((name) => this.setProp(name, this.getDefaultsByKey(name)));
         }
+
         /**
          * @summary Must pass config for subclasses to override and use initialization logic
          * @private
          */
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        _initRuntimeItems(keys, _config) {
+        _initRuntimeItems(keys: ItemKey[], _config: object) {
             // keeping this separate from constructor so that it can be overridden in mixing (eg. in `ExecutionUnit`)
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const me = this;
@@ -95,76 +120,94 @@ function RuntimeItemsUILogicMixin(superclass) {
                 }
             });
         }
+
         // eslint-disable-next-line default-param-last
-        _addRuntimeItem(key = ItemKey.results, config) {
+        _addRuntimeItem(key: ItemKey = ItemKey.results, config: RuntimeItemSchema) {
             const runtimeItems = this._json[key];
             if (!runtimeItems) {
                 throw new Error("not found");
             }
-            runtimeItems.push((0, object_1.safeMakeObject)(config));
+            runtimeItems.push(safeMakeObject(config));
         }
+
         // eslint-disable-next-line default-param-last
-        _removeRuntimeItem(key = ItemKey.results, config) {
-            const newConfig = (0, object_1.safeMakeObject)(config);
-            this._removeRuntimeItemByName(key, (newConfig === null || newConfig === void 0 ? void 0 : newConfig.name) || "");
+        _removeRuntimeItem(key: ItemKey = ItemKey.results, config: RuntimeItemSchema) {
+            const newConfig = safeMakeObject(config);
+            this._removeRuntimeItemByName(key, newConfig?.name || "");
         }
-        _removeRuntimeItemByName(key, name) {
-            this._json[key] = this._json[key].filter((x) => x.name !== name);
+
+        _removeRuntimeItemByName(key: ItemKey, name: string) {
+            this._json[key] = (this._json[key] as NameResultSchema[]).filter(
+                (x) => x.name !== name,
+            );
         }
+
         _toggleRuntimeItem(
-        // eslint-disable-next-line default-param-last
-        key = ItemKey.results, data, isAdding) {
+            // eslint-disable-next-line default-param-last
+            key: ItemKey = ItemKey.results,
+            data: RuntimeItemSchema,
+            isAdding: boolean,
+        ) {
             if (isAdding) {
                 this._addRuntimeItem(key, data);
-            }
-            else {
+            } else {
                 this._removeRuntimeItem(key, data);
             }
         }
-        toggleResult(data, isAdding) {
+
+        toggleResult(data: RuntimeItemSchema, isAdding: boolean) {
             this._toggleRuntimeItem(ItemKey.results, data, isAdding);
         }
-        toggleMonitor(data, isAdding) {
+
+        toggleMonitor(data: RuntimeItemSchema, isAdding: boolean) {
             this._toggleRuntimeItem(ItemKey.monitors, data, isAdding);
         }
-        togglePreProcessor(data, isAdding) {
+
+        togglePreProcessor(data: RuntimeItemSchema, isAdding: boolean) {
             this._toggleRuntimeItem(ItemKey.preProcessors, data, isAdding);
         }
-        togglePostProcessor(data, isAdding) {
+
+        togglePostProcessor(data: RuntimeItemSchema, isAdding: boolean) {
             this._toggleRuntimeItem(ItemKey.postProcessors, data, isAdding);
         }
+
         get resultNames() {
             return this.results.map((r) => {
                 return r && r.name;
             });
         }
+
         get monitorNames() {
-            return this.monitors.map((r) => r === null || r === void 0 ? void 0 : r.name);
+            return this.monitors.map((r) => r?.name);
         }
+
         get postProcessorNames() {
-            return this.postProcessors.map((r) => r === null || r === void 0 ? void 0 : r.name);
+            return this.postProcessors.map((r) => r?.name);
         }
+
         get preProcessorNames() {
-            return this.preProcessors.map((r) => r === null || r === void 0 ? void 0 : r.name);
+            return this.preProcessors.map((r) => r?.name);
         }
-        getResultByName(name) {
-            return this.results.find((r) => (r === null || r === void 0 ? void 0 : r.name) === name);
+
+        getResultByName(name: string) {
+            return this.results.find((r) => r?.name === name);
         }
     };
 }
-exports.RuntimeItemsUILogicMixin = RuntimeItemsUILogicMixin;
+
 // "Placeholder" mixin. Used to indicate the presence of the fields in parent class.
-function RuntimeItemsUIAllowedMixin(superclass) {
+export function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends superclass {
         get allowedResults() {
             return [];
         }
+
         get allowedMonitors() {
             return [];
         }
+
         get allowedPostProcessors() {
             return [];
         }
     };
 }
-exports.RuntimeItemsUIAllowedMixin = RuntimeItemsUIAllowedMixin;

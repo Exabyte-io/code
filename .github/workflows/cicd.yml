@@ -1,26 +1,80 @@
-name: Continuous testing and publication to NPM from 'main'
+name: Continuous Testing and Publication
 
-on:
-  workflow_dispatch:
-  push:
+on: [push]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-
 jobs:
-
-  run-js-tests:
-    runs-on: ubuntu-latest
-    if: github.repository != 'Exabyte-io/template-definitions'
+  run-py-linter:
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
-        node-version: [14.x, 20.x]
+        python-version: [3.8.6]
 
     steps:
       - name: Checkout this repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Checkout actions repository
+        uses: actions/checkout@v4
+        with:
+          repository: Exabyte-io/actions
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          path: actions
+
+      - name: Run ruff linter
+        uses: ./actions/py/lint
+        with:
+          python-version: ${{ matrix.python-version }}
+
+  run-py-tests:
+    needs: run-py-linter
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        python-version:
+          - 3.8.x
+          - 3.9.x
+          - 3.10.x
+          - 3.11.x
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Checkout actions repository
+        uses: actions/checkout@v4
+        with:
+          repository: Exabyte-io/actions
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          path: actions
+
+      - name: Run python unit tests
+        uses: ./actions/py/test
+        with:
+          python-version: ${{ matrix.python-version }}
+          unit-test-directory: tests/py/unit
+          bot-ssh-key: ${{ secrets.BOT_GITHUB_KEY }}
+
+  run-js-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 14.x
+          - 20.x
+
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Checkout actions repository
         uses: actions/checkout@v4
@@ -31,6 +85,9 @@ jobs:
 
       - name: Run JS validate
         uses: ./actions/js/validate
+        with:
+          node-version: '14.x'
+          skip-eslint: 'true'
 
       - name: Run JS tests
         uses: ./actions/js/test
@@ -38,11 +95,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
   publish-js-package:
-    needs: [run-js-tests]
+    needs:
+      - run-js-tests
+      - run-py-tests
+      - run-py-linter
     runs-on: ubuntu-latest
-    if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
-    outputs:
-      release-version: ${{ steps.publish.outputs.tag-name }}
+    if: (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
 
     steps:
       - name: Checkout this repository
@@ -56,42 +114,72 @@ jobs:
           path: actions
 
       - name: Publish JS release
-        id: publish
         uses: ./actions/js/publish
         with:
           node-version: 14.19.x
           npm-token: ${{ secrets.NPM_TOKEN }}
           github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-  create-pr-in-a-dependant:
-    needs: [publish-js-package]
+  publish-py-package:
+    needs:
+      - run-js-tests
+      - run-py-tests
+      - run-py-linter
     runs-on: ubuntu-latest
-    if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
-    strategy:
-      matrix:
-        target-repository:
-          - Exabyte-io/ade.js
-          - Exabyte-io/application-flavors
-          - Exabyte-io/ide.js
-          - Exabyte-io/made.js
-          - Exabyte-io/mode.js
-          - Exabyte-io/prode.js
-          - Exabyte-io/wode.js
-          - Exabyte-io/materials-designer
-          - Exabyte-io/web-app
+    if: (github.repository != 'Exabyte-io/template-definitions-js-py') && (github.ref_name == 'main')
 
     steps:
-      - name: Checkout actions repository
-        uses: actions/checkout@v4
-        with:
-          repository: Exabyte-io/actions
-          token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          path: actions
+      -   name: Checkout this repository
+          uses: actions/checkout@v4
+          with:
+            lfs: true
 
-      - name: Create a PR
-        uses: ./actions/git/pull-request
-        with:
-          github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
-          target-repository: ${{ matrix.target-repository }}
-          source-package-name: "@exabyte-io/code.js"
-          target-version: ${{ needs.publish-js-package.outputs.release-version }}
+      -   name: Checkout actions repository
+          uses: actions/checkout@v4
+          with:
+            repository: Exabyte-io/actions
+            token: ${{ secrets.BOT_GITHUB_TOKEN }}
+            path: actions
+
+      -   name: Publish python release
+          uses: ./actions/py/publish
+          with:
+            python-version: 3.8.x
+            github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+            pypi-api-token: ${{ secrets.PYPI_API_TOKEN }}
+            publish-tag: 'false'
+
+
+# TB disabled on 2024-03-21 as not practically useful at this time
+#  create-pr-in-a-dependant:
+#    needs: [publish-js-package]
+#    runs-on: ubuntu-latest
+#    if: (github.repository != 'Exabyte-io/template-definitions') && (github.ref_name == 'main')
+#    strategy:
+#      matrix:
+#        target-repository:
+#          - Exabyte-io/ade.js
+#          - Exabyte-io/application-flavors
+#          - Exabyte-io/ide.js
+#          - Exabyte-io/made.js
+#          - Exabyte-io/mode.js
+#          - Exabyte-io/prode.js
+#          - Exabyte-io/wode.js
+#          - Exabyte-io/materials-designer
+#          - Exabyte-io/web-app
+#
+#    steps:
+#      - name: Checkout actions repository
+#        uses: actions/checkout@v4
+#        with:
+#          repository: Exabyte-io/actions
+#          token: ${{ secrets.BOT_GITHUB_TOKEN }}
+#          path: actions
+#
+#      - name: Create a PR
+#        uses: ./actions/git/pull-request
+#        with:
+#          github-token: ${{ secrets.BOT_GITHUB_TOKEN }}
+#          target-repository: ${{ matrix.target-repository }}
+#          source-package-name: "@exabyte-io/code.js"
+#          target-version: ${{ needs.publish-js-package.outputs.release-version }}

@@ -56,11 +56,9 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
         setRuntimeItemsToDefaultValues(): void;
         /**
          * @summary Must pass config for subclasses to override and use initialization logic
-         * @param keys
-         * @param config
          * @private
          */
-        _initRuntimeItems(keys: ItemKey[], config: object): void;
+        _initRuntimeItems(keys: ItemKey[], _config: object): void;
         _addRuntimeItem(key: ItemKey | undefined, config: RuntimeItemSchema): void;
         _removeRuntimeItem(key: ItemKey | undefined, config: RuntimeItemSchema): void;
         _removeRuntimeItemByName(key: ItemKey, name: string): void;

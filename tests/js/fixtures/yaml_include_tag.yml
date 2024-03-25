@@ -1,0 +1,8 @@
+# include content from another Yaml file
+case1:
+    here: original content
+    there: !include "tests/js/fixtures/yaml_parameter_ref.yml#/job/workflow"
+# return the original data when an error occurs
+case2:
+    here: original content
+    there: !include nonexistent_file.txt

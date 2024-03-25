@@ -10,7 +10,7 @@ export declare function ContextAndRenderFieldsMixin<T extends InMemoryEntityCons
         getCombinedContext(): {
             [x: string]: unknown;
         };
-        render(context?: AnyObject): void;
+        render(_context?: AnyObject): void;
         _json: AnyObject;
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
         prop<T_2 = undefined>(name: string): T_2 | undefined;

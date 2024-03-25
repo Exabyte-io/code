@@ -406,7 +406,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         getCombinedContext(): {
             [x: string]: unknown;
         };
-        render(context?: import("./in_memory").AnyObject): void;
+        render(_context?: import("./in_memory").AnyObject): void;
         _json: import("./in_memory").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T_1 = undefined>(name: string): T_1 | undefined;
@@ -547,7 +547,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getCombinedContext(): {
             [x: string]: unknown;
         };
-        render(context?: import("./in_memory").AnyObject): void;
+        render(_context?: import("./in_memory").AnyObject): void;
         _json: import("./in_memory").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T_1 = undefined>(name: string): T_1 | undefined;
@@ -629,7 +629,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         _json: import("./mixins/runtime_items").RuntimeItemsUILogicJSON;
         getDefaultsByKey(key: import("./mixins/runtime_items").ItemKey): import("@mat3ra/esse/lib/js/types").NameResultSchema[];
         setRuntimeItemsToDefaultValues(): void;
-        _initRuntimeItems(keys: import("./mixins/runtime_items").ItemKey[], config: object): void;
+        _initRuntimeItems(keys: import("./mixins/runtime_items").ItemKey[], _config: object): void;
         _addRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, config: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema): void;
         _removeRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, config: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema): void;
         _removeRuntimeItemByName(key: import("./mixins/runtime_items").ItemKey, name: string): void;
