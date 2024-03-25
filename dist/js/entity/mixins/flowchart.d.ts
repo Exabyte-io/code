@@ -1,19 +1,16 @@
-import { ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines } from "@mat3ra/esse/lib/js/types";
+import { UnitEntity } from "../../utils/graph";
 import { InMemoryEntityConstructor } from "../in_memory";
-export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(superclass: T): {
-    new (...args: any[]): {
-        getHashObject(): {};
-        /**
-         * @summary Calculates hash based on meaningful fields and unit-specific fields. Unit-specific fields are
-         *          separated into _typeSpecificHash function which can be overwritten by child classes.
-         *          head and next are also important but not considered since they are included in subworkflow hash.
-         */
-        calculateHash(): string;
+export declare function FlowchartItemMixin<T extends InMemoryEntityConstructor>(superclass: T): {
+    new (...params: any[]): {
+        readonly flowchartId: string;
+        head: boolean;
+        next: string | undefined;
         _json: import("../in_memory").AnyObject;
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
@@ -26,19 +23,26 @@ export declare function HashedEntityMixin<T extends InMemoryEntityConstructor>(s
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;
-export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructor>(superclass: T): {
-    new (...args: any[]): {
-        input: ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines[];
-        readonly hashFromArrayInputContent: string;
+export declare function FlowchartEntityMixin<T extends InMemoryEntityConstructor>(superclass: T): {
+    new (...params: any[]): {
+        _units: UnitEntity[];
+        readonly units: UnitEntity[];
+        setUnits(units: UnitEntity[]): void;
+        addUnit(unit: UnitEntity, index?: number): void;
+        removeUnit(flowchartId: string): void;
+        replaceUnit(unit: UnitEntity, index: number): void;
+        getUnit(flowchartId: string): UnitEntity | undefined;
+        getUnitIndexByFlowchartId(flowchartId: string): number;
         _json: import("../in_memory").AnyObject;
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../in_memory").AnyObject;
@@ -51,7 +55,7 @@ export declare function HashedInputArrayMixin<T extends InMemoryEntityConstructo
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
     };
 } & T;

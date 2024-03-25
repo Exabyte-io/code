@@ -67,10 +67,10 @@ o, keysOriginal = [], keysRenamed = []) {
         // Get the destination key
         const idx = keysOriginal.indexOf(origKey);
         const destKey = idx === -1 ? origKey : keysRenamed[idx];
-        const destValue = typeof origValue === "object"
-            ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
-            : origValue;
-        result[destKey] = destValue;
+        result[destKey] =
+            typeof origValue === "object"
+                ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
+                : origValue;
         return null;
     });
     return result;

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import JSONSchemasInterface from "@mat3ra/esse/lib/js/esse/JSONSchemasInterfaceServer";
+import JSONSchemasInterface from "@mat3ra/esse/dist/js/esse/JSONSchemasInterfaceServer";
 import { expect } from "chai";
 import fs from "fs";
 import yaml from "js-yaml";

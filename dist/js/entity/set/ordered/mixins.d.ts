@@ -1,4 +1,4 @@
-import { EntitySetSchema, SystemInSetSchema } from "@mat3ra/esse/lib/js/types";
+import { EntitySetSchema, SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 import { InMemoryEntityConstructor } from "../../in_memory";
 export declare function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
@@ -9,6 +9,7 @@ export declare function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityCo
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../../in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("../../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../../in_memory").AnyObject;
@@ -21,7 +22,7 @@ export declare function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityCo
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../../in_memory").InMemoryEntity[], entity: string, name: string): import("../../in_memory").InMemoryEntity;
     };
 } & T;
@@ -38,6 +39,7 @@ export declare function OrderedInMemoryEntityInSetMixin<T extends InMemoryEntity
         prop<T_2 = undefined>(name: string): T_2 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("../../in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("../../in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("../../in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("../../in_memory").AnyObject;
@@ -50,7 +52,7 @@ export declare function OrderedInMemoryEntityInSetMixin<T extends InMemoryEntity
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../../in_memory").InMemoryEntity[], entity: string, name: string): import("../../in_memory").InMemoryEntity;
     };
 } & T;

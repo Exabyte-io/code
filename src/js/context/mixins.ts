@@ -4,7 +4,7 @@ import {
     JobSchema,
     MaterialSchema,
     WorkflowSchema,
-} from "@mat3ra/esse/lib/js/types";
+} from "@mat3ra/esse/dist/js/types";
 import CryptoJS from "crypto-js";
 
 import { InMemoryEntity } from "../entity";

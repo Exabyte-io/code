@@ -1,4 +1,4 @@
-import { EntitySetSchema } from "@mat3ra/esse/lib/js/types";
+import { EntitySetSchema } from "@mat3ra/esse/dist/js/types";
 import { AnyObject } from "../in_memory";
 import { InMemoryEntitySet } from "../set";
 export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, orderedEntitySetCls }: {
@@ -12,6 +12,7 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
+            setProps(json?: AnyObject): any;
             toJSON(exclude?: string[]): AnyObject;
             toJSONSafe(exclude?: string[]): AnyObject;
             toJSONQuick(exclude?: string[]): AnyObject;
@@ -24,7 +25,7 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             getClsName(): string;
             readonly slug: string;
             readonly isSystemEntity: boolean;
-            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
             getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         };
     } & {
@@ -42,6 +43,7 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
+            setProps(json?: AnyObject): any;
             toJSON(exclude?: string[]): AnyObject;
             toJSONSafe(exclude?: string[]): AnyObject;
             toJSONQuick(exclude?: string[]): AnyObject;
@@ -54,7 +56,7 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             getClsName(): string;
             readonly slug: string;
             readonly isSystemEntity: boolean;
-            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
             getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         };
     } & typeof InMemoryEntitySet) | undefined;

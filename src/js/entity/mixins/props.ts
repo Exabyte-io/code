@@ -1,4 +1,4 @@
-import { ExtendedBaseEntitySchema } from "@mat3ra/esse/lib/js/types";
+import { ExtendedBaseEntitySchema } from "@mat3ra/esse/dist/js/types";
 
 import { InMemoryEntityConstructor } from "../in_memory";
 
@@ -13,6 +13,7 @@ export function DefaultableMixin<T extends InMemoryEntityConstructor>(superclass
         declare static readonly defaultConfig: object | null;
 
         static createDefault() {
+            // @ts-ignore
             return new this.prototype.constructor(this.defaultConfig);
         }
     };

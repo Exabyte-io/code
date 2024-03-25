@@ -28,6 +28,7 @@ declare const InMemoryEntitySet_base: {
             prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
+            setProps(json?: import("./in_memory").AnyObject): any;
             toJSON(exclude?: string[]): import("./in_memory").AnyObject;
             toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
             toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -40,7 +41,7 @@ declare const InMemoryEntitySet_base: {
             getClsName(): string;
             readonly slug: string;
             readonly isSystemEntity: boolean;
-            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
             getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         } & InMemoryEntity>(entity?: T_2 | undefined): boolean | undefined;
         _json: import("./in_memory").AnyObject;
@@ -48,6 +49,7 @@ declare const InMemoryEntitySet_base: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -60,7 +62,7 @@ declare const InMemoryEntitySet_base: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -91,6 +93,7 @@ declare const InMemoryEntitySet_base: {
         prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
+        setProps(json?: import("./in_memory").AnyObject): any;
         toJSON(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONSafe(exclude?: string[]): import("./in_memory").AnyObject;
         toJSONQuick(exclude?: string[]): import("./in_memory").AnyObject;
@@ -103,7 +106,7 @@ declare const InMemoryEntitySet_base: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & typeof InMemoryEntity;

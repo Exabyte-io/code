@@ -7,6 +7,7 @@ function DefaultableMixin(superclass) {
             return this.prop("isDefault", false);
         }
         static createDefault() {
+            // @ts-ignore
             return new this.prototype.constructor(this.defaultConfig);
         }
     };

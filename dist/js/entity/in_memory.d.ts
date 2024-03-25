@@ -1,5 +1,5 @@
-import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
-import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
+import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
+import { EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
 export declare enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID"
 }
@@ -36,6 +36,11 @@ export declare class InMemoryEntity {
      * @summary Remove a prop
      */
     unsetProp(name: string): void;
+    /**
+     * Updates internal JSON. Works the same as Mongo's $set operator
+     * @see https://www.mongodb.com/docs/manual/reference/operator/update/set/#-set
+     */
+    setProps(json?: AnyObject): this;
     /**
      * @summary Array of fields to exclude from resulted JSON
      */

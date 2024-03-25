@@ -1,4 +1,4 @@
-import { SystemInSetSchema } from "@mat3ra/esse/lib/js/types";
+import { SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 
 import { InMemoryEntityConstructor } from "../in_memory";
 

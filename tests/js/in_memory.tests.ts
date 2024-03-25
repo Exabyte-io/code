@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
-import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
-import inMemoryEntitySchema from "@mat3ra/esse/lib/js/schema/in_memory_entity/base.json";
+import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
+import inMemoryEntitySchema from "@mat3ra/esse/dist/js/schema/in_memory_entity/base.json";
 import { expect } from "chai";
 
 import { InMemoryEntity } from "../../src/js/entity/in_memory";

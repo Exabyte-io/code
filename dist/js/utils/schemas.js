@@ -18,11 +18,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.buildNamedEntitySchema = exports.schemaByNamedEntityName = exports.getSchemaWithDependencies = exports.buildDependencies = exports.typeofSchema = exports.schemas = void 0;
-const JSONSchemasInterface_1 = __importDefault(require("@mat3ra/esse/lib/js/esse/JSONSchemasInterface"));
+const JSONSchemasInterface_1 = __importDefault(require("@mat3ra/esse/dist/js/esse/JSONSchemasInterface"));
 const forEach_1 = __importDefault(require("lodash/forEach"));
 const has_1 = __importDefault(require("lodash/has"));
 const isEmpty_1 = __importDefault(require("lodash/isEmpty"));
-__exportStar(require("@mat3ra/esse/lib/js/esse/schemaUtils"), exports);
+__exportStar(require("@mat3ra/esse/dist/js/esse/schemaUtils"), exports);
 exports.schemas = {};
 function typeofSchema(schema) {
     if (schema === null || schema === void 0 ? void 0 : schema.type) {
@@ -153,12 +153,11 @@ const defaultNamedEntitySchema = (name) => {
  */
 const schemaByNamedEntityName = (name) => {
     const translatedName = name.replace(/_/g, "-");
-    const schema = JSONSchemasInterface_1.default.matchSchema({
+    return JSONSchemasInterface_1.default.matchSchema({
         $id: {
             $regex: `${translatedName}$`,
         },
     });
-    return schema;
 };
 exports.schemaByNamedEntityName = schemaByNamedEntityName;
 /*

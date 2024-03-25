@@ -27,9 +27,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InMemoryEntity = exports.EntityError = exports.ValidationErrorCode = void 0;
-const ajv = __importStar(require("@mat3ra/esse/lib/js/utils/ajv"));
+const ajv = __importStar(require("@mat3ra/esse/dist/js/utils/ajv"));
 const get_1 = __importDefault(require("lodash/get"));
 const omit_1 = __importDefault(require("lodash/omit"));
+const set_1 = __importDefault(require("lodash/set"));
 const clone_1 = require("../utils/clone");
 var ValidationErrorCode;
 (function (ValidationErrorCode) {
@@ -64,13 +65,22 @@ class InMemoryEntity {
      * @summary Set a prop
      */
     setProp(name, value) {
-        this._json[name] = value;
+        // lodash.set is required to support dot-notation in keys (e.g. "compute.cluster.fqdn")
+        (0, set_1.default)(this._json, name, value);
     }
     /**
      * @summary Remove a prop
      */
     unsetProp(name) {
         delete this._json[name];
+    }
+    /**
+     * Updates internal JSON. Works the same as Mongo's $set operator
+     * @see https://www.mongodb.com/docs/manual/reference/operator/update/set/#-set
+     */
+    setProps(json = {}) {
+        Object.entries(json).forEach(([key, value]) => this.setProp(key, value));
+        return this;
     }
     /**
      * @summary Array of fields to exclude from resulted JSON
@@ -90,11 +100,10 @@ class InMemoryEntity {
      * @summary Clone this entity
      */
     clone(extraContext) {
-        const object = new this.constructor({
+        return new this.constructor({
             ...this.toJSON(),
             ...extraContext,
         });
-        return object;
     }
     static validateData(data, clean = false) {
         if (!this.jsonSchema) {
@@ -127,7 +136,20 @@ class InMemoryEntity {
         }
     }
     clean(config) {
-        return this.constructor.validateData(config, true);
+        var _a, _b, _c;
+        try {
+            return this.constructor.validateData(config, true);
+        }
+        catch (err) {
+            if (err instanceof EntityError) {
+                console.error({
+                    error: JSON.stringify((_a = err.details) === null || _a === void 0 ? void 0 : _a.error),
+                    json: JSON.stringify((_b = err.details) === null || _b === void 0 ? void 0 : _b.json),
+                    schema: JSON.stringify((_c = err.details) === null || _c === void 0 ? void 0 : _c.schema),
+                });
+            }
+            throw err;
+        }
     }
     isValid() {
         try {
