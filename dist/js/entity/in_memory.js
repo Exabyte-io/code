@@ -100,11 +100,10 @@ class InMemoryEntity {
      * @summary Clone this entity
      */
     clone(extraContext) {
-        const object = new this.constructor({
+        return new this.constructor({
             ...this.toJSON(),
             ...extraContext,
         });
-        return object;
     }
     static validateData(data, clean = false) {
         if (!this.jsonSchema) {

@@ -1,4 +1,4 @@
-import { NameResultSchema } from "@mat3ra/esse/lib/js/types";
+import { NameResultSchema } from "@mat3ra/esse/dist/js/types";
 import camelCase from "lodash/camelCase";
 import filterObject from "lodash/filter";
 import isArray from "lodash/isArray";
@@ -82,11 +82,10 @@ export function renameKeysForObject(
         // Get the destination key
         const idx = keysOriginal.indexOf(origKey);
         const destKey = idx === -1 ? origKey : keysRenamed[idx];
-        const destValue =
+        result[destKey] =
             typeof origValue === "object"
                 ? renameKeysForObject(origValue, keysOriginal, keysRenamed)
                 : origValue;
-        result[destKey] = destValue;
         return null;
     });
     return result;

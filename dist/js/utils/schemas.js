@@ -153,12 +153,11 @@ const defaultNamedEntitySchema = (name) => {
  */
 const schemaByNamedEntityName = (name) => {
     const translatedName = name.replace(/_/g, "-");
-    const schema = JSONSchemasInterface_1.default.matchSchema({
+    return JSONSchemasInterface_1.default.matchSchema({
         $id: {
             $regex: `${translatedName}$`,
         },
     });
-    return schema;
 };
 exports.schemaByNamedEntityName = schemaByNamedEntityName;
 /*

@@ -1,10 +1,10 @@
-import JSONSchemasInterface from "@mat3ra/esse/lib/js/esse/JSONSchemasInterface";
+import JSONSchemasInterface from "@mat3ra/esse/dist/js/esse/JSONSchemasInterface";
 import { JSONSchema7 } from "json-schema";
 import forEach from "lodash/forEach";
 import hasProperty from "lodash/has";
 import isEmpty from "lodash/isEmpty";
 
-export * from "@mat3ra/esse/lib/js/esse/schemaUtils";
+export * from "@mat3ra/esse/dist/js/esse/schemaUtils";
 
 export const schemas: { [key: string]: string } = {};
 
@@ -181,12 +181,11 @@ const defaultNamedEntitySchema = (name: string) => {
  */
 export const schemaByNamedEntityName = (name: string): JSONSchema7 | undefined => {
     const translatedName = name.replace(/_/g, "-");
-    const schema = JSONSchemasInterface.matchSchema({
+    return JSONSchemasInterface.matchSchema({
         $id: {
             $regex: `${translatedName}$`,
         },
     });
-    return schema;
 };
 
 /*

@@ -1,6 +1,6 @@
 // @ts-nocheck
 // TODO: remove ts-nocheck
-import JSONSchemasInterface from "@mat3ra/esse/lib/js/esse/JSONSchemasInterfaceServer";
+import JSONSchemasInterface from "@mat3ra/esse/dist/js/esse/JSONSchemasInterfaceServer";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 import * as lodash from "lodash";

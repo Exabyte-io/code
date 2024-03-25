@@ -1,6 +1,6 @@
-import { JSONSchema } from "@mat3ra/esse/lib/js/esse/utils";
-import { EntityReferenceSchema } from "@mat3ra/esse/lib/js/types";
-import * as ajv from "@mat3ra/esse/lib/js/utils/ajv";
+import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
+import { EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
+import * as ajv from "@mat3ra/esse/dist/js/utils/ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
 import set from "lodash/set";
@@ -113,12 +113,10 @@ export class InMemoryEntity {
         type ThisType = typeof this;
         type ThisConstructor = { new (o: object): ThisType };
 
-        const object = new (this.constructor as ThisConstructor)({
+        return new (this.constructor as ThisConstructor)({
             ...this.toJSON(),
             ...extraContext,
         });
-
-        return object;
     }
 
     static validateData(data: AnyObject, clean = false) {
