@@ -16,7 +16,8 @@ classifiers = [
 ]
 dependencies = [
     # add requirements here
-    "numpy"
+    "numpy",
+    "jsonschema>=2.6.0",
 ]
 
 [project.optional-dependencies]
