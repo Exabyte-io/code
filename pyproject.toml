@@ -28,7 +28,8 @@ tests = [
     "ruff",
     "isort",
     "mypy",
-    "pip-tools"
+    "pip-tools",
+    "pytest",
 ]
 all = ["mat3ra-code[tests]"]
 
