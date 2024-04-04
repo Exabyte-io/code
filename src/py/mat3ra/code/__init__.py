@@ -26,7 +26,7 @@ class BaseUnderscoreJsonPropsHandler(object):
     def unset_prop(self, name: str) -> None:
         del self._json[name]
 
-    def set_props(self, json: Dict[str, Any] = {}) -> 'BaseUnderscoreJsonPropsHandler':
+    def set_props(self, json: Dict[str, Any] = {}) -> "BaseUnderscoreJsonPropsHandler":
         for key, value in json.items():
             self.set_prop(key, value)
         return self

@@ -40,13 +40,13 @@ class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
         return self.__class__.__name__
 
     @staticmethod
-    def create(config: Dict[str, Any]) -> 'InMemoryEntity':
+    def create(config: Dict[str, Any]) -> "InMemoryEntity":
         return InMemoryEntity(config)
 
     def to_json(self, exclude: List[str] = []) -> Dict[str, Any]:
         return self.clean(object_utils.clone_deep(object_utils.omit(self._json, exclude)))
 
-    def clone(self, extra_context: Dict[str, Any] = {}) -> 'InMemoryEntity':
+    def clone(self, extra_context: Dict[str, Any] = {}) -> "InMemoryEntity":
         return self.__class__({**self.to_json(), **extra_context})
 
     @staticmethod
@@ -92,6 +92,7 @@ class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
             return {"_id": self.id, "slug": self.slug, "cls": self.get_cls_name()}
 
 
-class HasDescriptionHasMetadataNamedDefaultableInMemoryEntity(InMemoryEntity, DefaultableMixin, NamedMixin,
-                                                              HasMetadataMixin, HasDescriptionMixin):
+class HasDescriptionHasMetadataNamedDefaultableInMemoryEntity(
+    InMemoryEntity, DefaultableMixin, NamedMixin, HasMetadataMixin, HasDescriptionMixin
+):
     pass

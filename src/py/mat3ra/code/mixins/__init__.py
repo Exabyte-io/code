@@ -1,10 +1,9 @@
-from typing import Dict, Any
+from typing import Any, Dict
 
 from .. import BaseUnderscoreJsonPropsHandler
 
 
 class DefaultableMixin(BaseUnderscoreJsonPropsHandler):
-
     __default_config__: Dict[str, Any]
 
     @property
@@ -16,12 +15,11 @@ class DefaultableMixin(BaseUnderscoreJsonPropsHandler):
         self.set_prop("isDefault", is_default)
 
     @classmethod
-    def create_default(cls) -> 'DefaultableMixin':
+    def create_default(cls) -> "DefaultableMixin":
         return cls(cls.__default_config__)
 
 
 class NamedMixin(BaseUnderscoreJsonPropsHandler):
-
     @property
     def name(self) -> str:
         return self.prop("name", False)
@@ -32,7 +30,6 @@ class NamedMixin(BaseUnderscoreJsonPropsHandler):
 
 
 class HasMetadataMixin(BaseUnderscoreJsonPropsHandler):
-
     @property
     def metadata(self) -> Dict:
         return self.prop("metadata", False)
@@ -43,7 +40,6 @@ class HasMetadataMixin(BaseUnderscoreJsonPropsHandler):
 
 
 class HasDescriptionMixin(BaseUnderscoreJsonPropsHandler):
-
     @property
     def description(self) -> str:
         return self.prop("description", "")
@@ -59,4 +55,3 @@ class HasDescriptionMixin(BaseUnderscoreJsonPropsHandler):
     @description_object.setter
     def description_object(self, description_object: str = "") -> None:
         self.set_prop("descriptionObject", description_object)
-
