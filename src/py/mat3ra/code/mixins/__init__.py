@@ -8,7 +8,7 @@ class DefaultableMixin(BaseUnderscoreJsonPropsHandler):
 
     @property
     def is_default(self) -> bool:
-        return self.prop("isDefault", False)
+        return self.get_prop("isDefault", False)
 
     @is_default.setter
     def is_default(self, is_default: bool = False) -> None:
@@ -22,7 +22,7 @@ class DefaultableMixin(BaseUnderscoreJsonPropsHandler):
 class NamedMixin(BaseUnderscoreJsonPropsHandler):
     @property
     def name(self) -> str:
-        return self.prop("name", False)
+        return self.get_prop("name", False)
 
     @name.setter
     def name(self, name: str = "") -> None:
@@ -32,7 +32,7 @@ class NamedMixin(BaseUnderscoreJsonPropsHandler):
 class HasMetadataMixin(BaseUnderscoreJsonPropsHandler):
     @property
     def metadata(self) -> Dict:
-        return self.prop("metadata", False)
+        return self.get_prop("metadata", False)
 
     @metadata.setter
     def metadata(self, metadata: Dict = {}) -> None:
@@ -42,7 +42,7 @@ class HasMetadataMixin(BaseUnderscoreJsonPropsHandler):
 class HasDescriptionMixin(BaseUnderscoreJsonPropsHandler):
     @property
     def description(self) -> str:
-        return self.prop("description", "")
+        return self.get_prop("description", "")
 
     @description.setter
     def description(self, description: str = "") -> None:
@@ -50,7 +50,7 @@ class HasDescriptionMixin(BaseUnderscoreJsonPropsHandler):
 
     @property
     def description_object(self) -> str:
-        return self.prop("descriptionObject", "")
+        return self.get_prop("descriptionObject", "")
 
     @description_object.setter
     def description_object(self, description_object: str = "") -> None:

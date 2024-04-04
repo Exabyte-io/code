@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 import jsonschema
 from mat3ra.utils import object as object_utils
@@ -39,15 +39,15 @@ class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
     def get_cls_name(self) -> str:
         return self.__class__.__name__
 
-    @staticmethod
-    def create(config: Dict[str, Any]) -> "InMemoryEntity":
-        return InMemoryEntity(config)
+    @classmethod
+    def create(cls, config: Dict[str, Any]) -> Any:
+        return cls(config)
 
     def to_json(self, exclude: List[str] = []) -> Dict[str, Any]:
         return self.clean(object_utils.clone_deep(object_utils.omit(self._json, exclude)))
 
-    def clone(self, extra_context: Dict[str, Any] = {}) -> "InMemoryEntity":
-        return self.__class__({**self.to_json(), **extra_context})
+    def clone(self, extra_context: Dict[str, Any] = {}) -> Any:
+        return self.__class__.__init__({**self.to_json(), **extra_context})
 
     @staticmethod
     def validate_data(data: Dict[str, Any], clean: bool = False):
