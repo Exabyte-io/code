@@ -30,6 +30,7 @@ tests = [
     "mypy",
     "pip-tools",
     "pytest",
+    "pytest-cov",
 ]
 all = ["mat3ra-code[tests]"]
 
