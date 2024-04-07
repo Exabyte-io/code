@@ -85,7 +85,7 @@ class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
     def slug(self) -> str:
         return self.prop("slug", "")
 
-    def get_as_entity_reference(self, by_id_only: bool = False) -> dict[str, str]:
+    def get_as_entity_reference(self, by_id_only: bool = False) -> Dict[str, str]:
         if by_id_only:
             return {"_id": self.id}
         else:
