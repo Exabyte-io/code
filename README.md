@@ -46,4 +46,3 @@ npm run transpile
 # run tests
 npm run test
 ```
-

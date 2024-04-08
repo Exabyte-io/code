@@ -16,7 +16,9 @@ classifiers = [
 ]
 dependencies = [
     # add requirements here
-    "numpy"
+    "numpy",
+    "jsonschema>=2.6.0",
+    "mat3ra-utils",
 ]
 
 [project.optional-dependencies]
@@ -27,7 +29,9 @@ tests = [
     "ruff",
     "isort",
     "mypy",
-    "pip-tools"
+    "pip-tools",
+    "pytest",
+    "pytest-cov",
 ]
 all = ["mat3ra-code[tests]"]
 

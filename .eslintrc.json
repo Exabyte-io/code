@@ -1,4 +1,3 @@
 {
     "extends": ["@exabyte-io/eslint-config"]
 }
-
