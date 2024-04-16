@@ -7,6 +7,7 @@ repos:
       - id: isort
       - id: mypy
       - id: check-yaml
+        exclude: ^tests/js
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: local

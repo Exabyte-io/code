@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 from mat3ra.utils import object as object_utils
 
@@ -26,7 +26,7 @@ class BaseUnderscoreJsonPropsHandler(object):
     def unset_prop(self, name: str) -> None:
         del self._json[name]
 
-    def set_props(self, json: Dict[str, Any] = {}) -> "BaseUnderscoreJsonPropsHandler":
+    def set_props(self, json: Dict[str, Any] = {}) -> Any:
         for key, value in json.items():
             self.set_prop(key, value)
         return self

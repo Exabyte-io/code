@@ -47,7 +47,12 @@ class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
         return self.clean(object_utils.clone_deep(object_utils.omit(self._json, exclude)))
 
     def clone(self, extra_context: Dict[str, Any] = {}) -> Any:
-        return self.__class__.__init__({**self.to_json(), **extra_context})
+        config = self.to_json()
+        config.update(extra_context)
+        # To avoid:
+        #   Argument 1 to "__init__" of "BaseUnderscoreJsonPropsHandler" has incompatible type "Dict[str, Any]";
+        #   expected "BaseUnderscoreJsonPropsHandler"
+        return self.__class__.__init__(config)  # type: ignore[arg-type]
 
     @staticmethod
     def validate_data(data: Dict[str, Any], clean: bool = False):
