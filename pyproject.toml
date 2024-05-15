@@ -18,7 +18,8 @@ dependencies = [
     # add requirements here
     "numpy",
     "jsonschema>=2.6.0",
-    "mat3ra-utils",
+#    "mat3ra-utils",
+    "mat3ra-utils@git+https://github.com/Exabyte-io/utils.git@2f7b4cb40839e0ede25838ccbf81792a689cba50",
 ]
 
 [project.optional-dependencies]
