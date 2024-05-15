@@ -21,7 +21,7 @@ class BaseUnderscoreJsonPropsHandler(object):
         return self.__getattribute_from_json__(name, default_value)
 
     def set_prop(self, name: str, value: Any) -> None:
-        object_utils.set(self._json, name, value)
+        object_utils.set_object_key(self._json, name, value)
 
     def unset_prop(self, name: str) -> None:
         del self._json[name]
