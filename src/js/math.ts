@@ -4,6 +4,29 @@ import _ from "underscore";
 
 import { tolerance as TOLERANCE } from "./constants";
 
+export type MathArray = mathjs.MathArray;
+export type MathType = mathjs.MathType;
+export type MathExpression = mathjs.MathExpression;
+export type MathJsStatic = mathjs.MathJsStatic;
+export type Matrix = mathjs.Matrix;
+export type BigNumber = mathjs.BigNumber;
+export type Fraction = mathjs.Fraction;
+export type Complex = mathjs.Complex;
+export type PolarCoordinates = mathjs.PolarCoordinates;
+export type MathJSON = mathjs.MathJSON;
+export type Unit = mathjs.Unit;
+export type CreateUnitOptions = mathjs.CreateUnitOptions;
+export type UnitDefinition = mathjs.UnitDefinition;
+export type Index = mathjs.Index;
+export type EvalFunction = mathjs.EvalFunction;
+export type MathNode = mathjs.MathNode;
+export type Parser = mathjs.Parser;
+export type Distribution = mathjs.Distribution;
+export type FormatOptions = mathjs.FormatOptions;
+export type Help = mathjs.Help;
+export type MathJsChain = mathjs.MathJsChain;
+export type MathJsJson = mathjs.MathJsJson;
+
 /**
  * @summary Zero threshold. Numbers below it are put to zero exactly.
  * Used to avoid math.js bug in treating zero as X.XXe-16.

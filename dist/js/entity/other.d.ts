@@ -20,7 +20,7 @@ export declare const DefaultableInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
     readonly defaultConfig: object | null;
@@ -48,7 +48,7 @@ export declare const NamedInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & typeof InMemoryEntity;
@@ -74,7 +74,7 @@ export declare const NamedDefaultableInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -98,7 +98,7 @@ export declare const NamedDefaultableInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
     readonly defaultConfig: object | null;
@@ -126,7 +126,7 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -151,7 +151,7 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -175,7 +175,7 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
     readonly defaultConfig: object | null;
@@ -203,7 +203,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -228,7 +228,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -253,7 +253,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -277,7 +277,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
     readonly defaultConfig: object | null;
@@ -309,7 +309,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -341,7 +341,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -366,7 +366,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -390,7 +390,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
     readonly defaultConfig: object | null;
@@ -425,7 +425,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -457,7 +457,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -482,7 +482,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -506,7 +506,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
     readonly defaultConfig: object | null;
@@ -534,7 +534,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -566,7 +566,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -595,7 +595,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -621,40 +621,40 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
     new (...params: any): {
         _json: import("./mixins/runtime_items").RuntimeItemsUILogicJSON;
-        getDefaultsByKey(key: import("./mixins/runtime_items").ItemKey): import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        getDefaultsByKey(key: import("./mixins/runtime_items").ItemKey): import("@mat3ra/esse/lib/js/types").NameResultSchema[];
         setRuntimeItemsToDefaultValues(): void;
         _initRuntimeItems(keys: import("./mixins/runtime_items").ItemKey[], _config: object): void;
-        _addRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, config: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema): void;
-        _removeRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, config: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema): void;
+        _addRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, config: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema): void;
+        _removeRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, config: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema): void;
         _removeRuntimeItemByName(key: import("./mixins/runtime_items").ItemKey, name: string): void;
-        _toggleRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
-        toggleResult(data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
-        toggleMonitor(data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
-        togglePreProcessor(data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
-        togglePostProcessor(data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
+        _toggleRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, data: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema, isAdding: boolean): void;
+        toggleResult(data: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema, isAdding: boolean): void;
+        toggleMonitor(data: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema, isAdding: boolean): void;
+        togglePreProcessor(data: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema, isAdding: boolean): void;
+        togglePostProcessor(data: import("@mat3ra/esse/lib/js/types").RuntimeItemSchema, isAdding: boolean): void;
         readonly resultNames: string[];
         readonly monitorNames: string[];
         readonly postProcessorNames: string[];
         readonly preProcessorNames: string[];
-        getResultByName(name: string): import("@mat3ra/esse/dist/js/types").NameResultSchema | undefined;
-        readonly results: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly monitors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly preProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly postProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly defaultResults: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly defaultMonitors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly defaultPreProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly defaultPostProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        getResultByName(name: string): import("@mat3ra/esse/lib/js/types").NameResultSchema | undefined;
+        readonly results: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+        readonly monitors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+        readonly preProcessors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+        readonly postProcessors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+        readonly defaultResults: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+        readonly defaultMonitors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+        readonly defaultPreProcessors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+        readonly defaultPostProcessors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
         readonly hashObjectFromRuntimeItems: {
-            results: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-            preProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-            postProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+            results: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+            preProcessors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
+            postProcessors: import("@mat3ra/esse/lib/js/types").NameResultSchema[];
         };
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T_1 = undefined>(name: string): T_1 | undefined;
@@ -673,7 +673,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -705,7 +705,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -730,7 +730,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
 } & {
@@ -754,7 +754,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getClsName(): string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/lib/js/types").EntityReferenceSchema;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
     };
     readonly defaultConfig: object | null;
