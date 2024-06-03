@@ -74,7 +74,7 @@
         "@babel/register": "^7.16.0",
         "@babel/runtime-corejs3": "7.16.8",
         "@exabyte-io/eslint-config": "^2023.8.29-1",
-        "@mat3ra/esse": "^2024.3.25-6",
+        "@mat3ra/esse": "git+https://github.com/Exabyte-io/esse.git#afa7b5834b5b2777be3d5ec445d6a373bced5708",
         "@mat3ra/tsconfig": "git+https://github.com/Exabyte-io/tsconfig.git#355d5dd04e11ba2bba61c85274ef98bc6729718a",
         "@types/chai": "^4.3.5",
         "@types/crypto-js": "^4.1.1",
