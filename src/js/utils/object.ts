@@ -1,3 +1,4 @@
+import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { NameResultSchema } from "@mat3ra/esse/dist/js/types";
 import camelCase from "lodash/camelCase";
 import filterObject from "lodash/filter";
@@ -9,7 +10,6 @@ import isString from "lodash/isString";
 import mapKeys from "lodash/mapKeys";
 import omit from "lodash/omit";
 
-import { AnyObject } from "../entity/in_memory";
 import { safeMakeArray } from "./array";
 import { deepClone } from "./clone";
 
