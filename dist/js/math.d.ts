@@ -1,4 +1,9 @@
 import mathjs from "mathjs";
+/**
+ * This module is intended to be used instead of the original mathjs package, hence we need to reexport all original functions and all TS types.
+ * Export of all mathjs types one by one is required as we don't have a way to re-export them automatically in TS v4.5.
+ * This can be changed in TS version 5.0 and higher.
+ */
 export type MathArray = mathjs.MathArray;
 export type MathType = mathjs.MathType;
 export type MathExpression = mathjs.MathExpression;
