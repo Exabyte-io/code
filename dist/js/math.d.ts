@@ -1,5 +1,32 @@
 import mathjs from "mathjs";
 /**
+ * This module is intended to be used instead of the original mathjs package, hence we need to reexport all original functions and all TS types.
+ * Export of all mathjs types one by one is required as we don't have a way to re-export them automatically in TS v4.5.
+ * This can be changed in TS version 5.0 and higher.
+ */
+export type MathArray = mathjs.MathArray;
+export type MathType = mathjs.MathType;
+export type MathExpression = mathjs.MathExpression;
+export type MathJsStatic = mathjs.MathJsStatic;
+export type Matrix = mathjs.Matrix;
+export type BigNumber = mathjs.BigNumber;
+export type Fraction = mathjs.Fraction;
+export type Complex = mathjs.Complex;
+export type PolarCoordinates = mathjs.PolarCoordinates;
+export type MathJSON = mathjs.MathJSON;
+export type Unit = mathjs.Unit;
+export type CreateUnitOptions = mathjs.CreateUnitOptions;
+export type UnitDefinition = mathjs.UnitDefinition;
+export type Index = mathjs.Index;
+export type EvalFunction = mathjs.EvalFunction;
+export type MathNode = mathjs.MathNode;
+export type Parser = mathjs.Parser;
+export type Distribution = mathjs.Distribution;
+export type FormatOptions = mathjs.FormatOptions;
+export type Help = mathjs.Help;
+export type MathJsChain = mathjs.MathJsChain;
+export type MathJsJson = mathjs.MathJsJson;
+/**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
  * Returns a string representing the Number object to the specified precision.
  * @memberOf Helpers
@@ -53,9 +80,7 @@ export declare const math: {
     lsolve(L: mathjs.MathArray | mathjs.Matrix, b: mathjs.MathArray | mathjs.Matrix): mathjs.MathArray | mathjs.Matrix;
     lup(A?: mathjs.MathArray | mathjs.Matrix | undefined): mathjs.MathArray;
     lusolve(A: number | mathjs.MathArray | mathjs.Matrix, b: mathjs.MathArray | mathjs.Matrix): mathjs.MathArray | mathjs.Matrix;
-    slu(A: mathjs.Matrix, order: number, threshold: number): any; /**
-     * @summary Returns all possible positive integer combinations where each value changes from 0 to a, b, c.
-     */
+    slu(A: mathjs.Matrix, order: number, threshold: number): any;
     usolve(U: mathjs.MathArray | mathjs.Matrix, b: mathjs.MathArray | mathjs.Matrix): mathjs.MathArray | mathjs.Matrix;
     abs(x: number): number;
     abs(x: mathjs.BigNumber): mathjs.BigNumber;
@@ -121,7 +146,7 @@ export declare const math: {
     lcm(a: mathjs.BigNumber, b: mathjs.BigNumber): mathjs.BigNumber;
     lcm(a: mathjs.MathArray, b: mathjs.MathArray): mathjs.MathArray;
     lcm(a: mathjs.Matrix, b: mathjs.Matrix): mathjs.Matrix;
-    log(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.MathArray | mathjs.Matrix, base?: number | mathjs.BigNumber | mathjs.Complex | undefined): number | mathjs.BigNumber | mathjs.Complex | mathjs.MathArray | mathjs.Matrix;
+    log(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Matrix, base?: number | mathjs.BigNumber | mathjs.Complex | undefined): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Matrix;
     log10(x: number): number;
     log10(x: mathjs.BigNumber): mathjs.BigNumber;
     log10(x: mathjs.Complex): mathjs.Complex;
@@ -131,10 +156,10 @@ export declare const math: {
     multiply(x: mathjs.Unit, y: mathjs.Unit): mathjs.Unit;
     multiply(x: number, y: number): number;
     multiply(x: mathjs.MathType, y: mathjs.MathType): mathjs.MathType;
-    norm(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.MathArray | mathjs.Matrix, p?: string | number | mathjs.BigNumber | undefined): number | mathjs.BigNumber;
-    nthRoot(a: number | mathjs.BigNumber | mathjs.Complex | mathjs.MathArray | mathjs.Matrix, root?: number | mathjs.BigNumber | undefined): number | mathjs.Complex | mathjs.MathArray | mathjs.Matrix;
+    norm(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Matrix, p?: string | number | mathjs.BigNumber | undefined): number | mathjs.BigNumber;
+    nthRoot(a: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Matrix, root?: number | mathjs.BigNumber | undefined): number | mathjs.MathArray | mathjs.Complex | mathjs.Matrix;
     pow(x: mathjs.MathType, y: number | mathjs.BigNumber | mathjs.Complex): mathjs.MathType;
-    round(x: number | mathjs.BigNumber | mathjs.Fraction | mathjs.Complex | mathjs.MathArray | mathjs.Matrix, n?: number | mathjs.BigNumber | mathjs.MathArray | undefined): number | mathjs.BigNumber | mathjs.Fraction | mathjs.Complex | mathjs.MathArray | mathjs.Matrix;
+    round(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Fraction | mathjs.Complex | mathjs.Matrix, n?: number | mathjs.MathArray | mathjs.BigNumber | undefined): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Fraction | mathjs.Complex | mathjs.Matrix;
     sign(x: number): number;
     sign(x: mathjs.BigNumber): mathjs.BigNumber;
     sign(x: mathjs.Fraction): mathjs.Fraction;
@@ -172,7 +197,7 @@ export declare const math: {
     unaryPlus(x: mathjs.Matrix): mathjs.Matrix;
     unaryPlus(x: mathjs.Unit): mathjs.Unit;
     xgcd(a: number | mathjs.BigNumber, b: number | mathjs.BigNumber): mathjs.MathArray;
-    bitAnd(x: number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix, y: number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix): number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix;
+    bitAnd(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix, y: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix;
     bitNot(x: number): number;
     bitNot(x: mathjs.BigNumber): mathjs.BigNumber;
     bitNot(x: mathjs.MathArray): mathjs.MathArray;
@@ -181,9 +206,9 @@ export declare const math: {
     bitOr(x: mathjs.BigNumber): mathjs.BigNumber;
     bitOr(x: mathjs.MathArray): mathjs.MathArray;
     bitOr(x: mathjs.Matrix): mathjs.Matrix;
-    bitXor(x: number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix, y: number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix): number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix;
-    leftShift(x: number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix, y: number | mathjs.BigNumber): number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix;
-    rightArithShift(x: number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix, y: number | mathjs.BigNumber): number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix;
+    bitXor(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix, y: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix;
+    leftShift(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix, y: number | mathjs.BigNumber): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix;
+    rightArithShift(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix, y: number | mathjs.BigNumber): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix;
     rightLogShift(x: number | mathjs.MathArray | mathjs.Matrix, y: number): number | mathjs.MathArray | mathjs.Matrix;
     bellNumbers(n: number): number;
     bellNumbers(n: mathjs.BigNumber): mathjs.BigNumber;
@@ -194,19 +219,19 @@ export declare const math: {
     arg(x: number | mathjs.Complex): number;
     arg(x: mathjs.MathArray): mathjs.MathArray;
     arg(x: mathjs.Matrix): mathjs.Matrix;
-    conj(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.MathArray | mathjs.Matrix): number | mathjs.BigNumber | mathjs.Complex | mathjs.MathArray | mathjs.Matrix;
-    im(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.MathArray | mathjs.Matrix): number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix;
-    re(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.MathArray | mathjs.Matrix): number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix;
+    conj(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Matrix): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Matrix;
+    im(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Matrix): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix;
+    re(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Matrix): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix;
     bignumber(x?: string | number | boolean | mathjs.MathArray | mathjs.Matrix | undefined): mathjs.BigNumber;
     boolean(x: string | number | boolean | mathjs.MathArray | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
     chain(value?: any): mathjs.MathJsChain;
-    complex(arg?: string | mathjs.Complex | mathjs.MathArray | mathjs.PolarCoordinates | undefined): mathjs.Complex;
+    complex(arg?: string | mathjs.MathArray | mathjs.Complex | mathjs.PolarCoordinates | undefined): mathjs.Complex;
     complex(re: number, im: number): mathjs.Complex;
-    fraction(numerator: string | number | mathjs.MathArray | mathjs.Matrix, denominator?: string | number | mathjs.MathArray | mathjs.Matrix | undefined): mathjs.Fraction | mathjs.MathArray | mathjs.Matrix;
+    fraction(numerator: string | number | mathjs.MathArray | mathjs.Matrix, denominator?: string | number | mathjs.MathArray | mathjs.Matrix | undefined): mathjs.MathArray | mathjs.Fraction | mathjs.Matrix;
     index(...ranges: any[]): mathjs.Index;
     matrix(format?: "sparse" | "dense" | undefined): mathjs.Matrix;
     matrix(data: mathjs.MathArray | mathjs.Matrix, format?: "sparse" | "dense" | undefined, dataType?: string | undefined): mathjs.Matrix;
-    number(value?: string | number | boolean | mathjs.BigNumber | mathjs.Fraction | mathjs.Unit | mathjs.MathArray | mathjs.Matrix | undefined): number | mathjs.MathArray | mathjs.Matrix;
+    number(value?: string | number | boolean | mathjs.MathArray | mathjs.BigNumber | mathjs.Fraction | mathjs.Unit | mathjs.Matrix | undefined): number | mathjs.MathArray | mathjs.Matrix;
     number(unit: mathjs.Unit, valuelessUnit: string | mathjs.Unit): number | mathjs.MathArray | mathjs.Matrix;
     sparse(data?: mathjs.MathArray | mathjs.Matrix | undefined, dataType?: string | undefined): mathjs.Matrix;
     string(value: any): string | mathjs.MathArray | mathjs.Matrix;
@@ -223,10 +248,10 @@ export declare const math: {
     parser(): mathjs.Parser;
     distance(x: mathjs.MathType, y: mathjs.MathType): number | mathjs.BigNumber;
     intersect(w: mathjs.MathArray | mathjs.Matrix, x: mathjs.MathArray | mathjs.Matrix, y: mathjs.MathArray | mathjs.Matrix, z: mathjs.MathArray | mathjs.Matrix): mathjs.MathArray;
-    and(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix, y: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
-    not(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
-    or(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix, y: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
-    xor(x: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix, y: number | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
+    and(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.Matrix, y: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
+    not(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
+    or(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.Matrix, y: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
+    xor(x: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.Matrix, y: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Complex | mathjs.Unit | mathjs.Matrix): boolean | mathjs.MathArray | mathjs.Matrix;
     concat(...args: (number | mathjs.MathArray | mathjs.Matrix)[]): mathjs.MathArray | mathjs.Matrix;
     cross(x: mathjs.MathArray | mathjs.Matrix, y: mathjs.MathArray | mathjs.Matrix): mathjs.Matrix;
     det(x: mathjs.MathArray | mathjs.Matrix): number;
@@ -236,14 +261,14 @@ export declare const math: {
     eye(n: number | number[], format?: string | undefined): mathjs.Matrix;
     eye(m: number, n: number, format?: string | undefined): mathjs.Matrix;
     flatten(x: mathjs.MathArray | mathjs.Matrix): mathjs.MathArray | mathjs.Matrix;
-    inv(x: number | mathjs.Complex | mathjs.MathArray | mathjs.Matrix): number | mathjs.Complex | mathjs.MathArray | mathjs.Matrix;
+    inv(x: number | mathjs.MathArray | mathjs.Complex | mathjs.Matrix): number | mathjs.MathArray | mathjs.Complex | mathjs.Matrix;
     ones(n: number | number[], format?: string | undefined): mathjs.MathArray | mathjs.Matrix;
     ones(m: number, n: number, format?: string | undefined): mathjs.MathArray | mathjs.Matrix;
     range(str: string, includeEnd?: boolean | undefined): mathjs.Matrix;
     range(start: number | mathjs.BigNumber, end: number | mathjs.BigNumber, includeEnd?: boolean | undefined): mathjs.Matrix;
     range(start: number | mathjs.BigNumber, end: number | mathjs.BigNumber, step: number | mathjs.BigNumber, includeEnd?: boolean | undefined): mathjs.Matrix;
     resize(x: mathjs.MathArray | mathjs.Matrix, size: mathjs.MathArray | mathjs.Matrix, defaultValue?: string | number | undefined): mathjs.MathArray | mathjs.Matrix;
-    size(x: string | number | boolean | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix): mathjs.MathArray | mathjs.Matrix;
+    size(x: string | number | boolean | mathjs.MathArray | mathjs.Complex | mathjs.Unit | mathjs.Matrix): mathjs.MathArray | mathjs.Matrix;
     squeeze(x: mathjs.MathArray | mathjs.Matrix): mathjs.MathArray | mathjs.Matrix;
     subset(value: string | mathjs.MathArray | mathjs.Matrix, index: mathjs.Index, replacement?: any, defaultValue?: any): string | mathjs.MathArray | mathjs.Matrix;
     trace(x: mathjs.MathArray | mathjs.Matrix): number;
@@ -251,7 +276,7 @@ export declare const math: {
     zeros(n: number | number[], format?: string | undefined): mathjs.MathArray | mathjs.Matrix;
     zeros(m: number, n: number, format?: string | undefined): mathjs.MathArray | mathjs.Matrix;
     distribution(name: string): mathjs.Distribution;
-    factorial(n: number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix): number | mathjs.BigNumber | mathjs.MathArray | mathjs.Matrix;
+    factorial(n: number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Matrix;
     gamma(n: number | mathjs.MathArray | mathjs.Matrix): number | mathjs.MathArray | mathjs.Matrix;
     kldivergence(x: mathjs.MathArray | mathjs.Matrix, y: mathjs.MathArray | mathjs.Matrix): number;
     multinomial(a: number[] | mathjs.BigNumber[]): number | mathjs.BigNumber;
@@ -261,8 +286,8 @@ export declare const math: {
     random(size: mathjs.MathArray | mathjs.Matrix, min?: number | undefined, max?: number | undefined): mathjs.MathArray | mathjs.Matrix;
     randomInt(min: number, max?: number | undefined): number;
     randomInt(size: mathjs.MathArray | mathjs.Matrix, min?: number | undefined, max?: number | undefined): mathjs.MathArray | mathjs.Matrix;
-    compare(x: mathjs.MathType, y: mathjs.MathType): number | mathjs.BigNumber | mathjs.Fraction | mathjs.MathArray | mathjs.Matrix;
-    deepEqual(x: mathjs.MathType, y: mathjs.MathType): number | mathjs.BigNumber | mathjs.Fraction | mathjs.Complex | mathjs.Unit | mathjs.MathArray | mathjs.Matrix;
+    compare(x: mathjs.MathType, y: mathjs.MathType): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Fraction | mathjs.Matrix;
+    deepEqual(x: mathjs.MathType, y: mathjs.MathType): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Fraction | mathjs.Complex | mathjs.Unit | mathjs.Matrix;
     equal(x: mathjs.MathType, y: mathjs.MathType): boolean | mathjs.MathArray | mathjs.Matrix;
     larger(x: mathjs.MathType, y: mathjs.MathType): boolean | mathjs.MathArray | mathjs.Matrix;
     largerEq(x: mathjs.MathType, y: mathjs.MathType): boolean | mathjs.MathArray | mathjs.Matrix;
@@ -278,7 +303,7 @@ export declare const math: {
     min(A: mathjs.MathArray | mathjs.Matrix, dim?: number | undefined): any;
     mode(...args: mathjs.MathType[]): any;
     prod(...args: mathjs.MathType[]): any;
-    quantileSeq(A: mathjs.MathArray | mathjs.Matrix, prob: number | mathjs.BigNumber | mathjs.MathArray, sorted?: boolean | undefined): number | mathjs.BigNumber | mathjs.Unit | mathjs.MathArray;
+    quantileSeq(A: mathjs.MathArray | mathjs.Matrix, prob: number | mathjs.MathArray | mathjs.BigNumber, sorted?: boolean | undefined): number | mathjs.MathArray | mathjs.BigNumber | mathjs.Unit;
     std(array: mathjs.MathArray | mathjs.Matrix, normalization?: string | undefined): number;
     sum(...args: (number | mathjs.BigNumber | mathjs.Fraction)[]): any;
     sum(array: mathjs.MathArray | mathjs.Matrix): any;
@@ -391,7 +416,7 @@ export declare const math: {
     tanh(x: mathjs.Complex): mathjs.Complex;
     tanh(x: mathjs.MathArray): mathjs.MathArray;
     tanh(x: mathjs.Matrix): mathjs.Matrix;
-    to(x: mathjs.Unit | mathjs.MathArray | mathjs.Matrix, unit: string | mathjs.Unit): mathjs.Unit | mathjs.MathArray | mathjs.Matrix;
+    to(x: mathjs.MathArray | mathjs.Unit | mathjs.Matrix, unit: string | mathjs.Unit): mathjs.MathArray | mathjs.Unit | mathjs.Matrix;
     clone(x: any): any;
     filter(x: mathjs.MathArray | mathjs.Matrix, test: RegExp | ((item: any) => boolean)): mathjs.MathArray | mathjs.Matrix;
     forEach: (x: mathjs.MathArray | mathjs.Matrix, callback: (item: any) => any) => void;

@@ -1,8 +1,9 @@
 /* eslint-disable class-methods-use-this */
+import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { NameResultSchema, RuntimeItemSchema } from "@mat3ra/esse/dist/js/types";
 
 import { safeMakeObject } from "../../utils/object";
-import { AnyObject, InMemoryEntityConstructor } from "../in_memory";
+import { InMemoryEntityConstructor } from "../in_memory";
 
 export enum ItemKey {
     results = "results",

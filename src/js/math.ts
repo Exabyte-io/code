@@ -5,6 +5,34 @@ import _ from "underscore";
 import { tolerance as TOLERANCE } from "./constants";
 
 /**
+ * This module is intended to be used instead of the original mathjs package, hence we need to reexport all original functions and all TS types.
+ * Export of all mathjs types one by one is required as we don't have a way to re-export them automatically in TS v4.5.
+ * This can be changed in TS version 5.0 and higher.
+ */
+export type MathArray = mathjs.MathArray;
+export type MathType = mathjs.MathType;
+export type MathExpression = mathjs.MathExpression;
+export type MathJsStatic = mathjs.MathJsStatic;
+export type Matrix = mathjs.Matrix;
+export type BigNumber = mathjs.BigNumber;
+export type Fraction = mathjs.Fraction;
+export type Complex = mathjs.Complex;
+export type PolarCoordinates = mathjs.PolarCoordinates;
+export type MathJSON = mathjs.MathJSON;
+export type Unit = mathjs.Unit;
+export type CreateUnitOptions = mathjs.CreateUnitOptions;
+export type UnitDefinition = mathjs.UnitDefinition;
+export type Index = mathjs.Index;
+export type EvalFunction = mathjs.EvalFunction;
+export type MathNode = mathjs.MathNode;
+export type Parser = mathjs.Parser;
+export type Distribution = mathjs.Distribution;
+export type FormatOptions = mathjs.FormatOptions;
+export type Help = mathjs.Help;
+export type MathJsChain = mathjs.MathJsChain;
+export type MathJsJson = mathjs.MathJsJson;
+
+/**
  * @summary Zero threshold. Numbers below it are put to zero exactly.
  * Used to avoid math.js bug in treating zero as X.XXe-16.
  */

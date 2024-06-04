@@ -1,6 +1,6 @@
+import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { EntitySetSchema } from "@mat3ra/esse/dist/js/types";
 
-import { AnyObject } from "../in_memory";
 import { InMemoryEntitySet } from "../set";
 import { ENTITY_SET_TYPES } from "./enums";
 import { OrderedInMemoryEntitySet } from "./ordered";

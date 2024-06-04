@@ -1,4 +1,5 @@
-import { AnyObject, InMemoryEntityConstructor } from "../in_memory";
+import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
+import { InMemoryEntityConstructor } from "../in_memory";
 export type Context = AnyObject;
 export declare function ContextAndRenderFieldsMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...params: any[]): {

@@ -1,10 +1,8 @@
+import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
 import { EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
 export declare enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID"
-}
-export interface AnyObject {
-    [key: string]: unknown;
 }
 interface ErrorDetails {
     error?: object | null;

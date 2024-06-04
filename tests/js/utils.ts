@@ -1,6 +1,5 @@
+import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { expect } from "chai";
-
-import { AnyObject } from "../../src/js/entity/in_memory";
 
 export function assertObject(prop: unknown): prop is AnyObject {
     expect(prop).to.be.an("object");

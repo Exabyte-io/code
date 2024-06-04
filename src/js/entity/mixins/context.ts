@@ -1,5 +1,7 @@
+import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
+
 import { deepClone } from "../../utils/clone";
-import { AnyObject, InMemoryEntityConstructor } from "../in_memory";
+import { InMemoryEntityConstructor } from "../in_memory";
 
 // TODO: clarify interface
 export type Context = AnyObject;
