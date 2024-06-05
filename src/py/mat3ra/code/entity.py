@@ -52,7 +52,7 @@ class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
         # To avoid:
         #   Argument 1 to "__init__" of "BaseUnderscoreJsonPropsHandler" has incompatible type "Dict[str, Any]";
         #   expected "BaseUnderscoreJsonPropsHandler"
-        return self.__class__.__init__(config)  # type: ignore[arg-type]
+        return self.__class__(config)
 
     @staticmethod
     def validate_data(data: Dict[str, Any], clean: bool = False):
