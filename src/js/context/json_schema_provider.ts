@@ -42,10 +42,6 @@ class JSONSchemaFormDataProvider extends ContextProvider {
         return {};
     }
 
-    fieldStyles(classNames: string): { classNames: string } {
-        return { classNames };
-    }
-
     get uiSchemaStyled(): UiSchema {
         const schema = this.uiSchema;
         // @ts-ignore

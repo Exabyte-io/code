@@ -20,9 +20,6 @@ declare class JSONSchemaFormDataProvider extends ContextProvider {
     get uiSchema(): UiSchema;
     get fields(): {};
     get defaultFieldStyles(): {};
-    fieldStyles(classNames: string): {
-        classNames: string;
-    };
     get uiSchemaStyled(): UiSchema;
 }
 export { JSONSchemaFormDataProvider };
