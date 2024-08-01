@@ -14,18 +14,12 @@ interface JSONSchemaFormDataProviderConfig extends ContextProviderConfig {
  * ```
  */
 declare class JSONSchemaFormDataProvider extends ContextProvider {
-    defaultClassNames: string;
     isUsingJinjaVariables: boolean;
     constructor(config: JSONSchemaFormDataProviderConfig);
     get jsonSchema(): void;
     get uiSchema(): UiSchema;
     get fields(): {};
-    get defaultFieldStyles(): {
-        classNames: string;
-    };
-    fieldStyles(classNames: string, overrideDefault?: boolean): {
-        classNames: string;
-    };
+    get defaultFieldStyles(): {};
     get uiSchemaStyled(): UiSchema;
 }
 export { JSONSchemaFormDataProvider };

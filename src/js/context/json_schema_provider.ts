@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { UiSchema } from "react-jsonschema-form";
 import _ from "underscore";
 
@@ -18,39 +19,27 @@ interface JSONSchemaFormDataProviderConfig extends ContextProviderConfig {
  * ```
  */
 class JSONSchemaFormDataProvider extends ContextProvider {
-    defaultClassNames: string;
-
     isUsingJinjaVariables: boolean;
 
     constructor(config: JSONSchemaFormDataProviderConfig) {
         super(config);
-        this.defaultClassNames = "col-xs-12 col-sm-6 col-md-4 col-lg-3";
         this.isUsingJinjaVariables = Boolean(config?.isUsingJinjaVariables);
     }
 
-    // eslint-disable-next-line class-methods-use-this
     get jsonSchema() {
         throw new Error("Not implemented.");
     }
 
-    // eslint-disable-next-line class-methods-use-this
     get uiSchema(): UiSchema {
         throw new Error("Not implemented.");
     }
 
-    // eslint-disable-next-line class-methods-use-this
     get fields() {
         return {};
     }
 
     get defaultFieldStyles() {
-        return { classNames: this.defaultClassNames };
-    }
-
-    fieldStyles(classNames: string, overrideDefault = false): { classNames: string } {
-        let names = classNames;
-        if (!overrideDefault) names += " " + this.defaultClassNames;
-        return { classNames: names };
+        return {};
     }
 
     get uiSchemaStyled(): UiSchema {
@@ -58,8 +47,7 @@ class JSONSchemaFormDataProvider extends ContextProvider {
         // @ts-ignore
         return _.each<UiSchema>(schema, (v: UiSchema, k: string, l: UiSchema) => {
             l[k] = { ...v, ...this.defaultFieldStyles };
-            // @ts-ignore
-            l[k].classNames = `${v.classNames || ""} ${this.defaultClassNames || ""}`;
+            l[k].classNames = `${v.classNames || ""}`;
             return null;
         });
     }

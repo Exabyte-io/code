@@ -19,37 +19,26 @@ const provider_1 = require("./provider");
 class JSONSchemaFormDataProvider extends provider_1.ContextProvider {
     constructor(config) {
         super(config);
-        this.defaultClassNames = "col-xs-12 col-sm-6 col-md-4 col-lg-3";
         this.isUsingJinjaVariables = Boolean(config === null || config === void 0 ? void 0 : config.isUsingJinjaVariables);
     }
-    // eslint-disable-next-line class-methods-use-this
     get jsonSchema() {
         throw new Error("Not implemented.");
     }
-    // eslint-disable-next-line class-methods-use-this
     get uiSchema() {
         throw new Error("Not implemented.");
     }
-    // eslint-disable-next-line class-methods-use-this
     get fields() {
         return {};
     }
     get defaultFieldStyles() {
-        return { classNames: this.defaultClassNames };
-    }
-    fieldStyles(classNames, overrideDefault = false) {
-        let names = classNames;
-        if (!overrideDefault)
-            names += " " + this.defaultClassNames;
-        return { classNames: names };
+        return {};
     }
     get uiSchemaStyled() {
         const schema = this.uiSchema;
         // @ts-ignore
         return underscore_1.default.each(schema, (v, k, l) => {
             l[k] = { ...v, ...this.defaultFieldStyles };
-            // @ts-ignore
-            l[k].classNames = `${v.classNames || ""} ${this.defaultClassNames || ""}`;
+            l[k].classNames = `${v.classNames || ""}`;
             return null;
         });
     }
