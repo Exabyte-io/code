@@ -26,7 +26,7 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             readonly slug: string;
             readonly isSystemEntity: boolean;
             getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
-            getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+            getEntityByName(entities: import("..").InMemoryEntity[], entity: string, name: string): import("..").InMemoryEntity;
         };
     } & {
         new (...args: any[]): {
@@ -57,7 +57,7 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             readonly slug: string;
             readonly isSystemEntity: boolean;
             getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
-            getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+            getEntityByName(entities: import("..").InMemoryEntity[], entity: string, name: string): import("..").InMemoryEntity;
         };
     } & typeof InMemoryEntitySet) | undefined;
 }) => (config: AnyObject, entityCls: EntitySetSchema["entityCls"]) => InMemoryEntitySet;
