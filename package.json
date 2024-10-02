@@ -42,7 +42,7 @@
         "js-yaml": "^4.1.0",
         "json-schema": "^0.4.0",
         "lodash": "^4.17.*",
-        "mathjs": "12.4.1",
+        "mathjs": "^3.9.0",
         "mixwith": "^0.1.1",
         "nunjucks": "^3.2.4",
         "react-jsonschema-form": "^1.8.1",
