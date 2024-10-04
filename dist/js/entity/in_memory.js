@@ -105,22 +105,22 @@ class InMemoryEntity {
             ...extraContext,
         });
     }
-    static validateData(data, clean = false) {
-        if (!this.jsonSchema) {
+    static validateData(data, clean = false, jsonSchema = this.jsonSchema) {
+        if (!jsonSchema) {
             return data;
         }
         const result = clean
-            ? ajv.validateAndClean(data, this.jsonSchema, {
+            ? ajv.validateAndClean(data, jsonSchema, {
                 coerceTypes: this.allowJsonSchemaTypesCoercing,
             })
-            : ajv.validate(data, this.jsonSchema);
+            : ajv.validate(data, jsonSchema);
         if (!result.isValid) {
             throw new EntityError({
                 code: ValidationErrorCode.IN_MEMORY_ENTITY_DATA_INVALID,
                 details: {
                     error: result === null || result === void 0 ? void 0 : result.errors,
                     json: data,
-                    schema: this.jsonSchema,
+                    schema: jsonSchema,
                 },
             });
         }

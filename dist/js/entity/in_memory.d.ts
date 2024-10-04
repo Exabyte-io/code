@@ -49,7 +49,7 @@ export declare class InMemoryEntity {
      * @summary Clone this entity
      */
     clone(extraContext?: object): this;
-    static validateData(data: AnyObject, clean?: boolean): AnyObject;
+    static validateData(data: AnyObject, clean?: boolean, jsonSchema?: import("json-schema").JSONSchema7 | undefined): AnyObject;
     /**
      * @summary Validate entity contents against schema
      */
