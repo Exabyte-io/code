@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RuntimeContextFieldMixin = void 0;
+exports.RuntimeContextFieldMixin = RuntimeContextFieldMixin;
 function RuntimeContextFieldMixin(superclass) {
     return class extends superclass {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,4 +24,3 @@ function RuntimeContextFieldMixin(superclass) {
         }
     };
 }
-exports.RuntimeContextFieldMixin = RuntimeContextFieldMixin;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchFilesFromGitHubAPI = void 0;
+exports.fetchFilesFromGitHubAPI = fetchFilesFromGitHubAPI;
 /**
  * Fetches file metadata from a GitHub repository using the GitHub API.
  *
@@ -40,4 +40,3 @@ async function fetchFilesFromGitHubAPI(url) {
         throw error;
     }
 }
-exports.fetchFilesFromGitHubAPI = fetchFilesFromGitHubAPI;

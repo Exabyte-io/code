@@ -1,38 +1,32 @@
 import { InMemoryEntity } from "./in_memory";
 declare const InMemoryEntitySet_base: {
     new (...args: any[]): {
-        containsEntity<T_2 extends {
-            inSet: {
-                _id: string;
-                cls?: string | undefined;
-                slug?: string | undefined;
-                type?: string | undefined;
-                index?: number | undefined;
-            }[];
+        containsEntity<T extends {
+            inSet: import("./set/mixins").InSet[];
             getInSetFilteredByCls(cls: string): {
                 _id: string;
-                cls?: string | undefined;
-                slug?: string | undefined;
-                type?: string | undefined;
-                index?: number | undefined;
+                cls?: string;
+                slug?: string;
+                type?: string;
+                index?: number;
             }[];
             readonly parentEntitySetReference: {
                 _id: string;
-                cls?: string | undefined;
-                slug?: string | undefined;
-                type?: string | undefined;
-                index?: number | undefined;
+                cls?: string;
+                slug?: string;
+                type?: string;
+                index?: number;
             } | undefined;
             _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-            prop<T = undefined>(name: string, defaultValue: T): T;
+            prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
             prop<T_1 = undefined>(name: string): T_1 | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
-            setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): any;
+            setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
             toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
             toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
             toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-            clone(extraContext?: object | undefined): any;
+            clone(extraContext?: object): /*elided*/ any;
             validate(): void;
             clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
             isValid(): boolean;
@@ -46,17 +40,17 @@ declare const InMemoryEntitySet_base: {
             systemName: string;
             readonly slug: string;
             readonly isSystemEntity: boolean;
-        } & InMemoryEntity>(entity?: T_2 | undefined): boolean | undefined;
+        } & InMemoryEntity>(entity?: T | undefined): boolean | undefined;
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T_1 = undefined>(name: string): T_1 | undefined;
+        prop<T = undefined>(name: string): T | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): any;
+        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
         toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object | undefined): any;
+        clone(extraContext?: object): /*elided*/ any;
         validate(): void;
         clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         isValid(): boolean;
@@ -73,37 +67,31 @@ declare const InMemoryEntitySet_base: {
     };
 } & {
     new (...args: any[]): {
-        inSet: {
-            _id: string;
-            cls?: string | undefined;
-            slug?: string | undefined;
-            type?: string | undefined;
-            index?: number | undefined;
-        }[];
+        inSet: import("./set/mixins").InSet[];
         getInSetFilteredByCls(cls: string): {
             _id: string;
-            cls?: string | undefined;
-            slug?: string | undefined;
-            type?: string | undefined;
-            index?: number | undefined;
+            cls?: string;
+            slug?: string;
+            type?: string;
+            index?: number;
         }[];
         readonly parentEntitySetReference: {
             _id: string;
-            cls?: string | undefined;
-            slug?: string | undefined;
-            type?: string | undefined;
-            index?: number | undefined;
+            cls?: string;
+            slug?: string;
+            type?: string;
+            index?: number;
         } | undefined;
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T_1 = undefined>(name: string): T_1 | undefined;
+        prop<T = undefined>(name: string): T | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): any;
+        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
         toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object | undefined): any;
+        clone(extraContext?: object): /*elided*/ any;
         validate(): void;
         clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         isValid(): boolean;

@@ -24,17 +24,14 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
         };
         _json: AnyObject;
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
-        setProps(json?: AnyObject): any;
+        setProps(json?: AnyObject): /*elided*/ any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object | undefined): any; /**
-         * @summary Must pass config for subclasses to override and use initialization logic
-         * @private
-         */
+        clone(extraContext?: object): /*elided*/ any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
@@ -93,17 +90,14 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
             postProcessors: NameResultSchema[];
         };
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
-        setProps(json?: AnyObject): any;
+        setProps(json?: AnyObject): /*elided*/ any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object | undefined): any; /**
-         * @summary Must pass config for subclasses to override and use initialization logic
-         * @private
-         */
+        clone(extraContext?: object): /*elided*/ any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
@@ -126,17 +120,14 @@ export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConst
         readonly allowedPostProcessors: never[];
         _json: AnyObject;
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
-        setProps(json?: AnyObject): any;
+        setProps(json?: AnyObject): /*elided*/ any;
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object | undefined): any; /**
-         * @summary Must pass config for subclasses to override and use initialization logic
-         * @private
-         */
+        clone(extraContext?: object): /*elided*/ any;
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;

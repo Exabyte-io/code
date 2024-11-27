@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.math = exports.numberToPrecision = void 0;
+exports.math = void 0;
+exports.numberToPrecision = numberToPrecision;
 /* eslint-disable */
 const mathjs_1 = __importDefault(require("mathjs"));
 const underscore_1 = __importDefault(require("underscore"));
@@ -205,7 +206,6 @@ function numberToPrecision(number, precision) {
     }
     return number;
 }
-exports.numberToPrecision = numberToPrecision;
 exports.math = {
     ...mathjs_1.default,
     PI: Math.PI,

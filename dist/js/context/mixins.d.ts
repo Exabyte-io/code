@@ -17,8 +17,8 @@ export declare function MaterialContextMixin<T extends Constructor>(superclass: 
         _material: Material;
         extraData?: {
             materialHash: string;
-        } | undefined;
-        isEdited?: boolean | undefined;
+        };
+        isEdited?: boolean;
         readonly isEditedIsSetToFalseOnMaterialUpdate: boolean;
         updateMaterialHash(): void;
         readonly isMaterialCreatedDefault: boolean;
@@ -46,10 +46,10 @@ export declare function MethodDataContextMixin<T extends Constructor>(superclass
         [x: string]: any;
         _methodData: any;
         isEdited: boolean;
-        methodDataHash?: string | undefined;
+        methodDataHash?: string;
         extraData?: {
-            methodDataHash?: string | undefined;
-        } | undefined;
+            methodDataHash?: string;
+        };
         _initMethodDataHash(): void;
         readonly methodData: any;
         readonly isMethodDataUpdated: boolean;

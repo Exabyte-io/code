@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.replaceUnit = exports.removeUnit = exports.addUnit = exports.setNextLinks = exports.setUnitsHead = void 0;
+exports.setUnitsHead = setUnitsHead;
+exports.setNextLinks = setNextLinks;
+exports.addUnit = addUnit;
+exports.removeUnit = removeUnit;
+exports.replaceUnit = replaceUnit;
 /**
  * @summary Set the head of an array of units
  */
@@ -12,7 +16,6 @@ function setUnitsHead(units) {
     }
     return units;
 }
-exports.setUnitsHead = setUnitsHead;
 /**
  * @summary Re-establishes the linked `next => flowchartId` logic in an array of units
  */
@@ -32,7 +35,6 @@ function setNextLinks(units) {
     }
     return units;
 }
-exports.setNextLinks = setNextLinks;
 /**
  * Add unit to unit graph (by index or appending).
  */
@@ -45,7 +47,6 @@ function addUnit(units, unit, index = -1) {
     }
     return setNextLinks(setUnitsHead(units));
 }
-exports.addUnit = addUnit;
 /**
  * Remove unit based on flowchartId from unit graph.
  * @param {Unit[]} units
@@ -59,7 +60,6 @@ function removeUnit(units, flowchartId) {
     // TODO: remove the setNextLinks and setUnitsHead and handle the logic via flowchart designer
     return setNextLinks(setUnitsHead(units.filter((x) => x.flowchartId !== flowchartId)));
 }
-exports.removeUnit = removeUnit;
 /**
  * Replace a unit in a unit graph by index.
  * @param {Unit[]} units
@@ -70,4 +70,3 @@ function replaceUnit(units, unit, index) {
     units[index] = unit;
     return setNextLinks(setUnitsHead(units));
 }
-exports.replaceUnit = replaceUnit;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.mapTree = void 0;
+exports.mapTree = mapTree;
 /**
  * @summary Return nodes with `fn` function applied to each node.
  * Note that the function `fn` must take a node as an argument and must return a node object.
@@ -18,4 +18,3 @@ function mapTree(nodes, fn) {
         return mappedNode;
     });
 }
-exports.mapTree = mapTree;

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getSearchQuerySelector = void 0;
+exports.getSearchQuerySelector = getSearchQuerySelector;
 /**
  * Forms a search query selector for MongoDB
  * @param {Object} searchQuery - db query
@@ -21,4 +21,3 @@ function getSearchQuerySelector(searchQuery, fields = []) {
     }
     return selector;
 }
-exports.getSearchQuerySelector = getSearchQuerySelector;

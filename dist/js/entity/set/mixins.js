@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InMemoryEntitySetMixin = exports.InMemoryEntityInSetMixin = void 0;
+exports.InMemoryEntityInSetMixin = InMemoryEntityInSetMixin;
+exports.InMemoryEntitySetMixin = InMemoryEntitySetMixin;
 function InMemoryEntityInSetMixin(superclass) {
     return class InMemoryEntityInSetMixin extends superclass {
         get inSet() {
@@ -19,7 +20,6 @@ function InMemoryEntityInSetMixin(superclass) {
         }
     };
 }
-exports.InMemoryEntityInSetMixin = InMemoryEntityInSetMixin;
 function InMemoryEntitySetMixin(superclass) {
     return class InMemoryEntitySetMixin extends superclass {
         containsEntity(entity) {
@@ -27,4 +27,3 @@ function InMemoryEntitySetMixin(superclass) {
         }
     };
 }
-exports.InMemoryEntitySetMixin = InMemoryEntitySetMixin;

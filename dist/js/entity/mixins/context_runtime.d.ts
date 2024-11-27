@@ -4,20 +4,20 @@ type RuntimeContext = Required<JobBaseSchema>["runtimeContext"];
 export declare function RuntimeContextFieldMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
         _runtimeContext: RuntimeContext;
-        runtimeContext: {};
+        runtimeContext: RuntimeContext;
         updateRuntimeContext(ctx?: RuntimeContext): void;
         toJSON(exclude?: string[]): {
             runtimeContext: {};
         };
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
-        prop<T_2 = undefined>(name: string): T_2 | undefined;
+        prop<T_1 = undefined>(name: string): T_1 | undefined;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): any;
+        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
         toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object | undefined): any;
+        clone(extraContext?: object): /*elided*/ any;
         validate(): void;
         clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         isValid(): boolean;

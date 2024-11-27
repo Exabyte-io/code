@@ -1,6 +1,6 @@
 export class ContextProviderRegistryContainer {
     _providers: any[];
-    set providers(arg: any[]);
+    set providers(p: any[]);
     get providers(): any[];
     addProvider({ name, instance }: {
         name: any;

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filterEntityList = void 0;
+exports.filterEntityList = filterEntityList;
 const uniqBy_1 = __importDefault(require("lodash/uniqBy"));
 /**
  * Check if one path matches regular expression or exact string.
@@ -47,4 +47,3 @@ function filterEntityList({ entitiesOrPaths, filterObjects = [], multiPathSepara
     }
     return (0, uniqBy_1.default)(filtered, "path");
 }
-exports.filterEntityList = filterEntityList;

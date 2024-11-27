@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HasRepetitionMixin = void 0;
+exports.HasRepetitionMixin = HasRepetitionMixin;
 function HasRepetitionMixin(superclass) {
     return class extends superclass {
         constructor() {
@@ -30,4 +30,3 @@ function HasRepetitionMixin(superclass) {
         }
     };
 }
-exports.HasRepetitionMixin = HasRepetitionMixin;

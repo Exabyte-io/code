@@ -5,25 +5,25 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
     entitySetCls?: typeof InMemoryEntitySet | undefined;
     orderedEntitySetCls?: ({
         new (...args: any[]): {
-            entitySetType: string | undefined;
+            entitySetType: EntitySetSchema["entitySetType"];
             readonly isOrderedSet: boolean;
             _json: AnyObject;
             prop<T = undefined>(name: string, defaultValue: T): T;
-            prop<T_1 = undefined>(name: string): T_1 | undefined;
+            prop<T = undefined>(name: string): T | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
-            setProps(json?: AnyObject): any;
+            setProps(json?: AnyObject): /*elided*/ any;
             toJSON(exclude?: string[]): AnyObject;
             toJSONSafe(exclude?: string[]): AnyObject;
             toJSONQuick(exclude?: string[]): AnyObject;
-            clone(extraContext?: object | undefined): any;
+            clone(extraContext?: object): /*elided*/ any;
             validate(): void;
             clean(config: AnyObject): AnyObject;
             isValid(): boolean;
             readonly cls: string;
             getClsName(): string;
             getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
-            getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+            getEntityByName(entities: import("..").InMemoryEntity[], entity: string, name: string): import("..").InMemoryEntity;
             id: string;
             _id: string;
             schemaVersion: string;
@@ -33,31 +33,25 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
         };
     } & {
         new (...args: any[]): {
-            inSet: {
-                _id: string;
-                cls?: string | undefined;
-                slug?: string | undefined;
-                type?: string | undefined;
-                index?: number | undefined;
-            }[];
+            inSet: Required<import("@mat3ra/esse/dist/js/types").SystemInSetSchema>["inSet"];
             getIndexByIdInOrderedSet(setId: string): number;
             _json: AnyObject;
             prop<T = undefined>(name: string, defaultValue: T): T;
-            prop<T_1 = undefined>(name: string): T_1 | undefined;
+            prop<T = undefined>(name: string): T | undefined;
             setProp(name: string, value: unknown): void;
             unsetProp(name: string): void;
-            setProps(json?: AnyObject): any;
+            setProps(json?: AnyObject): /*elided*/ any;
             toJSON(exclude?: string[]): AnyObject;
             toJSONSafe(exclude?: string[]): AnyObject;
             toJSONQuick(exclude?: string[]): AnyObject;
-            clone(extraContext?: object | undefined): any;
+            clone(extraContext?: object): /*elided*/ any;
             validate(): void;
             clean(config: AnyObject): AnyObject;
             isValid(): boolean;
             readonly cls: string;
             getClsName(): string;
             getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
-            getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+            getEntityByName(entities: import("..").InMemoryEntity[], entity: string, name: string): import("..").InMemoryEntity;
             id: string;
             _id: string;
             schemaVersion: string;
