@@ -1,4 +1,7 @@
+import { SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 import { InMemoryEntityConstructor } from "../in_memory";
+export type SystemInSet = Required<SystemInSetSchema>;
+export type InSet = SystemInSet["inSet"][0];
 export declare function InMemoryEntityInSetMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
         inSet: {

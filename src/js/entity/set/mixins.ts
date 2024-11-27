@@ -2,15 +2,16 @@ import { SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 
 import { InMemoryEntityConstructor } from "../in_memory";
 
-type SystemInSet = Required<SystemInSetSchema>;
+export type SystemInSet = Required<SystemInSetSchema>;
+export type InSet = SystemInSet["inSet"][0];
 
 export function InMemoryEntityInSetMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class InMemoryEntityInSetMixin extends superclass implements SystemInSet {
         get inSet() {
-            return this.prop("inSet", []);
+            return this.prop<InSet[]>("inSet", []);
         }
 
-        set inSet(inSet: SystemInSet["inSet"]) {
+        set inSet(inSet: InSet[]) {
             this.setProp("inSet", inSet);
         }
 
@@ -26,12 +27,12 @@ export function InMemoryEntityInSetMixin<T extends InMemoryEntityConstructor>(su
     };
 }
 
+type BaseEntityInSet = InstanceType<ReturnType<typeof InMemoryEntityInSetMixin>>;
+
 export function InMemoryEntitySetMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class InMemoryEntitySetMixin extends superclass {
-        containsEntity<T extends InstanceType<ReturnType<typeof InMemoryEntityInSetMixin>>>(
-            entity?: T,
-        ) {
-            return entity?.inSet?.some((ref) => ref._id === this.id);
+        containsEntity<T extends BaseEntityInSet>(entity?: T) {
+            return entity?.inSet.some((ref) => ref._id === this.id);
         }
     };
 }

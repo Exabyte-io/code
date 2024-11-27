@@ -23,8 +23,7 @@ exports.InMemoryEntityInSetMixin = InMemoryEntityInSetMixin;
 function InMemoryEntitySetMixin(superclass) {
     return class InMemoryEntitySetMixin extends superclass {
         containsEntity(entity) {
-            var _a;
-            return (_a = entity === null || entity === void 0 ? void 0 : entity.inSet) === null || _a === void 0 ? void 0 : _a.some((ref) => ref._id === this.id);
+            return entity === null || entity === void 0 ? void 0 : entity.inSet.some((ref) => ref._id === this.id);
         }
     };
 }
