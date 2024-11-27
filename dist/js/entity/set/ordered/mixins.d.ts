@@ -17,13 +17,16 @@ export declare function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityCo
         validate(): void;
         clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../../in_memory").InMemoryEntity[], entity: string, name: string): import("../../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;
 export interface OrderedInMemoryEntityInSet {
@@ -47,12 +50,15 @@ export declare function OrderedInMemoryEntityInSetMixin<T extends InMemoryEntity
         validate(): void;
         clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../../in_memory").InMemoryEntity[], entity: string, name: string): import("../../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;

@@ -2,21 +2,21 @@ import { InMemoryEntityConstructor } from "../in_memory";
 export declare function InMemoryEntityInSetMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
         inSet: {
-            _id?: string | undefined;
+            _id: string;
             cls?: string | undefined;
             slug?: string | undefined;
             type?: string | undefined;
             index?: number | undefined;
         }[];
         getInSetFilteredByCls(cls: string): {
-            _id?: string | undefined;
+            _id: string;
             cls?: string | undefined;
             slug?: string | undefined;
             type?: string | undefined;
             index?: number | undefined;
         }[];
         readonly parentEntitySetReference: {
-            _id?: string | undefined;
+            _id: string;
             cls?: string | undefined;
             slug?: string | undefined;
             type?: string | undefined;
@@ -35,34 +35,37 @@ export declare function InMemoryEntityInSetMixin<T extends InMemoryEntityConstru
         validate(): void;
         clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;
 export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
         containsEntity<T_3 extends {
             inSet: {
-                _id?: string | undefined;
+                _id: string;
                 cls?: string | undefined;
                 slug?: string | undefined;
                 type?: string | undefined;
                 index?: number | undefined;
             }[];
             getInSetFilteredByCls(cls: string): {
-                _id?: string | undefined;
+                _id: string;
                 cls?: string | undefined;
                 slug?: string | undefined;
                 type?: string | undefined;
                 index?: number | undefined;
             }[];
             readonly parentEntitySetReference: {
-                _id?: string | undefined;
+                _id: string;
                 cls?: string | undefined;
                 slug?: string | undefined;
                 type?: string | undefined;
@@ -81,13 +84,16 @@ export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstruct
             validate(): void;
             clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
             isValid(): boolean;
-            id: string;
             readonly cls: string;
             getClsName(): string;
-            readonly slug: string;
-            readonly isSystemEntity: boolean;
             getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
             getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+            id: string;
+            _id: string;
+            schemaVersion: string;
+            systemName: string;
+            readonly slug: string;
+            readonly isSystemEntity: boolean;
         } & import("../in_memory").InMemoryEntity>(entity?: T_3 | undefined): boolean | undefined;
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
@@ -102,12 +108,15 @@ export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstruct
         validate(): void;
         clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;

@@ -2,13 +2,15 @@ import { SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 
 import { InMemoryEntityConstructor } from "../in_memory";
 
+type SystemInSet = Required<SystemInSetSchema>;
+
 export function InMemoryEntityInSetMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class InMemoryEntityInSetMixin extends superclass {
+    return class InMemoryEntityInSetMixin extends superclass implements SystemInSet {
         get inSet() {
             return this.prop("inSet", []);
         }
 
-        set inSet(inSet: Required<SystemInSetSchema>["inSet"]) {
+        set inSet(inSet: SystemInSet["inSet"]) {
             this.setProp("inSet", inSet);
         }
 

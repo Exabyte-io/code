@@ -160,12 +160,6 @@ class InMemoryEntity {
             return false;
         }
     }
-    get id() {
-        return this.prop("_id", "");
-    }
-    set id(id) {
-        this.setProp("_id", id);
-    }
     static get cls() {
         return this.prototype.constructor.name;
     }
@@ -175,12 +169,6 @@ class InMemoryEntity {
     // TODO: figure out why the above getter for `cls` returns `null` and use only one
     getClsName() {
         return this.constructor.name;
-    }
-    get slug() {
-        return this.prop("slug", "");
-    }
-    get isSystemEntity() {
-        return Boolean(this.prop("systemName", ""));
     }
     /**
      * @summary get small identifying payload of object
@@ -219,6 +207,37 @@ class InMemoryEntity {
             console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
         }
         return filtered[0];
+    }
+    // Properties from BaseInMemoryEntitySchema
+    get id() {
+        return this.prop("_id", "");
+    }
+    set id(id) {
+        this.setProp("_id", id);
+    }
+    get _id() {
+        return this.prop("_id", "");
+    }
+    set _id(id) {
+        this.setProp("_id", id);
+    }
+    get schemaVersion() {
+        return this.prop("schemaVersion", "");
+    }
+    set schemaVersion(schemaVersion) {
+        this.setProp("schemaVersion", schemaVersion);
+    }
+    get systemName() {
+        return this.prop("systemName", "");
+    }
+    set systemName(systemName) {
+        this.setProp("systemName", systemName);
+    }
+    get slug() {
+        return this.prop("slug", "");
+    }
+    get isSystemEntity() {
+        return Boolean(this.systemName);
     }
 }
 exports.InMemoryEntity = InMemoryEntity;

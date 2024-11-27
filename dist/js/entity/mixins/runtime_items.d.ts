@@ -31,17 +31,23 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object | undefined): any;
+        clone(extraContext?: object | undefined): any; /**
+         * @summary Must pass config for subclasses to override and use initialization logic
+         * @private
+         */
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;
 export interface RuntimeItemsUILogicJSON extends AnyObject {
@@ -94,17 +100,23 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object | undefined): any;
+        clone(extraContext?: object | undefined): any; /**
+         * @summary Must pass config for subclasses to override and use initialization logic
+         * @private
+         */
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;
 export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -121,16 +133,22 @@ export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConst
         toJSON(exclude?: string[]): AnyObject;
         toJSONSafe(exclude?: string[]): AnyObject;
         toJSONQuick(exclude?: string[]): AnyObject;
-        clone(extraContext?: object | undefined): any;
+        clone(extraContext?: object | undefined): any; /**
+         * @summary Must pass config for subclasses to override and use initialization logic
+         * @private
+         */
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;

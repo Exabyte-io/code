@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HasConsistencyChecksMixin = exports.NamedEntityMixin = exports.HasDescriptionMixin = exports.HasMetadataMixin = exports.HasScopeTrackMixin = exports.TaggableMixin = exports.DefaultableMixin = void 0;
 function DefaultableMixin(superclass) {
-    return class extends superclass {
+    class DefaultableMixin extends superclass {
         get isDefault() {
             return this.prop("isDefault", false);
         }
@@ -10,7 +10,8 @@ function DefaultableMixin(superclass) {
             // @ts-ignore
             return new this.prototype.constructor(this.defaultConfig);
         }
-    };
+    }
+    return DefaultableMixin;
 }
 exports.DefaultableMixin = DefaultableMixin;
 function TaggableMixin(superclass) {
@@ -86,7 +87,7 @@ function NamedEntityMixin(superclass) {
 }
 exports.NamedEntityMixin = NamedEntityMixin;
 function HasConsistencyChecksMixin(superclass) {
-    return class extends superclass {
+    return class HasConsistencyChecksMixin extends superclass {
         get consistencyChecks() {
             return this.prop("consistencyChecks", []);
         }

@@ -7,7 +7,9 @@ const hash_1 = require("./mixins/hash");
 const props_1 = require("./mixins/props");
 const repetition_1 = require("./mixins/repetition");
 const runtime_items_1 = require("./mixins/runtime_items");
-exports.DefaultableInMemoryEntity = (0, props_1.DefaultableMixin)(in_memory_1.InMemoryEntity);
+class DefaultableInMemoryEntity extends (0, props_1.DefaultableMixin)(in_memory_1.InMemoryEntity) {
+}
+exports.DefaultableInMemoryEntity = DefaultableInMemoryEntity;
 exports.NamedInMemoryEntity = (0, props_1.NamedEntityMixin)(in_memory_1.InMemoryEntity);
 exports.NamedDefaultableInMemoryEntity = (0, props_1.NamedEntityMixin)((0, props_1.DefaultableMixin)(in_memory_1.InMemoryEntity));
 exports.HasMetadataNamedDefaultableInMemoryEntity = (0, props_1.HasMetadataMixin)((0, props_1.NamedEntityMixin)((0, props_1.DefaultableMixin)(in_memory_1.InMemoryEntity)));

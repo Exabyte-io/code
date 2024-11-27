@@ -20,18 +20,21 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             validate(): void;
             clean(config: AnyObject): AnyObject;
             isValid(): boolean;
-            id: string;
             readonly cls: string;
             getClsName(): string;
-            readonly slug: string;
-            readonly isSystemEntity: boolean;
             getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
             getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+            id: string;
+            _id: string;
+            schemaVersion: string;
+            systemName: string;
+            readonly slug: string;
+            readonly isSystemEntity: boolean;
         };
     } & {
         new (...args: any[]): {
             inSet: {
-                _id?: string | undefined;
+                _id: string;
                 cls?: string | undefined;
                 slug?: string | undefined;
                 type?: string | undefined;
@@ -51,13 +54,16 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             validate(): void;
             clean(config: AnyObject): AnyObject;
             isValid(): boolean;
-            id: string;
             readonly cls: string;
             getClsName(): string;
-            readonly slug: string;
-            readonly isSystemEntity: boolean;
             getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
             getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+            id: string;
+            _id: string;
+            schemaVersion: string;
+            systemName: string;
+            readonly slug: string;
+            readonly isSystemEntity: boolean;
         };
     } & typeof InMemoryEntitySet) | undefined;
 }) => (config: AnyObject, entityCls: EntitySetSchema["entityCls"]) => InMemoryEntitySet;

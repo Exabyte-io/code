@@ -25,13 +25,16 @@ export declare function ContextAndRenderFieldsMixin<T extends InMemoryEntityCons
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;
 export interface ContextProvider {
@@ -54,13 +57,16 @@ export declare function DomainContextProviderMixin<T extends InMemoryEntityConst
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;
 export declare function ImportantSettingsProviderMixin<T extends InMemoryEntityConstructor>(superclass: T): {
@@ -84,12 +90,15 @@ export declare function ImportantSettingsProviderMixin<T extends InMemoryEntityC
         validate(): void;
         clean(config: AnyObject): AnyObject;
         isValid(): boolean;
-        id: string;
         readonly cls: string;
         getClsName(): string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
         getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
+        id: string;
+        _id: string;
+        schemaVersion: string;
+        systemName: string;
+        readonly slug: string;
+        readonly isSystemEntity: boolean;
     };
 } & T;
