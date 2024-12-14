@@ -8,9 +8,12 @@ import {
     type NameEntitySchema,
 } from "@mat3ra/esse/dist/js/types";
 
-import { InMemoryEntityConstructor } from "../in_memory";
+import type { Constructor } from "../../utils/types";
+import { type InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 
-export function DefaultableMixin<T extends InMemoryEntityConstructor>(superclass: T) {
+export function DefaultableMixin<
+    T extends Constructor<InMemoryEntity> = Constructor<InMemoryEntity>,
+>(superclass: T) {
     class DefaultableMixin extends superclass implements DefaultableEntitySchema {
         get isDefault() {
             return this.prop("isDefault", false);

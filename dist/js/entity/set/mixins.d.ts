@@ -44,10 +44,9 @@ export declare function InMemoryEntityInSetMixin<T extends InMemoryEntityConstru
         readonly isSystemEntity: boolean;
     };
 } & T;
-type BaseEntityInSet = InstanceType<ReturnType<typeof InMemoryEntityInSetMixin>>;
 export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstructor>(superclass: T): {
     new (...args: any[]): {
-        containsEntity<T_1 extends BaseEntityInSet>(entity?: T_1 | undefined): boolean | undefined;
+        containsEntity<T_1 extends SystemInSetSchema>(entity?: T_1 | undefined): boolean;
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T_1 = undefined>(name: string, defaultValue: T_1): T_1;
         prop<T_1 = undefined>(name: string): T_1 | undefined;
@@ -73,4 +72,3 @@ export declare function InMemoryEntitySetMixin<T extends InMemoryEntityConstruct
         readonly isSystemEntity: boolean;
     };
 } & T;
-export {};

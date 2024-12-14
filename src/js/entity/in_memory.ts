@@ -174,7 +174,7 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
         }
     }
 
-    static get cls() {
+    static get cls(): string {
         return this.prototype.constructor.name;
     }
 

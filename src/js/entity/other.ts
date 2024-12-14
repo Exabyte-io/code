@@ -16,13 +16,12 @@ export const NamedInMemoryEntity = NamedEntityMixin(InMemoryEntity);
 
 export const NamedDefaultableInMemoryEntity = NamedEntityMixin(DefaultableMixin(InMemoryEntity));
 
-export class HasMetadataNamedDefaultableInMemoryEntity extends HasMetadataMixin(
+export const HasMetadataNamedDefaultableInMemoryEntity = HasMetadataMixin(
     NamedEntityMixin(DefaultableMixin(InMemoryEntity)),
-) {}
+);
 
-export class HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity extends HasConsistencyChecksMixin(
-    HasMetadataNamedDefaultableInMemoryEntity,
-) {}
+export const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity =
+    HasConsistencyChecksMixin(HasMetadataNamedDefaultableInMemoryEntity);
 
 export const NamedDefaultableRepetitionImportantSettingsInMemoryEntity =
     ImportantSettingsProviderMixin(

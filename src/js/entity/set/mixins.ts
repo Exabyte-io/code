@@ -27,12 +27,10 @@ export function InMemoryEntityInSetMixin<T extends InMemoryEntityConstructor>(su
     };
 }
 
-type BaseEntityInSet = InstanceType<ReturnType<typeof InMemoryEntityInSetMixin>>;
-
 export function InMemoryEntitySetMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class InMemoryEntitySetMixin extends superclass {
-        containsEntity<T extends BaseEntityInSet>(entity?: T) {
-            return entity?.inSet.some((ref) => ref._id === this.id);
+        containsEntity<T extends SystemInSetSchema>(entity?: T) {
+            return Boolean(entity?.inSet?.some((ref) => ref._id === this.id));
         }
     };
 }
