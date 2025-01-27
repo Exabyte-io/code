@@ -3,7 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createObjectPathFromFilePath = exports.getDirectories = exports.getFilesInDirectory = exports.formatFileSize = exports.getProgrammingLanguageFromFileExtension = void 0;
+exports.getProgrammingLanguageFromFileExtension = getProgrammingLanguageFromFileExtension;
+exports.formatFileSize = formatFileSize;
+exports.getFilesInDirectory = getFilesInDirectory;
+exports.getDirectories = getDirectories;
+exports.createObjectPathFromFilePath = createObjectPathFromFilePath;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP = {
@@ -23,7 +27,6 @@ function getProgrammingLanguageFromFileExtension(filename, defaultLanguage = "fo
     const fileExt = filename.split(".").pop().toLowerCase();
     return FILE_EXTENSION_TO_PROGRAMMING_LANGUAGE_MAP[fileExt] || defaultLanguage;
 }
-exports.getProgrammingLanguageFromFileExtension = getProgrammingLanguageFromFileExtension;
 /**
  * @summary Formats a given file size.
  * @param size {Number} file size.
@@ -36,7 +39,6 @@ function formatFileSize(size, decimals = 2) {
     const units = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     return parseFloat((size / 1024 ** index).toFixed(decimals)) + " " + units[index];
 }
-exports.formatFileSize = formatFileSize;
 /** Get list of paths for files in a directory and filter by file extensions if provided.
  * @param {string} dirPath - Path to current directory, i.e. $PWD
  * @param {string[]} fileExtensions - File extensions to filter, e.g. `.yml`
@@ -52,7 +54,6 @@ function getFilesInDirectory(dirPath, fileExtensions = [], resolvePath = true) {
         return fileNames.map((fileName) => path_1.default.resolve(dirPath, fileName));
     return fileNames;
 }
-exports.getFilesInDirectory = getFilesInDirectory;
 /**
  * Get list of directories contained in current directory.
  * @param {string} currentPath - current directory
@@ -64,7 +65,6 @@ function getDirectories(currentPath) {
         .filter((dirent) => dirent.isDirectory())
         .map((dirent) => dirent.name);
 }
-exports.getDirectories = getDirectories;
 /**
  * Construct object path compatible with lodash.get/lodash.set from file path.
  * Note: if no root path is provided the file's dirname is taken instead.
@@ -82,4 +82,3 @@ function createObjectPathFromFilePath(filePath, root) {
     const parentDirs = root ? path_1.default.relative(root, dirname).split(path_1.default.sep) : [];
     return [...parentDirs, basename].map((item) => `['${item}']`).join("");
 }
-exports.createObjectPathFromFilePath = createObjectPathFromFilePath;

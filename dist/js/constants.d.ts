@@ -1,24 +1,24 @@
 export namespace coefficients {
-    const EV_TO_RY: number;
-    const BOHR_TO_ANGSTROM: number;
-    const ANGSTROM_TO_BOHR: number;
-    const EV_A_TO_RY_BOHR: number;
+    let EV_TO_RY: number;
+    let BOHR_TO_ANGSTROM: number;
+    let ANGSTROM_TO_BOHR: number;
+    let EV_A_TO_RY_BOHR: number;
 }
 export namespace tolerance {
-    const length: number;
-    const lengthAngstrom: number;
-    const pointsDistance: number;
+    let length: number;
+    let lengthAngstrom: number;
+    let pointsDistance: number;
 }
 export namespace units {
-    const bohr: string;
-    const angstrom: string;
-    const degree: string;
-    const radian: string;
-    const alat: string;
+    let bohr: string;
+    let angstrom: string;
+    let degree: string;
+    let radian: string;
+    let alat: string;
 }
 export namespace ATOMIC_COORD_UNITS {
-    const crystal: string;
-    const cartesian: string;
+    let crystal: string;
+    let cartesian: string;
 }
 export const HASH_TOLERANCE: 3;
 declare namespace _default {

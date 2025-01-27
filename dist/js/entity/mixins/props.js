@@ -1,8 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HasConsistencyChecksMixin = exports.NamedEntityMixin = exports.HasDescriptionMixin = exports.HasMetadataMixin = exports.HasScopeTrackMixin = exports.TaggableMixin = exports.DefaultableMixin = void 0;
+exports.DefaultableMixin = DefaultableMixin;
+exports.TaggableMixin = TaggableMixin;
+exports.HasScopeTrackMixin = HasScopeTrackMixin;
+exports.HasMetadataMixin = HasMetadataMixin;
+exports.HasDescriptionMixin = HasDescriptionMixin;
+exports.NamedEntityMixin = NamedEntityMixin;
+exports.HasConsistencyChecksMixin = HasConsistencyChecksMixin;
 function DefaultableMixin(superclass) {
-    return class extends superclass {
+    class DefaultableMixin extends superclass {
         get isDefault() {
             return this.prop("isDefault", false);
         }
@@ -10,9 +16,9 @@ function DefaultableMixin(superclass) {
             // @ts-ignore
             return new this.prototype.constructor(this.defaultConfig);
         }
-    };
+    }
+    return DefaultableMixin;
 }
-exports.DefaultableMixin = DefaultableMixin;
 function TaggableMixin(superclass) {
     return class extends superclass {
         get tags() {
@@ -27,7 +33,6 @@ function TaggableMixin(superclass) {
         }
     };
 }
-exports.TaggableMixin = TaggableMixin;
 function HasScopeTrackMixin(superclass) {
     return class extends superclass {
         get scopeTrack() {
@@ -38,7 +43,6 @@ function HasScopeTrackMixin(superclass) {
         }
     };
 }
-exports.HasScopeTrackMixin = HasScopeTrackMixin;
 function HasMetadataMixin(superclass) {
     return class extends superclass {
         get metadata() {
@@ -52,7 +56,6 @@ function HasMetadataMixin(superclass) {
         }
     };
 }
-exports.HasMetadataMixin = HasMetadataMixin;
 function HasDescriptionMixin(superclass) {
     return class extends superclass {
         get description() {
@@ -69,7 +72,6 @@ function HasDescriptionMixin(superclass) {
         }
     };
 }
-exports.HasDescriptionMixin = HasDescriptionMixin;
 function NamedEntityMixin(superclass) {
     return class extends superclass {
         get name() {
@@ -84,9 +86,8 @@ function NamedEntityMixin(superclass) {
         }
     };
 }
-exports.NamedEntityMixin = NamedEntityMixin;
 function HasConsistencyChecksMixin(superclass) {
-    return class extends superclass {
+    return class HasConsistencyChecksMixin extends superclass {
         get consistencyChecks() {
             return this.prop("consistencyChecks", []);
         }
@@ -98,4 +99,3 @@ function HasConsistencyChecksMixin(superclass) {
         }
     };
 }
-exports.HasConsistencyChecksMixin = HasConsistencyChecksMixin;

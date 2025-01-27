@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HashedInputArrayMixin = exports.HashedEntityMixin = void 0;
+exports.HashedEntityMixin = HashedEntityMixin;
+exports.HashedInputArrayMixin = HashedInputArrayMixin;
 const hash_1 = require("../../utils/hash");
 const str_1 = require("../../utils/str");
 function HashedEntityMixin(superclass) {
@@ -23,7 +24,6 @@ function HashedEntityMixin(superclass) {
         }
     };
 }
-exports.HashedEntityMixin = HashedEntityMixin;
 function HashedInputArrayMixin(superclass) {
     return class extends superclass {
         /*
@@ -37,4 +37,3 @@ function HashedInputArrayMixin(superclass) {
         }
     };
 }
-exports.HashedInputArrayMixin = HashedInputArrayMixin;

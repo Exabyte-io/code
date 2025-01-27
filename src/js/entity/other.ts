@@ -10,7 +10,7 @@ import {
 import { HasRepetitionMixin } from "./mixins/repetition";
 import { RuntimeItemsUIAllowedMixin, RuntimeItemsUILogicMixin } from "./mixins/runtime_items";
 
-export const DefaultableInMemoryEntity = DefaultableMixin(InMemoryEntity);
+export class DefaultableInMemoryEntity extends DefaultableMixin(InMemoryEntity) {}
 
 export const NamedInMemoryEntity = NamedEntityMixin(InMemoryEntity);
 

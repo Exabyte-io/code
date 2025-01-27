@@ -1,6 +1,6 @@
 import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
-import { EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
+import { BaseInMemoryEntitySchema, EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
 export declare enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID"
 }
@@ -17,7 +17,7 @@ export declare class EntityError extends Error {
         details?: ErrorDetails;
     });
 }
-export declare class InMemoryEntity {
+export declare class InMemoryEntity implements BaseInMemoryEntitySchema {
     static create(config: object): InMemoryEntity;
     static _isDeepCloneRequired: boolean;
     static allowJsonSchemaTypesCoercing: boolean;
@@ -56,13 +56,9 @@ export declare class InMemoryEntity {
     validate(): void;
     clean(config: AnyObject): AnyObject;
     isValid(): boolean;
-    get id(): string;
-    set id(id: string);
     static get cls(): string;
     get cls(): string;
     getClsName(): string;
-    get slug(): string;
-    get isSystemEntity(): boolean;
     /**
      * @summary get small identifying payload of object
      * @param byIdOnly if true, return only the id
@@ -77,6 +73,16 @@ export declare class InMemoryEntity {
      * @param name the name of the entity to choose
      */
     getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
+    get id(): string;
+    set id(id: string);
+    get _id(): string;
+    set _id(id: string);
+    get schemaVersion(): string;
+    set schemaVersion(schemaVersion: string);
+    get systemName(): string;
+    set systemName(systemName: string);
+    get slug(): string;
+    get isSystemEntity(): boolean;
 }
 export type InMemoryEntityConstructor<T extends InMemoryEntity = InMemoryEntity> = new (...args: any[]) => T;
 export {};

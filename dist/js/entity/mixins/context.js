@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ImportantSettingsProviderMixin = exports.DomainContextProviderMixin = exports.ContextAndRenderFieldsMixin = void 0;
+exports.ContextAndRenderFieldsMixin = ContextAndRenderFieldsMixin;
+exports.DomainContextProviderMixin = DomainContextProviderMixin;
+exports.ImportantSettingsProviderMixin = ImportantSettingsProviderMixin;
 const clone_1 = require("../../utils/clone");
 function ContextAndRenderFieldsMixin(superclass) {
     return class extends superclass {
@@ -44,7 +46,6 @@ function ContextAndRenderFieldsMixin(superclass) {
         }
     };
 }
-exports.ContextAndRenderFieldsMixin = ContextAndRenderFieldsMixin;
 /*
  * @summary Handles logic for domain-specific context, eg. "important settings".
  *          Important settings are stored inside "important" property and have context providers associated with it.
@@ -62,7 +63,6 @@ function DomainContextProviderMixin(superclass) {
         }
     };
 }
-exports.DomainContextProviderMixin = DomainContextProviderMixin;
 function ImportantSettingsProviderMixin(superclass) {
     return class extends DomainContextProviderMixin(superclass) {
         get important() {
@@ -82,4 +82,3 @@ function ImportantSettingsProviderMixin(superclass) {
         }
     };
 }
-exports.ImportantSettingsProviderMixin = ImportantSettingsProviderMixin;

@@ -3,7 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findPreviousVersion = exports.renderTextWithSubstitutes = exports.convertArabicToRoman = exports.removeEmptyLinesFromString = exports.removeCommentsFromSourceCode = exports.toFixedLocale = exports.randomAlphanumeric = exports.removeNewLinesAndExtraSpaces = void 0;
+exports.removeNewLinesAndExtraSpaces = removeNewLinesAndExtraSpaces;
+exports.randomAlphanumeric = randomAlphanumeric;
+exports.toFixedLocale = toFixedLocale;
+exports.removeCommentsFromSourceCode = removeCommentsFromSourceCode;
+exports.removeEmptyLinesFromString = removeEmptyLinesFromString;
+exports.convertArabicToRoman = convertArabicToRoman;
+exports.renderTextWithSubstitutes = renderTextWithSubstitutes;
+exports.findPreviousVersion = findPreviousVersion;
 const lodash_1 = __importDefault(require("lodash"));
 const nunjucks_1 = __importDefault(require("nunjucks"));
 const coerce_1 = __importDefault(require("semver/functions/coerce"));
@@ -13,7 +20,6 @@ const underscore_1 = __importDefault(require("underscore"));
 function removeNewLinesAndExtraSpaces(str) {
     return str.replace(/[\n\r]/g, "").replace(/  +/g, " ");
 }
-exports.removeNewLinesAndExtraSpaces = removeNewLinesAndExtraSpaces;
 /**
  * @summary Generates random alphanumeric string with a specified length.
  * Returns lowercase string which starts with letter.
@@ -32,14 +38,12 @@ function randomAlphanumeric(length) {
             .toString(36)
             .substring(2, 2 + length - 1));
 }
-exports.randomAlphanumeric = randomAlphanumeric;
 function toFixedLocale(number, precision) {
     if (underscore_1.default.isNumber(number)) {
         return number.toFixed(precision).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
     return number;
 }
-exports.toFixedLocale = toFixedLocale;
 /**
  * @summary Removes lines started with # character. Shebang (#!) is excluded.
  * @param text {String} text to remove comments from.
@@ -52,7 +56,6 @@ function removeCommentsFromSourceCode(text, language = "shell") {
     };
     return text.replace(regexList[language], "");
 }
-exports.removeCommentsFromSourceCode = removeCommentsFromSourceCode;
 /**
  * @summary Removes empty lines from a given string.
  * @param string {String} string to remove empty lines from.
@@ -62,7 +65,6 @@ function removeEmptyLinesFromString(string) {
     // remove "\n" on empty lines AND the very last "\n"
     return string.replace(/^\s*[\r\n]/gm, "").trim();
 }
-exports.removeEmptyLinesFromString = removeEmptyLinesFromString;
 /**
  * converts simple number to roman.
  * @param {Number} num
@@ -94,7 +96,6 @@ function convertArabicToRoman(num) {
     }
     return str;
 }
-exports.convertArabicToRoman = convertArabicToRoman;
 /**
  * Render name template based on config.
  * Use substitution map to replace a config value with a more readable variant.
@@ -137,7 +138,6 @@ function renderTextWithSubstitutes(template, data, substitutionMap = {}) {
     substituteNested(renderData);
     return nunjucks_1.default.renderString(template, renderData);
 }
-exports.renderTextWithSubstitutes = renderTextWithSubstitutes;
 /**
  * Find the next smallest version from a list of semantic version strings.
  * @param {string[]} versions - Array of semantic version strings.
@@ -152,4 +152,3 @@ function findPreviousVersion(versions, inputVersion) {
     const prev = versions_.find((o) => (0, lt_1.default)(o.coerced, version));
     return prev === null || prev === void 0 ? void 0 : prev.raw;
 }
-exports.findPreviousVersion = findPreviousVersion;
