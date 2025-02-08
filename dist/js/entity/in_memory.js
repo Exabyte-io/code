@@ -15,13 +15,23 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 }) : function(o, v) {
     o["default"] = v;
 });
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -35,7 +45,7 @@ const clone_1 = require("../utils/clone");
 var ValidationErrorCode;
 (function (ValidationErrorCode) {
     ValidationErrorCode["IN_MEMORY_ENTITY_DATA_INVALID"] = "IN_MEMORY_ENTITY_DATA_INVALID";
-})(ValidationErrorCode = exports.ValidationErrorCode || (exports.ValidationErrorCode = {}));
+})(ValidationErrorCode || (exports.ValidationErrorCode = ValidationErrorCode = {}));
 class EntityError extends Error {
     constructor({ code, details }) {
         super(code);
@@ -160,12 +170,6 @@ class InMemoryEntity {
             return false;
         }
     }
-    get id() {
-        return this.prop("_id", "");
-    }
-    set id(id) {
-        this.setProp("_id", id);
-    }
     static get cls() {
         return this.prototype.constructor.name;
     }
@@ -175,12 +179,6 @@ class InMemoryEntity {
     // TODO: figure out why the above getter for `cls` returns `null` and use only one
     getClsName() {
         return this.constructor.name;
-    }
-    get slug() {
-        return this.prop("slug", "");
-    }
-    get isSystemEntity() {
-        return Boolean(this.prop("systemName", ""));
     }
     /**
      * @summary get small identifying payload of object
@@ -219,6 +217,37 @@ class InMemoryEntity {
             console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
         }
         return filtered[0];
+    }
+    // Properties from BaseInMemoryEntitySchema
+    get id() {
+        return this.prop("_id", "");
+    }
+    set id(id) {
+        this.setProp("_id", id);
+    }
+    get _id() {
+        return this.prop("_id", "");
+    }
+    set _id(id) {
+        this.setProp("_id", id);
+    }
+    get schemaVersion() {
+        return this.prop("schemaVersion", "");
+    }
+    set schemaVersion(schemaVersion) {
+        this.setProp("schemaVersion", schemaVersion);
+    }
+    get systemName() {
+        return this.prop("systemName", "");
+    }
+    set systemName(systemName) {
+        this.setProp("systemName", systemName);
+    }
+    get slug() {
+        return this.prop("slug", "");
+    }
+    get isSystemEntity() {
+        return Boolean(this.systemName);
     }
 }
 exports.InMemoryEntity = InMemoryEntity;

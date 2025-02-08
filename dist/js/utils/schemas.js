@@ -17,7 +17,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buildNamedEntitySchema = exports.schemaByNamedEntityName = exports.getSchemaWithDependencies = exports.buildDependencies = exports.typeofSchema = exports.schemas = void 0;
+exports.buildNamedEntitySchema = exports.schemaByNamedEntityName = exports.schemas = void 0;
+exports.typeofSchema = typeofSchema;
+exports.buildDependencies = buildDependencies;
+exports.getSchemaWithDependencies = getSchemaWithDependencies;
 const JSONSchemasInterface_1 = __importDefault(require("@mat3ra/esse/dist/js/esse/JSONSchemasInterface"));
 const forEach_1 = __importDefault(require("lodash/forEach"));
 const has_1 = __importDefault(require("lodash/has"));
@@ -35,7 +38,6 @@ function typeofSchema(schema) {
         return "array";
     }
 }
-exports.typeofSchema = typeofSchema;
 function extractEnumOptions(nodes) {
     if (!nodes || !nodes.length)
         return {};
@@ -97,7 +99,6 @@ function buildDependencies(nodes) {
         }
         : {};
 }
-exports.buildDependencies = buildDependencies;
 /**
  * Combine schema and dependencies block for usage with react-jsonschema-form (RJSF)
  */
@@ -127,7 +128,6 @@ function getSchemaWithDependencies({ schema = {}, nodes, modifyProperties = fals
         ...buildDependencies(nodes),
     };
 }
-exports.getSchemaWithDependencies = getSchemaWithDependencies;
 const DEFAULT_GENERATIVE_KEYS = ["name"];
 const baseSchema = (definitionName, enforceUnique = true) => {
     return {

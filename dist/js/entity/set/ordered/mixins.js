@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrderedInMemoryEntityInSetMixin = exports.OrderedInMemoryEntitySetMixin = void 0;
+exports.OrderedInMemoryEntitySetMixin = OrderedInMemoryEntitySetMixin;
+exports.OrderedInMemoryEntityInSetMixin = OrderedInMemoryEntityInSetMixin;
 const enums_1 = require("../enums");
 // NOTE: these mixins are meant to be used together with `InMemoryEntity{In}SetMixin`s only
 function OrderedInMemoryEntitySetMixin(superclass) {
@@ -10,7 +11,6 @@ function OrderedInMemoryEntitySetMixin(superclass) {
         }
     };
 }
-exports.OrderedInMemoryEntitySetMixin = OrderedInMemoryEntitySetMixin;
 function OrderedInMemoryEntityInSetMixin(superclass) {
     return class extends superclass {
         getIndexByIdInOrderedSet(setId) {
@@ -19,4 +19,3 @@ function OrderedInMemoryEntityInSetMixin(superclass) {
         }
     };
 }
-exports.OrderedInMemoryEntityInSetMixin = OrderedInMemoryEntityInSetMixin;

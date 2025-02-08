@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FlowchartEntityMixin = exports.FlowchartItemMixin = void 0;
+exports.FlowchartItemMixin = FlowchartItemMixin;
+exports.FlowchartEntityMixin = FlowchartEntityMixin;
 const findIndex_1 = __importDefault(require("lodash/findIndex"));
 const utils_1 = require("../../utils");
 function FlowchartItemMixin(superclass) {
@@ -33,7 +34,6 @@ function FlowchartItemMixin(superclass) {
         }
     };
 }
-exports.FlowchartItemMixin = FlowchartItemMixin;
 function FlowchartEntityMixin(superclass) {
     return class extends superclass {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,4 +67,3 @@ function FlowchartEntityMixin(superclass) {
         }
     };
 }
-exports.FlowchartEntityMixin = FlowchartEntityMixin;

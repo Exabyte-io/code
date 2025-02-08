@@ -1,6 +1,6 @@
 import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
-import { EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
+import { BaseInMemoryEntitySchema, EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
 import * as ajv from "@mat3ra/esse/dist/js/utils/ajv";
 import getValue from "lodash/get";
 import omit from "lodash/omit";
@@ -30,7 +30,7 @@ export class EntityError extends Error {
     }
 }
 
-export class InMemoryEntity {
+export class InMemoryEntity implements BaseInMemoryEntitySchema {
     static create(config: object) {
         return new (this.prototype.constructor as typeof InMemoryEntity)(config);
     }
@@ -174,15 +174,7 @@ export class InMemoryEntity {
         }
     }
 
-    get id() {
-        return this.prop("_id", "");
-    }
-
-    set id(id) {
-        this.setProp("_id", id);
-    }
-
-    static get cls() {
+    static get cls(): string {
         return this.prototype.constructor.name;
     }
 
@@ -193,14 +185,6 @@ export class InMemoryEntity {
     // TODO: figure out why the above getter for `cls` returns `null` and use only one
     getClsName() {
         return this.constructor.name;
-    }
-
-    get slug() {
-        return this.prop("slug", "");
-    }
-
-    get isSystemEntity() {
-        return Boolean(this.prop("systemName", ""));
     }
 
     /**
@@ -239,6 +223,48 @@ export class InMemoryEntity {
             console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
         }
         return filtered[0];
+    }
+
+    // Properties from BaseInMemoryEntitySchema
+
+    get id() {
+        return this.prop("_id", "");
+    }
+
+    set id(id) {
+        this.setProp("_id", id);
+    }
+
+    get _id() {
+        return this.prop("_id", "");
+    }
+
+    set _id(id) {
+        this.setProp("_id", id);
+    }
+
+    get schemaVersion() {
+        return this.prop("schemaVersion", "");
+    }
+
+    set schemaVersion(schemaVersion) {
+        this.setProp("schemaVersion", schemaVersion);
+    }
+
+    get systemName() {
+        return this.prop("systemName", "");
+    }
+
+    set systemName(systemName) {
+        this.setProp("systemName", systemName);
+    }
+
+    get slug() {
+        return this.prop("slug", "");
+    }
+
+    get isSystemEntity() {
+        return Boolean(this.systemName);
     }
 }
 

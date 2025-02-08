@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.extendThis = exports.extendClassStaticProps = exports.extendClass = exports.cloneClass = void 0;
+exports.cloneClass = cloneClass;
+exports.extendClass = extendClass;
+exports.extendClassStaticProps = extendClassStaticProps;
+exports.extendThis = extendThis;
 function cloneClass(classToClone) {
     return Object.assign(Object.create(Object.getPrototypeOf(classToClone)), classToClone);
 }
-exports.cloneClass = cloneClass;
 /**
  * Extends a child class with the parent class.
  * Note: this function does not handle static functions.
@@ -35,7 +37,6 @@ function extendClass(childClass, parentClass, excludedProps = [], ...args) {
         }
     });
 }
-exports.extendClass = extendClass;
 function extendClassStaticProps(childClass, parentClass, excludedProps = []) {
     const parentStaticProps = Object.getOwnPropertyNames(parentClass).filter((p) => !["length", "name", "prototype"].includes(p));
     parentStaticProps
@@ -44,7 +45,6 @@ function extendClassStaticProps(childClass, parentClass, excludedProps = []) {
         childClass[prop] = parentClass[prop];
     });
 }
-exports.extendClassStaticProps = extendClassStaticProps;
 /**
  * Slightly different implementation of extendClass assuming excludedProps
  * is contained within the child-most class definition and assigning only
@@ -79,4 +79,3 @@ function extendThis(childClass, parentClass, config) {
         obj = protos;
     }
 }
-exports.extendThis = extendThis;

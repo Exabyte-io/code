@@ -1,11 +1,20 @@
-import { ExtendedBaseEntitySchema } from "@mat3ra/esse/dist/js/types";
+import {
+    type ConsistencyCheck,
+    type DefaultableEntitySchema,
+    type DescriptionSchema,
+    type EntityTagsSchema,
+    type HasConsistencyCheckSchema,
+    type MetadataSchema,
+    type NameEntitySchema,
+} from "@mat3ra/esse/dist/js/types";
 
-import { InMemoryEntityConstructor } from "../in_memory";
+import type { Constructor } from "../../utils/types";
+import { type InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 
-type ExtendedBaseEntity = Required<ExtendedBaseEntitySchema>;
-
-export function DefaultableMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass {
+export function DefaultableMixin<
+    T extends Constructor<InMemoryEntity> = Constructor<InMemoryEntity>,
+>(superclass: T) {
+    class DefaultableMixin extends superclass implements DefaultableEntitySchema {
         get isDefault() {
             return this.prop("isDefault", false);
         }
@@ -16,11 +25,13 @@ export function DefaultableMixin<T extends InMemoryEntityConstructor>(superclass
             // @ts-ignore
             return new this.prototype.constructor(this.defaultConfig);
         }
-    };
+    }
+
+    return DefaultableMixin;
 }
 
 export function TaggableMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass {
+    return class extends superclass implements EntityTagsSchema {
         get tags(): string[] {
             return this.prop("tags", []);
         }
@@ -49,7 +60,7 @@ export function HasScopeTrackMixin<T extends InMemoryEntityConstructor>(supercla
 }
 
 export function HasMetadataMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass {
+    return class extends superclass implements MetadataSchema {
         get metadata(): object {
             return this.prop("metadata", {});
         }
@@ -65,9 +76,9 @@ export function HasMetadataMixin<T extends InMemoryEntityConstructor>(superclass
 }
 
 export function HasDescriptionMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass {
+    return class extends superclass implements DescriptionSchema {
         get description() {
-            return this.prop<ExtendedBaseEntity["description"]>("description", "");
+            return this.prop("description", "");
         }
 
         set description(string) {
@@ -75,7 +86,7 @@ export function HasDescriptionMixin<T extends InMemoryEntityConstructor>(supercl
         }
 
         get descriptionObject() {
-            return this.prop<ExtendedBaseEntity["descriptionObject"]>("descriptionObject");
+            return this.prop<DescriptionSchema["descriptionObject"]>("descriptionObject");
         }
 
         set descriptionObject(obj) {
@@ -85,7 +96,7 @@ export function HasDescriptionMixin<T extends InMemoryEntityConstructor>(supercl
 }
 
 export function NamedEntityMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass {
+    return class extends superclass implements NameEntitySchema {
         get name(): string {
             return this.prop("name", "");
         }
@@ -102,16 +113,16 @@ export function NamedEntityMixin<T extends InMemoryEntityConstructor>(superclass
 }
 
 export function HasConsistencyChecksMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass {
-        get consistencyChecks(): object[] {
+    return class HasConsistencyChecksMixin extends superclass implements HasConsistencyCheckSchema {
+        get consistencyChecks(): ConsistencyCheck[] {
             return this.prop("consistencyChecks", []);
         }
 
-        set consistencyChecks(array: object[]) {
+        set consistencyChecks(array: ConsistencyCheck[]) {
             this.setProp("consistencyChecks", array);
         }
 
-        addConsistencyChecks(array: object[]) {
+        addConsistencyChecks(array: ConsistencyCheck[]) {
             this.consistencyChecks = [...this.consistencyChecks, ...array];
         }
     };

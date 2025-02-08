@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.convertToCompactCSVArrayOfObjects = exports.safeMakeArray = void 0;
+exports.safeMakeArray = safeMakeArray;
+exports.convertToCompactCSVArrayOfObjects = convertToCompactCSVArrayOfObjects;
 const lodash_1 = __importDefault(require("lodash"));
 const underscore_1 = __importDefault(require("underscore"));
 function safeMakeArray(x) {
@@ -11,7 +12,6 @@ function safeMakeArray(x) {
         return [x];
     return x;
 }
-exports.safeMakeArray = safeMakeArray;
 /**
  * @summary Returns objects array in compact csv format. E.g.:
  * [{a: 1, b: 2}, {a: 2, d: 3}] -> [['a','b','d'],[1, 2, null], [2, null, 3]]
@@ -30,4 +30,3 @@ function convertToCompactCSVArrayOfObjects(objects) {
     });
     return result;
 }
-exports.convertToCompactCSVArrayOfObjects = convertToCompactCSVArrayOfObjects;
