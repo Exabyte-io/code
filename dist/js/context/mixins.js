@@ -107,10 +107,11 @@ exports.MaterialsContextMixin = MaterialsContextMixin;
 function MethodDataContextMixin(superclass) {
     return class extends superclass {
         constructor(...params) {
+            var _a;
             super(...params);
             const config = params[0];
             this._methodData = (config.context && config.context.methodData) || {};
-            this.isEdited = false; // we always get the `defaultData` (recalculated from scratch, not persistent)
+            this.isEdited = (_a = config.isEdited) !== null && _a !== void 0 ? _a : false;
         }
         /* @summary Replace the logic in constructor with this in order to enable passing `methodDataHash` between
          *          subsequent initializations of the derived class. Not used at present and kept for the record.
