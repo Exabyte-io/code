@@ -19,7 +19,10 @@ export declare function DefaultableMixin<T extends Constructor<InMemoryEntity> =
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -50,7 +53,10 @@ export declare function TaggableMixin<T extends InMemoryEntityConstructor>(super
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -78,7 +84,10 @@ export declare function HasScopeTrackMixin<T extends InMemoryEntityConstructor>(
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -107,7 +116,10 @@ export declare function HasMetadataMixin<T extends InMemoryEntityConstructor>(su
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -136,7 +148,10 @@ export declare function HasDescriptionMixin<T extends InMemoryEntityConstructor>
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -165,7 +180,10 @@ export declare function NamedEntityMixin<T extends InMemoryEntityConstructor>(su
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -194,7 +212,10 @@ export declare function HasConsistencyChecksMixin<T extends InMemoryEntityConstr
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
