@@ -17,7 +17,10 @@ declare const DefaultableInMemoryEntity_base: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -50,7 +53,10 @@ export declare const NamedInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -79,7 +85,10 @@ export declare const NamedDefaultableInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -106,7 +115,10 @@ export declare const NamedDefaultableInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -137,7 +149,10 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -165,7 +180,10 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -192,7 +210,10 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -223,7 +244,10 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -251,7 +275,10 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -279,7 +306,10 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -306,7 +336,10 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -341,7 +374,10 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -376,7 +412,10 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -404,7 +443,10 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -431,7 +473,10 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -469,7 +514,10 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -504,7 +552,10 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -532,7 +583,10 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -559,7 +613,10 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -590,7 +647,10 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -625,7 +685,10 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -657,7 +720,10 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -686,7 +752,10 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -741,7 +810,10 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -776,7 +848,10 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -804,7 +879,10 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -831,7 +909,10 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;

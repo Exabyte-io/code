@@ -45,6 +45,7 @@ const clone_1 = require("../utils/clone");
 var ValidationErrorCode;
 (function (ValidationErrorCode) {
     ValidationErrorCode["IN_MEMORY_ENTITY_DATA_INVALID"] = "IN_MEMORY_ENTITY_DATA_INVALID";
+    ValidationErrorCode["ENTITY_REFERENCE_ERROR"] = "ENTITY_REFERENCE_ERROR";
 })(ValidationErrorCode || (exports.ValidationErrorCode = ValidationErrorCode = {}));
 class EntityError extends Error {
     constructor({ code, details }) {
@@ -180,12 +181,16 @@ class InMemoryEntity {
     getClsName() {
         return this.constructor.name;
     }
-    /**
-     * @summary get small identifying payload of object
-     * @param byIdOnly if true, return only the id
-     * @returns identifying data
-     */
     getAsEntityReference(byIdOnly = false) {
+        if (!this.id) {
+            throw new EntityError({
+                code: ValidationErrorCode.ENTITY_REFERENCE_ERROR,
+                details: {
+                    json: this._json,
+                    schema: this.constructor.jsonSchema || {},
+                },
+            });
+        }
         if (byIdOnly) {
             return { _id: this.id };
         }

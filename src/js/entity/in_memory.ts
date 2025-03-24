@@ -10,6 +10,7 @@ import { clone, deepClone } from "../utils/clone";
 
 export enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
+    ENTITY_REFERENCE_ERROR = "ENTITY_REFERENCE_ERROR",
 }
 
 interface ErrorDetails {
@@ -192,10 +193,25 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
      * @param byIdOnly if true, return only the id
      * @returns identifying data
      */
-    getAsEntityReference(byIdOnly = false): EntityReferenceSchema {
+    getAsEntityReference(byIdOnly: true): { _id: string };
+
+    getAsEntityReference(byIdOnly: false): Required<EntityReferenceSchema>;
+
+    getAsEntityReference(byIdOnly = false) {
+        if (!this.id) {
+            throw new EntityError({
+                code: ValidationErrorCode.ENTITY_REFERENCE_ERROR,
+                details: {
+                    json: this._json,
+                    schema: (this.constructor as typeof InMemoryEntity).jsonSchema || {},
+                },
+            });
+        }
+
         if (byIdOnly) {
             return { _id: this.id };
         }
+
         return {
             _id: this.id,
             slug: this.slug,
