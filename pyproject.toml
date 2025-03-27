@@ -18,6 +18,7 @@ dependencies = [
     # add requirements here
     "numpy",
     "jsonschema>=2.6.0",
+    "pydantic>=2.10.5",
     "mat3ra-utils>=2024.5.15.post0",
 ]
 
