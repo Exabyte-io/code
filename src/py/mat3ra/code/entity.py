@@ -7,9 +7,11 @@ from .mixins import DefaultableMixin, HasDescriptionMixin, HasMetadataMixin, Nam
 
 T = TypeVar("T", bound="InMemoryEntity")
 
+
 class InMemoryEntity(BaseModel):
-    class Config:
-        arbitrary_types_allowed = True
+    model_config = {
+        "arbitrary_types_allowed": True
+    }
 
     @classmethod
     def get_cls(cls) -> str:
@@ -21,12 +23,6 @@ class InMemoryEntity(BaseModel):
     @property
     def id(self) -> str:
         return self.model_fields.get("_id", {}).get("default", "")
-
-    def get_as_entity_reference(self, by_id_only: bool = False) -> Dict[str, str]:
-        base = {"_id": self.id}
-        if not by_id_only:
-            base.update({"cls": self.get_cls_name()})
-        return base
 
     def to_dict(self, exclude: Optional[List[str]] = None) -> Dict[str, Any]:
         return self.model_dump(exclude=set(exclude) if exclude else None)
