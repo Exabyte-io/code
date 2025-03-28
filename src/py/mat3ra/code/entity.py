@@ -50,7 +50,7 @@ class InMemoryEntityPydantic(BaseModel):
 
     @classmethod
     def clean(cls: Type[T], config: Dict[str, Any]) -> Dict[str, Any]:
-        validated_model = cls.validated_model_validate(config)
+        validated_model = cls.model_validate(config)
         return validated_model.model_dump()
 
     def get_cls_name(self) -> str:
