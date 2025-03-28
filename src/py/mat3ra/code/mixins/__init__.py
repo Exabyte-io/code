@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, ClassVar
 
 from mat3ra.esse.models.system.description import DescriptionSchema
 from mat3ra.esse.models.system.metadata import MetadataSchema
@@ -7,11 +7,17 @@ from mat3ra.esse.models.system.defaultable import DefaultableEntitySchema
 
 
 class DefaultableMixin(DefaultableEntitySchema):
-    default_config: Dict[str, Any] = {}
+    __default_config__: ClassVar[Dict[str, Any]] = {}
+
+    @property
+    def default_config(self) -> Dict[str, Any]:
+        return self.__default_config__
 
     @classmethod
-    def create_default(cls) -> "DefaultableMixin":
-        return cls(**cls.default_config)
+    def create_default(cls) -> "DefaultablePydanticMixin":
+        instance = cls(**cls.__default_config__)
+        instance.isDefault = True
+        return instance
 
 
 class NamedMixin(BaseModel):
