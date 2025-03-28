@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Optional, Type, TypeVar
+from typing_extensions import Self
 
 import jsonschema
 from mat3ra.utils import object as object_utils
@@ -35,8 +36,22 @@ class InMemoryEntityPydantic(BaseModel):
     model_config = {"arbitrary_types_allowed": True}
 
     @classmethod
-    def get_cls(cls) -> str:
-        return cls.__name__
+    def create(cls: Type[T], config: Dict[str, Any]) -> T:
+        validated_data = cls.clean(config)
+        return cls(**validated_data)
+    
+    @classmethod
+    def validate(cls, value: Any) -> Self:
+        return cls.model_validate(value)
+
+    @classmethod
+    def from_json(cls: Type[T], json_str: str) -> T:
+        return cls.model_validate_json(json_str)
+
+    @classmethod
+    def clean(cls: Type[T], config: Dict[str, Any]) -> Dict[str, Any]:
+        validated_model = cls.validated_model_validate(config)
+        return validated_model.model_dump()
 
     def get_cls_name(self) -> str:
         return self.__class__.__name__
@@ -46,14 +61,6 @@ class InMemoryEntityPydantic(BaseModel):
 
     def to_json(self, exclude: Optional[List[str]] = None) -> str:
         return self.model_dump_json(exclude=set(exclude) if exclude else None)
-
-    @classmethod
-    def create(cls: Type[T], config: Dict[str, Any]) -> T:
-        return cls(**config)
-
-    @classmethod
-    def from_json(cls: Type[T], json_str: str) -> T:
-        return cls.model_validate_json(json_str)
 
     def clone(self: T, extra_context: Optional[Dict[str, Any]] = None) -> T:
         return self.model_copy(update=extra_context or {})
