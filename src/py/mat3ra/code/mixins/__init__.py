@@ -7,7 +7,7 @@ from mat3ra.esse.models.system.defaultable import DefaultableEntitySchema
 
 
 class DefaultableMixin(DefaultableEntitySchema):
-    default_config: [Dict[str, Any]] = {}
+    default_config: Dict[str, Any] = {}
 
     @classmethod
     def create_default(cls) -> "DefaultableMixin":
