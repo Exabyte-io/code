@@ -1,13 +1,11 @@
-from typing import Any, Dict, List, Optional, TypeVar
-
-from pydantic import BaseModel
-
-from .mixins import DefaultableMixin, HasDescriptionMixin, HasMetadataMixin, NamedMixin
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 import jsonschema
 from mat3ra.utils import object as object_utils
+from pydantic import BaseModel
 
 from . import BaseUnderscoreJsonPropsHandler
+from .mixins import DefaultableMixin, HasDescriptionMixin, HasMetadataMixin, NamedMixin
 
 T = TypeVar("T", bound="InMemoryEntityPydantic")
 
@@ -34,9 +32,7 @@ class EntityError(Exception):
 
 
 class InMemoryEntityPydantic(BaseModel):
-    model_config = {
-        "arbitrary_types_allowed": True
-    }
+    model_config = {"arbitrary_types_allowed": True}
 
     @classmethod
     def get_cls(cls) -> str:
@@ -52,11 +48,11 @@ class InMemoryEntityPydantic(BaseModel):
         return self.model_dump_json(exclude=set(exclude) if exclude else None)
 
     @classmethod
-    def create(cls: type[T], config: Dict[str, Any]) -> T:
+    def create(cls: Type[T], config: Dict[str, Any]) -> T:
         return cls(**config)
 
     @classmethod
-    def from_json(cls: type[T], json_str: str) -> T:
+    def from_json(cls: Type[T], json_str: str) -> T:
         return cls.model_validate_json(json_str)
 
     def clone(self: T, extra_context: Optional[Dict[str, Any]] = None) -> T:
