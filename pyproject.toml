@@ -4,9 +4,9 @@ dynamic = ["version"]
 description = "COre DEfinitions."
 readme = "README.md"
 requires-python = ">=3.8"
-license = {file = "LICENSE.md"}
+license = { file = "LICENSE.md" }
 authors = [
-    {name = "Exabyte Inc.", email = "info@mat3ra.com"}
+    { name = "Exabyte Inc.", email = "info@mat3ra.com" }
 ]
 classifiers = [
     "Programming Language :: Python",
@@ -19,6 +19,7 @@ dependencies = [
     "numpy",
     "jsonschema>=2.6.0",
     "pydantic>=2.10.5",
+    "mat3ra-esse @ git+https://github.com/Exabyte-io/esse.git@refs/pull/325/head",
     "mat3ra-utils>=2024.5.15.post0",
 ]
 
