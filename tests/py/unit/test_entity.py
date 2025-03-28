@@ -35,7 +35,7 @@ def test_validate():
     try:
         _ = ExampleClass.create(REFERENCE_OBJECT_INVALID)
         assert False, "Invalid input did not raise an exception"
-    except Exception as e:
+    except Exception:
         assert True  # Expecting an exception for invalid input
 
 

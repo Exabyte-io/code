@@ -1,9 +1,9 @@
 from typing import Any, Dict, List, Optional, Type, TypeVar
-from typing_extensions import Self
 
 import jsonschema
 from mat3ra.utils import object as object_utils
 from pydantic import BaseModel
+from typing_extensions import Self
 
 from . import BaseUnderscoreJsonPropsHandler
 from .mixins import DefaultableMixin, HasDescriptionMixin, HasMetadataMixin, NamedMixin
@@ -39,7 +39,7 @@ class InMemoryEntityPydantic(BaseModel):
     def create(cls: Type[T], config: Dict[str, Any]) -> T:
         validated_data = cls.clean(config)
         return cls(**validated_data)
-    
+
     @classmethod
     def validate(cls, value: Any) -> Self:
         return cls.model_validate(value)
