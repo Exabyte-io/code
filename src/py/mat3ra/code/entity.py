@@ -9,6 +9,7 @@ from . import BaseUnderscoreJsonPropsHandler
 from .mixins import DefaultableMixin, HasDescriptionMixin, HasMetadataMixin, NamedMixin
 
 T = TypeVar("T", bound="InMemoryEntityPydantic")
+B = TypeVar("B", bound="BaseModel")
 
 
 # TODO: remove in the next PR
@@ -60,6 +61,15 @@ class InMemoryEntityPydantic(BaseModel):
     def clean(cls: Type[T], config: Dict[str, Any]) -> Dict[str, Any]:
         validated_model = cls.model_validate(config)
         return validated_model.model_dump()
+
+    def get_schema(self) -> Dict[str, Any]:
+        return self.model_json_schema()
+
+    def get_data_model(self) -> Type[B]:
+        for base in self.__class__.__bases__:
+            if issubclass(base, BaseModel) and base is not self.__class__:
+                return base  # this will be MaterialSchema
+        raise ValueError(f"No schema base model found for {self.__class__.__name__}")
 
     def get_cls_name(self) -> str:
         return self.__class__.__name__

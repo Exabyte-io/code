@@ -35,7 +35,6 @@ class ExampleNestedClass(ExampleNestedSchema, InMemoryEntityPydantic):
 
 class ExampleFullClass(ExampleOverrideSchema, InMemoryEntityPydantic):
     __default_config__ = REFERENCE_OBJECT_OVERRIDE_VALID
-    __schema__ = ExampleOverrideSchema
 
     # We override the as_class_instance field to be an instance of ExampleClass
     as_class_instance: ExampleClass = ExampleClass(**REFERENCE_OBJECT_VALID)
@@ -64,7 +63,7 @@ def test_full_class():
     assert isinstance(in_memory_entity.as_class_instance, ExampleClass)
     assert in_memory_entity.as_class_instance.key1 == "value1"
     assert in_memory_entity.as_class_instance.key2 == 1
-    assert in_memory_entity.__schema__ == ExampleOverrideSchema
+    assert in_memory_entity.get_data_model() == ExampleOverrideSchema
 
 
 def test_validate():
