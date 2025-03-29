@@ -6,6 +6,7 @@ from pydantic import BaseModel
 REFERENCE_OBJECT_VALID = {"key1": "value1", "key2": 1}
 REFERENCE_OBJECT_INVALID = {"key1": "value1", "key2": "value2"}
 REFERENCE_OBJECT_VALID_JSON = json.dumps(REFERENCE_OBJECT_VALID)
+REFERENCE_OBJECT_NESTED_VALID = {"nested_key1": {**REFERENCE_OBJECT_VALID}}
 
 
 class ExampleSchema(BaseModel):
@@ -13,8 +14,16 @@ class ExampleSchema(BaseModel):
     key2: int
 
 
+class ExampleNestedSchema(BaseModel):
+    nested_key1: ExampleSchema
+
+
 class ExampleClass(ExampleSchema, InMemoryEntityPydantic):
     pass
+
+
+class ExampleNestedClass(ExampleNestedSchema, InMemoryEntityPydantic):
+    _class_factory = {"nested_key1": ExampleClass}
 
 
 example_class_instance_valid = ExampleClass(**REFERENCE_OBJECT_VALID)
@@ -25,6 +34,16 @@ def test_create():
     assert isinstance(in_memory_entity, ExampleClass)
     assert in_memory_entity.key1 == "value1"
     assert in_memory_entity.key2 == 1
+
+
+def test_create_nested():
+    # Test creating an instance with nested valid data
+    in_memory_entity = ExampleNestedClass.create(REFERENCE_OBJECT_NESTED_VALID)
+    assert isinstance(in_memory_entity, ExampleNestedClass)
+    assert isinstance(in_memory_entity.nested_key1, ExampleSchema)
+    assert in_memory_entity.nested_key1.key1 == "value1"
+    assert in_memory_entity.nested_key1.key2 == 1
+    assert isinstance(in_memory_entity.nested_key1_instance, ExampleClass)
 
 
 def test_validate():

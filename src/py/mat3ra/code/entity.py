@@ -33,7 +33,10 @@ class EntityError(Exception):
 
 
 class InMemoryEntityPydantic(BaseModel):
-    model_config = {"arbitrary_types_allowed": True}
+    model_config = {"arbitrary_types_allowed": True, "extra": "allow"}
+
+    # Factory helper field mapping field names to class names
+    _class_factory: Dict = {}
 
     @classmethod
     def create(cls: Type[T], config: Dict[str, Any]) -> T:
@@ -60,6 +63,18 @@ class InMemoryEntityPydantic(BaseModel):
     def clean(cls: Type[T], config: Dict[str, Any]) -> Dict[str, Any]:
         validated_model = cls.model_validate(config)
         return validated_model.model_dump()
+
+    def model_post_init(self, __context: Any) -> None:
+        for field_name, field_value in self.__dict__.items():
+            if isinstance(field_value, BaseModel):
+                class_reference = self._class_factory.get(field_name)
+                if not class_reference:
+                    continue
+                else:
+                    instance_field_name = field_name + "_instance"
+                    config = field_value.model_dump()  # convert from BaseModel to dict
+                    class_instance = class_reference(**config)
+                    setattr(self, instance_field_name, class_instance)
 
     def get_cls_name(self) -> str:
         return self.__class__.__name__
