@@ -7,6 +7,7 @@ REFERENCE_OBJECT_VALID = {"key1": "value1", "key2": 1}
 REFERENCE_OBJECT_INVALID = {"key1": "value1", "key2": "value2"}
 REFERENCE_OBJECT_VALID_JSON = json.dumps(REFERENCE_OBJECT_VALID)
 REFERENCE_OBJECT_NESTED_VALID = {"nested_key1": {**REFERENCE_OBJECT_VALID}}
+REFERENCE_OBJECT_OVERRIDE_VALID = {"as_class_instance": {**REFERENCE_OBJECT_VALID}}
 
 
 class ExampleSchema(BaseModel):
@@ -16,6 +17,10 @@ class ExampleSchema(BaseModel):
 
 class ExampleNestedSchema(BaseModel):
     nested_key1: ExampleSchema
+
+
+class ExampleOverrideSchema(BaseModel):
+    as_class_instance: ExampleSchema
 
 
 class ExampleClass(ExampleSchema, InMemoryEntityPydantic):
@@ -28,7 +33,12 @@ class ExampleNestedClass(ExampleNestedSchema, InMemoryEntityPydantic):
         return ExampleClass.create(self.nested_key1.model_dump())
 
 
-example_class_instance_valid = ExampleClass(**REFERENCE_OBJECT_VALID)
+class ExampleFullClass(ExampleOverrideSchema, InMemoryEntityPydantic):
+    __default_config__ = REFERENCE_OBJECT_OVERRIDE_VALID
+    __schema__ = ExampleOverrideSchema
+
+    # We override the as_class_instance field to be an instance of ExampleClass
+    as_class_instance: ExampleClass = ExampleClass(**REFERENCE_OBJECT_VALID)
 
 
 def test_create():
@@ -46,6 +56,15 @@ def test_create_nested():
     assert in_memory_entity.nested_key1.key1 == "value1"
     assert in_memory_entity.nested_key1.key2 == 1
     assert isinstance(in_memory_entity.nested_key1_instance, ExampleClass)
+
+
+def test_full_class():
+    in_memory_entity = ExampleFullClass.create(REFERENCE_OBJECT_OVERRIDE_VALID)
+    assert isinstance(in_memory_entity, ExampleFullClass)
+    assert isinstance(in_memory_entity.as_class_instance, ExampleClass)
+    assert in_memory_entity.as_class_instance.key1 == "value1"
+    assert in_memory_entity.as_class_instance.key2 == 1
+    assert in_memory_entity.__schema__ == ExampleOverrideSchema
 
 
 def test_validate():
