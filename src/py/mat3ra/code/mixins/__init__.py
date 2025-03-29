@@ -3,6 +3,8 @@ from typing import Any, ClassVar, Dict, Optional
 from mat3ra.esse.models.system.defaultable import DefaultableEntitySchema
 from mat3ra.esse.models.system.description import DescriptionSchema
 from mat3ra.esse.models.system.metadata import MetadataSchema
+from mat3ra.esse.models.system.name import NameEntitySchema
+
 from pydantic import BaseModel
 
 
@@ -20,8 +22,8 @@ class DefaultableMixin(DefaultableEntitySchema):
         return instance
 
 
-class NamedMixin(BaseModel):
-    name: Optional[str] = None
+class NamedMixin(NameEntitySchema):
+    pass
 
 
 class HasMetadataMixin(MetadataSchema):
