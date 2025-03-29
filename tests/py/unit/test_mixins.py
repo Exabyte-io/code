@@ -16,7 +16,7 @@ def test_defaultable_mixin():
 
     assert instance.key == "value"
     assert instance.number == 42
-    assert hasattr(instance, 'isDefault') and instance.isDefault is True
+    assert hasattr(instance, "isDefault") and instance.isDefault is True
 
 
 def test_named_mixin():
