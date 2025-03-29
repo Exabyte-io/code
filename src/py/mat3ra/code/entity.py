@@ -37,12 +37,20 @@ class InMemoryEntityPydantic(BaseModel):
 
     @classmethod
     def create(cls: Type[T], config: Dict[str, Any]) -> T:
-        validated_data = cls.clean(config)
-        return cls(**validated_data)
+        return cls.validate(**config)
 
     @classmethod
     def validate(cls, value: Any) -> Self:
+        # this will clean and validate data
         return cls.model_validate(value)
+
+    @classmethod
+    def is_valid(cls, value: Any) -> bool:
+        try:
+            cls.validate(value)
+            return True
+        except Exception:
+            return False
 
     @classmethod
     def from_json(cls: Type[T], json_str: str) -> T:
