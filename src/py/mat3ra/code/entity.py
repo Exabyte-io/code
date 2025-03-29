@@ -37,7 +37,7 @@ class InMemoryEntityPydantic(BaseModel):
 
     @classmethod
     def create(cls: Type[T], config: Dict[str, Any]) -> T:
-        return cls.validate(**config)
+        return cls.validate(config)
 
     @classmethod
     def validate(cls, value: Any) -> Self:
