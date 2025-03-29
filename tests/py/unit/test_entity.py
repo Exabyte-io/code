@@ -1,5 +1,4 @@
 import json
-from typing import Any
 
 from mat3ra.code.entity import InMemoryEntityPydantic
 from pydantic import BaseModel
@@ -24,7 +23,6 @@ class ExampleClass(ExampleSchema, InMemoryEntityPydantic):
 
 
 class ExampleNestedClass(ExampleNestedSchema, InMemoryEntityPydantic):
-
     @property
     def nested_key1_instance(self) -> ExampleClass:
         return ExampleClass.create(self.nested_key1.model_dump())
