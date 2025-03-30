@@ -1,39 +1,21 @@
 import json
 
-from mat3ra.code.entity import InMemoryEntityPydantic
-from pydantic import BaseModel
-
-REFERENCE_OBJECT_VALID = {"key1": "value1", "key2": 1}
-REFERENCE_OBJECT_VALID_UPDATED = {"key1": "value1-updated", "key2": 2}
-REFERENCE_OBJECT_INVALID = {"key1": "value1", "key2": "value2"}
-REFERENCE_OBJECT_VALID_JSON = json.dumps(REFERENCE_OBJECT_VALID)
-REFERENCE_OBJECT_NESTED_VALID = {"nested_key1": {**REFERENCE_OBJECT_VALID}}
-REFERENCE_OBJECT_NESTED_VALID_UPDATED = {"nested_key1": {**REFERENCE_OBJECT_VALID_UPDATED}}
-
-
-class ExampleSchema(BaseModel):
-    key1: str
-    key2: int
-
-
-class ExampleNestedSchema(BaseModel):
-    nested_key1: ExampleSchema
-
-
-class ExampleClass(ExampleSchema, InMemoryEntityPydantic):
-    pass
-
-
-class ExampleNestedClass(ExampleNestedSchema, InMemoryEntityPydantic):
-    @property
-    def nested_key1_instance(self) -> ExampleClass:
-        return ExampleClass.create(self.nested_key1.model_dump())
-
-
-class ExampleNestedKeyAsClassInstanceClass(ExampleNestedSchema, InMemoryEntityPydantic):
-    __default_config__ = REFERENCE_OBJECT_NESTED_VALID
-
-    nested_key1: ExampleClass = ExampleClass(**REFERENCE_OBJECT_VALID)
+from . import (
+    REFERENCE_OBJECT_DOUBLE_NESTED_VALID,
+    REFERENCE_OBJECT_INVALID,
+    REFERENCE_OBJECT_NESTED_VALID,
+    REFERENCE_OBJECT_NESTED_VALID_UPDATED,
+    REFERENCE_OBJECT_VALID,
+    REFERENCE_OBJECT_VALID_JSON,
+    REFERENCE_OBJECT_VALID_UPDATED,
+    ExampleClass,
+    ExampleDoubleNestedKeyAsClassInstancesClass,
+    ExampleDoubleNestedSchema,
+    ExampleNestedClass,
+    ExampleNestedKeyAsClassInstanceClass,
+    ExampleNestedSchema,
+    ExampleSchema,
+)
 
 
 def test_create():
@@ -60,6 +42,16 @@ def test_create_nested_as_class_instance():
     assert entity.nested_key1.key1 == "value1"
     assert entity.nested_key1.key2 == 1
     assert entity.get_data_model() == ExampleNestedSchema
+
+
+def test_create_double_nested_as_class_instances():
+    entity = ExampleDoubleNestedKeyAsClassInstancesClass.create(REFERENCE_OBJECT_DOUBLE_NESTED_VALID)
+    assert isinstance(entity, ExampleDoubleNestedKeyAsClassInstancesClass)
+    assert isinstance(entity.double_nested_key1, ExampleNestedKeyAsClassInstanceClass)
+    assert isinstance(entity.double_nested_key1.nested_key1, ExampleClass)
+    assert entity.double_nested_key1.nested_key1.key1 == "value1"
+    assert entity.double_nested_key1.nested_key1.key2 == 1
+    assert entity.get_data_model() == ExampleDoubleNestedSchema
 
 
 def test_update_nested_as_class_instance():
