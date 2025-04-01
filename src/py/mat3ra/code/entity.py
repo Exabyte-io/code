@@ -68,7 +68,7 @@ class InMemoryEntityPydantic(BaseModel):
     def get_data_model(self) -> Type[B]:
         for base in self.__class__.__bases__:
             if issubclass(base, BaseModel) and base is not self.__class__:
-                return base  # this will be MaterialSchema
+                return base
         raise ValueError(f"No schema base model found for {self.__class__.__name__}")
 
     def get_cls_name(self) -> str:
