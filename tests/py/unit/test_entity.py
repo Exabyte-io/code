@@ -141,14 +141,27 @@ def test_to_json():
 def test_clone():
     entity = ExampleClass.create(REFERENCE_OBJECT_VALID)
     # Test clone method
-    cloned_entity = entity.clone()
+    cloned_entity = entity.clone(deep=False)
     assert isinstance(cloned_entity, ExampleClass)
     assert cloned_entity.key1 == entity.key1
     assert cloned_entity.key2 == entity.key2
 
     # Test clone with extra context
     extra_context = {"key2": 2}
-    cloned_entity_with_extra = entity.clone(extra_context=extra_context)
+    cloned_entity_with_extra = entity.clone(extra_context=extra_context, deep=False)
     assert isinstance(cloned_entity_with_extra, ExampleClass)
     assert cloned_entity_with_extra.key1 == entity.key1
     assert cloned_entity_with_extra.key2 == 2  # Should override to 2
+
+
+def test_clone_deep():
+    entity = ExampleClass.create(REFERENCE_OBJECT_VALID)
+    # Test clone with deep=True
+    cloned_entity_deep = entity.clone(deep=True)
+    assert isinstance(cloned_entity_deep, ExampleClass)
+    assert cloned_entity_deep.key1 == entity.key1
+    assert cloned_entity_deep.key2 == entity.key2
+
+    cloned_entity_deep.key1 = "adjusted_value"
+    assert entity.key1 == "value1"
+    assert cloned_entity_deep.key1 == "adjusted_value"

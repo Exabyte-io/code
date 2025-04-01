@@ -80,8 +80,8 @@ class InMemoryEntityPydantic(BaseModel):
     def to_json(self, exclude: Optional[List[str]] = None) -> str:
         return self.model_dump_json(exclude=set(exclude) if exclude else None)
 
-    def clone(self: T, extra_context: Optional[Dict[str, Any]] = None) -> T:
-        return self.model_copy(update=extra_context or {}, deep=True)
+    def clone(self: T, extra_context: Optional[Dict[str, Any]] = None, deep=True) -> T:
+        return self.model_copy(update=extra_context or {}, deep=deep)
 
 
 # TODO: remove in the next PR
