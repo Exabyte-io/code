@@ -208,6 +208,25 @@ def test_filter_by_ids():
     )
 
 
+def test_filter_by_ids_invert():
+    instance = ArrayWithIds(**ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG)
+    instance.filter_by_ids([0, 2], invert=True)
+    assert instance.values == [
+        ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG["values"][1],
+    ]
+    assert instance.ids == [
+        ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG["ids"][1],
+    ]
+    assert instance.to_dict() == [
+        ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG_TO_DICT_OUTPUT[1],
+    ]
+    assert instance.to_json() == json.dumps(
+        [
+            ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG_TO_DICT_OUTPUT[1],
+        ]
+    )
+
+
 def test_map_array_in_place_rounded():
     def add_one_to_each_element(value):
         return [float(np.round(v + 1.0, decimals=3)) for v in value]
