@@ -2,6 +2,8 @@ from math import pi
 
 from mat3ra.esse.models.definitions.constants import FundamentalConstants
 
+CONSTANTS = FundamentalConstants()
+
 
 class Coefficients:
     # Same as used in: JS/TS
@@ -15,11 +17,11 @@ class Coefficients:
     # and originally taken from https://github.com/hplgit/physical-quantities/blob/master/PhysicalQuantities.py
 
     # Internal, for convenience purposes
-    _c = FundamentalConstants.c  # speed of light, m/s
-    _Grav = FundamentalConstants.G  # gravitational constant
-    _hplanck = FundamentalConstants.h  # Planck constant, J s
-    _e = FundamentalConstants.e  # elementary charge
-    _me = FundamentalConstants.me  # electron mass
+    _c = CONSTANTS.c  # speed of light, m/s
+    _Grav = CONSTANTS.G  # gravitational constant
+    _hplanck = CONSTANTS.h  # Planck constant, J s
+    _e = CONSTANTS.e  # elementary charge
+    _me = CONSTANTS.me  # electron mass
     _mu0 = 4.0e-7 * pi  # permeability of vacuum, atomic units
 
     _mp = 1.6726231e-27  # proton mass
