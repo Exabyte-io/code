@@ -6,7 +6,8 @@ from pydantic import model_serializer
 
 
 class Vector3D(Vector3DSchema):
-    pass
+    def __init__(self, root: List[float]):
+        super().__init__(root=root)
 
     @property
     def value(self):
@@ -14,6 +15,9 @@ class Vector3D(Vector3DSchema):
 
 
 class RoundedVector3D(RoundNumericValuesMixin, Vector3D):
+    def __init__(self, root: List[float]):
+        super().__init__(root=root)
+
     @model_serializer
     def to_dict(self, skip_rounding: bool = False) -> List[float]:
         rounded_value = self.round_array_or_number(self.root) if not skip_rounding else self.root
