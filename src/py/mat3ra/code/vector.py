@@ -8,9 +8,17 @@ from pydantic import model_serializer
 class Vector3D(Vector3DSchema):
     pass
 
+    @property
+    def value(self):
+        return self.root
+
 
 class RoundedVector3D(RoundNumericValuesMixin, Vector3D):
     @model_serializer
     def to_dict(self, skip_rounding: bool = False) -> List[float]:
         rounded_value = self.round_array_or_number(self.root) if not skip_rounding else self.root
         return Vector3D(root=rounded_value).model_dump()
+
+    @property
+    def value_rounded(self):
+        return self.to_dict()

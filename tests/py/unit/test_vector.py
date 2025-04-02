@@ -30,8 +30,12 @@ def test_rounded_vector_serialization():
     class_reference.__round_precision__ = 4
     vector = class_reference(root=VECTOR_FLOAT)
     assert vector.model_dump() == VECTOR_FLOAT_ROUNDED_4
+    assert vector.value_rounded == VECTOR_FLOAT_ROUNDED_4
+    assert vector.value == VECTOR_FLOAT
 
     class_reference = RoundedVector3D
     class_reference.__round_precision__ = 3
     vector = class_reference(root=VECTOR_FLOAT)
     assert vector.model_dump() == VECTOR_FLOAT_ROUNDED_3
+    assert vector.value_rounded == VECTOR_FLOAT_ROUNDED_3
+    assert vector.value == VECTOR_FLOAT
