@@ -1,6 +1,8 @@
 from mat3ra.code.vector import RoundedVector3D, Vector3D
 
 VECTOR_FLOAT = [1.234567890, 2.345678901, 3.456789012]
+VECTOR_FLOAT_DIFFERENT_WITHIN_TOL = [1.23456789999, 2.345678901, 3.456789012]
+VECTOR_FLOAT_DIFFERENT_OUTSIDE_TOL = [1.2345699999, 2.345678901, 3.456789012]
 VECTOR_FLOAT_ROUNDED_4 = [1.2346, 2.3457, 3.4568]
 VECTOR_FLOAT_ROUNDED_3 = [1.235, 2.346, 3.457]
 
@@ -27,6 +29,13 @@ def test_vector_init_wrong_size():
         assert False
     except Exception:
         assert True
+
+
+def test_vector_equality():
+    vector = Vector3D(VECTOR_FLOAT)
+    assert vector == VECTOR_FLOAT
+    assert vector == Vector3D(VECTOR_FLOAT_DIFFERENT_WITHIN_TOL)
+    assert vector != Vector3D(VECTOR_FLOAT_DIFFERENT_OUTSIDE_TOL)
 
 
 def test_rounded_vector_init():

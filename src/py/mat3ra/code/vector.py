@@ -1,11 +1,14 @@
 from typing import List
 
+import numpy as np
 from mat3ra.esse.models.core.abstract.point import PointSchema as Vector3DSchema
 from mat3ra.utils.mixins import RoundNumericValuesMixin
 from pydantic import model_serializer
 
 
 class Vector3D(Vector3DSchema):
+    __atol__ = 1e-8
+
     def __init__(self, root: List[float]):
         super().__init__(root=root)
 
@@ -24,6 +27,11 @@ class Vector3D(Vector3DSchema):
     @property
     def z(self):
         return self.root[2]
+
+    def __eq__(self, other):
+        if isinstance(other, list):
+            other = Vector3D(other)
+        return np.allclose(self.root, other.root, atol=self.__atol__, rtol=0)
 
 
 class RoundedVector3D(RoundNumericValuesMixin, Vector3D):
@@ -50,3 +58,9 @@ class RoundedVector3D(RoundNumericValuesMixin, Vector3D):
     @property
     def z_rounded(self):
         return self.value_rounded[2]
+
+    def __eq__(self, other):
+        if isinstance(other, list):
+            other = RoundedVector3D(other)
+        atol = self.__atol__ or 10 ** (-self.__round_precision__)
+        return np.allclose(self.value_rounded, other.value_rounded, atol=atol, rtol=0)
