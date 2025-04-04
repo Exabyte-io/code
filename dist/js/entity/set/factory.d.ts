@@ -22,7 +22,10 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             isValid(): boolean;
             readonly cls: string;
             getClsName(): string;
-            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+            getAsEntityReference(byIdOnly: true): {
+                _id: string;
+            };
+            getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
             getEntityByName(entities: import("..").InMemoryEntity[], entity: string, name: string): import("..").InMemoryEntity;
             id: string;
             _id: string;
@@ -50,7 +53,10 @@ export declare const constructEntitySetFactoryByConfig: ({ entitySetCls, ordered
             isValid(): boolean;
             readonly cls: string;
             getClsName(): string;
-            getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+            getAsEntityReference(byIdOnly: true): {
+                _id: string;
+            };
+            getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
             getEntityByName(entities: import("..").InMemoryEntity[], entity: string, name: string): import("..").InMemoryEntity;
             id: string;
             _id: string;

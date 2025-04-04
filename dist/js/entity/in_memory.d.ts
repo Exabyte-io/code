@@ -2,7 +2,8 @@ import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
 import { BaseInMemoryEntitySchema, EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
 export declare enum ValidationErrorCode {
-    IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID"
+    IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
+    ENTITY_REFERENCE_ERROR = "ENTITY_REFERENCE_ERROR"
 }
 interface ErrorDetails {
     error?: object | null;
@@ -64,7 +65,10 @@ export declare class InMemoryEntity implements BaseInMemoryEntitySchema {
      * @param byIdOnly if true, return only the id
      * @returns identifying data
      */
-    getAsEntityReference(byIdOnly?: boolean): EntityReferenceSchema;
+    getAsEntityReference(byIdOnly: true): {
+        _id: string;
+    };
+    getAsEntityReference(byIdOnly: false): Required<EntityReferenceSchema>;
     /**
      * @summary Pluck an entity from a collection by name.
      *          If no name is provided and no entity has prop isDefault, return the first entity

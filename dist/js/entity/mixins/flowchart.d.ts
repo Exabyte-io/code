@@ -20,7 +20,10 @@ export declare function FlowchartItemMixin<T extends InMemoryEntityConstructor>(
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         id: string;
         _id: string;
@@ -55,7 +58,10 @@ export declare function FlowchartEntityMixin<T extends InMemoryEntityConstructor
         isValid(): boolean;
         readonly cls: string;
         getClsName(): string;
-        getAsEntityReference(byIdOnly?: boolean): import("@mat3ra/esse/dist/js/types").EntityReferenceSchema;
+        getAsEntityReference(byIdOnly: true): {
+            _id: string;
+        };
+        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         id: string;
         _id: string;

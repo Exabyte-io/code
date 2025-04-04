@@ -1,16 +1,23 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Type, TypeVar
 
 import jsonschema
 from mat3ra.utils import object as object_utils
+from pydantic import BaseModel
+from typing_extensions import Self
 
 from . import BaseUnderscoreJsonPropsHandler
 from .mixins import DefaultableMixin, HasDescriptionMixin, HasMetadataMixin, NamedMixin
 
+T = TypeVar("T", bound="InMemoryEntityPydantic")
+B = TypeVar("B", bound="BaseModel")
 
+
+# TODO: remove in the next PR
 class ValidationErrorCode:
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID"
 
 
+# TODO: remove in the next PR
 class ErrorDetails:
     def __init__(self, error: Optional[Dict[str, Any]], json: Dict[str, Any], schema: Dict):
         self.error = error
@@ -18,6 +25,7 @@ class ErrorDetails:
         self.schema = schema
 
 
+# TODO: remove in the next PR
 class EntityError(Exception):
     def __init__(self, code: ValidationErrorCode, details: Optional[ErrorDetails] = None):
         super().__init__(code)
@@ -25,6 +33,58 @@ class EntityError(Exception):
         self.details = details
 
 
+class InMemoryEntityPydantic(BaseModel):
+    model_config = {"arbitrary_types_allowed": True}
+
+    @classmethod
+    def create(cls: Type[T], config: Dict[str, Any]) -> T:
+        return cls.validate(config)
+
+    @classmethod
+    def validate(cls, value: Any) -> Self:
+        # this will clean and validate data
+        return cls.model_validate(value)
+
+    @classmethod
+    def is_valid(cls, value: Any) -> bool:
+        try:
+            cls.validate(value)
+            return True
+        except Exception:
+            return False
+
+    @classmethod
+    def from_json(cls: Type[T], json_str: str) -> T:
+        return cls.model_validate_json(json_str)
+
+    @classmethod
+    def clean(cls: Type[T], config: Dict[str, Any]) -> Dict[str, Any]:
+        validated_model = cls.model_validate(config)
+        return validated_model.model_dump()
+
+    def get_schema(self) -> Dict[str, Any]:
+        return self.model_json_schema()
+
+    def get_data_model(self) -> Type[B]:
+        for base in self.__class__.__bases__:
+            if issubclass(base, BaseModel) and base is not self.__class__:
+                return base
+        raise ValueError(f"No schema base model found for {self.__class__.__name__}")
+
+    def get_cls_name(self) -> str:
+        return self.__class__.__name__
+
+    def to_dict(self, exclude: Optional[List[str]] = None) -> Dict[str, Any]:
+        return self.model_dump(exclude=set(exclude) if exclude else None)
+
+    def to_json(self, exclude: Optional[List[str]] = None) -> str:
+        return self.model_dump_json(exclude=set(exclude) if exclude else None)
+
+    def clone(self: T, extra_context: Optional[Dict[str, Any]] = None, deep=True) -> T:
+        return self.model_copy(update=extra_context or {}, deep=deep)
+
+
+# TODO: remove in the next PR
 class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
     jsonSchema: Optional[Dict] = None
 
@@ -97,7 +157,7 @@ class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
             return {"_id": self.id, "slug": self.slug, "cls": self.get_cls_name()}
 
 
-class HasDescriptionHasMetadataNamedDefaultableInMemoryEntity(
-    InMemoryEntity, DefaultableMixin, NamedMixin, HasMetadataMixin, HasDescriptionMixin
+class HasDescriptionHasMetadataNamedDefaultableInMemoryEntityPydantic(
+    InMemoryEntityPydantic, DefaultableMixin, NamedMixin, HasMetadataMixin, HasDescriptionMixin
 ):
     pass
