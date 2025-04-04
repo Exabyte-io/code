@@ -34,7 +34,7 @@ class EntityError(Exception):
 
 
 class InMemoryEntityPydantic(BaseModel):
-    model_config = {"arbitrary_types_allowed": True, "extra": "ignore"}
+    model_config = {"arbitrary_types_allowed": True}
 
     @classmethod
     def create(cls: Type[T], config: Dict[str, Any]) -> T:
