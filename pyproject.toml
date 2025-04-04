@@ -4,9 +4,9 @@ dynamic = ["version"]
 description = "COre DEfinitions."
 readme = "README.md"
 requires-python = ">=3.8"
-license = {file = "LICENSE.md"}
+license = { file = "LICENSE.md" }
 authors = [
-    {name = "Exabyte Inc.", email = "info@mat3ra.com"}
+    { name = "Exabyte Inc.", email = "info@mat3ra.com" }
 ]
 classifiers = [
     "Programming Language :: Python",
@@ -18,6 +18,8 @@ dependencies = [
     # add requirements here
     "numpy",
     "jsonschema>=2.6.0",
+    "pydantic>=2.10.5",
+    "mat3ra-esse",
     "mat3ra-utils>=2024.5.15.post0",
 ]
 
@@ -79,3 +81,11 @@ target-version = "py38"
 profile = "black"
 multi_line_output = 3
 include_trailing_comma = true
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src/py",
+]
+testpaths = [
+    "tests/py"
+]

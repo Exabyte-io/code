@@ -1,5 +1,9 @@
 from math import pi
 
+from mat3ra.esse.models.definitions.constants import FundamentalConstants
+
+CONSTANTS = FundamentalConstants()
+
 
 class Coefficients:
     # Same as used in: JS/TS
@@ -13,18 +17,19 @@ class Coefficients:
     # and originally taken from https://github.com/hplgit/physical-quantities/blob/master/PhysicalQuantities.py
 
     # Internal, for convenience purposes
-    _c = 299792458.0  # speed of light, m/s
-    _mu0 = 4.0e-7 * pi  # permeability of vacuum
-    _eps0 = 1 / _mu0 / _c**2  # permittivity of vacuum
-    _Grav = 6.67259e-11  # gravitational constant
-    _hplanck = 6.6260755e-34  # Planck constant, J s
-    _hbar = _hplanck / (2 * pi)  # Planck constant / 2pi, J s
-    _e = 1.60217733e-19  # elementary charge
-    _me = 9.1093897e-31  # electron mass
+    _c = CONSTANTS.c  # speed of light, m/s
+    _Grav = CONSTANTS.G  # gravitational constant
+    _hplanck = CONSTANTS.h  # Planck constant, J s
+    _e = CONSTANTS.e  # elementary charge
+    _me = CONSTANTS.me  # electron mass
+    _mu0 = 4.0e-7 * pi  # permeability of vacuum, atomic units
+
     _mp = 1.6726231e-27  # proton mass
     _Nav = 6.0221367e23  # Avogadro number
     _k = 1.380658e-23  # Boltzmann constant, J/K
     _amu = 1.6605402e-27  # atomic mass unit, kg
+    _eps0 = 1 / _mu0 / _c**2  # permittivity of vacuum
+    _hbar = _hplanck / (2 * pi)  # Planck constant / 2pi, J s
 
     # External
     BOHR = 4e10 * pi * _eps0 * _hbar**2 / _me / _e**2  # Bohr radius in angstrom

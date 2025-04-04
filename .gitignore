@@ -126,7 +126,7 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+.venv*
 env/
 venv/
 ENV/
@@ -176,3 +176,4 @@ node_modules/
 *.DS_Store
 
 tsconfig.tsbuildinfo
+.python-version
