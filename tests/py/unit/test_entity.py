@@ -8,7 +8,10 @@ from . import (
     REFERENCE_OBJECT_VALID,
     REFERENCE_OBJECT_VALID_JSON,
     REFERENCE_OBJECT_VALID_UPDATED,
+    REFERENCE_OBJECT_VALID_WITH_EXTRA_KEY,
+    REFERENCE_OBJECT_VALID_WITH_MISSING_KEY,
     ExampleClass,
+    ExampleDefaultableClass,
     ExampleDoubleNestedKeyAsClassInstancesClass,
     ExampleDoubleNestedSchema,
     ExampleNestedClass,
@@ -65,6 +68,15 @@ def test_update_nested_as_class_instance():
     assert isinstance(entity.nested_key1, ExampleClass)
 
 
+def test_create_with_default():
+    entity = ExampleDefaultableClass.create(REFERENCE_OBJECT_VALID_WITH_MISSING_KEY)
+    assert isinstance(entity, ExampleDefaultableClass)
+    # Default value for key1 -- "value1" is used
+    assert entity.key1 == "value1"
+    assert entity.key2 == 1
+    assert isinstance(entity, ExampleDefaultableClass)
+
+
 def test_validate():
     # Test valid case
     entity = ExampleClass.create(REFERENCE_OBJECT_VALID)
@@ -109,6 +121,28 @@ def test_clean():
         assert False, "Invalid input did not raise an exception"
     except Exception:
         assert True  # Expecting an exception for invalid input
+
+
+def test_clean_extra_keys():
+    # Test clean method with valid input with extra keys
+    cleaned_data_with_extra = ExampleClass.clean(REFERENCE_OBJECT_VALID_WITH_EXTRA_KEY)
+    assert isinstance(cleaned_data_with_extra, dict)
+    assert cleaned_data_with_extra == REFERENCE_OBJECT_VALID
+    assert "key-to-clean" not in cleaned_data_with_extra
+
+
+def test_clean_default_substitution():
+    # Test case with default substitution (should add pass and add default values)
+    cleaned_data_with_default = ExampleDefaultableClass.clean(REFERENCE_OBJECT_VALID_WITH_MISSING_KEY)
+    assert isinstance(cleaned_data_with_default, dict)
+    assert cleaned_data_with_default == REFERENCE_OBJECT_VALID
+
+    # Test case with invalid input with missing keys (should raise an error)
+    try:
+        _ = ExampleDefaultableClass.clean(REFERENCE_OBJECT_INVALID)
+        assert False, "Invalid input did not raise an exception"
+    except Exception:
+        assert True
 
 
 def test_get_cls_name():

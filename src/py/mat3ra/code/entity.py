@@ -38,7 +38,8 @@ class InMemoryEntityPydantic(BaseModel):
 
     @classmethod
     def create(cls: Type[T], config: Dict[str, Any]) -> T:
-        return cls.validate(config)
+        cleaned_data = cls.clean(config)
+        return cls.validate(cleaned_data)
 
     @classmethod
     def validate(cls, value: Any) -> Self:
@@ -59,8 +60,9 @@ class InMemoryEntityPydantic(BaseModel):
 
     @classmethod
     def clean(cls: Type[T], config: Dict[str, Any]) -> Dict[str, Any]:
-        validated_model = cls.model_validate(config)
-        return validated_model.model_dump()
+        # Validate the config; extra keys are dropped and defaults are substituted.
+        validated = cls.model_validate(config, strict=False)
+        return validated.model_dump(exclude_unset=False)
 
     def get_schema(self) -> Dict[str, Any]:
         return self.model_json_schema()

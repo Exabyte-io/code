@@ -33,6 +33,10 @@ class Vector3D(Vector3DSchema):
             other = Vector3D(other)
         return np.allclose(self.root, other.root, atol=self.__atol__, rtol=0)
 
+    @property
+    def norm(self):
+        return np.linalg.norm(self.value)
+
 
 class RoundedVector3D(RoundNumericValuesMixin, Vector3D):
     def __init__(self, root: List[float]):
@@ -64,3 +68,7 @@ class RoundedVector3D(RoundNumericValuesMixin, Vector3D):
             other = RoundedVector3D(other)
         atol = self.__atol__ or 10 ** (-self.__round_precision__)
         return np.allclose(self.value_rounded, other.value_rounded, atol=atol, rtol=0)
+
+    @property
+    def norm_rounded(self):
+        return self.round_array_or_number(self.norm)
