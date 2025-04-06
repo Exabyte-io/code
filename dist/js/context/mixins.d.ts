@@ -53,6 +53,10 @@ export declare function MethodDataContextMixin<T extends Constructor>(superclass
         _initMethodDataHash(): void;
         readonly methodData: any;
         readonly isMethodDataUpdated: boolean;
+        /**
+         * Returns array of orbital names: [{element: "Si", valenceOrbitals: ["3s", "3p"]}]
+         */
+        readonly valenceOrbitals: any;
     };
 } & T;
 export declare function WorkflowContextMixin<T extends Constructor>(superclass: T): {

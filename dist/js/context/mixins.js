@@ -142,6 +142,20 @@ function MethodDataContextMixin(superclass) {
         get isMethodDataUpdated() {
             return Boolean(this.extraData && this.extraData.methodDataHash !== this.methodDataHash);
         }
+        /**
+         * Returns array of orbital names: [{element: "Si", valenceOrbitals: ["3s", "3p"]}]
+         */
+        get valenceOrbitals() {
+            var _a;
+            const pseudoData = ((_a = this.methodData) === null || _a === void 0 ? void 0 : _a.pseudo) || [];
+            return pseudoData.map((item) => {
+                const valenceConfiguration = (item === null || item === void 0 ? void 0 : item.valenceConfiguration) || [];
+                return {
+                    element: item.element,
+                    valenceOrbitals: valenceConfiguration.map((entry) => { var _a; return (_a = entry === null || entry === void 0 ? void 0 : entry.orbitalName) === null || _a === void 0 ? void 0 : _a.toLowerCase(); }),
+                };
+            });
+        }
     };
 }
 function WorkflowContextMixin(superclass) {
