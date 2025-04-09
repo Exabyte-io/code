@@ -194,7 +194,7 @@ export function MethodDataContextMixin<T extends Constructor>(superclass: T) {
         /**
          * Returns array of orbital names: [{element: "Si", valenceOrbitals: ["3s", "3p"]}]
          */
-        get valenceOrbitals() {
+        get valenceOrbitals(): { element: string; valenceOrbitals?: Array<string> }[] {
             const pseudoData = this.methodData?.pseudo || [];
             return pseudoData.map((item: FileDataItem) => {
                 const valenceConfiguration = item?.valenceConfiguration || [];

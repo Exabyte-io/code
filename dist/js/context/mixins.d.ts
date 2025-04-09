@@ -56,7 +56,10 @@ export declare function MethodDataContextMixin<T extends Constructor>(superclass
         /**
          * Returns array of orbital names: [{element: "Si", valenceOrbitals: ["3s", "3p"]}]
          */
-        readonly valenceOrbitals: any;
+        readonly valenceOrbitals: {
+            element: string;
+            valenceOrbitals?: Array<string>;
+        }[];
     };
 } & T;
 export declare function WorkflowContextMixin<T extends Constructor>(superclass: T): {
