@@ -170,6 +170,37 @@ const combinationsFromIntervals = (arrA, arrB, arrC) => {
 const roundValueToNDecimals = (value, decimals = 3) => {
     return parseFloat(value.toFixed(decimals));
 };
+var RoundingMethod;
+(function (RoundingMethod) {
+    RoundingMethod["Bankers"] = "bankers";
+    RoundingMethod["HalfAwayFromZero"] = "halfAwayFromZero";
+})(RoundingMethod || (RoundingMethod = {}));
+const roundCustom = (value, decimals = 0, method = RoundingMethod.HalfAwayFromZero) => {
+    const factor = Math.pow(10, decimals);
+    const scaledValue = value * factor;
+    const absValue = Math.abs(scaledValue);
+    const sign = scaledValue < 0 ? -1 : 1;
+    let roundedAbs;
+    switch (method) {
+        case RoundingMethod.HalfAwayFromZero:
+            roundedAbs = Math.round(absValue);
+            break;
+        case RoundingMethod.Bankers:
+            const floorValue = Math.floor(absValue);
+            const fractional = absValue - floorValue;
+            if (Math.abs(fractional - 0.5) < Number.EPSILON) {
+                // Round to even
+                roundedAbs = floorValue % 2 === 0 ? floorValue : floorValue + 1;
+            }
+            else {
+                roundedAbs = Math.round(absValue);
+            }
+            break;
+        default:
+            throw new Error(`Unsupported rounding method: ${method}`);
+    }
+    return (roundedAbs * sign) / factor;
+};
 /**
  * @summary Returns n splits of the passed segment.
  */
@@ -227,4 +258,6 @@ exports.math = {
     calculateSegmentsBetweenPoints3D,
     roundValueToNDecimals,
     numberToPrecision,
+    roundCustom,
+    RoundingMethod,
 };
