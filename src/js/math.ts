@@ -2,7 +2,7 @@
 import mathjs from "mathjs";
 import _ from "underscore";
 
-import {tolerance as TOLERANCE} from "./constants";
+import { tolerance as TOLERANCE } from "./constants";
 
 /**
  * This module is intended to be used instead of the original mathjs package, hence we need to reexport all original functions and all TS types.
@@ -31,7 +31,6 @@ export type FormatOptions = mathjs.FormatOptions;
 export type Help = mathjs.Help;
 export type MathJsChain = mathjs.MathJsChain;
 export type MathJsJson = mathjs.MathJsJson;
-
 
 /**
  * @summary Zero threshold. Numbers below it are put to zero exactly.
@@ -216,7 +215,6 @@ const combinationsFromIntervals = (arrA: number[], arrB: number[], arrC: number[
 const roundValueToNDecimals = (value: number, decimals = 3) => {
     return parseFloat(value.toFixed(decimals));
 };
-
 
 // See: https://en.wikipedia.org/wiki/Rounding
 export enum RoundingMethod {
