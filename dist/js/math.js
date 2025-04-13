@@ -170,6 +170,7 @@ const combinationsFromIntervals = (arrA, arrB, arrC) => {
 const roundValueToNDecimals = (value, decimals = 3) => {
     return parseFloat(value.toFixed(decimals));
 };
+// See: https://en.wikipedia.org/wiki/Rounding
 var RoundingMethod;
 (function (RoundingMethod) {
     RoundingMethod["Bankers"] = "bankers";
