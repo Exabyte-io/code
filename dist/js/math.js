@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.math = exports.roundCustom = void 0;
+exports.math = exports.roundCustom = exports.RoundingMethod = void 0;
 exports.numberToPrecision = numberToPrecision;
 /* eslint-disable */
 const mathjs_1 = __importDefault(require("mathjs"));
@@ -174,7 +174,7 @@ var RoundingMethod;
 (function (RoundingMethod) {
     RoundingMethod["Bankers"] = "bankers";
     RoundingMethod["HalfAwayFromZero"] = "halfAwayFromZero";
-})(RoundingMethod || (RoundingMethod = {}));
+})(RoundingMethod || (exports.RoundingMethod = RoundingMethod = {}));
 const roundCustom = (value, decimals = 0, method = RoundingMethod.HalfAwayFromZero) => {
     const factor = Math.pow(10, decimals);
     const scaledValue = value * factor;

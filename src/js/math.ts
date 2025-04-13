@@ -215,12 +215,17 @@ const combinationsFromIntervals = (arrA: number[], arrB: number[], arrC: number[
 const roundValueToNDecimals = (value: number, decimals = 3) => {
     return parseFloat(value.toFixed(decimals));
 };
-enum RoundingMethod {
+export enum RoundingMethod {
     Bankers = "bankers",
     HalfAwayFromZero = "halfAwayFromZero",
 }
 
-export const roundCustom = (value: number, decimals = 0, method = RoundingMethod.HalfAwayFromZero) => {
+
+export const roundCustom = (
+    value: number,
+    decimals = 0,
+    method = RoundingMethod.HalfAwayFromZero,
+) => {
     const factor = Math.pow(10, decimals);
     const scaledValue = value * factor;
     const absValue = Math.abs(scaledValue);

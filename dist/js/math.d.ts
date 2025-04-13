@@ -26,7 +26,7 @@ export type FormatOptions = mathjs.FormatOptions;
 export type Help = mathjs.Help;
 export type MathJsChain = mathjs.MathJsChain;
 export type MathJsJson = mathjs.MathJsJson;
-declare enum RoundingMethod {
+export declare enum RoundingMethod {
     Bankers = "bankers",
     HalfAwayFromZero = "halfAwayFromZero"
 }
@@ -439,4 +439,3 @@ export declare const math: {
     sort(x: mathjs.MathArray | mathjs.Matrix, compare?: string | ((a: any, b: any) => number)): mathjs.MathArray | mathjs.Matrix;
     typeof(x: any): string;
 };
-export {};
