@@ -220,7 +220,7 @@ enum RoundingMethod {
     HalfAwayFromZero = "halfAwayFromZero",
 }
 
-const roundCustom = (value: number, decimals = 0, method = RoundingMethod.HalfAwayFromZero) => {
+export const roundCustom = (value: number, decimals = 0, method = RoundingMethod.HalfAwayFromZero) => {
     const factor = Math.pow(10, decimals);
     const scaledValue = value * factor;
     const absValue = Math.abs(scaledValue);

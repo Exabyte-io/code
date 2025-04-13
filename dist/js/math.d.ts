@@ -30,6 +30,7 @@ declare enum RoundingMethod {
     Bankers = "bankers",
     HalfAwayFromZero = "halfAwayFromZero"
 }
+export declare const roundCustom: (value: number, decimals?: number, method?: RoundingMethod) => number;
 /**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
  * Returns a string representing the Number object to the specified precision.

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.math = void 0;
+exports.math = exports.roundCustom = void 0;
 exports.numberToPrecision = numberToPrecision;
 /* eslint-disable */
 const mathjs_1 = __importDefault(require("mathjs"));
@@ -201,6 +201,7 @@ const roundCustom = (value, decimals = 0, method = RoundingMethod.HalfAwayFromZe
     }
     return (roundedAbs * sign) / factor;
 };
+exports.roundCustom = roundCustom;
 /**
  * @summary Returns n splits of the passed segment.
  */
@@ -258,6 +259,6 @@ exports.math = {
     calculateSegmentsBetweenPoints3D,
     roundValueToNDecimals,
     numberToPrecision,
-    roundCustom,
+    roundCustom: exports.roundCustom,
     RoundingMethod,
 };
