@@ -220,7 +220,6 @@ export enum RoundingMethod {
     HalfAwayFromZero = "halfAwayFromZero",
 }
 
-
 export const roundCustom = (
     value: number,
     decimals = 0,
