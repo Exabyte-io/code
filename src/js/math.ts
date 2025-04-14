@@ -43,7 +43,10 @@ const EPSILON = 1e-8;
  * @param v2 Vector 2
  */
 const product = (v1: number[], v2: number[]) => {
-    return math.multiply(v1, math.transpose(v2));
+    if (v1.length !== v2.length) {
+        throw new Error("Vectors must be of the same length");
+    }
+    return Number(math.multiply(v1, math.transpose(v2)));
 };
 
 /**
@@ -217,7 +220,7 @@ const roundValueToNDecimals = (value: number, decimals = 3) => {
 };
 
 // See: https://en.wikipedia.org/wiki/Rounding
-export enum RoundingMethod {
+export enum RoundingMethodEnum {
     Bankers = "bankers",
     HalfAwayFromZero = "halfAwayFromZero",
 }
@@ -225,7 +228,7 @@ export enum RoundingMethod {
 export const roundCustom = (
     value: number,
     decimals = 0,
-    method = RoundingMethod.HalfAwayFromZero,
+    method = RoundingMethodEnum.HalfAwayFromZero,
 ) => {
     const factor = Math.pow(10, decimals);
     const scaledValue = value * factor;
@@ -235,10 +238,10 @@ export const roundCustom = (
     let roundedAbs: number;
 
     switch (method) {
-        case RoundingMethod.HalfAwayFromZero:
+        case RoundingMethodEnum.HalfAwayFromZero:
             roundedAbs = Math.round(absValue);
             break;
-        case RoundingMethod.Bankers:
+        case RoundingMethodEnum.Bankers:
             const floorValue = Math.floor(absValue);
             const fractional = absValue - floorValue;
 
@@ -321,5 +324,5 @@ export const math = {
     roundValueToNDecimals,
     numberToPrecision,
     roundCustom,
-    RoundingMethod,
+    RoundingMethod: RoundingMethodEnum,
 };

@@ -1,30 +1,55 @@
 import { expect } from "chai";
 
-import { math } from "../../src/js/math";
+import { math, RoundingMethodEnum } from "../../src/js/math";
 
 describe("Math Tests", () => {
-    it("should round according to specified method", () => {
-        const [value1, value2, value3, value4] = [0.5, 1.5, -0.5, -1.5];
-        const [expectedBankers1, expectedBankers2, expectedBankers3, expectedBankers4] = [
-            0, 2, 0, -2,
-        ];
-        const [expectedAway1, expectedAway2, expectedAway3, expectedAway4] = [1, 2, -1, -2];
+    it("should roundCustom according to specified method", () => {
+        const values = [0.5, 1.5, -0.5, -1.5];
+        const expectedBankers = [0, 2, 0, -2];
+        const expectedHalfAwayFromZero = [1, 2, -1, -2];
         const n = 0;
-        expect(math.roundCustom(value1, n, math.RoundingMethod.Bankers)).to.equal(expectedBankers1);
-        expect(math.roundCustom(value2, n, math.RoundingMethod.Bankers)).to.equal(expectedBankers2);
-        expect(math.roundCustom(value3, n, math.RoundingMethod.Bankers)).to.equal(expectedBankers3);
-        expect(math.roundCustom(value4, n, math.RoundingMethod.Bankers)).to.equal(expectedBankers4);
-        expect(math.roundCustom(value1, n, math.RoundingMethod.HalfAwayFromZero)).to.equal(
-            expectedAway1,
-        );
-        expect(math.roundCustom(value2, n, math.RoundingMethod.HalfAwayFromZero)).to.equal(
-            expectedAway2,
-        );
-        expect(math.roundCustom(value3, n, math.RoundingMethod.HalfAwayFromZero)).to.equal(
-            expectedAway3,
-        );
-        expect(math.roundCustom(value4, n, math.RoundingMethod.HalfAwayFromZero)).to.equal(
-            expectedAway4,
-        );
+
+        expectedBankers.forEach((expected, i) => {
+            const result = math.roundCustom(values[i], n, RoundingMethodEnum.Bankers);
+            expect(result).to.equal(expected);
+        });
+        expectedHalfAwayFromZero.forEach((expected, i) => {
+            const result = math.roundCustom(values[i], n, RoundingMethodEnum.HalfAwayFromZero);
+            expect(result).to.equal(expected);
+        });
+    });
+
+    it("should calculate vector length", () => {
+        const vector = [3, 4, 0];
+        const expectedLength = 5;
+        expect(math.vlen(vector)).to.equal(expectedLength);
+    });
+
+    it("should calculate angle between vectors", () => {
+        const vectorA = [1, 0, 0];
+        const vectorB = [0, 1, 0];
+        const expectedAngle = 90;
+        expect(math.angle(vectorA, vectorB, "deg")).to.equal(expectedAngle);
+    });
+
+    it("should calculate distance between vectors", () => {
+        const vectorA = [1, 2, 3];
+        const vectorB = [4, 5, 6];
+        const expectedDistance = 5.196152422706632;
+        expect(math.vDist(vectorA, vectorB)).to.equal(expectedDistance);
+    });
+
+    it("should check if vectors are equal within tolerance", () => {
+        const vectorA = [1, 2, 3];
+        const vectorB = [1.0001, 2.0001, 3.0001];
+        const tolerance = 0.001;
+        expect(math.vEqualWithTolerance(vectorA, vectorB, tolerance)).to.equal(true);
+    });
+
+    it("should check if vectors are not equal within tolerance", () => {
+        const vectorA = [1, 2, 3];
+        const vectorB = [1.1, 2.1, 3.1];
+        const tolerance = 0.001;
+        expect(math.vEqualWithTolerance(vectorA, vectorB, tolerance)).to.equal(false);
     });
 });
