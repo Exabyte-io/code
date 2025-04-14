@@ -1,30 +1,26 @@
-/**
- * Represents a value with an associated ID.
- */
 export class ValueWithId<T> {
-    constructor(public id: number = 0, public value: T = null as unknown as T) {}
+    id: number;
 
-    /**
-     * Converts the instance to a plain object.
-     */
-    toDict(): { id: number; value: any } {
-        // If value has a toDict method, call it
-        if (
-            this.value !== null &&
-            typeof this.value === "object" &&
-            "toDict" in this.value &&
-            typeof (this.value as any).toDict === "function"
-        ) {
-            return { id: this.id, value: (this.value as any).toDict() };
-        }
-        return { id: this.id, value: this.value };
+    value: T | null;
+
+    constructor(id = 0, value: T | null = null) {
+        this.id = id;
+        this.value = value;
     }
 
     /**
-     * Converts the instance to a JSON string.
+     * Converts the instance to a plain JavaScript object.
      */
-    toJson(): string {
-        return JSON.stringify(this.toDict());
+    toJSON(): object {
+        if (
+            this.value !== null &&
+            typeof this.value === "object" &&
+            "toJSON" in this.value &&
+            typeof (this.value as any).toJSON === "function"
+        ) {
+            return { id: this.id, value: (this.value as any).toJSON() };
+        }
+        return { id: this.id, value: this.value };
     }
 
     /**
@@ -35,7 +31,6 @@ export class ValueWithId<T> {
             return false;
         }
 
-        // Handle array comparison
         if (Array.isArray(this.value) && Array.isArray(other.value)) {
             if (this.value.length !== other.value.length) {
                 return false;
@@ -50,7 +45,6 @@ export class ValueWithId<T> {
             return this.id === other.id;
         }
 
-        // Handle regular value comparison
         return this.id === other.id && this.value === other.value;
     }
 }
