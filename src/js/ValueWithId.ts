@@ -1,11 +1,11 @@
 export class ValueWithId<T> {
-    id: number;
-
     value: T | null;
 
-    constructor(id = 0, value: T | null = null) {
-        this.id = id;
+    id: number;
+
+    constructor(value: T | null = null, id = 0) {
         this.value = value;
+        this.id = id;
     }
 
     /**
