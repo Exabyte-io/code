@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     ApplicationSchemaBase,
+    FileDataItem,
     JobSchema,
     MaterialSchema,
     WorkflowSchema,
@@ -158,7 +159,7 @@ export function MethodDataContextMixin<T extends Constructor>(superclass: T) {
             const config = params[0];
 
             this._methodData = (config.context && config.context.methodData) || {};
-            this.isEdited = false; // we always get the `defaultData` (recalculated from scratch, not persistent)
+            this.isEdited = Boolean(config.isEdited);
         }
 
         /* @summary Replace the logic in constructor with this in order to enable passing `methodDataHash` between
@@ -188,6 +189,22 @@ export function MethodDataContextMixin<T extends Constructor>(superclass: T) {
 
         get isMethodDataUpdated() {
             return Boolean(this.extraData && this.extraData.methodDataHash !== this.methodDataHash);
+        }
+
+        /**
+         * Returns array of orbital names: [{element: "Si", valenceOrbitals: ["3s", "3p"]}]
+         */
+        get valenceOrbitals(): { element: string; valenceOrbitals?: Array<string> }[] {
+            const pseudoData = this.methodData?.pseudo || [];
+            return pseudoData.map((item: FileDataItem) => {
+                const valenceConfiguration = item?.valenceConfiguration || [];
+                return {
+                    element: item.element,
+                    valenceOrbitals: valenceConfiguration.map((entry) =>
+                        entry?.orbitalName?.toLowerCase(),
+                    ),
+                };
+            });
         }
     };
 }
