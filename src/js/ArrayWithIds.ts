@@ -1,4 +1,9 @@
-import { ValueWithId } from "./ValueWithId";
+import {
+    defaultRoundingOptions,
+    RoundedValueWithId,
+    RoundingOptions,
+    ValueWithId,
+} from "./ValueWithId";
 
 export class ArrayWithIds<T> {
     values: T[];
@@ -38,7 +43,7 @@ export class ArrayWithIds<T> {
     }
 
     toValueWithIdArray(): ValueWithId<T>[] {
-        return this.values.map((value, index) => new ValueWithId(value, this.ids[index]));
+        return this.values.map((value, index) => new ValueWithId(this.ids[index], value));
     }
 
     getElementValueByIndex(index: number): T | undefined {
@@ -121,5 +126,24 @@ export class ArrayWithIds<T> {
 
         this.values.splice(index, 1);
         this.ids.splice(index, 1);
+    }
+}
+
+export class RoundedArrayWithIds<T> extends ArrayWithIds<T> {
+    readonly roundingOptions: RoundingOptions;
+
+    constructor(
+        values: T[] = [],
+        ids: number[] = [],
+        options: RoundingOptions = defaultRoundingOptions,
+    ) {
+        super(values, ids);
+        this.roundingOptions = options;
+    }
+
+    override toJSON(): object[] {
+        return this.values.map((value, index) =>
+            new RoundedValueWithId(this.ids[index], value, this.roundingOptions).toJSON(),
+        );
     }
 }
