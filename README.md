@@ -1,9 +1,9 @@
-[![npm version](https://badge.fury.io/js/%40exabyte-io%2Fcode.js.svg)](https://badge.fury.io/js/%40exabyte-io%2Fcode.js)
+[![npm version](https://badge.fury.io/js/%40mat3ra%2Fcode.svg)](https://badge.fury.io/js/%40mat3ra%2Fcode)
 [![License: Apache](https://img.shields.io/badge/License-Apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-# @exabyte-io/code.js
+# @mat3ra/code
 
-@exabyte-io/code.js houses COre DEfinitions (CODE) for use across the Mat3ra platform.
+@mat3ra/code houses COre DEfinitions (CODE) for use across the Mat3ra platform.
 Its usage can be found in other open-source packages used in the platform.
 
 
@@ -12,13 +12,13 @@ Its usage can be found in other open-source packages used in the platform.
 For usage within a javascript project:
 
 ```bash
-npm install @exabyte-io/code.js
+npm install @mat3ra/code
 ```
 
 For development:
 
 ```bash
-git clone https://github.com/Exabyte-io/code.js.git
+git clone https://github.com/Exabyte-io/code.git
 ```
 
 

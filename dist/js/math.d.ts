@@ -26,6 +26,11 @@ export type FormatOptions = mathjs.FormatOptions;
 export type Help = mathjs.Help;
 export type MathJsChain = mathjs.MathJsChain;
 export type MathJsJson = mathjs.MathJsJson;
+export declare enum RoundingMethodEnum {
+    Bankers = "bankers",
+    HalfAwayFromZero = "halfAwayFromZero"
+}
+export declare const roundCustom: (value: number, decimals?: number, method?: RoundingMethodEnum) => number;
 /**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
  * Returns a string representing the Number object to the specified precision.
@@ -41,11 +46,11 @@ export declare function numberToPrecision(number: number | string, precision?: n
 export declare const math: {
     PI: number;
     trunc: (x: number) => number;
-    product: (v1: number[], v2: number[]) => mathjs.Matrix;
-    vlen: (v: number[]) => mathjs.Matrix;
+    product: (v1: number[], v2: number[]) => number;
+    vlen: (v: number[]) => number;
     angle: (a: number[], b: number[], unit: string) => number;
     angleUpTo90: (a: number[], b: number[], unit: string) => number;
-    vDist: (v1: number[], v2: number[]) => mathjs.Matrix | undefined;
+    vDist: (v1: number[], v2: number[]) => number | undefined;
     vEqualWithTolerance: (vec1: number[], vec2: number[], tolerance?: number) => boolean;
     roundToZero: (n: number) => number;
     precise: (x: number, n?: number) => number;
@@ -58,6 +63,8 @@ export declare const math: {
     calculateSegmentsBetweenPoints3D: (point1: (string | number)[], point2: (string | number)[], n: number | string) => number[][];
     roundValueToNDecimals: (value: number, decimals?: number) => number;
     numberToPrecision: typeof numberToPrecision;
+    roundCustom: (value: number, decimals?: number, method?: RoundingMethodEnum) => number;
+    RoundingMethod: typeof RoundingMethodEnum;
     e: number;
     pi: number;
     i: number;
