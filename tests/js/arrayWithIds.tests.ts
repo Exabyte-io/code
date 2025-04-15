@@ -1,6 +1,7 @@
 import { expect } from "chai";
 
-import { ArrayWithIds } from "../../src/js/ArrayWithIds";
+import { ArrayWithIds, RoundedArrayWithIds } from "../../src/js/ArrayWithIds";
+import { RoundingMethodEnum } from "../../src/js/math";
 import { ValueWithId } from "../../src/js/ValueWithId";
 
 const NUMBERS = [1, 2, 3, 4, 5];
@@ -140,5 +141,59 @@ describe("ArrayWithIds Tests", () => {
         expect(valueWithIdArray[0]).to.be.instanceOf(ValueWithId);
         expect(valueWithIdArray[0].id).to.equal(0);
         expect(valueWithIdArray[0].value).to.equal(1);
+    });
+});
+
+describe("RoundedArrayWithIds Tests", () => {
+    it("should round values when converting to JSON", () => {
+        const values = [1.23456789, 2.34567891, 3.45678912];
+        const ids = [1, 2, 3];
+
+        const roundedArray = new RoundedArrayWithIds(values, ids, {
+            precision: 2,
+            roundingMethod: RoundingMethodEnum.HalfAwayFromZero,
+        });
+
+        const result = roundedArray.toJSON();
+
+        expect(result).to.deep.equal([
+            { id: 1, value: 1.23 },
+            { id: 2, value: 2.35 },
+            { id: 3, value: 3.46 },
+        ]);
+    });
+
+    it("should round array values when converting to JSON", () => {
+        const values = [
+            [1.23456789, 4.56789123],
+            [2.34567891, 5.67891234],
+        ];
+        const ids = [1, 2];
+
+        const roundedArray = new RoundedArrayWithIds(values, ids, {
+            precision: 2,
+            roundingMethod: RoundingMethodEnum.HalfAwayFromZero,
+        });
+
+        const result = roundedArray.toJSON();
+
+        expect(result).to.deep.equal([
+            { id: 1, value: [1.23, 4.57] },
+            { id: 2, value: [2.35, 5.68] },
+        ]);
+    });
+
+    it("should inherit methods from ArrayWithIds", () => {
+        const values = [1.23, 2.34, 3.45];
+        const ids = [1, 2, 3];
+
+        const roundedArray = new RoundedArrayWithIds(values, ids);
+
+        roundedArray.filterByIds([1, 3]);
+        expect(roundedArray.values).to.deep.equal([1.23, 3.45]);
+        expect(roundedArray.ids).to.deep.equal([1, 3]);
+
+        const arrayWithIds = new ArrayWithIds([1.23, 3.45], [1, 3]);
+        expect(roundedArray.equals(arrayWithIds)).to.be.true;
     });
 });
