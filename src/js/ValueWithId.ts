@@ -1,11 +1,13 @@
-export class ValueWithId<T> {
-    value: T | null;
+import { math, RoundingMethodEnum } from "./math";
 
+export class ValueWithId<T> {
     id: number;
 
-    constructor(value: T | null = null, id = 0) {
-        this.value = value;
+    value: T | null;
+
+    constructor(id = 0, value: T | null = null) {
         this.id = id;
+        this.value = value;
     }
 
     /**
@@ -46,5 +48,37 @@ export class ValueWithId<T> {
         }
 
         return this.id === other.id && this.value === other.value;
+    }
+}
+
+export interface RoundingOptions {
+    precision: number;
+    roundingMethod: RoundingMethodEnum;
+}
+
+export const defaultRoundingOptions: RoundingOptions = {
+    precision: 9,
+    roundingMethod: RoundingMethodEnum.HalfAwayFromZero,
+};
+
+export class RoundedValueWithId<T> extends ValueWithId<T> {
+    readonly precision: number;
+
+    readonly roundingMethod: RoundingMethodEnum;
+
+    constructor(id: number, value: T, options: RoundingOptions = defaultRoundingOptions) {
+        super(id, value);
+        this.precision = options.precision;
+        this.roundingMethod = options.roundingMethod;
+    }
+
+    override toJSON(): object {
+        const roundFn = (v: number) => math.roundCustom(v, this.precision, this.roundingMethod);
+
+        const roundedValue = Array.isArray(this.value)
+            ? this.value.map(roundFn)
+            : roundFn(this.value as number);
+
+        return { id: this.id, value: roundedValue };
     }
 }
