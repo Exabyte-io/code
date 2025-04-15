@@ -73,12 +73,9 @@ export class RoundedValueWithId<T> extends ValueWithId<T> {
     }
 
     override toJSON(): object {
-        const roundFn = (v: number) => math.roundCustom(v, this.precision, this.roundingMethod);
-
-        const roundedValue = Array.isArray(this.value)
-            ? this.value.map(roundFn)
-            : roundFn(this.value as number);
-
-        return { id: this.id, value: roundedValue };
+        return {
+            id: this.id,
+            value: math.roundArrayOrNumber(this.value, this.precision, this.roundingMethod),
+        };
     }
 }
