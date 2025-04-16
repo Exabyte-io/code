@@ -2,8 +2,9 @@ import { InMemoryEntity } from "./in_memory";
 declare const DefaultableInMemoryEntity_base: typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 }> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 }>;
 export declare class DefaultableInMemoryEntity extends DefaultableInMemoryEntity_base {
 }
@@ -15,20 +16,23 @@ export declare const NamedInMemoryEntity: typeof InMemoryEntity & import("../uti
 export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 }> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     name: string;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     setName(name: string): void;
 }>;
@@ -66,20 +70,23 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
 } & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 }> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     name: string;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     setName(name: string): void;
 }>;
@@ -148,20 +155,23 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
 } & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 }> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     name: string;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     setName(name: string): void;
 }>;
@@ -241,20 +251,23 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
 } & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 }> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     name: string;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     setName(name: string): void;
 }>;
@@ -337,20 +350,23 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
 } & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 }> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     name: string;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     setName(name: string): void;
 }>;
@@ -589,20 +605,23 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
 } & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 }> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     name: string;
 }> & import("../utils/types").Constructor<InMemoryEntity & {
     isDefault: boolean;
 } & typeof InMemoryEntity & {
-    readonly defaultConfig: object | null;
     createDefault(): typeof InMemoryEntity;
+} & {
+    readonly defaultConfig: object | null;
 } & {
     setName(name: string): void;
 }>;

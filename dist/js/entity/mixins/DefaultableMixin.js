@@ -13,12 +13,9 @@ function props(item) {
 }
 function staticProps(item) {
     const properties = {
-        get defaultConfig() {
-            return null;
-        },
         createDefault() {
             // @ts-ignore
-            return new this.prototype.constructor(this.defaultConfig);
+            return new item.prototype.constructor(item.defaultConfig);
         },
     };
     return Object.assign(item, properties);

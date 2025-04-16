@@ -17,15 +17,17 @@ function props<T extends InMemoryEntity>(item: T) {
 
 function staticProps<T extends InMemoryEntityConstructor>(item: T) {
     const properties = {
-        get defaultConfig(): object | null {
-            return null;
-        },
         createDefault(): T {
             // @ts-ignore
-            return new this.prototype.constructor(this.defaultConfig);
+            return new item.prototype.constructor(item.defaultConfig);
         },
     };
-    return Object.assign(item, properties);
+    return Object.assign(
+        item,
+        properties as typeof properties & {
+            readonly defaultConfig: object | null;
+        },
+    );
 }
 
 export default function DefaultableMixin<S extends InMemoryEntityConstructor>(superclass: S) {
