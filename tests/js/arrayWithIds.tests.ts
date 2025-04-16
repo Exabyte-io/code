@@ -6,6 +6,9 @@ import { ValueWithId } from "../../src/js/ValueWithId";
 
 const NUMBERS = [1, 2, 3, 4, 5];
 const STRINGS = ["value1", "value2", "value3", "value4", "value5"];
+const IDS_SELECTED_3 = [0, 1, 2];
+const NUMBERS_SELECTED_3 = [1, 2, 3];
+const STRINGS_SELECTED_3 = ["value1", "value2", "value3"];
 
 const OBJECTS_WITH_IDS = [
     { id: 10, value: "value1" },
@@ -21,14 +24,14 @@ const ARRAY_VALUES = [
 
 describe("ArrayWithIds Tests", () => {
     it("should create from values with sequential IDs", () => {
-        const arrayWithIds = ArrayWithIds.fromValues(NUMBERS.slice(0, 3));
-        expect(arrayWithIds.values).to.deep.equal([1, 2, 3]);
-        expect(arrayWithIds.ids).to.deep.equal([0, 1, 2]);
+        const arrayWithIds = ArrayWithIds.fromValues(NUMBERS_SELECTED_3);
+        expect(arrayWithIds.values).to.deep.equal(NUMBERS_SELECTED_3);
+        expect(arrayWithIds.ids).to.deep.equal(IDS_SELECTED_3);
     });
 
     it("should create from objects with id and value properties", () => {
         const arrayWithIds = ArrayWithIds.fromObjects(OBJECTS_WITH_IDS);
-        expect(arrayWithIds.values).to.deep.equal(["value1", "value2", "value3"]);
+        expect(arrayWithIds.values).to.deep.equal(STRINGS_SELECTED_3);
         expect(arrayWithIds.ids).to.deep.equal([10, 20, 30]);
     });
 
