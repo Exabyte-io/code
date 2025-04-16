@@ -1,24 +1,18 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DefaultableMixin = DefaultableMixin;
+exports.NamedEntityMixin = exports.DefaultableMixin = void 0;
 exports.TaggableMixin = TaggableMixin;
 exports.HasScopeTrackMixin = HasScopeTrackMixin;
 exports.HasMetadataMixin = HasMetadataMixin;
 exports.HasDescriptionMixin = HasDescriptionMixin;
-exports.NamedEntityMixin = NamedEntityMixin;
 exports.HasConsistencyChecksMixin = HasConsistencyChecksMixin;
-function DefaultableMixin(superclass) {
-    class DefaultableMixin extends superclass {
-        get isDefault() {
-            return this.prop("isDefault", false);
-        }
-        static createDefault() {
-            // @ts-ignore
-            return new this.prototype.constructor(this.defaultConfig);
-        }
-    }
-    return DefaultableMixin;
-}
+const DefaultableMixin_1 = __importDefault(require("./DefaultableMixin"));
+exports.DefaultableMixin = DefaultableMixin_1.default;
+const NamedEntityMixin_1 = __importDefault(require("./NamedEntityMixin"));
+exports.NamedEntityMixin = NamedEntityMixin_1.default;
 function TaggableMixin(superclass) {
     return class extends superclass {
         get tags() {
@@ -69,20 +63,6 @@ function HasDescriptionMixin(superclass) {
         }
         set descriptionObject(obj) {
             this.setProp("descriptionObject", obj);
-        }
-    };
-}
-function NamedEntityMixin(superclass) {
-    return class extends superclass {
-        get name() {
-            return this.prop("name", "");
-        }
-        set name(name) {
-            this.setProp("name", name);
-        }
-        // to be used when getter is overriden
-        setName(name) {
-            this.setProp("name", name);
         }
     };
 }
