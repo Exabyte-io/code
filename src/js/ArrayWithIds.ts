@@ -14,8 +14,8 @@ export class ArrayWithIds<T> {
         if (values.length !== ids.length) {
             throw new Error("Values and IDs must have the same length");
         }
-        this.values = values;
-        this.ids = ids;
+        this.values = [...values];
+        this.ids = [...ids];
     }
 
     static fromValues<T>(values: T[]): ArrayWithIds<T> {
