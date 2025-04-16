@@ -5,15 +5,20 @@ import type { Constructor } from "../../utils/types";
 import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 
 function props<T extends InMemoryEntity>(item: T) {
-    return Object.assign(item, {
+    const schema = {
         get name(): string {
             return item.prop("name", "");
         },
-
         set name(name: string) {
             item.setProp("name", name);
         },
-    } satisfies NameEntitySchema);
+    } satisfies NameEntitySchema;
+
+    if (!("name" in item)) {
+        Object.assign(item, schema);
+    }
+
+    return schema;
 }
 
 function methods<T extends InMemoryEntity>(item: T) {

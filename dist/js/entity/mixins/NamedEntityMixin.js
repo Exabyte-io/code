@@ -2,14 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = NamedEntityMixin;
 function props(item) {
-    return Object.assign(item, {
+    const schema = {
         get name() {
             return item.prop("name", "");
         },
         set name(name) {
             item.setProp("name", name);
         },
-    });
+    };
+    if (!("name" in item)) {
+        Object.assign(item, schema);
+    }
+    return schema;
 }
 function methods(item) {
     return Object.assign(item, {
