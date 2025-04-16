@@ -1,135 +1,37 @@
 import { InMemoryEntity } from "./in_memory";
-declare const DefaultableInMemoryEntity_base: {
-    new (...args: any[]): {
-        readonly isDefault: boolean;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
+declare const DefaultableInMemoryEntity_base: typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
     readonly defaultConfig: object | null;
-    createDefault(): any;
-} & typeof InMemoryEntity;
+    createDefault(): typeof InMemoryEntity;
+}>;
 export declare class DefaultableInMemoryEntity extends DefaultableInMemoryEntity_base {
 }
-export declare const NamedInMemoryEntity: {
-    new (...args: any[]): {
-        name: string;
-        setName(name: string): void;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
-} & typeof InMemoryEntity;
-export declare const NamedDefaultableInMemoryEntity: {
-    new (...args: any[]): {
-        name: string;
-        setName(name: string): void;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
-} & {
-    new (...args: any[]): {
-        readonly isDefault: boolean;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
+export declare const NamedInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+    name: string;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    setName(name: string): void;
+}>;
+export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
     readonly defaultConfig: object | null;
-    createDefault(): any;
-} & typeof InMemoryEntity;
+    createDefault(): typeof InMemoryEntity;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    name: string;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    setName(name: string): void;
+}>;
 export declare const HasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
         metadata: object;
@@ -161,70 +63,26 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & {
-    new (...args: any[]): {
-        name: string;
-        setName(name: string): void;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
-} & {
-    new (...args: any[]): {
-        readonly isDefault: boolean;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
+} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
     readonly defaultConfig: object | null;
-    createDefault(): any;
-} & typeof InMemoryEntity;
+    createDefault(): typeof InMemoryEntity;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    name: string;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    setName(name: string): void;
+}>;
 export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
         consistencyChecks: import("@mat3ra/esse/dist/js/types").ConsistencyCheck[];
@@ -287,70 +145,26 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & {
-    new (...args: any[]): {
-        name: string;
-        setName(name: string): void;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
-} & {
-    new (...args: any[]): {
-        readonly isDefault: boolean;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
+} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
     readonly defaultConfig: object | null;
-    createDefault(): any;
-} & typeof InMemoryEntity;
+    createDefault(): typeof InMemoryEntity;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    name: string;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    setName(name: string): void;
+}>;
 export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: {
     new (...args: any[]): {
         readonly important: any;
@@ -424,70 +238,26 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & {
-    new (...args: any[]): {
-        name: string;
-        setName(name: string): void;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
-} & {
-    new (...args: any[]): {
-        readonly isDefault: boolean;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
+} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
     readonly defaultConfig: object | null;
-    createDefault(): any;
-} & typeof InMemoryEntity;
+    createDefault(): typeof InMemoryEntity;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    name: string;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    setName(name: string): void;
+}>;
 export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
     new (...params: any[]): {
         _context: import("./mixins/context").Context;
@@ -564,70 +334,26 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & {
-    new (...args: any[]): {
-        name: string;
-        setName(name: string): void;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
-} & {
-    new (...args: any[]): {
-        readonly isDefault: boolean;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
+} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
     readonly defaultConfig: object | null;
-    createDefault(): any;
-} & typeof InMemoryEntity;
+    createDefault(): typeof InMemoryEntity;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    name: string;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    setName(name: string): void;
+}>;
 export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity: {
     new (...args: any[]): {
         getHashObject(): {};
@@ -860,68 +586,24 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & {
-    new (...args: any[]): {
-        name: string;
-        setName(name: string): void;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
-} & {
-    new (...args: any[]): {
-        readonly isDefault: boolean;
-        _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        prop<T = undefined>(name: string, defaultValue: T): T;
-        prop<T = undefined>(name: string): T | undefined;
-        setProp(name: string, value: unknown): void;
-        unsetProp(name: string): void;
-        setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
-        toJSON(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONSafe(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        toJSONQuick(exclude?: string[]): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        clone(extraContext?: object): /*elided*/ any;
-        validate(): void;
-        clean(config: import("@mat3ra/esse/dist/js/esse/types").AnyObject): import("@mat3ra/esse/dist/js/esse/types").AnyObject;
-        isValid(): boolean;
-        readonly cls: string;
-        getClsName(): string;
-        getAsEntityReference(byIdOnly: true): {
-            _id: string;
-        };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
-        getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-        id: string;
-        _id: string;
-        schemaVersion: string;
-        systemName: string;
-        readonly slug: string;
-        readonly isSystemEntity: boolean;
-    };
+} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
     readonly defaultConfig: object | null;
-    createDefault(): any;
-} & typeof InMemoryEntity;
+    createDefault(): typeof InMemoryEntity;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    name: string;
+}> & import("../utils/types").Constructor<InMemoryEntity & {
+    isDefault: boolean;
+} & typeof InMemoryEntity & {
+    readonly defaultConfig: object | null;
+    createDefault(): typeof InMemoryEntity;
+} & {
+    setName(name: string): void;
+}>;
 export {};

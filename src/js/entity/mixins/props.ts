@@ -1,34 +1,16 @@
 import {
     type ConsistencyCheck,
-    type DefaultableEntitySchema,
     type DescriptionSchema,
     type EntityTagsSchema,
     type HasConsistencyCheckSchema,
     type MetadataSchema,
-    type NameEntitySchema,
 } from "@mat3ra/esse/dist/js/types";
 
-import type { Constructor } from "../../utils/types";
-import { type InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
+import { InMemoryEntityConstructor } from "../in_memory";
+import DefaultableMixin from "./DefaultableMixin";
+import NamedEntityMixin from "./NamedEntityMixin";
 
-export function DefaultableMixin<
-    T extends Constructor<InMemoryEntity> = Constructor<InMemoryEntity>,
->(superclass: T) {
-    class DefaultableMixin extends superclass implements DefaultableEntitySchema {
-        get isDefault() {
-            return this.prop("isDefault", false);
-        }
-
-        declare static readonly defaultConfig: object | null;
-
-        static createDefault() {
-            // @ts-ignore
-            return new this.prototype.constructor(this.defaultConfig);
-        }
-    }
-
-    return DefaultableMixin;
-}
+export { DefaultableMixin, NamedEntityMixin };
 
 export function TaggableMixin<T extends InMemoryEntityConstructor>(superclass: T) {
     return class extends superclass implements EntityTagsSchema {
@@ -91,23 +73,6 @@ export function HasDescriptionMixin<T extends InMemoryEntityConstructor>(supercl
 
         set descriptionObject(obj) {
             this.setProp("descriptionObject", obj);
-        }
-    };
-}
-
-export function NamedEntityMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass implements NameEntitySchema {
-        get name(): string {
-            return this.prop("name", "");
-        }
-
-        set name(name: string) {
-            this.setProp("name", name);
-        }
-
-        // to be used when getter is overriden
-        setName(name: string) {
-            this.setProp("name", name);
         }
     };
 }
