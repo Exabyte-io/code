@@ -53,16 +53,16 @@ var __importStar =
         };
     })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Code = void 0;
 const ArrayWithIds_1 = require("./ArrayWithIds");
 const context = __importStar(require("./context"));
 const entity = __importStar(require("./entity"));
 const utils = __importStar(require("./utils"));
 const ValueWithId_1 = require("./ValueWithId");
-exports.Code = {
+const Code = {
     entity,
     context,
     utils,
     ValueWithId: ValueWithId_1.ValueWithId,
     ArrayWithIds: ArrayWithIds_1.ArrayWithIds,
 };
+exports.default = Code;

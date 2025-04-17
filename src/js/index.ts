@@ -4,10 +4,12 @@ import * as entity from "./entity";
 import * as utils from "./utils";
 import { ValueWithId } from "./ValueWithId";
 
-export const Code = {
+const Code = {
     entity,
     context,
     utils,
     ValueWithId,
     ArrayWithIds,
 };
+
+export default Code;
