@@ -31,6 +31,7 @@ export declare enum RoundingMethodEnum {
     HalfAwayFromZero = "halfAwayFromZero"
 }
 export declare const roundCustom: (value: number, decimals?: number, method?: RoundingMethodEnum) => number;
+export declare const roundArrayOrNumber: (value: unknown, decimals?: number, method?: RoundingMethodEnum) => unknown;
 /**
  * @summary Wrapper for native [Number.toPrecision](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_objects/Number/toPrecision) method.
  * Returns a string representing the Number object to the specified precision.
@@ -52,8 +53,6 @@ export declare const math: {
     angleUpTo90: (a: number[], b: number[], unit: string) => number;
     vDist: (v1: number[], v2: number[]) => number | undefined;
     vEqualWithTolerance: (vec1: number[], vec2: number[], tolerance?: number) => boolean;
-    roundToZero: (n: number) => number;
-    precise: (x: number, n?: number) => number;
     mod: (num: number, tolerance?: number) => number;
     isBetweenZeroInclusiveAndOne: (number: number, tolerance?: number) => boolean;
     cartesianProduct: (...arg: number[][]) => number[][];
@@ -61,10 +60,13 @@ export declare const math: {
     combinations: (a: number, b: number, c: number) => number[][];
     combinationsFromIntervals: (arrA: number[], arrB: number[], arrC: number[]) => number[][];
     calculateSegmentsBetweenPoints3D: (point1: (string | number)[], point2: (string | number)[], n: number | string) => number[][];
+    roundToZero: (n: number) => number;
+    precise: (x: number, n?: number) => number;
     roundValueToNDecimals: (value: number, decimals?: number) => number;
     numberToPrecision: typeof numberToPrecision;
     roundCustom: (value: number, decimals?: number, method?: RoundingMethodEnum) => number;
     RoundingMethod: typeof RoundingMethodEnum;
+    roundArrayOrNumber: (value: unknown, decimals?: number, method?: RoundingMethodEnum) => unknown;
     e: number;
     pi: number;
     i: number;
