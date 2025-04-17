@@ -17,6 +17,10 @@
     },
     "main": "dist/index.js",
     "exports": {
+        ".": {
+            "import": "./dist/js/index.js",
+            "types": "./dist/js/index.d.ts"
+        },
         "./dist/js/context": "./dist/js/context/index.js",
         "./dist/js/entity": "./dist/js/entity/index.js",
         "./dist/js/utils": "./dist/js/utils/index.js",
