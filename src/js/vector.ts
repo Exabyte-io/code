@@ -15,7 +15,7 @@ export class Vector3D {
         ) {
             throw new Error("Vector3D must be a tuple of exactly 3 numbers.");
         }
-        this._value = value as PointSchema;
+        this._value = [...value] as PointSchema;
     }
 
     get value(): PointSchema {
@@ -58,7 +58,7 @@ export class RoundedVector3D extends Vector3D {
         const rounded = skipRounding
             ? this.value
             : (math.roundArrayOrNumber(this.value, RoundedVector3D.roundPrecision) as PointSchema);
-        return rounded;
+        return [...rounded] as PointSchema;
     }
 
     get value_rounded(): PointSchema {

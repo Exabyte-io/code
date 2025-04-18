@@ -19,7 +19,7 @@ const VECTOR_FLOAT_ROUNDED_3: [number, number, number] = [1.235, 2.346, 3.457];
 describe("Vector3D", () => {
     it("should do init and value access", () => {
         const vector = new Vector3D(VECTOR_FLOAT);
-        expect(vector.value).to.equal(VECTOR_FLOAT);
+        expect(vector.value).to.deep.equal(VECTOR_FLOAT);
         expect(vector.x).to.be.closeTo(1.23456789, FLOAT_PRECISION);
         expect(vector.y).to.be.closeTo(2.345678901, FLOAT_PRECISION);
         expect(vector.z).to.be.closeTo(3.456789012, FLOAT_PRECISION);
@@ -49,26 +49,26 @@ describe("Vector3D", () => {
 describe("RoundedVector3D", () => {
     it("should do init and default value access", () => {
         const vector = new RoundedVector3D(VECTOR_FLOAT);
-        expect(vector.value).to.equal(VECTOR_FLOAT);
+        expect(vector.value).to.deep.equal(VECTOR_FLOAT);
     });
 
     it("should do serialization with precision 4", () => {
         RoundedVector3D.roundPrecision = 4;
         const vector = new RoundedVector3D(VECTOR_FLOAT);
 
-        expect(vector.toJSON()).to.equal(VECTOR_FLOAT_ROUNDED_4);
-        expect(vector.value_rounded).to.equal(VECTOR_FLOAT_ROUNDED_4);
-        expect(vector.x_rounded).to.be.equal(VECTOR_FLOAT_ROUNDED_4[0]);
-        expect(vector.y_rounded).to.be.equal(VECTOR_FLOAT_ROUNDED_4[1]);
-        expect(vector.z_rounded).to.be.equal(VECTOR_FLOAT_ROUNDED_4[2]);
+        expect(vector.toJSON()).to.deep.equal(VECTOR_FLOAT_ROUNDED_4);
+        expect(vector.value_rounded).to.deep.equal(VECTOR_FLOAT_ROUNDED_4);
+        expect(vector.x_rounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[0]);
+        expect(vector.y_rounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[1]);
+        expect(vector.z_rounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[2]);
     });
 
     it("should do serialization with precision 3", () => {
         RoundedVector3D.roundPrecision = 3;
         const vector = new RoundedVector3D(VECTOR_FLOAT);
 
-        expect(vector.toJSON()).to.equal(VECTOR_FLOAT_ROUNDED_3);
-        expect(vector.value_rounded).to.equal(VECTOR_FLOAT_ROUNDED_3);
+        expect(vector.toJSON()).to.deep.equal(VECTOR_FLOAT_ROUNDED_3);
+        expect(vector.value_rounded).to.deep.equal(VECTOR_FLOAT_ROUNDED_3);
     });
 
     it("should do equality changes with precision", () => {
