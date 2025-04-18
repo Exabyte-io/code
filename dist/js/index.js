@@ -56,6 +56,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.utils =
     exports.context =
     exports.entity =
+    exports.RoundedArrayWithIds =
+    exports.RoundedValueWithId =
     exports.ValueWithId =
     exports.ArrayWithIds =
         void 0;
@@ -66,6 +68,12 @@ Object.defineProperty(exports, "ArrayWithIds", {
         return ArrayWithIds_1.ArrayWithIds;
     },
 });
+Object.defineProperty(exports, "RoundedArrayWithIds", {
+    enumerable: true,
+    get: function () {
+        return ArrayWithIds_1.RoundedArrayWithIds;
+    },
+});
 const context = __importStar(require("./context"));
 exports.context = context;
 const entity = __importStar(require("./entity"));
@@ -73,6 +81,12 @@ exports.entity = entity;
 const utils = __importStar(require("./utils"));
 exports.utils = utils;
 const ValueWithId_1 = require("./ValueWithId");
+Object.defineProperty(exports, "RoundedValueWithId", {
+    enumerable: true,
+    get: function () {
+        return ValueWithId_1.RoundedValueWithId;
+    },
+});
 Object.defineProperty(exports, "ValueWithId", {
     enumerable: true,
     get: function () {
@@ -82,6 +96,8 @@ Object.defineProperty(exports, "ValueWithId", {
 const Code = {
     ArrayWithIds: ArrayWithIds_1.ArrayWithIds,
     ValueWithId: ValueWithId_1.ValueWithId,
+    RoundedArrayWithIds: ArrayWithIds_1.RoundedArrayWithIds,
+    RoundedValueWithId: ValueWithId_1.RoundedValueWithId,
     entity,
     context,
     utils,
