@@ -3,13 +3,16 @@ import * as context from "./context";
 import * as entity from "./entity";
 import * as utils from "./utils";
 import { RoundedValueWithId, ValueWithId } from "./ValueWithId";
-export { ArrayWithIds, ValueWithId, RoundedValueWithId, RoundedArrayWithIds };
+import { RoundedVector3D, Vector3D } from "./vector";
+export { ArrayWithIds, ValueWithId, RoundedValueWithId, RoundedArrayWithIds, RoundedVector3D, Vector3D, };
 export { entity, context, utils };
 declare const Code: {
     ArrayWithIds: typeof ArrayWithIds;
     ValueWithId: typeof ValueWithId;
     RoundedArrayWithIds: typeof RoundedArrayWithIds;
     RoundedValueWithId: typeof RoundedValueWithId;
+    RoundedVector3D: typeof RoundedVector3D;
+    Vector3D: typeof Vector3D;
     entity: typeof entity;
     context: typeof context;
     utils: typeof utils;
