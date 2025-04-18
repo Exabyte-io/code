@@ -53,16 +53,37 @@ var __importStar =
         };
     })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.utils =
+    exports.context =
+    exports.entity =
+    exports.ValueWithId =
+    exports.ArrayWithIds =
+        void 0;
 const ArrayWithIds_1 = require("./ArrayWithIds");
+Object.defineProperty(exports, "ArrayWithIds", {
+    enumerable: true,
+    get: function () {
+        return ArrayWithIds_1.ArrayWithIds;
+    },
+});
 const context = __importStar(require("./context"));
+exports.context = context;
 const entity = __importStar(require("./entity"));
+exports.entity = entity;
 const utils = __importStar(require("./utils"));
+exports.utils = utils;
 const ValueWithId_1 = require("./ValueWithId");
+Object.defineProperty(exports, "ValueWithId", {
+    enumerable: true,
+    get: function () {
+        return ValueWithId_1.ValueWithId;
+    },
+});
 const Code = {
+    ArrayWithIds: ArrayWithIds_1.ArrayWithIds,
+    ValueWithId: ValueWithId_1.ValueWithId,
     entity,
     context,
     utils,
-    ValueWithId: ValueWithId_1.ValueWithId,
-    ArrayWithIds: ArrayWithIds_1.ArrayWithIds,
 };
 exports.default = Code;
