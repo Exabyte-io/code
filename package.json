@@ -15,7 +15,7 @@
         "type": "git",
         "url": "https://github.com/Exabyte-io/code.js.git"
     },
-    "main": "dist/index.js",
+    "main": "./dist/js/index.js",
     "exports": {
         ".": {
             "import": "./dist/js/index.js",
