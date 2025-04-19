@@ -3,11 +3,11 @@ export declare class ArrayWithIds<T> {
     values: T[];
     ids: number[];
     constructor(values?: T[], ids?: number[]);
-    static fromValues<T>(values: T[]): ArrayWithIds<T>;
-    static fromObjects<T>(objects: Array<{
+    static fromValues<U, C extends ArrayWithIds<U>>(this: new (values: U[], ids: number[]) => C, values: U[]): C;
+    static fromObjects<U, C extends ArrayWithIds<U>>(this: new (values: U[], ids: number[]) => C, objects: {
         id: number;
-        value: T;
-    }>): ArrayWithIds<T>;
+        value: U;
+    }[]): C;
     toJSON(): object[];
     toValueWithIdArray(): ValueWithId<T>[];
     getElementValueByIndex(index: number): T | undefined;

@@ -18,15 +18,21 @@ export class ArrayWithIds<T> {
         this.ids = [...ids];
     }
 
-    static fromValues<T>(values: T[]): ArrayWithIds<T> {
+    static fromValues<U, C extends ArrayWithIds<U>>(
+        this: new (values: U[], ids: number[]) => C,
+        values: U[],
+    ): C {
         const ids = values.map((_, i) => i);
-        return new ArrayWithIds(values, ids);
+        return new this(values, ids);
     }
 
-    static fromObjects<T>(objects: Array<{ id: number; value: T }>): ArrayWithIds<T> {
-        const values = objects.map((item) => item.value);
-        const ids = objects.map((item) => item.id);
-        return new ArrayWithIds(values, ids);
+    static fromObjects<U, C extends ArrayWithIds<U>>(
+        this: new (values: U[], ids: number[]) => C,
+        objects: { id: number; value: U }[],
+    ): C {
+        const values = objects.map((obj) => obj.value);
+        const ids = objects.map((obj) => obj.id);
+        return new this(values, ids);
     }
 
     toJSON(): object[] {

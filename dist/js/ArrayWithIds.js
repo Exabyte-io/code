@@ -12,12 +12,12 @@ class ArrayWithIds {
     }
     static fromValues(values) {
         const ids = values.map((_, i) => i);
-        return new ArrayWithIds(values, ids);
+        return new this(values, ids);
     }
     static fromObjects(objects) {
-        const values = objects.map((item) => item.value);
-        const ids = objects.map((item) => item.id);
-        return new ArrayWithIds(values, ids);
+        const values = objects.map((obj) => obj.value);
+        const ids = objects.map((obj) => obj.id);
+        return new this(values, ids);
     }
     toJSON() {
         return this.values.map((value, index) => ({

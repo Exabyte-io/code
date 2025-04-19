@@ -16,21 +16,6 @@
         "url": "https://github.com/Exabyte-io/code.js.git"
     },
     "main": "./dist/js/index.js",
-    "exports": {
-        ".": {
-            "import": "./dist/js/index.js",
-            "types": "./dist/js/index.d.ts"
-        },
-        "./dist/js/context": "./dist/js/context/index.js",
-        "./dist/js/entity": "./dist/js/entity/index.js",
-        "./dist/js/utils": "./dist/js/utils/index.js",
-        "./dist/js/constants": "./dist/js/constants.js",
-        "./dist/js/math": {
-    "import": "./dist/js/math.js",
-    "types": "./dist/js/math.d.ts"
-  },
-        "./dist/js/utils/schemas": "./dist/js/utils/schemas.js"
-    },
     "files": [
         "/dist",
         "/src/js",
