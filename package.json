@@ -25,7 +25,10 @@
         "./dist/js/entity": "./dist/js/entity/index.js",
         "./dist/js/utils": "./dist/js/utils/index.js",
         "./dist/js/constants": "./dist/js/constants.js",
-        "./dist/js/math": "./dist/js/math.js",
+        "./dist/js/math": {
+    "import": "./dist/js/math.js",
+    "types": "./dist/js/math.d.ts"
+  },
         "./dist/js/utils/schemas": "./dist/js/utils/schemas.js"
     },
     "files": [
