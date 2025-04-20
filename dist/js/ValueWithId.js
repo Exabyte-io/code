@@ -3,7 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoundedValueWithId = exports.defaultRoundingOptions = exports.ValueWithId = void 0;
 const math_1 = require("./math");
 class ValueWithId {
-    constructor(id = 0, value = null) {
+    static fromValueAndId(value, id = 0) {
+        return new ValueWithId({ id, value });
+    }
+    constructor({ id, value } = ValueWithId.defaultConfig) {
         this.id = id;
         this.value = value;
     }
@@ -41,13 +44,17 @@ class ValueWithId {
     }
 }
 exports.ValueWithId = ValueWithId;
+ValueWithId.defaultConfig = {
+    id: 0,
+    value: null,
+};
 exports.defaultRoundingOptions = {
     precision: 9,
     roundingMethod: math_1.RoundingMethodEnum.HalfAwayFromZero,
 };
 class RoundedValueWithId extends ValueWithId {
     constructor(id, value, options = exports.defaultRoundingOptions) {
-        super(id, value);
+        super({ id, value });
         this.precision = options.precision;
         this.roundingMethod = options.roundingMethod;
     }

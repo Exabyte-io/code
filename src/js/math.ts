@@ -2,7 +2,7 @@
 import mathjs from "mathjs";
 import _ from "underscore";
 
-import {tolerance as TOLERANCE} from "./constants";
+import { tolerance as TOLERANCE } from "./constants";
 
 /**
  * This module is intended to be used instead of the original mathjs package, hence we need to reexport all original functions and all TS types.
@@ -265,13 +265,10 @@ export const roundArrayOrNumber = (
     method = RoundingMethodEnum.HalfAwayFromZero,
 ) => {
     if (Array.isArray(value)) {
-        return value.map((v) =>
-            typeof v === "number" ? roundCustom(v, decimals, method) : v
-        );
+        return value.map((v) => (typeof v === "number" ? roundCustom(v, decimals, method) : v));
     }
     return typeof value === "number" ? roundCustom(value, decimals, method) : value;
 };
-
 
 /**
  * @summary Returns n splits of the passed segment.

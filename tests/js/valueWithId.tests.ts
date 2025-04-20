@@ -40,31 +40,31 @@ describe("ValueWithId Tests", () => {
     });
 
     it("should create with specified id and value", () => {
-        const valueWithId = new ValueWithId(TEST_ID, TEST_VALUE);
+        const valueWithId = ValueWithId.fromValueAndId(TEST_VALUE, TEST_ID);
         expect(valueWithId.id).to.equal(TEST_ID);
         expect(valueWithId.value).to.be.equal(TEST_VALUE);
     });
 
     it("should convert to JSON format", () => {
-        const valueWithId = new ValueWithId(TEST_ID, TEST_VALUE);
+        const valueWithId = ValueWithId.fromValueAndId(TEST_VALUE, TEST_ID);
         const jsonResult = valueWithId.toJSON();
         expect(jsonResult).to.deep.equal({ id: TEST_ID, value: TEST_VALUE });
     });
 
     it("should correctly compare equality with primitive values", () => {
-        const a = new ValueWithId(TEST_ID, TEST_VALUE);
-        const b = new ValueWithId(TEST_ID, TEST_VALUE);
-        const c = new ValueWithId(TEST_ID, DIFFERENT_VALUE);
+        const a = ValueWithId.fromValueAndId(TEST_VALUE, TEST_ID);
+        const b = ValueWithId.fromValueAndId(TEST_VALUE, TEST_ID);
+        const c = ValueWithId.fromValueAndId(DIFFERENT_VALUE, TEST_ID);
 
         expect(a.equals(b)).to.equal(true);
         expect(a.equals(c)).to.equal(false);
     });
 
     it("should correctly compare equality with array values", () => {
-        const a = new ValueWithId(TEST_ID, ARRAY_VALUE);
-        const b = new ValueWithId(TEST_ID, ARRAY_VALUE_EQUAL);
-        const c = new ValueWithId(TEST_ID, ARRAY_VALUE_DIFF);
-        const d = new ValueWithId(TEST_ID, ARRAY_VALUE_SHORTER);
+        const a = ValueWithId.fromValueAndId(ARRAY_VALUE, TEST_ID);
+        const b = ValueWithId.fromValueAndId(ARRAY_VALUE_EQUAL, TEST_ID);
+        const c = ValueWithId.fromValueAndId(ARRAY_VALUE_DIFF, TEST_ID);
+        const d = ValueWithId.fromValueAndId(ARRAY_VALUE_SHORTER, TEST_ID);
 
         expect(a.equals(b)).to.equal(true);
         expect(a.equals(c)).to.equal(false);

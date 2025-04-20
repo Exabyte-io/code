@@ -49,7 +49,9 @@ export class ArrayWithIds<T> {
     }
 
     toValueWithIdArray(): ValueWithId<T>[] {
-        return this.values.map((value, index) => new ValueWithId(this.ids[index], value));
+        return this.values.map((value, index) =>
+            ValueWithId.fromValueAndId(value, this.ids[index]),
+        );
     }
 
     getElementValueByIndex(index: number): T | undefined {

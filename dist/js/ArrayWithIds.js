@@ -31,7 +31,7 @@ class ArrayWithIds {
         }));
     }
     toValueWithIdArray() {
-        return this.values.map((value, index) => new ValueWithId_1.ValueWithId(this.ids[index], value));
+        return this.values.map((value, index) => ValueWithId_1.ValueWithId.fromValueAndId(value, this.ids[index]));
     }
     getElementValueByIndex(index) {
         return this.values[index];

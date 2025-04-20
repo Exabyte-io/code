@@ -1,11 +1,27 @@
+import { ObjectWithIdAndValueSchema } from "@mat3ra/esse/dist/js/types";
+
 import { math, RoundingMethodEnum } from "./math";
+
+interface ValueWithIdSchema<T> {
+    id: ObjectWithIdAndValueSchema["id"];
+    value: T | null;
+}
 
 export class ValueWithId<T> {
     id: number;
 
     value: T | null;
 
-    constructor(id = 0, value: T | null = null) {
+    static defaultConfig = {
+        id: 0,
+        value: null,
+    };
+
+    static fromValueAndId<U>(value: U, id = 0): ValueWithId<U> {
+        return new ValueWithId<U>({ id, value });
+    }
+
+    constructor({ id, value }: ValueWithIdSchema<T> = ValueWithId.defaultConfig) {
         this.id = id;
         this.value = value;
     }
@@ -67,7 +83,7 @@ export class RoundedValueWithId<T> extends ValueWithId<T> {
     readonly roundingMethod: RoundingMethodEnum;
 
     constructor(id: number, value: T, options: RoundingOptions = defaultRoundingOptions) {
-        super(id, value);
+        super({ id, value });
         this.precision = options.precision;
         this.roundingMethod = options.roundingMethod;
     }
