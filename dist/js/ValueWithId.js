@@ -4,7 +4,7 @@ exports.RoundedValueWithId = exports.defaultRoundingOptions = exports.ValueWithI
 const math_1 = require("./math");
 class ValueWithId {
     static fromValueAndId(value, id = 0) {
-        return new ValueWithId({ id, value });
+        return new this({ id, value });
     }
     constructor({ id, value } = ValueWithId.defaultConfig) {
         this.id = id;
@@ -26,21 +26,21 @@ class ValueWithId {
      * Checks if this instance is equal to another ValueWithId.
      */
     equals(other) {
-        if (!(other instanceof ValueWithId)) {
+        if (!(other instanceof ValueWithId))
             return false;
-        }
-        if (Array.isArray(this.value) && Array.isArray(other.value)) {
-            if (this.value.length !== other.value.length) {
+        // because U may differ from T, we cast to unknown when comparing
+        const v1 = this.value;
+        const v2 = other.value;
+        if (Array.isArray(v1) && Array.isArray(v2)) {
+            if (v1.length !== v2.length)
                 return false;
-            }
-            for (let i = 0; i < this.value.length; i++) {
-                if (this.value[i] !== other.value[i]) {
+            for (let i = 0; i < v1.length; i++) {
+                if (v1[i] !== v2[i])
                     return false;
-                }
             }
             return this.id === other.id;
         }
-        return this.id === other.id && this.value === other.value;
+        return this.id === other.id && v1 === v2;
     }
 }
 exports.ValueWithId = ValueWithId;

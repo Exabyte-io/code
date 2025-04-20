@@ -11,7 +11,10 @@ export declare class ValueWithId<T> {
         id: number;
         value: null;
     };
-    static fromValueAndId<U>(value: U, id?: number): ValueWithId<U>;
+    static fromValueAndId<U, C extends ValueWithId<U>>(this: new (args: {
+        id: number;
+        value: U | null;
+    }) => C, value: U, id?: number): C;
     constructor({ id, value }?: ValueWithIdSchema<T>);
     /**
      * Converts the instance to a plain JavaScript object.
@@ -20,7 +23,7 @@ export declare class ValueWithId<T> {
     /**
      * Checks if this instance is equal to another ValueWithId.
      */
-    equals(other: ValueWithId<T>): boolean;
+    equals<U>(other: ValueWithId<U>): boolean;
 }
 export interface RoundingOptions {
     precision: number;
