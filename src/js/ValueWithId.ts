@@ -18,7 +18,7 @@ export class ValueWithId<T> {
     };
 
     static fromValueAndId<U, C extends ValueWithId<U>>(
-        this: new (args: { id: number; value: U | null }) => C,
+        this: new (args: { id: number; value: U }) => C,
         value: U,
         id = 0,
     ): C {

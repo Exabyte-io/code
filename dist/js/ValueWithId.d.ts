@@ -13,7 +13,7 @@ export declare class ValueWithId<T> {
     };
     static fromValueAndId<U, C extends ValueWithId<U>>(this: new (args: {
         id: number;
-        value: U | null;
+        value: U;
     }) => C, value: U, id?: number): C;
     constructor({ id, value }?: ValueWithIdSchema<T>);
     /**
