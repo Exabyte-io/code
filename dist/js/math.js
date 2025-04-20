@@ -1,15 +1,9 @@
 "use strict";
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.math =
-    exports.roundArrayOrNumber =
-    exports.roundCustom =
-    exports.RoundingMethodEnum =
-        void 0;
+exports.math = exports.roundArrayOrNumber = exports.roundCustom = exports.RoundingMethodEnum = void 0;
 exports.numberToPrecision = numberToPrecision;
 /* eslint-disable */
 const mathjs_1 = __importDefault(require("mathjs"));
@@ -48,9 +42,7 @@ const angle = (a, b, unit) => {
     const lenA = vlen(a);
     const lenB = vlen(b);
     // @ts-ignore
-    return exports.math
-        .unit(exports.math.acos(product(a, b) / (lenA * lenB)), "rad")
-        .toNumber(unit || "deg");
+    return exports.math.unit(exports.math.acos(product(a, b) / (lenA * lenB)), "rad").toNumber(unit || "deg");
 };
 const angleUpTo90 = (a, b, unit) => {
     const angleUpTo180 = angle(a, b, unit);
@@ -64,9 +56,7 @@ const angleUpTo90 = (a, b, unit) => {
  */
 const vDist = (v1, v2) => {
     if (v1.length !== v2.length) {
-        console.error(
-            "Attempting to calculate distance between vectors of different dimensionality",
-        );
+        console.error("Attempting to calculate distance between vectors of different dimensionality");
         return;
     }
     return vlen(v1.map((coordinate, index) => coordinate - v2[index]));
@@ -106,10 +96,7 @@ const precise = (x, n = 7) => {
 const mod = (num, tolerance = 0.001) => {
     const m = num % 1;
     const x = num >= 0 ? m : 1 + m;
-    if (
-        exports.math.smallerEq(Math.abs(x - 1), tolerance) ||
-        exports.math.smallerEq(Math.abs(x), tolerance)
-    ) {
+    if (exports.math.smallerEq(Math.abs(x - 1), tolerance) || exports.math.smallerEq(Math.abs(x), tolerance)) {
         return 0;
     }
     return x;
@@ -127,7 +114,8 @@ const cartesianProduct = (...arg) => {
             a.push(arg[i][j]);
             if (i === max) {
                 r.push(a);
-            } else {
+            }
+            else {
                 helper(a, i + 1);
             }
         }
@@ -207,7 +195,8 @@ const roundCustom = (value, decimals = 0, method = RoundingMethodEnum.HalfAwayFr
             if (Math.abs(fractional - 0.5) < Number.EPSILON) {
                 // Round to even
                 roundedAbs = floorValue % 2 === 0 ? floorValue : floorValue + 1;
-            } else {
+            }
+            else {
                 roundedAbs = Math.round(absValue);
             }
             break;
@@ -219,9 +208,7 @@ const roundCustom = (value, decimals = 0, method = RoundingMethodEnum.HalfAwayFr
 exports.roundCustom = roundCustom;
 const roundArrayOrNumber = (value, decimals = 9, method = RoundingMethodEnum.HalfAwayFromZero) => {
     if (Array.isArray(value)) {
-        return value.map((v) =>
-            typeof v === "number" ? (0, exports.roundCustom)(v, decimals, method) : v,
-        );
+        return value.map((v) => (typeof v === "number" ? (0, exports.roundCustom)(v, decimals, method) : v));
     }
     return typeof value === "number" ? (0, exports.roundCustom)(value, decimals, method) : value;
 };

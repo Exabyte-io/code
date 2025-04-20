@@ -1,7 +1,7 @@
 from typing import List
 
 import numpy as np
-from mat3ra.esse.models.core.abstract.point import PointSchema as Vector3DSchema
+from mat3ra.esse.models.core.abstract.point import Coordinate3DSchema as Vector3DSchema
 from mat3ra.utils.mixins import RoundNumericValuesMixin
 from pydantic import model_serializer
 

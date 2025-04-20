@@ -4,11 +4,9 @@ exports.RoundedVector3D = exports.Vector3D = void 0;
 const math_1 = require("./math");
 class Vector3D {
     constructor(value) {
-        if (
-            !Array.isArray(value) ||
+        if (!Array.isArray(value) ||
             value.length !== 3 ||
-            !value.every((v) => typeof v === "number")
-        ) {
+            !value.every((v) => typeof v === "number")) {
             throw new Error("Vector3D must be a tuple of exactly 3 numbers.");
         }
         this._value = [...value];

@@ -22,36 +22,29 @@ class ArrayWithIds {
     toJSON() {
         return this.values.map((value, index) => ({
             id: this.ids[index],
-            value:
-                value !== null &&
+            value: value !== null &&
                 typeof value === "object" &&
                 "toJSON" in value &&
                 typeof value.toJSON === "function"
-                    ? value.toJSON()
-                    : value,
+                ? value.toJSON()
+                : value,
         }));
     }
     toValueWithIdArray() {
-        return this.values.map(
-            (value, index) => new ValueWithId_1.ValueWithId(this.ids[index], value),
-        );
+        return this.values.map((value, index) => new ValueWithId_1.ValueWithId(this.ids[index], value));
     }
     getElementValueByIndex(index) {
         return this.values[index];
     }
     getElementIdByValue(value) {
-        const index = this.values.findIndex((v) =>
-            Array.isArray(v) && Array.isArray(value)
-                ? v.length === value.length && v.every((val, idx) => val === value[idx])
-                : v === value,
-        );
+        const index = this.values.findIndex((v) => Array.isArray(v) && Array.isArray(value)
+            ? v.length === value.length && v.every((val, idx) => val === value[idx])
+            : v === value);
         return index !== -1 ? this.ids[index] : undefined;
     }
     filterByValues(valuesToKeep) {
         const toHash = (v) => (Array.isArray(v) ? JSON.stringify(v) : String(v));
-        const keepSet = new Set(
-            Array.isArray(valuesToKeep) ? valuesToKeep.map(toHash) : [toHash(valuesToKeep)],
-        );
+        const keepSet = new Set(Array.isArray(valuesToKeep) ? valuesToKeep.map(toHash) : [toHash(valuesToKeep)]);
         const filtered = this.values
             .map((value, i) => [value, this.ids[i]])
             .filter(([value]) => keepSet.has(toHash(value)));
@@ -72,17 +65,18 @@ class ArrayWithIds {
         this.ids = keep.map((i) => this.ids[i]);
     }
     equals(other) {
-        if (!(other instanceof ArrayWithIds)) return false;
-        if (this.values.length !== other.values.length) return false;
-        if (this.ids.length !== other.ids.length) return false;
-        return (
-            this.values.every((v, i) => {
-                const ov = other.values[i];
-                return Array.isArray(v) && Array.isArray(ov)
-                    ? v.length === ov.length && v.every((val, idx) => val === ov[idx])
-                    : v === ov;
-            }) && this.ids.every((id, i) => id === other.ids[i])
-        );
+        if (!(other instanceof ArrayWithIds))
+            return false;
+        if (this.values.length !== other.values.length)
+            return false;
+        if (this.ids.length !== other.ids.length)
+            return false;
+        return (this.values.every((v, i) => {
+            const ov = other.values[i];
+            return Array.isArray(v) && Array.isArray(ov)
+                ? v.length === ov.length && v.every((val, idx) => val === ov[idx])
+                : v === ov;
+        }) && this.ids.every((id, i) => id === other.ids[i]));
     }
     mapArrayInPlace(func) {
         this.values = this.values.map(func);
@@ -95,7 +89,8 @@ class ArrayWithIds {
     removeItem(index, id) {
         if (id !== undefined) {
             index = this.ids.indexOf(id);
-            if (index === -1) throw new Error("ID not found");
+            if (index === -1)
+                throw new Error("ID not found");
         }
         if (index < 0 || index >= this.values.length) {
             throw new Error("Index out of range");
@@ -111,13 +106,7 @@ class RoundedArrayWithIds extends ArrayWithIds {
         this.roundingOptions = options;
     }
     toJSON() {
-        return this.values.map((value, index) =>
-            new ValueWithId_1.RoundedValueWithId(
-                this.ids[index],
-                value,
-                this.roundingOptions,
-            ).toJSON(),
-        );
+        return this.values.map((value, index) => new ValueWithId_1.RoundedValueWithId(this.ids[index], value, this.roundingOptions).toJSON());
     }
 }
 exports.RoundedArrayWithIds = RoundedArrayWithIds;

@@ -11,12 +11,10 @@ class ValueWithId {
      * Converts the instance to a plain JavaScript object.
      */
     toJSON() {
-        if (
-            this.value !== null &&
+        if (this.value !== null &&
             typeof this.value === "object" &&
             "toJSON" in this.value &&
-            typeof this.value.toJSON === "function"
-        ) {
+            typeof this.value.toJSON === "function") {
             return { id: this.id, value: this.value.toJSON() };
         }
         return { id: this.id, value: this.value };

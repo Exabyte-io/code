@@ -1,13 +1,13 @@
-import { PointSchema } from "@mat3ra/esse/dist/js/types";
+import { Vector3DSchema } from "@mat3ra/esse/dist/js/types";
 
 import { math } from "./math";
 
 export class Vector3D {
     static atol = 1e-8;
 
-    private _value: PointSchema;
+    private _value: Vector3DSchema;
 
-    constructor(value: number[] | PointSchema) {
+    constructor(value: number[] | Vector3DSchema) {
         if (
             !Array.isArray(value) ||
             value.length !== 3 ||
@@ -15,10 +15,10 @@ export class Vector3D {
         ) {
             throw new Error("Vector3D must be a tuple of exactly 3 numbers.");
         }
-        this._value = [...value] as PointSchema;
+        this._value = [...value] as Vector3DSchema;
     }
 
-    get value(): PointSchema {
+    get value(): Vector3DSchema {
         return this._value;
     }
 
@@ -34,12 +34,12 @@ export class Vector3D {
         return this._value[2];
     }
 
-    equals(other: number[] | PointSchema | Vector3D): boolean {
+    equals(other: number[] | Vector3DSchema | Vector3D): boolean {
         if (Array.isArray(other)) {
             if (other.length !== 3) {
                 throw new Error("Input must be a 3-element array.");
             }
-            other = other as PointSchema;
+            other = other as Vector3DSchema;
         }
         const arr1 = this._value;
         const arr2 = other instanceof Vector3D ? other.value : other;
@@ -54,14 +54,17 @@ export class Vector3D {
 export class RoundedVector3D extends Vector3D {
     static roundPrecision = 9;
 
-    toJSON(skipRounding = false): PointSchema {
+    toJSON(skipRounding = false): Vector3DSchema {
         const rounded = skipRounding
             ? this.value
-            : (math.roundArrayOrNumber(this.value, RoundedVector3D.roundPrecision) as PointSchema);
-        return [...rounded] as PointSchema;
+            : (math.roundArrayOrNumber(
+                  this.value,
+                  RoundedVector3D.roundPrecision,
+              ) as Vector3DSchema);
+        return [...rounded] as Vector3DSchema;
     }
 
-    get value_rounded(): PointSchema {
+    get value_rounded(): Vector3DSchema {
         return this.toJSON();
     }
 
@@ -77,7 +80,7 @@ export class RoundedVector3D extends Vector3D {
         return this.value_rounded[2];
     }
 
-    override equals(other: PointSchema | RoundedVector3D): boolean {
+    override equals(other: Vector3DSchema | RoundedVector3D): boolean {
         const arr1 = this.value_rounded;
         const arr2 = Array.isArray(other)
             ? new RoundedVector3D(other).value_rounded
