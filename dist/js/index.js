@@ -33,12 +33,31 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Code = void 0;
+exports.utils = exports.context = exports.entity = exports.Vector3D = exports.RoundedVector3D = exports.RoundedArrayWithIds = exports.RoundedValueWithId = exports.ValueWithId = exports.ArrayWithIds = void 0;
+const ArrayWithIds_1 = require("./ArrayWithIds");
+Object.defineProperty(exports, "ArrayWithIds", { enumerable: true, get: function () { return ArrayWithIds_1.ArrayWithIds; } });
+Object.defineProperty(exports, "RoundedArrayWithIds", { enumerable: true, get: function () { return ArrayWithIds_1.RoundedArrayWithIds; } });
 const context = __importStar(require("./context"));
+exports.context = context;
 const entity = __importStar(require("./entity"));
+exports.entity = entity;
 const utils = __importStar(require("./utils"));
-exports.Code = {
+exports.utils = utils;
+const ValueWithId_1 = require("./ValueWithId");
+Object.defineProperty(exports, "RoundedValueWithId", { enumerable: true, get: function () { return ValueWithId_1.RoundedValueWithId; } });
+Object.defineProperty(exports, "ValueWithId", { enumerable: true, get: function () { return ValueWithId_1.ValueWithId; } });
+const vector_1 = require("./vector");
+Object.defineProperty(exports, "RoundedVector3D", { enumerable: true, get: function () { return vector_1.RoundedVector3D; } });
+Object.defineProperty(exports, "Vector3D", { enumerable: true, get: function () { return vector_1.Vector3D; } });
+const Code = {
+    ArrayWithIds: ArrayWithIds_1.ArrayWithIds,
+    ValueWithId: ValueWithId_1.ValueWithId,
+    RoundedArrayWithIds: ArrayWithIds_1.RoundedArrayWithIds,
+    RoundedValueWithId: ValueWithId_1.RoundedValueWithId,
+    RoundedVector3D: vector_1.RoundedVector3D,
+    Vector3D: vector_1.Vector3D,
     entity,
     context,
     utils,
 };
+exports.default = Code;
