@@ -42,7 +42,7 @@
         "underscore": "^1.13.7",
         "underscore.string": "^3.3.6",
         "uuid": "8.3.2",
-        "@types/mathjs": "^3.21.1"
+        "@types/mathjs": "^5.0.1"
     },
     "devDependencies": {
         "@babel/cli": "7.25.7",
