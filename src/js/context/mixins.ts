@@ -158,7 +158,7 @@ export function MethodDataContextMixin<T extends Constructor>(superclass: T) {
             const config = params[0];
 
             this._methodData = (config.context && config.context.methodData) || {};
-            this.isEdited = false; // we always get the `defaultData` (recalculated from scratch, not persistent)
+            this.isEdited = Boolean(config.isEdited);
         }
 
         /* @summary Replace the logic in constructor with this in order to enable passing `methodDataHash` between
