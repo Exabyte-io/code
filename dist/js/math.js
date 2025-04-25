@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.math = exports.roundCustom = exports.RoundingMethodEnum = void 0;
+exports.math = exports.roundArrayOrNumber = exports.roundCustom = exports.RoundingMethodEnum = void 0;
 exports.numberToPrecision = numberToPrecision;
 /* eslint-disable */
 const mathjs_1 = __importDefault(require("mathjs"));
@@ -206,6 +206,13 @@ const roundCustom = (value, decimals = 0, method = RoundingMethodEnum.HalfAwayFr
     return (roundedAbs * sign) / factor;
 };
 exports.roundCustom = roundCustom;
+const roundArrayOrNumber = (value, decimals = 9, method = RoundingMethodEnum.HalfAwayFromZero) => {
+    if (Array.isArray(value)) {
+        return value.map((v) => (typeof v === "number" ? (0, exports.roundCustom)(v, decimals, method) : v));
+    }
+    return typeof value === "number" ? (0, exports.roundCustom)(value, decimals, method) : value;
+};
+exports.roundArrayOrNumber = roundArrayOrNumber;
 /**
  * @summary Returns n splits of the passed segment.
  */
@@ -252,8 +259,6 @@ exports.math = {
     angleUpTo90,
     vDist,
     vEqualWithTolerance,
-    roundToZero,
-    precise,
     mod,
     isBetweenZeroInclusiveAndOne,
     cartesianProduct,
@@ -261,8 +266,11 @@ exports.math = {
     combinations,
     combinationsFromIntervals,
     calculateSegmentsBetweenPoints3D,
+    roundToZero,
+    precise,
     roundValueToNDecimals,
     numberToPrecision,
     roundCustom: exports.roundCustom,
     RoundingMethod: RoundingMethodEnum,
+    roundArrayOrNumber: exports.roundArrayOrNumber,
 };

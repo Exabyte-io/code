@@ -259,6 +259,17 @@ export const roundCustom = (
     return (roundedAbs * sign) / factor;
 };
 
+export const roundArrayOrNumber = (
+    value: unknown,
+    decimals = 9,
+    method = RoundingMethodEnum.HalfAwayFromZero,
+) => {
+    if (Array.isArray(value)) {
+        return value.map((v) => (typeof v === "number" ? roundCustom(v, decimals, method) : v));
+    }
+    return typeof value === "number" ? roundCustom(value, decimals, method) : value;
+};
+
 /**
  * @summary Returns n splits of the passed segment.
  */
@@ -312,8 +323,6 @@ export const math = {
     angleUpTo90,
     vDist,
     vEqualWithTolerance,
-    roundToZero,
-    precise,
     mod,
     isBetweenZeroInclusiveAndOne,
     cartesianProduct,
@@ -321,8 +330,11 @@ export const math = {
     combinations,
     combinationsFromIntervals,
     calculateSegmentsBetweenPoints3D,
+    roundToZero,
+    precise,
     roundValueToNDecimals,
     numberToPrecision,
     roundCustom,
     RoundingMethod: RoundingMethodEnum,
+    roundArrayOrNumber,
 };
