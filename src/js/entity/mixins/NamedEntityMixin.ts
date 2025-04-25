@@ -14,9 +14,7 @@ function namedEntityMixin(item: InMemoryEntity) {
         },
     } satisfies NameEntitySchema;
 
-    if (!("name" in item)) {
-        Object.assign(item, schema);
-    }
+    Object.assign(item, schema);
 
     return schema;
 }

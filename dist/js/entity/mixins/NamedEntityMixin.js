@@ -10,9 +10,7 @@ function namedEntityMixin(item) {
             item.setProp("name", name);
         },
     };
-    if (!("name" in item)) {
-        Object.assign(item, schema);
-    }
+    Object.assign(item, schema);
     return schema;
 }
 function namedEntityMethodsMixin(item) {
