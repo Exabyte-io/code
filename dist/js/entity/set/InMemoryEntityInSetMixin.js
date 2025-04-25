@@ -1,18 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.entityInSetPropsMixin = entityInSetPropsMixin;
+exports.entityInSetMethodsMixin = entityInSetMethodsMixin;
 exports.default = InMemoryEntityInSetMixin;
-function props(item) {
-    return Object.assign(item, {
+function entityInSetPropsMixin(item) {
+    const properties = {
         get inSet() {
             return item.prop("inSet", []);
         },
         set inSet(inSet) {
             item.setProp("inSet", inSet);
         },
-    });
+    };
+    Object.assign(item, properties);
+    return properties;
 }
-function methods(item) {
-    return Object.assign(item, {
+function entityInSetMethodsMixin(item) {
+    const methods = {
         getInSetFilteredByCls(cls) {
             return item.inSet.filter((ref) => ref.cls === cls);
         },
@@ -21,14 +25,16 @@ function methods(item) {
         get parentEntitySetReference() {
             return item.inSet.find((item) => item._id && !item.cls);
         },
-    });
+    };
+    Object.assign(item, methods);
+    return methods;
 }
 function InMemoryEntityInSetMixin(superclass) {
     class InMemoryEntityInSetMixin extends superclass {
         constructor(...args) {
             super(...args);
-            props(this);
-            methods(this);
+            entityInSetPropsMixin(this);
+            entityInSetMethodsMixin(this);
         }
     }
     return InMemoryEntityInSetMixin;

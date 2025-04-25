@@ -4,7 +4,7 @@ import type { NameEntitySchema } from "@mat3ra/esse/dist/js/types";
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 
-function props<T extends InMemoryEntity>(item: T) {
+function namedEntityMixin(item: InMemoryEntity) {
     const schema = {
         get name(): string {
             return item.prop("name", "");
@@ -21,7 +21,7 @@ function props<T extends InMemoryEntity>(item: T) {
     return schema;
 }
 
-function methods<T extends InMemoryEntity>(item: T) {
+function namedEntityMethodsMixin(item: InMemoryEntity) {
     return Object.assign(item, {
         setName(name: string) {
             item.setProp("name", name);
@@ -29,17 +29,20 @@ function methods<T extends InMemoryEntity>(item: T) {
     });
 }
 
-export default function NamedEntityMixin<S extends InMemoryEntityConstructor>(superclass: S) {
-    type Props = Constructor<ReturnType<typeof props<InstanceType<S>>>>;
-    type Methods = Constructor<ReturnType<typeof methods<InstanceType<S>>>>;
+type NamedEntityProps = ReturnType<typeof namedEntityMixin>;
+type NamedEntityMethods = ReturnType<typeof namedEntityMethodsMixin>;
 
+export type NamedEntity = NamedEntityProps & NamedEntityMethods;
+export type NamedEntityConstructor = Constructor<NamedEntity>;
+
+export default function NamedEntityMixin<S extends InMemoryEntityConstructor>(superclass: S) {
     class NamedEntityMixin extends superclass {
         constructor(...args: any[]) {
             super(...args);
-            props(this);
-            methods(this);
+            namedEntityMixin(this);
+            namedEntityMethodsMixin(this);
         }
     }
 
-    return NamedEntityMixin as S & Props & Methods;
+    return NamedEntityMixin as S & NamedEntityConstructor;
 }

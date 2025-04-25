@@ -2,13 +2,13 @@
 import { SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 
 import type { Constructor } from "../../utils/types";
-import { type InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
+import { type InMemoryEntity } from "../in_memory";
 
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
 
-function props<T extends InMemoryEntity>(item: T) {
-    return Object.assign(item, {
+export function entityInSetPropsMixin<E extends InMemoryEntity>(item: E) {
+    const properties = {
         get inSet() {
             return item.prop<InSet[]>("inSet", []);
         },
@@ -16,11 +16,17 @@ function props<T extends InMemoryEntity>(item: T) {
         set inSet(inSet: InSet[]) {
             item.setProp("inSet", inSet);
         },
-    } satisfies SystemInSetSchema);
+    } satisfies SystemInSetSchema;
+
+    Object.assign(item, properties);
+
+    return properties;
 }
 
-function methods<T extends InMemoryEntity>(item: T & ReturnType<typeof props<T>>) {
-    return Object.assign(item, {
+export function entityInSetMethodsMixin<E extends InMemoryEntity>(
+    item: E & InMemoryEntityInSetProps,
+) {
+    const methods = {
         getInSetFilteredByCls(cls: string) {
             return item.inSet.filter((ref) => ref.cls === cls);
         },
@@ -30,22 +36,32 @@ function methods<T extends InMemoryEntity>(item: T & ReturnType<typeof props<T>>
         get parentEntitySetReference() {
             return item.inSet.find((item) => item._id && !item.cls);
         },
-    });
+    };
+
+    Object.assign(item, methods);
+
+    return methods;
 }
 
-export default function InMemoryEntityInSetMixin<
-    S extends InMemoryEntityConstructor = InMemoryEntityConstructor,
->(superclass: S) {
-    type Props = Constructor<ReturnType<typeof props<InstanceType<S>>>>;
-    type Methods = Constructor<ReturnType<typeof methods<InstanceType<S>>>>;
+type InMemoryEntityInSetProps = ReturnType<typeof entityInSetPropsMixin>;
+type InMemoryEntityInSetPropsConstructor = Constructor<InMemoryEntityInSetProps>;
+type InMemoryEntityInSetMethods = ReturnType<typeof entityInSetMethodsMixin>;
+type InMemoryEntityInSetMethodsConstructor = Constructor<InMemoryEntityInSetMethods>;
 
+export type InMemoryEntityInSet = InMemoryEntityInSetProps & InMemoryEntityInSetMethods;
+export type InMemoryEntityInSetConstructor = InMemoryEntityInSetPropsConstructor &
+    InMemoryEntityInSetMethodsConstructor;
+
+type Base = Constructor<InMemoryEntity>;
+
+export default function InMemoryEntityInSetMixin<S extends Base = Base>(superclass: S) {
     class InMemoryEntityInSetMixin extends superclass {
         constructor(...args: any[]) {
             super(...args);
-            props(this);
-            methods(this as ReturnType<typeof props<InstanceType<S>>>);
+            entityInSetPropsMixin(this);
+            entityInSetMethodsMixin(this as this & InMemoryEntityInSetProps);
         }
     }
 
-    return InMemoryEntityInSetMixin as S & Props & Methods;
+    return InMemoryEntityInSetMixin as S & InMemoryEntityInSetConstructor;
 }

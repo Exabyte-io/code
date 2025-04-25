@@ -1,9 +1,16 @@
 import type { Constructor } from "../../utils/types";
-import { InMemoryEntityConstructor } from "../in_memory";
-export default function DefaultableMixin<S extends InMemoryEntityConstructor>(superclass: S): S & Constructor<InstanceType<S> & {
+import { InMemoryEntity } from "../in_memory";
+type ClassBase = Constructor<InMemoryEntity> & {
+    defaultConfig?: object | null;
+};
+declare function defaultableMixinProps<T extends InMemoryEntity>(item: T): {
     isDefault: boolean;
-}> & Constructor<S & {
-    createDefault(): S;
-} & {
-    readonly defaultConfig: object | null;
-}>;
+};
+declare function defaultableMixinStaticProps<T extends ClassBase>(item: T): {
+    createDefault(): T;
+};
+type DefaultableProps = ReturnType<typeof defaultableMixinProps>;
+type DefaultableStaticProps = ReturnType<typeof defaultableMixinStaticProps>;
+export type DefaultableConstructor = Constructor<DefaultableProps> & Constructor<DefaultableStaticProps>;
+export default function DefaultableMixin<S extends ClassBase>(superclass: S): S & DefaultableConstructor;
+export {};

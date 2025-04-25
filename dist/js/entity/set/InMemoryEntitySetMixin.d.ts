@@ -1,8 +1,13 @@
 import { SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 import type { Constructor } from "../../utils/types";
-import { InMemoryEntityConstructor } from "../in_memory";
+import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
-export default function InMemoryEntitySetMixin<S extends InMemoryEntityConstructor = InMemoryEntityConstructor>(superclass: S): S & Constructor<InstanceType<S> & {
-    containsEntity<T extends SystemInSetSchema>(entity?: T | undefined): boolean;
-}>;
+export declare function inMemoryEntitySetMixin<T extends InMemoryEntity>(item: T): T & {
+    containsEntity<T_1 extends SystemInSetSchema>(entity?: T_1): boolean;
+};
+export type InMemoryEntitySet = ReturnType<typeof inMemoryEntitySetMixin>;
+export type InMemoryEntitySetConstructor = Constructor<InMemoryEntitySet>;
+type Base = Constructor<InMemoryEntity>;
+export default function InMemoryEntitySetMixin<S extends Base = Base>(superclass: S): S & InMemoryEntitySetConstructor;
+export {};

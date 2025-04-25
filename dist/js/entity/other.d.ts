@@ -1,35 +1,21 @@
 import { InMemoryEntity } from "./in_memory";
-declare const DefaultableInMemoryEntity_base: typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+declare const DefaultableInMemoryEntity_base: typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
-}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
+}> & import("../utils/types").Constructor<{
+    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+        defaultConfig?: object | null;
+    };
 }>;
 export declare class DefaultableInMemoryEntity extends DefaultableInMemoryEntity_base {
 }
-export declare const NamedInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<{
-    name: string;
-}> & import("../utils/types").Constructor<InMemoryEntity & {
-    setName(name: string): void;
-}>;
-export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+export declare const NamedInMemoryEntity: typeof InMemoryEntity & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
+export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
-}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<{
-    name: string;
-}> & import("../utils/types").Constructor<InMemoryEntity & {
-    isDefault: boolean;
-} & typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
-} & {
-    setName(name: string): void;
-}>;
+    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+        defaultConfig?: object | null;
+    };
+}> & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const HasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
         metadata: object;
@@ -61,23 +47,13 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+} & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
-}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<{
-    name: string;
-}> & import("../utils/types").Constructor<InMemoryEntity & {
-    isDefault: boolean;
-} & typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
-} & {
-    setName(name: string): void;
-}>;
+    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+        defaultConfig?: object | null;
+    };
+}> & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
         consistencyChecks: import("@mat3ra/esse/dist/js/types").ConsistencyCheck[];
@@ -140,23 +116,13 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+} & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
-}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<{
-    name: string;
-}> & import("../utils/types").Constructor<InMemoryEntity & {
-    isDefault: boolean;
-} & typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
-} & {
-    setName(name: string): void;
-}>;
+    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+        defaultConfig?: object | null;
+    };
+}> & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: {
     new (...args: any[]): {
         readonly important: any;
@@ -230,23 +196,13 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+} & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
-}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<{
-    name: string;
-}> & import("../utils/types").Constructor<InMemoryEntity & {
-    isDefault: boolean;
-} & typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
-} & {
-    setName(name: string): void;
-}>;
+    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+        defaultConfig?: object | null;
+    };
+}> & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
     new (...params: any[]): {
         _context: import("./mixins/context").Context;
@@ -323,23 +279,13 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+} & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
-}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<{
-    name: string;
-}> & import("../utils/types").Constructor<InMemoryEntity & {
-    isDefault: boolean;
-} & typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
-} & {
-    setName(name: string): void;
-}>;
+    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+        defaultConfig?: object | null;
+    };
+}> & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity: {
     new (...args: any[]): {
         getHashObject(): {};
@@ -572,21 +518,11 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & typeof InMemoryEntity & import("../utils/types").Constructor<InMemoryEntity & {
+} & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
-}> & import("../utils/types").Constructor<typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
 }> & import("../utils/types").Constructor<{
-    name: string;
-}> & import("../utils/types").Constructor<InMemoryEntity & {
-    isDefault: boolean;
-} & typeof InMemoryEntity & {
-    createDefault(): typeof InMemoryEntity;
-} & {
-    readonly defaultConfig: object | null;
-} & {
-    setName(name: string): void;
-}>;
+    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+        defaultConfig?: object | null;
+    };
+}> & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export {};

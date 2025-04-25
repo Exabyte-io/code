@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.inMemoryEntitySetMixin = inMemoryEntitySetMixin;
 exports.default = InMemoryEntitySetMixin;
-function methods(item) {
+function inMemoryEntitySetMixin(item) {
     return Object.assign(item, {
         containsEntity(entity) {
             var _a;
@@ -13,7 +14,7 @@ function InMemoryEntitySetMixin(superclass) {
     class InMemoryEntitySetMixin extends superclass {
         constructor(...args) {
             super(...args);
-            methods(this);
+            inMemoryEntitySetMixin(this);
         }
     }
     return InMemoryEntitySetMixin;
