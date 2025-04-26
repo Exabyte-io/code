@@ -12,7 +12,7 @@ export declare class ArrayWithIds<T> {
     toValueWithIdArray(): ValueWithId<T>[];
     getElementValueById(id: number): T | undefined;
     getElementValueByIndex(index: number): T | undefined;
-    getElementIdByIndex(index: number): number | undefined;
+    getElementIdByIndex(index: number): number;
     getElementIdByValue(value: T): number | undefined;
     filterByValues(valuesToKeep: T | T[]): void;
     filterByIndices(indices: number | number[]): void;
