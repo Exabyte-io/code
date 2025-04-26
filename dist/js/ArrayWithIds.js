@@ -41,7 +41,7 @@ class ArrayWithIds {
         return this.values[index];
     }
     getElementIdByIndex(index) {
-        return this.ids[index];
+        return this.ids[index] || -1;
     }
     getElementIdByValue(value) {
         const index = this.values.findIndex((v) => Array.isArray(v) && Array.isArray(value)
