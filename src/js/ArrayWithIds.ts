@@ -63,8 +63,8 @@ export class ArrayWithIds<T> {
         return this.values[index];
     }
 
-    getElementIdByIndex(index: number): number {
-        return this.ids[index] || -1;
+    getElementIdByIndex(index: number): number | undefined {
+        return this.ids[index] || undefined;
     }
 
     getElementIdByValue(value: T): number | undefined {

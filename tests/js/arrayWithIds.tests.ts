@@ -113,7 +113,7 @@ describe("ArrayWithIds Tests", () => {
     it("should get element ID by value", () => {
         const arrayWithIds = ArrayWithIds.fromValues(FIRST_THREE_STRINGS);
         expect(arrayWithIds.getElementIdByValue("value3")).to.equal(2);
-        expect(arrayWithIds.getElementIdByValue("valueX")).to.equal(-1);
+        expect(arrayWithIds.getElementIdByValue("valueX")).to.equal(undefined);
     });
 
     it("should filter by values", () => {
