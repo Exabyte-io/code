@@ -33,6 +33,10 @@ class ArrayWithIds {
     toValueWithIdArray() {
         return this.values.map((value, index) => ValueWithId_1.ValueWithId.fromValueAndId(value, this.ids[index]));
     }
+    getElementValueById(id) {
+        const index = this.ids.indexOf(id);
+        return index !== -1 ? this.values[index] : undefined;
+    }
     getElementValueByIndex(index) {
         return this.values[index];
     }
