@@ -40,6 +40,9 @@ class ArrayWithIds {
     getElementValueByIndex(index) {
         return this.values[index];
     }
+    getElementIdByIndex(index) {
+        return this.ids[index];
+    }
     getElementIdByValue(value) {
         const index = this.values.findIndex((v) => Array.isArray(v) && Array.isArray(value)
             ? v.length === value.length && v.every((val, idx) => val === value[idx])

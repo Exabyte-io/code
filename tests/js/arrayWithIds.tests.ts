@@ -104,6 +104,12 @@ describe("ArrayWithIds Tests", () => {
         expect(arrayWithIds.getElementValueById(NON_EXISTENT_ID)).to.equal(undefined);
     });
 
+    it("should get element ID by index", () => {
+        const arrayWithIds = ArrayWithIds.fromObjects(OBJECTS_WITH_IDS);
+        expect(arrayWithIds.getElementIdByIndex(0)).to.equal(10);
+        expect(arrayWithIds.getElementIdByIndex(OUT_OF_RANGE_INDEX)).to.equal(undefined);
+    });
+
     it("should get element ID by value", () => {
         const arrayWithIds = ArrayWithIds.fromValues(FIRST_THREE_STRINGS);
         expect(arrayWithIds.getElementIdByValue("value3")).to.equal(2);

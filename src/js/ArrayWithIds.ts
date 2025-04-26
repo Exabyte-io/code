@@ -63,6 +63,10 @@ export class ArrayWithIds<T> {
         return this.values[index];
     }
 
+    getElementIdByIndex(index: number): number | undefined {
+        return this.ids[index];
+    }
+
     getElementIdByValue(value: T): number | undefined {
         const index = this.values.findIndex((v) =>
             Array.isArray(v) && Array.isArray(value)
