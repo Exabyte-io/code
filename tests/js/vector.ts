@@ -44,6 +44,14 @@ describe("Vector3D", () => {
         const vector = new Vector3D(VECTOR_FLOAT);
         expect(Math.abs(vector.norm - VECTOR_FLOAT_NORM)).to.be.lessThan(FLOAT_PRECISION);
     });
+
+    it("should translate vector", () => {
+        const vector = new Vector3D(VECTOR_FLOAT);
+        const translationVector3D = new Vector3D([1, 1, 1]);
+        const expectedTranslation = [2.23456789, 3.345678901, 4.456789012];
+        vector.translateByVector(translationVector3D);
+        expect(vector.value).to.deep.equal(expectedTranslation);
+    });
 });
 
 describe("RoundedVector3D", () => {
@@ -57,10 +65,10 @@ describe("RoundedVector3D", () => {
         const vector = new RoundedVector3D(VECTOR_FLOAT);
 
         expect(vector.toJSON()).to.deep.equal(VECTOR_FLOAT_ROUNDED_4);
-        expect(vector.value_rounded).to.deep.equal(VECTOR_FLOAT_ROUNDED_4);
-        expect(vector.x_rounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[0]);
-        expect(vector.y_rounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[1]);
-        expect(vector.z_rounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[2]);
+        expect(vector.valueRounded).to.deep.equal(VECTOR_FLOAT_ROUNDED_4);
+        expect(vector.xRounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[0]);
+        expect(vector.yRounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[1]);
+        expect(vector.zRounded).to.be.deep.equal(VECTOR_FLOAT_ROUNDED_4[2]);
     });
 
     it("should do serialization with precision 3", () => {
@@ -68,7 +76,7 @@ describe("RoundedVector3D", () => {
         const vector = new RoundedVector3D(VECTOR_FLOAT);
 
         expect(vector.toJSON()).to.deep.equal(VECTOR_FLOAT_ROUNDED_3);
-        expect(vector.value_rounded).to.deep.equal(VECTOR_FLOAT_ROUNDED_3);
+        expect(vector.valueRounded).to.deep.equal(VECTOR_FLOAT_ROUNDED_3);
     });
 
     it("should do equality changes with precision", () => {
@@ -82,5 +90,13 @@ describe("RoundedVector3D", () => {
         vector = new RoundedVector3D(VECTOR_FLOAT);
         expect(vector.equals(VECTOR_FLOAT_ROUNDED_4)).to.equal(true);
         expect(vector.equals(VECTOR_FLOAT_ROUNDED_3)).to.equal(true);
+    });
+    it("should extract rounded norm", () => {
+        RoundedVector3D.roundPrecision = 4;
+        const vector = new RoundedVector3D(VECTOR_FLOAT);
+        expect(vector.normRounded).to.be.deep.equal(4.3561);
+
+        RoundedVector3D.roundPrecision = 3;
+        expect(vector.normRounded).to.be.deep.equal(4.356);
     });
 });

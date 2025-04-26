@@ -49,6 +49,12 @@ export class Vector3D {
     get norm(): number {
         return math.vlen(this._value);
     }
+
+    translateByVector(vector: Vector3DSchema | Vector3D): Vector3D {
+        const arrayOfNumbers = vector instanceof Vector3D ? vector.value : vector;
+        this._value = this._value.map((v, i) => v + arrayOfNumbers[i]) as Vector3DSchema;
+        return this;
+    }
 }
 
 export class RoundedVector3D extends Vector3D {
@@ -64,32 +70,32 @@ export class RoundedVector3D extends Vector3D {
         return [...rounded] as Vector3DSchema;
     }
 
-    get value_rounded(): Vector3DSchema {
+    get valueRounded(): Vector3DSchema {
         return this.toJSON();
     }
 
-    get x_rounded(): number {
-        return this.value_rounded[0];
+    get xRounded(): number {
+        return this.valueRounded[0];
     }
 
-    get y_rounded(): number {
-        return this.value_rounded[1];
+    get yRounded(): number {
+        return this.valueRounded[1];
     }
 
-    get z_rounded(): number {
-        return this.value_rounded[2];
+    get zRounded(): number {
+        return this.valueRounded[2];
     }
 
     override equals(other: Vector3DSchema | RoundedVector3D): boolean {
-        const arr1 = this.value_rounded;
+        const arr1 = this.valueRounded;
         const arr2 = Array.isArray(other)
-            ? new RoundedVector3D(other).value_rounded
-            : other.value_rounded;
+            ? new RoundedVector3D(other).valueRounded
+            : other.valueRounded;
         const atol = RoundedVector3D.atol || 10 ** -RoundedVector3D.roundPrecision;
         return math.vEqualWithTolerance(arr1, arr2, atol);
     }
 
-    get norm_rounded(): number {
+    get normRounded(): number {
         return math.roundArrayOrNumber(this.norm, RoundedVector3D.roundPrecision) as number;
     }
 }
