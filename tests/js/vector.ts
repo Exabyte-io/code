@@ -1,20 +1,17 @@
+import { Vector3DSchema } from "@mat3ra/esse/dist/js/types";
 import { expect } from "chai";
 
-import { RoundedVector3D, Vector3D } from "../../src/js/vector";
+import { RoundedVector3D, Vector3D } from "../../src/js";
 
-const VECTOR_FLOAT: [number, number, number] = [1.23456789, 2.345678901, 3.456789012];
+const VECTOR_FLOAT: Vector3DSchema = [1.23456789, 2.345678901, 3.456789012];
 const VECTOR_FLOAT_NORM = 4.3561172682906;
 const FLOAT_PRECISION = 1e-8;
 
-const VECTOR_FLOAT_DIFFERENT_WITHIN_TOL: [number, number, number] = [
-    1.23456789999, 2.345678901, 3.456789012,
-];
-const VECTOR_FLOAT_DIFFERENT_OUTSIDE_TOL: [number, number, number] = [
-    1.2345699999, 2.345678901, 3.456789012,
-];
+const VECTOR_FLOAT_DIFFERENT_WITHIN_TOL: Vector3DSchema = [1.23456789999, 2.345678901, 3.456789012];
+const VECTOR_FLOAT_DIFFERENT_OUTSIDE_TOL: Vector3DSchema = [1.2345699999, 2.345678901, 3.456789012];
 
-const VECTOR_FLOAT_ROUNDED_4: [number, number, number] = [1.2346, 2.3457, 3.4568];
-const VECTOR_FLOAT_ROUNDED_3: [number, number, number] = [1.235, 2.346, 3.457];
+const VECTOR_FLOAT_ROUNDED_4: Vector3DSchema = [1.2346, 2.3457, 3.4568];
+const VECTOR_FLOAT_ROUNDED_3: Vector3DSchema = [1.235, 2.346, 3.457];
 
 describe("Vector3D", () => {
     it("should do init and value access", () => {
