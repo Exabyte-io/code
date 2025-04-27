@@ -10,7 +10,9 @@ export declare class ArrayWithIds<T> {
     }[]): C;
     toJSON(): object[];
     toValueWithIdArray(): ValueWithId<T>[];
+    getElementValueById(id: number): T | undefined;
     getElementValueByIndex(index: number): T | undefined;
+    getElementIdByIndex(index: number): number | undefined;
     getElementIdByValue(value: T): number | undefined;
     filterByValues(valuesToKeep: T | T[]): void;
     filterByIndices(indices: number | number[]): void;

@@ -54,8 +54,17 @@ export class ArrayWithIds<T> {
         );
     }
 
+    getElementValueById(id: number): T | undefined {
+        const index = this.ids.indexOf(id);
+        return index !== -1 ? this.values[index] : undefined;
+    }
+
     getElementValueByIndex(index: number): T | undefined {
         return this.values[index];
+    }
+
+    getElementIdByIndex(index: number): number | undefined {
+        return this.ids[index] || undefined;
     }
 
     getElementIdByValue(value: T): number | undefined {

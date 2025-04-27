@@ -9,14 +9,15 @@ export declare class Vector3D {
     get z(): number;
     equals(other: number[] | Vector3DSchema | Vector3D): boolean;
     get norm(): number;
+    translateByVector(vector: Vector3DSchema | Vector3D): Vector3D;
 }
 export declare class RoundedVector3D extends Vector3D {
     static roundPrecision: number;
     toJSON(skipRounding?: boolean): Vector3DSchema;
-    get value_rounded(): Vector3DSchema;
-    get x_rounded(): number;
-    get y_rounded(): number;
-    get z_rounded(): number;
+    get valueRounded(): Vector3DSchema;
+    get xRounded(): number;
+    get yRounded(): number;
+    get zRounded(): number;
     equals(other: Vector3DSchema | RoundedVector3D): boolean;
-    get norm_rounded(): number;
+    get normRounded(): number;
 }
