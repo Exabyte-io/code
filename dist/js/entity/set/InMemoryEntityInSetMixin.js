@@ -12,7 +12,7 @@ function entityInSetPropsMixin(item) {
             item.setProp("inSet", inSet);
         },
     };
-    Object.assign(item, properties);
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
     return properties;
 }
 function entityInSetMethodsMixin(item) {
@@ -26,7 +26,7 @@ function entityInSetMethodsMixin(item) {
             return item.inSet.find((item) => item._id && !item.cls);
         },
     };
-    Object.assign(item, methods);
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
     return methods;
 }
 function InMemoryEntityInSetMixin(superclass) {

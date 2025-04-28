@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = DefaultableMixin;
 function defaultableMixinProps(item) {
-    const props = {
+    const properties = {
         get isDefault() {
             return item.prop("isDefault", false);
         },
@@ -10,8 +10,8 @@ function defaultableMixinProps(item) {
             item.setProp("isDefault", isDefault);
         },
     };
-    Object.assign(item, props);
-    return props;
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    return properties;
 }
 function defaultableMixinStaticProps(item) {
     const properties = {
@@ -20,7 +20,7 @@ function defaultableMixinStaticProps(item) {
             return new item.prototype.constructor(item.defaultConfig);
         },
     };
-    Object.assign(item, properties);
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
     return properties;
 }
 function DefaultableMixin(superclass) {

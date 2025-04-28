@@ -3,7 +3,7 @@ import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 declare function namedEntityMixin(item: InMemoryEntity): {
     name: string;
 };
-declare function namedEntityMethodsMixin(item: InMemoryEntity): InMemoryEntity & {
+declare function namedEntityMethodsMixin(item: InMemoryEntity): {
     setName(name: string): void;
 };
 type NamedEntityProps = ReturnType<typeof namedEntityMixin>;

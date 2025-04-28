@@ -18,7 +18,7 @@ export function entityInSetPropsMixin<E extends InMemoryEntity>(item: E) {
         },
     } satisfies SystemInSetSchema;
 
-    Object.assign(item, properties);
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
     return properties;
 }
@@ -38,7 +38,7 @@ export function entityInSetMethodsMixin<E extends InMemoryEntity>(
         },
     };
 
-    Object.assign(item, methods);
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
 
     return methods;
 }

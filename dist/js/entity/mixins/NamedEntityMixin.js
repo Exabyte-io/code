@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = NamedEntityMixin;
 function namedEntityMixin(item) {
-    const schema = {
+    const properties = {
         get name() {
             return item.prop("name", "");
         },
@@ -10,15 +10,17 @@ function namedEntityMixin(item) {
             item.setProp("name", name);
         },
     };
-    Object.assign(item, schema);
-    return schema;
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    return properties;
 }
 function namedEntityMethodsMixin(item) {
-    return Object.assign(item, {
+    const methods = {
         setName(name) {
             item.setProp("name", name);
         },
-    });
+    };
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
+    return methods;
 }
 function NamedEntityMixin(superclass) {
     class NamedEntityMixin extends superclass {

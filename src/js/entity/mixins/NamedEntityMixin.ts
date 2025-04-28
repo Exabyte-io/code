@@ -5,7 +5,7 @@ import type { Constructor } from "../../utils/types";
 import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 
 function namedEntityMixin(item: InMemoryEntity) {
-    const schema = {
+    const properties = {
         get name(): string {
             return item.prop("name", "");
         },
@@ -14,17 +14,21 @@ function namedEntityMixin(item: InMemoryEntity) {
         },
     } satisfies NameEntitySchema;
 
-    Object.assign(item, schema);
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
-    return schema;
+    return properties;
 }
 
 function namedEntityMethodsMixin(item: InMemoryEntity) {
-    return Object.assign(item, {
+    const methods = {
         setName(name: string) {
             item.setProp("name", name);
         },
-    });
+    };
+
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
+
+    return methods;
 }
 
 type NamedEntityProps = ReturnType<typeof namedEntityMixin>;

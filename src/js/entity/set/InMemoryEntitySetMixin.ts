@@ -8,11 +8,15 @@ export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
 
 export function inMemoryEntitySetMixin<T extends InMemoryEntity>(item: T) {
-    return Object.assign(item, {
+    const properties = {
         containsEntity<T extends SystemInSetSchema>(entity?: T) {
             return Boolean(entity?.inSet?.some((ref) => ref._id === item.id));
         },
-    });
+    };
+
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+
+    return properties;
 }
 
 export type InMemoryEntitySet = ReturnType<typeof inMemoryEntitySetMixin>;
