@@ -4,7 +4,7 @@ import type { NameEntitySchema } from "@mat3ra/esse/dist/js/types";
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 
-function namedEntityMixin(item: InMemoryEntity) {
+export function namedEntityMixin(item: InMemoryEntity) {
     const properties = {
         get name(): string {
             return item.prop("name", "");
@@ -19,7 +19,7 @@ function namedEntityMixin(item: InMemoryEntity) {
     return properties;
 }
 
-function namedEntityMethodsMixin(item: InMemoryEntity) {
+export function namedEntityMethodsMixin(item: InMemoryEntity) {
     const methods = {
         setName(name: string) {
             item.setProp("name", name);

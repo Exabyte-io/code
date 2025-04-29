@@ -8,7 +8,7 @@ type ClassBase = Constructor<InMemoryEntity> & {
     defaultConfig?: object | null;
 };
 
-function defaultableMixinProps<T extends InMemoryEntity>(item: T) {
+export function defaultableMixinProps<T extends InMemoryEntity>(item: T) {
     const properties = {
         get isDefault() {
             return item.prop("isDefault", false);
@@ -23,7 +23,7 @@ function defaultableMixinProps<T extends InMemoryEntity>(item: T) {
     return properties;
 }
 
-function defaultableMixinStaticProps<T extends ClassBase>(item: T) {
+export function defaultableMixinStaticProps<T extends ClassBase>(item: T) {
     const properties = {
         createDefault(): T {
             // @ts-ignore

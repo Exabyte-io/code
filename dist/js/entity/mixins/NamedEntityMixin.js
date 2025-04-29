@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.namedEntityMixin = namedEntityMixin;
+exports.namedEntityMethodsMixin = namedEntityMethodsMixin;
 exports.default = NamedEntityMixin;
 function namedEntityMixin(item) {
     const properties = {

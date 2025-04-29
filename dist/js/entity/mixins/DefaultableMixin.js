@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.defaultableMixinProps = defaultableMixinProps;
+exports.defaultableMixinStaticProps = defaultableMixinStaticProps;
 exports.default = DefaultableMixin;
 function defaultableMixinProps(item) {
     const properties = {

@@ -3,10 +3,10 @@ import { InMemoryEntity } from "../in_memory";
 type ClassBase = Constructor<InMemoryEntity> & {
     defaultConfig?: object | null;
 };
-declare function defaultableMixinProps<T extends InMemoryEntity>(item: T): {
+export declare function defaultableMixinProps<T extends InMemoryEntity>(item: T): {
     isDefault: boolean;
 };
-declare function defaultableMixinStaticProps<T extends ClassBase>(item: T): {
+export declare function defaultableMixinStaticProps<T extends ClassBase>(item: T): {
     createDefault(): T;
 };
 type DefaultableProps = ReturnType<typeof defaultableMixinProps>;
