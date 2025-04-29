@@ -11,6 +11,6 @@ export declare function defaultableMixinStaticProps<T extends ClassBase>(item: T
 };
 type DefaultableProps = ReturnType<typeof defaultableMixinProps>;
 type DefaultableStaticProps = ReturnType<typeof defaultableMixinStaticProps>;
-export type DefaultableConstructor = Constructor<DefaultableProps> & Constructor<DefaultableStaticProps>;
+export type DefaultableConstructor = Constructor<DefaultableProps> & DefaultableStaticProps;
 export default function DefaultableMixin<S extends ClassBase>(superclass: S): S & DefaultableConstructor;
 export {};
