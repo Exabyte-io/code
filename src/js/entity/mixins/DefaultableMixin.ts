@@ -23,15 +23,15 @@ export function defaultableMixinProps<T extends InMemoryEntity>(item: T) {
     return properties;
 }
 
-export function defaultableMixinStaticProps<T extends ClassBase>(item: T) {
+export function defaultableMixinStaticProps<T extends ClassBase>(Item: T) {
     const properties = {
         createDefault(): T {
             // @ts-ignore
-            return new item.prototype.constructor(item.defaultConfig);
+            return new Item(item.defaultConfig);
         },
     };
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    Object.defineProperties(Item, Object.getOwnPropertyDescriptors(properties));
 
     return properties;
 }

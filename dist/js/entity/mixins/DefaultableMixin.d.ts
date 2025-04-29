@@ -6,7 +6,7 @@ type ClassBase = Constructor<InMemoryEntity> & {
 export declare function defaultableMixinProps<T extends InMemoryEntity>(item: T): {
     isDefault: boolean;
 };
-export declare function defaultableMixinStaticProps<T extends ClassBase>(item: T): {
+export declare function defaultableMixinStaticProps<T extends ClassBase>(Item: T): {
     createDefault(): T;
 };
 type DefaultableProps = ReturnType<typeof defaultableMixinProps>;

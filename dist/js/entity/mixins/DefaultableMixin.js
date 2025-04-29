@@ -15,14 +15,14 @@ function defaultableMixinProps(item) {
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
     return properties;
 }
-function defaultableMixinStaticProps(item) {
+function defaultableMixinStaticProps(Item) {
     const properties = {
         createDefault() {
             // @ts-ignore
-            return new item.prototype.constructor(item.defaultConfig);
+            return new Item(item.defaultConfig);
         },
     };
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    Object.defineProperties(Item, Object.getOwnPropertyDescriptors(properties));
     return properties;
 }
 function DefaultableMixin(superclass) {
