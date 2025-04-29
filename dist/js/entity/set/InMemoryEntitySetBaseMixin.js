@@ -2,9 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inMemoryEntitySetBaseMixin = inMemoryEntitySetBaseMixin;
 exports.default = InMemoryEntitySetBaseMixin;
-function inMemoryEntitySetBaseMixin(item) {
-    const originalCls = item.cls;
-    const properties = {
+function schemaMixin(item) {
+    const schema = {
         get isEntitySet() {
             return item.prop("isEntitySet", false);
         },
@@ -14,16 +13,27 @@ function inMemoryEntitySetBaseMixin(item) {
         get entityCls() {
             return item.prop("entityCls");
         },
+    };
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
+    return schema;
+}
+function methodsMixin(item) {
+    const originalCls = item.cls;
+    const methods = {
         get cls() {
-            return this.entityCls || originalCls;
+            return item.entityCls || originalCls;
         },
         toJSONForInclusionInEntity() {
             const { _id, type } = item.toJSON();
             return { _id, type };
         },
     };
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-    return properties;
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
+    return methods;
+}
+function inMemoryEntitySetBaseMixin(item) {
+    schemaMixin(item);
+    methodsMixin(item);
 }
 function InMemoryEntitySetBaseMixin(superclass) {
     class InMemoryEntitySetBaseMixin extends superclass {

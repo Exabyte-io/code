@@ -7,8 +7,8 @@ import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
 
-function entityInSetPropsMixin<E extends InMemoryEntity>(item: E) {
-    const properties = {
+function schemaMixin<E extends InMemoryEntity>(item: E) {
+    const schema = {
         get inSet() {
             return item.prop<InSet[]>("inSet", []);
         },
@@ -18,13 +18,13 @@ function entityInSetPropsMixin<E extends InMemoryEntity>(item: E) {
         },
     } satisfies SystemInSetSchema;
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
 
-    return properties;
+    return schema;
 }
 
-function entityInSetMethodsMixin<E extends InMemoryEntity>(item: E & InMemoryEntityInSetProps) {
-    const methods = {
+function propertiesMixin<E extends InMemoryEntity>(item: E & InMemoryEntityInSetSchema) {
+    const properties = {
         getInSetFilteredByCls(cls: string) {
             return item.inSet.filter((ref) => ref.cls === cls);
         },
@@ -36,24 +36,24 @@ function entityInSetMethodsMixin<E extends InMemoryEntity>(item: E & InMemoryEnt
         },
     };
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
-    return methods;
+    return properties;
 }
 
-export function entityInSetMixin<E extends InMemoryEntity>(item: E) {
-    entityInSetPropsMixin(item);
-    entityInSetMethodsMixin(item as E & InMemoryEntityInSetProps);
+export function inMemoryEntityInSetMixin<E extends InMemoryEntity>(item: E) {
+    schemaMixin(item);
+    propertiesMixin(item as E & InMemoryEntityInSetSchema);
 }
 
-type InMemoryEntityInSetProps = ReturnType<typeof entityInSetPropsMixin>;
-type InMemoryEntityInSetPropsConstructor = Constructor<InMemoryEntityInSetProps>;
-type InMemoryEntityInSetMethods = ReturnType<typeof entityInSetMethodsMixin>;
-type InMemoryEntityInSetMethodsConstructor = Constructor<InMemoryEntityInSetMethods>;
+type InMemoryEntityInSetSchema = ReturnType<typeof schemaMixin>;
+type InMemoryEntityInSetSchemaConstructor = Constructor<InMemoryEntityInSetSchema>;
+type InMemoryEntityInSetProperties = ReturnType<typeof propertiesMixin>;
+type InMemoryEntityInSetPropertiesConstructor = Constructor<InMemoryEntityInSetProperties>;
 
-export type InMemoryEntityInSet = InMemoryEntityInSetProps & InMemoryEntityInSetMethods;
-export type InMemoryEntityInSetConstructor = InMemoryEntityInSetPropsConstructor &
-    InMemoryEntityInSetMethodsConstructor;
+export type InMemoryEntityInSet = InMemoryEntityInSetSchema & InMemoryEntityInSetProperties;
+export type InMemoryEntityInSetConstructor = InMemoryEntityInSetSchemaConstructor &
+    InMemoryEntityInSetPropertiesConstructor;
 
 type Base = Constructor<InMemoryEntity>;
 
@@ -61,7 +61,7 @@ export default function InMemoryEntityInSetMixin<S extends Base = Base>(supercla
     class InMemoryEntityInSetMixin extends superclass {
         constructor(...args: any[]) {
             super(...args);
-            entityInSetMixin(this);
+            inMemoryEntityInSetMixin(this);
         }
     }
 

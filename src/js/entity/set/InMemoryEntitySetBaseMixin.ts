@@ -7,38 +7,51 @@ import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
 
-export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(item: T) {
-    const originalCls = item.cls;
-
-    const properties = {
+function schemaMixin<E extends InMemoryEntity>(item: E) {
+    const schema = {
         get isEntitySet() {
-            return item.prop<EntitySetSchema["isEntitySet"]>("isEntitySet", false);
+            return item.prop("isEntitySet", false);
         },
 
         get entitySetType() {
-            return item.prop<EntitySetSchema["entitySetType"]>("entitySetType");
+            return item.prop("entitySetType");
         },
 
         get entityCls() {
-            return item.prop<EntitySetSchema["entityCls"]>("entityCls");
+            return item.prop("entityCls");
         },
+    } satisfies EntitySetSchema;
 
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
+
+    return schema;
+}
+
+function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema) {
+    const originalCls = item.cls;
+
+    const methods = {
         get cls() {
-            return this.entityCls || originalCls;
+            return item.entityCls || originalCls;
         },
-
         toJSONForInclusionInEntity() {
             const { _id, type } = item.toJSON() as { _id: string; type: string };
             return { _id, type };
         },
     };
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
 
-    return properties;
+    return methods;
 }
 
-export type InMemoryEntitySetBase = ReturnType<typeof inMemoryEntitySetBaseMixin>;
+export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(item: T) {
+    schemaMixin(item);
+    methodsMixin(item as T & EntitySetSchema);
+}
+
+export type InMemoryEntitySetBase = ReturnType<typeof schemaMixin> &
+    ReturnType<typeof methodsMixin>;
 export type InMemoryEntitySetBaseConstructor = Constructor<InMemoryEntitySetBase>;
 
 type Base = Constructor<InMemoryEntity>;

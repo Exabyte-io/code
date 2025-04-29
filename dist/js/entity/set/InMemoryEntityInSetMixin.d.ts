@@ -3,10 +3,10 @@ import type { Constructor } from "../../utils/types";
 import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
-declare function entityInSetPropsMixin<E extends InMemoryEntity>(item: E): {
+declare function schemaMixin<E extends InMemoryEntity>(item: E): {
     inSet: InSet[];
 };
-declare function entityInSetMethodsMixin<E extends InMemoryEntity>(item: E & InMemoryEntityInSetProps): {
+declare function propertiesMixin<E extends InMemoryEntity>(item: E & InMemoryEntityInSetSchema): {
     getInSetFilteredByCls(cls: string): {
         _id: string;
         cls?: string;
@@ -22,13 +22,13 @@ declare function entityInSetMethodsMixin<E extends InMemoryEntity>(item: E & InM
         index?: number;
     } | undefined;
 };
-export declare function entityInSetMixin<E extends InMemoryEntity>(item: E): void;
-type InMemoryEntityInSetProps = ReturnType<typeof entityInSetPropsMixin>;
-type InMemoryEntityInSetPropsConstructor = Constructor<InMemoryEntityInSetProps>;
-type InMemoryEntityInSetMethods = ReturnType<typeof entityInSetMethodsMixin>;
-type InMemoryEntityInSetMethodsConstructor = Constructor<InMemoryEntityInSetMethods>;
-export type InMemoryEntityInSet = InMemoryEntityInSetProps & InMemoryEntityInSetMethods;
-export type InMemoryEntityInSetConstructor = InMemoryEntityInSetPropsConstructor & InMemoryEntityInSetMethodsConstructor;
+export declare function inMemoryEntityInSetMixin<E extends InMemoryEntity>(item: E): void;
+type InMemoryEntityInSetSchema = ReturnType<typeof schemaMixin>;
+type InMemoryEntityInSetSchemaConstructor = Constructor<InMemoryEntityInSetSchema>;
+type InMemoryEntityInSetProperties = ReturnType<typeof propertiesMixin>;
+type InMemoryEntityInSetPropertiesConstructor = Constructor<InMemoryEntityInSetProperties>;
+export type InMemoryEntityInSet = InMemoryEntityInSetSchema & InMemoryEntityInSetProperties;
+export type InMemoryEntityInSetConstructor = InMemoryEntityInSetSchemaConstructor & InMemoryEntityInSetPropertiesConstructor;
 type Base = Constructor<InMemoryEntity>;
 export default function InMemoryEntityInSetMixin<S extends Base = Base>(superclass: S): S & InMemoryEntityInSetConstructor;
 export {};
