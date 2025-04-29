@@ -30,7 +30,7 @@ export declare function ContextAndRenderFieldsMixin<T extends InMemoryEntityCons
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         id: string;
         _id: string;
@@ -65,7 +65,7 @@ export declare function DomainContextProviderMixin<T extends InMemoryEntityConst
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         id: string;
         _id: string;
@@ -101,7 +101,7 @@ export declare function ImportantSettingsProviderMixin<T extends InMemoryEntityC
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         id: string;
         _id: string;

@@ -22,7 +22,7 @@ export declare function OrderedInMemoryEntitySetMixin<T extends InMemoryEntityCo
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../../in_memory").InMemoryEntity[], entity: string, name: string): import("../../in_memory").InMemoryEntity;
         id: string;
         _id: string;
@@ -58,7 +58,7 @@ export declare function OrderedInMemoryEntityInSetMixin<T extends InMemoryEntity
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../../in_memory").InMemoryEntity[], entity: string, name: string): import("../../in_memory").InMemoryEntity;
         id: string;
         _id: string;

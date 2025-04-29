@@ -38,7 +38,7 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -76,7 +76,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -107,7 +107,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -149,7 +149,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -187,7 +187,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -232,7 +232,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -270,7 +270,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -308,7 +308,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -346,7 +346,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -381,7 +381,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -413,7 +413,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -471,7 +471,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
@@ -509,7 +509,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
         id: string;
         _id: string;
