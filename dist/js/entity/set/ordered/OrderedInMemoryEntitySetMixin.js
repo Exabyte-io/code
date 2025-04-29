@@ -1,10 +1,10 @@
 "use strict";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.orderedEntitySetPropertiesMixin = orderedEntitySetPropertiesMixin;
+exports.orderedEntitySetMixin = orderedEntitySetMixin;
 exports.default = OrderedInMemoryEntitySetMixin;
 const enums_1 = require("../enums");
-function orderedEntitySetPropertiesMixin(item) {
+function orderedEntitySetMixin(item) {
     const properties = {
         get isOrderedSet() {
             return item.entitySetType === enums_1.ENTITY_SET_TYPES.ordered;
@@ -17,7 +17,7 @@ function OrderedInMemoryEntitySetMixin(superclass) {
     class OrderedInMemoryEntitySetMixin extends superclass {
         constructor(...args) {
             super(...args);
-            orderedEntitySetPropertiesMixin(this);
+            orderedEntitySetMixin(this);
         }
     }
     return OrderedInMemoryEntitySetMixin;

@@ -8,7 +8,7 @@ import type {
     InMemoryEntitySetBaseConstructor,
 } from "../InMemoryEntitySetBaseMixin";
 
-export function orderedEntitySetPropertiesMixin(item: InMemoryEntity & InMemoryEntitySetBase) {
+export function orderedEntitySetMixin(item: InMemoryEntity & InMemoryEntitySetBase) {
     const properties = {
         get isOrderedSet(): boolean {
             return item.entitySetType === ENTITY_SET_TYPES.ordered;
@@ -20,7 +20,7 @@ export function orderedEntitySetPropertiesMixin(item: InMemoryEntity & InMemoryE
     return properties;
 }
 
-export type OrderedInMemoryEntitySet = ReturnType<typeof orderedEntitySetPropertiesMixin>;
+export type OrderedInMemoryEntitySet = ReturnType<typeof orderedEntitySetMixin>;
 export type OrderedInMemoryEntitySetConstructor = Constructor<OrderedInMemoryEntitySet>;
 
 type Base = Constructor<InMemoryEntity> & InMemoryEntitySetBaseConstructor;
@@ -29,7 +29,7 @@ export default function OrderedInMemoryEntitySetMixin<S extends Base = Base>(sup
     class OrderedInMemoryEntitySetMixin extends superclass {
         constructor(...args: any[]) {
             super(...args);
-            orderedEntitySetPropertiesMixin(this);
+            orderedEntitySetMixin(this);
         }
     }
 
