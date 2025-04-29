@@ -2,9 +2,9 @@ import { InMemoryEntity } from "./in_memory";
 declare const DefaultableInMemoryEntity_base: typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
 }> & {
-    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+    createDefault(this: import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    };
+    }): InMemoryEntity;
 };
 export declare class DefaultableInMemoryEntity extends DefaultableInMemoryEntity_base {
 }
@@ -12,9 +12,9 @@ export declare const NamedInMemoryEntity: typeof InMemoryEntity & import("./mixi
 export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
 }> & {
-    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+    createDefault(this: import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    };
+    }): InMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const HasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
@@ -50,9 +50,9 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
 } & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
 }> & {
-    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+    createDefault(this: import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    };
+    }): InMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
@@ -119,9 +119,9 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
 } & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
 }> & {
-    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+    createDefault(this: import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    };
+    }): InMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: {
     new (...args: any[]): {
@@ -199,9 +199,9 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
 } & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
 }> & {
-    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+    createDefault(this: import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    };
+    }): InMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
     new (...params: any[]): {
@@ -282,9 +282,9 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
 } & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
 }> & {
-    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+    createDefault(this: import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    };
+    }): InMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity: {
     new (...args: any[]): {
@@ -521,8 +521,8 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
 } & typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
 }> & {
-    createDefault(): import("../utils/types").Constructor<InMemoryEntity> & {
+    createDefault(this: import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    };
+    }): InMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
 export {};

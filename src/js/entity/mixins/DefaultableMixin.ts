@@ -25,9 +25,9 @@ export function defaultableMixinProps<T extends InMemoryEntity>(item: T) {
 
 export function defaultableMixinStaticProps<T extends ClassBase>(Item: T) {
     const properties = {
-        createDefault(): T {
+        createDefault(this: T) {
             // @ts-ignore
-            return new Item(item.defaultConfig);
+            return new this(item.defaultConfig);
         },
     };
 

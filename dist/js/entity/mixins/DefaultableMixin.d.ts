@@ -7,7 +7,7 @@ export declare function defaultableMixinProps<T extends InMemoryEntity>(item: T)
     isDefault: boolean;
 };
 export declare function defaultableMixinStaticProps<T extends ClassBase>(Item: T): {
-    createDefault(): T;
+    createDefault(this: T): InMemoryEntity;
 };
 type DefaultableProps = ReturnType<typeof defaultableMixinProps>;
 type DefaultableStaticProps = ReturnType<typeof defaultableMixinStaticProps>;

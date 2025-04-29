@@ -19,7 +19,7 @@ function defaultableMixinStaticProps(Item) {
     const properties = {
         createDefault() {
             // @ts-ignore
-            return new Item(item.defaultConfig);
+            return new this(item.defaultConfig);
         },
     };
     Object.defineProperties(Item, Object.getOwnPropertyDescriptors(properties));
