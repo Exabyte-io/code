@@ -8,6 +8,8 @@ export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
 
 export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(item: T) {
+    const originalCls = item.cls;
+
     const properties = {
         get isEntitySet() {
             return item.prop<EntitySetSchema["isEntitySet"]>("isEntitySet", false);
@@ -22,7 +24,7 @@ export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(item: T) {
         },
 
         get cls() {
-            return this.entityCls || item.cls;
+            return this.entityCls || originalCls;
         },
 
         toJSONForInclusionInEntity() {

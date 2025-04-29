@@ -3,10 +3,10 @@ import type { Constructor } from "../../utils/types";
 import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
-export declare function entityInSetPropsMixin<E extends InMemoryEntity>(item: E): {
+declare function entityInSetPropsMixin<E extends InMemoryEntity>(item: E): {
     inSet: InSet[];
 };
-export declare function entityInSetMethodsMixin<E extends InMemoryEntity>(item: E & InMemoryEntityInSetProps): {
+declare function entityInSetMethodsMixin<E extends InMemoryEntity>(item: E & InMemoryEntityInSetProps): {
     getInSetFilteredByCls(cls: string): {
         _id: string;
         cls?: string;
@@ -22,6 +22,7 @@ export declare function entityInSetMethodsMixin<E extends InMemoryEntity>(item: 
         index?: number;
     } | undefined;
 };
+export declare function entityInSetMixin<E extends InMemoryEntity>(item: E): void;
 type InMemoryEntityInSetProps = ReturnType<typeof entityInSetPropsMixin>;
 type InMemoryEntityInSetPropsConstructor = Constructor<InMemoryEntityInSetProps>;
 type InMemoryEntityInSetMethods = ReturnType<typeof entityInSetMethodsMixin>;

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.inMemoryEntitySetBaseMixin = inMemoryEntitySetBaseMixin;
 exports.default = InMemoryEntitySetBaseMixin;
 function inMemoryEntitySetBaseMixin(item) {
+    const originalCls = item.cls;
     const properties = {
         get isEntitySet() {
             return item.prop("isEntitySet", false);
@@ -14,7 +15,7 @@ function inMemoryEntitySetBaseMixin(item) {
             return item.prop("entityCls");
         },
         get cls() {
-            return this.entityCls || item.cls;
+            return this.entityCls || originalCls;
         },
         toJSONForInclusionInEntity() {
             const { _id, type } = item.toJSON();

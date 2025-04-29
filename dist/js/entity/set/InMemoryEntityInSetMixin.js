@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.entityInSetPropsMixin = entityInSetPropsMixin;
-exports.entityInSetMethodsMixin = entityInSetMethodsMixin;
+exports.entityInSetMixin = entityInSetMixin;
 exports.default = InMemoryEntityInSetMixin;
 function entityInSetPropsMixin(item) {
     const properties = {
@@ -29,12 +28,15 @@ function entityInSetMethodsMixin(item) {
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
     return methods;
 }
+function entityInSetMixin(item) {
+    entityInSetPropsMixin(item);
+    entityInSetMethodsMixin(item);
+}
 function InMemoryEntityInSetMixin(superclass) {
     class InMemoryEntityInSetMixin extends superclass {
         constructor(...args) {
             super(...args);
-            entityInSetPropsMixin(this);
-            entityInSetMethodsMixin(this);
+            entityInSetMixin(this);
         }
     }
     return InMemoryEntityInSetMixin;
