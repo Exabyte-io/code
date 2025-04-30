@@ -1,4 +1,4 @@
-import type { Constructor } from "src/js/utils/types";
+import type { Constructor } from "../../utils/types";
 import type { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 export declare function taggableMixin(item: InMemoryEntity): {
     setTags(array: string[]): void;

@@ -1,6 +1,6 @@
 import type { EntityTagsSchema } from "@mat3ra/esse/dist/js/types";
-import type { Constructor } from "src/js/utils/types";
 
+import type { Constructor } from "../../utils/types";
 import type { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 
 function schemaMixin(item: InMemoryEntity) {
