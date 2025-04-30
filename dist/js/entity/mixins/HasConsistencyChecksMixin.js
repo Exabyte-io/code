@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.namedEntityMixin = namedEntityMixin;
-exports.default = NamedEntityMixin;
+exports.hasConsistencyChecksMixin = hasConsistencyChecksMixin;
+exports.default = HasConsistencyChecksMixin;
 function schemaMixin(item) {
     const schema = {
-        get name() {
-            return item.prop("name", "");
+        get consistencyChecks() {
+            return item.prop("consistencyChecks", []);
         },
-        set name(name) {
-            item.setProp("name", name);
+        set consistencyChecks(array) {
+            item.setProp("consistencyChecks", array);
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
@@ -16,26 +16,26 @@ function schemaMixin(item) {
 }
 function propertiesMixin(item) {
     const properties = {
-        setName(name) {
-            item.setProp("name", name);
+        addConsistencyChecks(array) {
+            item.consistencyChecks = [...(item.consistencyChecks || []), ...array];
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
     return properties;
 }
-function namedEntityMixin(item) {
+function hasConsistencyChecksMixin(item) {
     return {
         ...schemaMixin(item),
         ...propertiesMixin(item),
     };
 }
-function NamedEntityMixin(superclass) {
-    class NamedEntityMixin extends superclass {
+function HasConsistencyChecksMixin(superclass) {
+    class HasConsistencyChecksMixin extends superclass {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...args) {
             super(...args);
-            namedEntityMixin(this);
+            hasConsistencyChecksMixin(this);
         }
     }
-    return NamedEntityMixin;
+    return HasConsistencyChecksMixin;
 }

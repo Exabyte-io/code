@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NameEntitySchema } from "@mat3ra/esse/dist/js/types";
 
 import type { Constructor } from "../../utils/types";
@@ -43,6 +42,7 @@ export type NamedInMemoryEntityConstructor = Constructor<NamedInMemoryEntity>;
 
 export default function NamedEntityMixin<S extends InMemoryEntityConstructor>(superclass: S) {
     class NamedEntityMixin extends superclass {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...args: any[]) {
             super(...args);
             namedEntityMixin(this);

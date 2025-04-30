@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.namedEntityMixin = namedEntityMixin;
-exports.default = NamedEntityMixin;
+exports.hasMetadataMixin = hasMetadataMixin;
+exports.default = HasMetadataMixin;
 function schemaMixin(item) {
     const schema = {
-        get name() {
-            return item.prop("name", "");
+        get metadata() {
+            return item.prop("metadata", {});
         },
-        set name(name) {
-            item.setProp("name", name);
+        set metadata(object) {
+            item.setProp("metadata", object);
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
@@ -16,26 +16,26 @@ function schemaMixin(item) {
 }
 function propertiesMixin(item) {
     const properties = {
-        setName(name) {
-            item.setProp("name", name);
+        updateMetadata(object) {
+            item.metadata = { ...item.metadata, ...object };
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
     return properties;
 }
-function namedEntityMixin(item) {
+function hasMetadataMixin(item) {
     return {
         ...schemaMixin(item),
         ...propertiesMixin(item),
     };
 }
-function NamedEntityMixin(superclass) {
-    class NamedEntityMixin extends superclass {
+function HasMetadataMixin(superclass) {
+    class HasMetadataMixin extends superclass {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...args) {
             super(...args);
-            namedEntityMixin(this);
+            hasMetadataMixin(this);
         }
     }
-    return NamedEntityMixin;
+    return HasMetadataMixin;
 }

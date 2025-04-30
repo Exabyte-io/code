@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.namedEntityMixin = namedEntityMixin;
-exports.default = NamedEntityMixin;
+exports.taggableMixin = taggableMixin;
+exports.default = TaggableMixin;
 function schemaMixin(item) {
     const schema = {
-        get name() {
-            return item.prop("name", "");
+        get tags() {
+            return item.prop("tags", []);
         },
-        set name(name) {
-            item.setProp("name", name);
+        set tags(array) {
+            item.setProp("tags", array);
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
@@ -16,26 +16,26 @@ function schemaMixin(item) {
 }
 function propertiesMixin(item) {
     const properties = {
-        setName(name) {
-            item.setProp("name", name);
+        setTags(array) {
+            item.tags = array.filter((value, index, self) => self.indexOf(value) === index);
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
     return properties;
 }
-function namedEntityMixin(item) {
+function taggableMixin(item) {
     return {
         ...schemaMixin(item),
         ...propertiesMixin(item),
     };
 }
-function NamedEntityMixin(superclass) {
-    class NamedEntityMixin extends superclass {
+function TaggableMixin(superclass) {
+    class TaggableMixin extends superclass {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...args) {
             super(...args);
-            namedEntityMixin(this);
+            taggableMixin(this);
         }
     }
-    return NamedEntityMixin;
+    return TaggableMixin;
 }
