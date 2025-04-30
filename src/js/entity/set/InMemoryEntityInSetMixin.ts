@@ -7,6 +7,8 @@ import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
 
+type InMemoryEntityInSetSchema = ReturnType<typeof schemaMixin>;
+
 function schemaMixin<E extends InMemoryEntity>(item: E) {
     const schema = {
         get inSet() {
@@ -42,18 +44,14 @@ function propertiesMixin<E extends InMemoryEntity>(item: E & InMemoryEntityInSet
 }
 
 export function inMemoryEntityInSetMixin<E extends InMemoryEntity>(item: E) {
-    schemaMixin(item);
-    propertiesMixin(item as E & InMemoryEntityInSetSchema);
+    return {
+        ...schemaMixin(item),
+        ...propertiesMixin(item as E & InMemoryEntityInSetSchema),
+    };
 }
 
-type InMemoryEntityInSetSchema = ReturnType<typeof schemaMixin>;
-type InMemoryEntityInSetSchemaConstructor = Constructor<InMemoryEntityInSetSchema>;
-type InMemoryEntityInSetProperties = ReturnType<typeof propertiesMixin>;
-type InMemoryEntityInSetPropertiesConstructor = Constructor<InMemoryEntityInSetProperties>;
-
-export type InMemoryEntityInSet = InMemoryEntityInSetSchema & InMemoryEntityInSetProperties;
-export type InMemoryEntityInSetConstructor = InMemoryEntityInSetSchemaConstructor &
-    InMemoryEntityInSetPropertiesConstructor;
+export type InMemoryEntityInSet = ReturnType<typeof inMemoryEntityInSetMixin>;
+export type InMemoryEntityInSetConstructor = Constructor<InMemoryEntityInSet>;
 
 type Base = Constructor<InMemoryEntity>;
 

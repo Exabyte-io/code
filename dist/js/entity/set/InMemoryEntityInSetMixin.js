@@ -29,8 +29,10 @@ function propertiesMixin(item) {
     return properties;
 }
 function inMemoryEntityInSetMixin(item) {
-    schemaMixin(item);
-    propertiesMixin(item);
+    return {
+        ...schemaMixin(item),
+        ...propertiesMixin(item),
+    };
 }
 function InMemoryEntityInSetMixin(superclass) {
     class InMemoryEntityInSetMixin extends superclass {

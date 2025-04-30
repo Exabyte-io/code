@@ -3,10 +3,7 @@ import type { Constructor } from "../../utils/types";
 import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
-declare function schemaMixin<E extends InMemoryEntity>(item: E): {
-    inSet: InSet[];
-};
-declare function propertiesMixin<E extends InMemoryEntity>(item: E & InMemoryEntityInSetSchema): {
+export declare function inMemoryEntityInSetMixin<E extends InMemoryEntity>(item: E): {
     getInSetFilteredByCls(cls: string): {
         _id: string;
         cls?: string;
@@ -14,21 +11,17 @@ declare function propertiesMixin<E extends InMemoryEntity>(item: E & InMemoryEnt
         type?: string;
         index?: number;
     }[];
-    readonly parentEntitySetReference: {
+    parentEntitySetReference: {
         _id: string;
         cls?: string;
         slug?: string;
         type?: string;
         index?: number;
     } | undefined;
+    inSet: InSet[];
 };
-export declare function inMemoryEntityInSetMixin<E extends InMemoryEntity>(item: E): void;
-type InMemoryEntityInSetSchema = ReturnType<typeof schemaMixin>;
-type InMemoryEntityInSetSchemaConstructor = Constructor<InMemoryEntityInSetSchema>;
-type InMemoryEntityInSetProperties = ReturnType<typeof propertiesMixin>;
-type InMemoryEntityInSetPropertiesConstructor = Constructor<InMemoryEntityInSetProperties>;
-export type InMemoryEntityInSet = InMemoryEntityInSetSchema & InMemoryEntityInSetProperties;
-export type InMemoryEntityInSetConstructor = InMemoryEntityInSetSchemaConstructor & InMemoryEntityInSetPropertiesConstructor;
+export type InMemoryEntityInSet = ReturnType<typeof inMemoryEntityInSetMixin>;
+export type InMemoryEntityInSetConstructor = Constructor<InMemoryEntityInSet>;
 type Base = Constructor<InMemoryEntity>;
 export default function InMemoryEntityInSetMixin<S extends Base = Base>(superclass: S): S & InMemoryEntityInSetConstructor;
 export {};
