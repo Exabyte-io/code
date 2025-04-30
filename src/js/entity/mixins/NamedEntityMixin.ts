@@ -4,8 +4,8 @@ import type { NameEntitySchema } from "@mat3ra/esse/dist/js/types";
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 
-export function namedEntityMixin(item: InMemoryEntity) {
-    const properties = {
+function schemaMixin(item: InMemoryEntity) {
+    const schema = {
         get name(): string {
             return item.prop("name", "");
         },
@@ -14,37 +14,40 @@ export function namedEntityMixin(item: InMemoryEntity) {
         },
     } satisfies NameEntitySchema;
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
 
-    return properties;
+    return schema;
 }
 
-export function namedEntityMethodsMixin(item: InMemoryEntity) {
-    const methods = {
+function propertiesMixin(item: InMemoryEntity) {
+    const properties = {
         setName(name: string) {
             item.setProp("name", name);
         },
     };
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
-    return methods;
+    return properties;
 }
 
-type NamedEntityProps = ReturnType<typeof namedEntityMixin>;
-type NamedEntityMethods = ReturnType<typeof namedEntityMethodsMixin>;
+export function namedEntityMixin(item: InMemoryEntity) {
+    return {
+        ...schemaMixin(item),
+        ...propertiesMixin(item),
+    };
+}
 
-export type NamedEntity = NamedEntityProps & NamedEntityMethods;
-export type NamedEntityConstructor = Constructor<NamedEntity>;
+export type NamedInMemoryEntity = ReturnType<typeof namedEntityMixin>;
+export type NamedInMemoryEntityConstructor = Constructor<NamedInMemoryEntity>;
 
 export default function NamedEntityMixin<S extends InMemoryEntityConstructor>(superclass: S) {
     class NamedEntityMixin extends superclass {
         constructor(...args: any[]) {
             super(...args);
             namedEntityMixin(this);
-            namedEntityMethodsMixin(this);
         }
     }
 
-    return NamedEntityMixin as S & NamedEntityConstructor;
+    return NamedEntityMixin as S & NamedInMemoryEntityConstructor;
 }

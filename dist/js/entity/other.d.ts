@@ -10,7 +10,7 @@ declare const DefaultableInMemoryEntity_base: typeof InMemoryEntity & import("..
 };
 export declare class DefaultableInMemoryEntity extends DefaultableInMemoryEntity_base {
 }
-export declare const NamedInMemoryEntity: typeof InMemoryEntity & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
+export declare const NamedInMemoryEntity: typeof InMemoryEntity & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<{
     isDefault: boolean;
 }> & {
@@ -19,7 +19,7 @@ export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & imp
     }>(this: T): InstanceType<T> & {
         isDefault: boolean;
     };
-} & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
+} & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export declare const HasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
         metadata: object;
@@ -59,7 +59,7 @@ export declare const HasMetadataNamedDefaultableInMemoryEntity: {
     }>(this: T): InstanceType<T> & {
         isDefault: boolean;
     };
-} & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
+} & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity: {
     new (...args: any[]): {
         consistencyChecks: import("@mat3ra/esse/dist/js/types").ConsistencyCheck[];
@@ -130,7 +130,7 @@ export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEnti
     }>(this: T): InstanceType<T> & {
         isDefault: boolean;
     };
-} & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
+} & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: {
     new (...args: any[]): {
         readonly important: any;
@@ -212,7 +212,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
     }>(this: T): InstanceType<T> & {
         isDefault: boolean;
     };
-} & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
+} & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
     new (...params: any[]): {
         _context: import("./mixins/context").Context;
@@ -297,7 +297,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
     }>(this: T): InstanceType<T> & {
         isDefault: boolean;
     };
-} & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
+} & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity: {
     new (...args: any[]): {
         getHashObject(): {};
@@ -538,5 +538,5 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
     }>(this: T): InstanceType<T> & {
         isDefault: boolean;
     };
-} & import("./mixins/NamedEntityMixin").NamedEntityConstructor;
+} & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export {};

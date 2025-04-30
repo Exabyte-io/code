@@ -1,14 +1,9 @@
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
 export declare function namedEntityMixin(item: InMemoryEntity): {
+    setName(name: string): void;
     name: string;
 };
-export declare function namedEntityMethodsMixin(item: InMemoryEntity): {
-    setName(name: string): void;
-};
-type NamedEntityProps = ReturnType<typeof namedEntityMixin>;
-type NamedEntityMethods = ReturnType<typeof namedEntityMethodsMixin>;
-export type NamedEntity = NamedEntityProps & NamedEntityMethods;
-export type NamedEntityConstructor = Constructor<NamedEntity>;
-export default function NamedEntityMixin<S extends InMemoryEntityConstructor>(superclass: S): S & NamedEntityConstructor;
-export {};
+export type NamedInMemoryEntity = ReturnType<typeof namedEntityMixin>;
+export type NamedInMemoryEntityConstructor = Constructor<NamedInMemoryEntity>;
+export default function NamedEntityMixin<S extends InMemoryEntityConstructor>(superclass: S): S & NamedInMemoryEntityConstructor;
