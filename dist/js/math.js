@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.math = void 0;
+exports.math = exports.roundArrayOrNumber = exports.roundCustom = exports.RoundingMethodEnum = void 0;
 exports.numberToPrecision = numberToPrecision;
 /* eslint-disable */
 const mathjs_1 = __importDefault(require("mathjs"));
@@ -20,7 +20,10 @@ const EPSILON = 1e-8;
  * @param v2 Vector 2
  */
 const product = (v1, v2) => {
-    return exports.math.multiply(v1, exports.math.transpose(v2));
+    if (v1.length !== v2.length) {
+        throw new Error("Vectors must be of the same length");
+    }
+    return Number(exports.math.multiply(v1, exports.math.transpose(v2)));
 };
 /**
  * @summary Returns length of a vector.
@@ -170,6 +173,46 @@ const combinationsFromIntervals = (arrA, arrB, arrC) => {
 const roundValueToNDecimals = (value, decimals = 3) => {
     return parseFloat(value.toFixed(decimals));
 };
+// See: https://en.wikipedia.org/wiki/Rounding
+var RoundingMethodEnum;
+(function (RoundingMethodEnum) {
+    RoundingMethodEnum["Bankers"] = "bankers";
+    RoundingMethodEnum["HalfAwayFromZero"] = "halfAwayFromZero";
+})(RoundingMethodEnum || (exports.RoundingMethodEnum = RoundingMethodEnum = {}));
+const roundCustom = (value, decimals = 0, method = RoundingMethodEnum.HalfAwayFromZero) => {
+    const factor = Math.pow(10, decimals);
+    const scaledValue = value * factor;
+    const absValue = Math.abs(scaledValue);
+    const sign = scaledValue < 0 ? -1 : 1;
+    let roundedAbs;
+    switch (method) {
+        case RoundingMethodEnum.HalfAwayFromZero:
+            roundedAbs = Math.round(absValue);
+            break;
+        case RoundingMethodEnum.Bankers:
+            const floorValue = Math.floor(absValue);
+            const fractional = absValue - floorValue;
+            if (Math.abs(fractional - 0.5) < Number.EPSILON) {
+                // Round to even
+                roundedAbs = floorValue % 2 === 0 ? floorValue : floorValue + 1;
+            }
+            else {
+                roundedAbs = Math.round(absValue);
+            }
+            break;
+        default:
+            throw new Error(`Unsupported rounding method: ${method}`);
+    }
+    return (roundedAbs * sign) / factor;
+};
+exports.roundCustom = roundCustom;
+const roundArrayOrNumber = (value, decimals = 9, method = RoundingMethodEnum.HalfAwayFromZero) => {
+    if (Array.isArray(value)) {
+        return value.map((v) => (typeof v === "number" ? (0, exports.roundCustom)(v, decimals, method) : v));
+    }
+    return typeof value === "number" ? (0, exports.roundCustom)(value, decimals, method) : value;
+};
+exports.roundArrayOrNumber = roundArrayOrNumber;
 /**
  * @summary Returns n splits of the passed segment.
  */
@@ -216,8 +259,6 @@ exports.math = {
     angleUpTo90,
     vDist,
     vEqualWithTolerance,
-    roundToZero,
-    precise,
     mod,
     isBetweenZeroInclusiveAndOne,
     cartesianProduct,
@@ -225,6 +266,11 @@ exports.math = {
     combinations,
     combinationsFromIntervals,
     calculateSegmentsBetweenPoints3D,
+    roundToZero,
+    precise,
     roundValueToNDecimals,
     numberToPrecision,
+    roundCustom: exports.roundCustom,
+    RoundingMethod: RoundingMethodEnum,
+    roundArrayOrNumber: exports.roundArrayOrNumber,
 };

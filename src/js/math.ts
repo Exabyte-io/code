@@ -43,7 +43,10 @@ const EPSILON = 1e-8;
  * @param v2 Vector 2
  */
 const product = (v1: number[], v2: number[]) => {
-    return math.multiply(v1, math.transpose(v2));
+    if (v1.length !== v2.length) {
+        throw new Error("Vectors must be of the same length");
+    }
+    return Number(math.multiply(v1, math.transpose(v2)));
 };
 
 /**
@@ -216,6 +219,57 @@ const roundValueToNDecimals = (value: number, decimals = 3) => {
     return parseFloat(value.toFixed(decimals));
 };
 
+// See: https://en.wikipedia.org/wiki/Rounding
+export enum RoundingMethodEnum {
+    Bankers = "bankers",
+    HalfAwayFromZero = "halfAwayFromZero",
+}
+
+export const roundCustom = (
+    value: number,
+    decimals = 0,
+    method = RoundingMethodEnum.HalfAwayFromZero,
+) => {
+    const factor = Math.pow(10, decimals);
+    const scaledValue = value * factor;
+    const absValue = Math.abs(scaledValue);
+    const sign = scaledValue < 0 ? -1 : 1;
+
+    let roundedAbs: number;
+
+    switch (method) {
+        case RoundingMethodEnum.HalfAwayFromZero:
+            roundedAbs = Math.round(absValue);
+            break;
+        case RoundingMethodEnum.Bankers:
+            const floorValue = Math.floor(absValue);
+            const fractional = absValue - floorValue;
+
+            if (Math.abs(fractional - 0.5) < Number.EPSILON) {
+                // Round to even
+                roundedAbs = floorValue % 2 === 0 ? floorValue : floorValue + 1;
+            } else {
+                roundedAbs = Math.round(absValue);
+            }
+            break;
+        default:
+            throw new Error(`Unsupported rounding method: ${method}`);
+    }
+
+    return (roundedAbs * sign) / factor;
+};
+
+export const roundArrayOrNumber = (
+    value: unknown,
+    decimals = 9,
+    method = RoundingMethodEnum.HalfAwayFromZero,
+) => {
+    if (Array.isArray(value)) {
+        return value.map((v) => (typeof v === "number" ? roundCustom(v, decimals, method) : v));
+    }
+    return typeof value === "number" ? roundCustom(value, decimals, method) : value;
+};
+
 /**
  * @summary Returns n splits of the passed segment.
  */
@@ -269,8 +323,6 @@ export const math = {
     angleUpTo90,
     vDist,
     vEqualWithTolerance,
-    roundToZero,
-    precise,
     mod,
     isBetweenZeroInclusiveAndOne,
     cartesianProduct,
@@ -278,6 +330,11 @@ export const math = {
     combinations,
     combinationsFromIntervals,
     calculateSegmentsBetweenPoints3D,
+    roundToZero,
+    precise,
     roundValueToNDecimals,
     numberToPrecision,
+    roundCustom,
+    RoundingMethod: RoundingMethodEnum,
+    roundArrayOrNumber,
 };
