@@ -25,7 +25,7 @@ export function defaultableMixinProps<T extends InMemoryEntity>(item: T) {
 
 const staticProperties = {
     createDefault<T extends ClassBase>(this: T) {
-        return new this(this.defaultConfig) as InstanceType<T> & DefaultableProps;
+        return new this(this.defaultConfig) as InstanceType<T> & DefaultableInMemoryEntity;
     },
 };
 
@@ -35,9 +35,9 @@ export function defaultableMixinStaticProps<T extends ClassBase>(Item: T) {
     return staticProperties;
 }
 
-type DefaultableProps = ReturnType<typeof defaultableMixinProps>;
-
-export type DefaultableConstructor = Constructor<DefaultableProps> & typeof staticProperties;
+export type DefaultableInMemoryEntity = ReturnType<typeof defaultableMixinProps>;
+export type DefaultableInMemoryEntityConstructor = Constructor<DefaultableInMemoryEntity>;
+export type DefaultableConstructor = DefaultableInMemoryEntityConstructor & typeof staticProperties;
 
 export default function DefaultableMixin<S extends ClassBase>(superclass: S) {
     class DefaultableMixin extends superclass {

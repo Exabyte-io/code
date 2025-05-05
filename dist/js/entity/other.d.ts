@@ -1,42 +1,26 @@
 import { InMemoryEntity } from "./in_memory";
-declare const DefaultableInMemoryEntity_base: typeof InMemoryEntity & import("../utils/types").Constructor<{
-    isDefault: boolean;
-}> & {
+declare const DefaultableInMemoryEntity_base: typeof InMemoryEntity & import("./mixins/DefaultableMixin").DefaultableInMemoryEntityConstructor & {
     createDefault<T extends import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    }>(this: T): InstanceType<T> & {
-        isDefault: boolean;
-    };
+    }>(this: T): InstanceType<T> & import("./mixins/DefaultableMixin").DefaultableInMemoryEntity;
 };
 export declare class DefaultableInMemoryEntity extends DefaultableInMemoryEntity_base {
 }
 export declare const NamedInMemoryEntity: typeof InMemoryEntity & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
-export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<{
-    isDefault: boolean;
-}> & {
+export declare const NamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("./mixins/DefaultableMixin").DefaultableInMemoryEntityConstructor & {
     createDefault<T extends import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    }>(this: T): InstanceType<T> & {
-        isDefault: boolean;
-    };
+    }>(this: T): InstanceType<T> & import("./mixins/DefaultableMixin").DefaultableInMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
-export declare const HasMetadataNamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<{
-    isDefault: boolean;
-}> & {
+export declare const HasMetadataNamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("./mixins/DefaultableMixin").DefaultableInMemoryEntityConstructor & {
     createDefault<T extends import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    }>(this: T): InstanceType<T> & {
-        isDefault: boolean;
-    };
+    }>(this: T): InstanceType<T> & import("./mixins/DefaultableMixin").DefaultableInMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor & import("./mixins/HasMetadataMixin").HasMetadataInMemoryEntityConstructor;
-export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("../utils/types").Constructor<{
-    isDefault: boolean;
-}> & {
+export declare const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity: typeof InMemoryEntity & import("./mixins/DefaultableMixin").DefaultableInMemoryEntityConstructor & {
     createDefault<T extends import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    }>(this: T): InstanceType<T> & {
-        isDefault: boolean;
-    };
+    }>(this: T): InstanceType<T> & import("./mixins/DefaultableMixin").DefaultableInMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor & import("./mixins/HasMetadataMixin").HasMetadataInMemoryEntityConstructor & import("./mixins/HasConsistencyChecksMixin").HasConsistencyChecksInMemoryEntityConstructor;
 export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: {
     new (...args: any[]): {
@@ -111,14 +95,10 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & typeof InMemoryEntity & import("../utils/types").Constructor<{
-    isDefault: boolean;
-}> & {
+} & typeof InMemoryEntity & import("./mixins/DefaultableMixin").DefaultableInMemoryEntityConstructor & {
     createDefault<T extends import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    }>(this: T): InstanceType<T> & {
-        isDefault: boolean;
-    };
+    }>(this: T): InstanceType<T> & import("./mixins/DefaultableMixin").DefaultableInMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
     new (...params: any[]): {
@@ -196,14 +176,10 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & typeof InMemoryEntity & import("../utils/types").Constructor<{
-    isDefault: boolean;
-}> & {
+} & typeof InMemoryEntity & import("./mixins/DefaultableMixin").DefaultableInMemoryEntityConstructor & {
     createDefault<T extends import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    }>(this: T): InstanceType<T> & {
-        isDefault: boolean;
-    };
+    }>(this: T): InstanceType<T> & import("./mixins/DefaultableMixin").DefaultableInMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity: {
     new (...args: any[]): {
@@ -437,13 +413,9 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         readonly slug: string;
         readonly isSystemEntity: boolean;
     };
-} & typeof InMemoryEntity & import("../utils/types").Constructor<{
-    isDefault: boolean;
-}> & {
+} & typeof InMemoryEntity & import("./mixins/DefaultableMixin").DefaultableInMemoryEntityConstructor & {
     createDefault<T extends import("../utils/types").Constructor<InMemoryEntity> & {
         defaultConfig?: object | null;
-    }>(this: T): InstanceType<T> & {
-        isDefault: boolean;
-    };
+    }>(this: T): InstanceType<T> & import("./mixins/DefaultableMixin").DefaultableInMemoryEntity;
 } & import("./mixins/NamedEntityMixin").NamedInMemoryEntityConstructor;
 export {};
