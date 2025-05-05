@@ -9,6 +9,7 @@ import CryptoJS from "crypto-js";
 
 import { InMemoryEntity } from "../entity";
 import { DefaultableMixin } from "../entity/mixins/props";
+import type { OrderedInMemoryEntityInSet } from "../entity/set/ordered/OrderedInMemoryEntityInSetMixin";
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
 
 type Constructor<T = any> = new (...args: any[]) => T;
@@ -107,7 +108,7 @@ export function MaterialsSetContextMixin<T extends Constructor>(superclass: T) {
             return this._materialsSet;
         }
 
-        sortMaterialsByIndexInSet(materials = []) {
+        sortMaterialsByIndexInSet(materials: OrderedInMemoryEntityInSet[] = []) {
             // DO NOT SORT IN PLACE AS IT CHANGES THE ORDER IN `this.materials` AND HAS SIDE EFFECTS (MaterialViewer).
             return materials.concat().sort((a, b) => {
                 return compareEntitiesInOrderedSetForSorting(a, b, this.materialsSet._id, false);

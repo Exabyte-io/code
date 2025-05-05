@@ -1,5 +1,6 @@
 import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "@mat3ra/esse/dist/js/types";
 import { InMemoryEntity } from "../entity";
+import type { OrderedInMemoryEntityInSet } from "../entity/set/ordered/OrderedInMemoryEntityInSetMixin";
 type Constructor<T = any> = new (...args: any[]) => T;
 export declare function ApplicationContextMixin<T extends Constructor>(superclass: T): {
     new (...args: any): {
@@ -31,7 +32,9 @@ export declare function MaterialsSetContextMixin<T extends Constructor>(supercla
         [x: string]: any;
         _materialsSet: any;
         readonly materialsSet: any;
-        sortMaterialsByIndexInSet(materials?: never[]): never[];
+        sortMaterialsByIndexInSet(materials?: OrderedInMemoryEntityInSet[]): {
+            getIndexByIdInOrderedSet(setId: string): number;
+        }[];
     };
 } & T;
 export declare function MaterialsContextMixin<T extends Constructor>(superclass: T): {
