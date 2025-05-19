@@ -40,7 +40,7 @@ export declare function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(s
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         id: string;
         _id: string;
@@ -109,7 +109,7 @@ export declare function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstru
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         id: string;
         _id: string;
@@ -142,7 +142,7 @@ export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConst
         getAsEntityReference(byIdOnly: true): {
             _id: string;
         };
-        getAsEntityReference(byIdOnly: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
+        getAsEntityReference(byIdOnly?: false): Required<import("@mat3ra/esse/dist/js/types").EntityReferenceSchema>;
         getEntityByName(entities: import("../in_memory").InMemoryEntity[], entity: string, name: string): import("../in_memory").InMemoryEntity;
         id: string;
         _id: string;
