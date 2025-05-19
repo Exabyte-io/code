@@ -3,10 +3,14 @@ import type { Constructor } from "../../utils/types";
 import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
+export declare enum EntitySetType {
+    ordered = "ordered",
+    unordered = "unordered"
+}
 declare function schemaMixin<E extends InMemoryEntity>(item: E): {
     readonly isEntitySet: boolean;
-    readonly entitySetType: undefined;
-    readonly entityCls: undefined;
+    readonly entitySetType: EntitySetType;
+    readonly entityCls: string | undefined;
 };
 declare function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema): {
     readonly cls: string;

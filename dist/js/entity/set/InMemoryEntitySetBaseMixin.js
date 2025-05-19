@@ -1,14 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EntitySetType = void 0;
 exports.inMemoryEntitySetBaseMixin = inMemoryEntitySetBaseMixin;
 exports.default = InMemoryEntitySetBaseMixin;
+var EntitySetType;
+(function (EntitySetType) {
+    EntitySetType["ordered"] = "ordered";
+    EntitySetType["unordered"] = "unordered";
+})(EntitySetType || (exports.EntitySetType = EntitySetType = {}));
 function schemaMixin(item) {
     const schema = {
         get isEntitySet() {
             return item.prop("isEntitySet", false);
         },
         get entitySetType() {
-            return item.prop("entitySetType");
+            return item.prop("entitySetType", EntitySetType.unordered);
         },
         get entityCls() {
             return item.prop("entityCls");

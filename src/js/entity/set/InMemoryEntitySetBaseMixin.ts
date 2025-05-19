@@ -7,6 +7,11 @@ import { type InMemoryEntity } from "../in_memory";
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
 
+export enum EntitySetType {
+    ordered = "ordered",
+    unordered = "unordered",
+}
+
 function schemaMixin<E extends InMemoryEntity>(item: E) {
     const schema = {
         get isEntitySet() {
@@ -14,11 +19,11 @@ function schemaMixin<E extends InMemoryEntity>(item: E) {
         },
 
         get entitySetType() {
-            return item.prop("entitySetType");
+            return item.prop("entitySetType", EntitySetType.unordered);
         },
 
         get entityCls() {
-            return item.prop("entityCls");
+            return item.prop<string | undefined>("entityCls");
         },
     } satisfies EntitySetSchema;
 
