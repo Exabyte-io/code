@@ -1,4 +1,5 @@
 import json
+from enum import Enum
 
 from mat3ra.code.entity import InMemoryEntityPydantic
 from pydantic import BaseModel
@@ -53,3 +54,17 @@ class ExampleNestedKeyAsClassInstanceClass(ExampleNestedSchema, InMemoryEntityPy
 
 class ExampleDoubleNestedKeyAsClassInstancesClass(ExampleDoubleNestedSchema, InMemoryEntityPydantic):
     double_nested_key1: ExampleNestedKeyAsClassInstanceClass
+
+
+class SampleEnum(str, Enum):
+    TRI = "TRI"
+    ANGSTROM = "angstrom"
+
+
+class SampleModelWithEnum(BaseModel):
+    type: SampleEnum
+    name: str = "test"
+
+
+class SampleEntityWithEnum(SampleModelWithEnum, InMemoryEntityPydantic):
+    pass
