@@ -68,7 +68,7 @@ export declare class InMemoryEntity implements BaseInMemoryEntitySchema {
     getAsEntityReference(byIdOnly: true): {
         _id: string;
     };
-    getAsEntityReference(byIdOnly: false): Required<EntityReferenceSchema>;
+    getAsEntityReference(byIdOnly?: false): Required<EntityReferenceSchema>;
     /**
      * @summary Pluck an entity from a collection by name.
      *          If no name is provided and no entity has prop isDefault, return the first entity
