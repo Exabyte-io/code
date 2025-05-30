@@ -62,7 +62,7 @@ class InMemoryEntityPydantic(BaseModel):
     def clean(cls: Type[T], config: Dict[str, Any]) -> Dict[str, Any]:
         # Validate the config; extra keys are dropped and defaults are substituted.
         validated = cls.model_validate(config, strict=False)
-        return validated.model_dump(exclude_unset=False)
+        return validated.model_dump(mode="json", exclude_unset=False)
 
     def get_schema(self) -> Dict[str, Any]:
         return self.model_json_schema()
@@ -77,7 +77,7 @@ class InMemoryEntityPydantic(BaseModel):
         return self.__class__.__name__
 
     def to_dict(self, exclude: Optional[List[str]] = None) -> Dict[str, Any]:
-        return self.model_dump(exclude=set(exclude) if exclude else None)
+        return self.model_dump(mode="json", exclude=set(exclude) if exclude else None)
 
     def to_json(self, exclude: Optional[List[str]] = None) -> str:
         return self.model_dump_json(exclude=set(exclude) if exclude else None)

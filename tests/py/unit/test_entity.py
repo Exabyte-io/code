@@ -18,6 +18,8 @@ from . import (
     ExampleNestedKeyAsClassInstanceClass,
     ExampleNestedSchema,
     ExampleSchema,
+    SampleEnum,
+    SampleEntityWithEnum,
 )
 
 
@@ -163,6 +165,16 @@ def test_to_dict():
     # Test with exclude
     result_exclude = entity.to_dict(exclude=["key2"])
     assert result_exclude == {"key1": "value1"}
+
+
+def test_to_dict_with_enum():
+    entity = SampleEntityWithEnum(type=SampleEnum.VALUE1, name="example")
+    result = entity.to_dict()
+    
+    assert isinstance(result, dict)
+    assert not isinstance(result["type"], SampleEnum)  # Should not be an enum object
+    assert result == {"type": "value1", "name": "example"}
+    assert result["type"] == "value1"  # String, not enum object
 
 
 def test_to_json():
