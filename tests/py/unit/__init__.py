@@ -57,8 +57,8 @@ class ExampleDoubleNestedKeyAsClassInstancesClass(ExampleDoubleNestedSchema, InM
 
 
 class SampleEnum(str, Enum):
-    TRI = "TRI"
-    ANGSTROM = "angstrom"
+    VALUE1 = "value1"
+    VALUE2 = "value2"
 
 
 class SampleModelWithEnum(BaseModel):

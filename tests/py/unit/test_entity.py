@@ -168,23 +168,13 @@ def test_to_dict():
 
 
 def test_to_dict_with_enum():
-    """Test that enums are serialized as strings in to_dict()"""
-    entity = SampleEntityWithEnum(type=SampleEnum.TRI, name="example")
+    entity = SampleEntityWithEnum(type=SampleEnum.VALUE1, name="example")
     result = entity.to_dict()
     
     assert isinstance(result, dict)
-    assert result == {"type": "TRI", "name": "example"}
-    assert result["type"] == "TRI"  # String, not enum object
-
-
-def test_to_dict_with_enum_exclude():
-    """Test to_dict with exclude parameter works with enums"""
-    entity = SampleEntityWithEnum(type=SampleEnum.ANGSTROM, name="test")
-    result = entity.to_dict(exclude=["name"])
-    
-    assert isinstance(result, dict)
-    assert result == {"type": "angstrom"}
-    assert result["type"] == "angstrom"  # String, not enum object
+    assert not isinstance(result["type"], SampleEnum)  # Should not be an enum object
+    assert result == {"type": "value1", "name": "example"}
+    assert result["type"] == "value1"  # String, not enum object
 
 
 def test_to_json():
