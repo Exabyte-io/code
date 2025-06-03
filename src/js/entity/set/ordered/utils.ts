@@ -1,4 +1,4 @@
-import { OrderedInMemoryEntityInSet } from "./mixins";
+import type { OrderedInMemoryEntityInSet } from "./OrderedInMemoryEntityInSetMixin";
 
 /**
  * A comparison function to sort inSet entities by setId and index (descending by default).

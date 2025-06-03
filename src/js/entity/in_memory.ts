@@ -195,7 +195,7 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
      */
     getAsEntityReference(byIdOnly: true): { _id: string };
 
-    getAsEntityReference(byIdOnly: false): Required<EntityReferenceSchema>;
+    getAsEntityReference(byIdOnly?: false): Required<EntityReferenceSchema>;
 
     getAsEntityReference(byIdOnly = false) {
         if (!this.id) {
