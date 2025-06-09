@@ -1,30 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.InMemoryEntityInSetMixin = InMemoryEntityInSetMixin;
-exports.InMemoryEntitySetMixin = InMemoryEntitySetMixin;
-function InMemoryEntityInSetMixin(superclass) {
-    return class InMemoryEntityInSetMixin extends superclass {
-        get inSet() {
-            return this.prop("inSet", []);
-        }
-        set inSet(inSet) {
-            this.setProp("inSet", inSet);
-        }
-        getInSetFilteredByCls(cls) {
-            return this.inSet.filter((ref) => ref.cls === cls);
-        }
-        // finds a parent entity set of the same cls (hence `cls` field is absent)
-        // NOTE: assumes that only one entry of this kind is present => gets the first one
-        get parentEntitySetReference() {
-            return this.inSet.find((item) => item._id && !item.cls);
-        }
-    };
-}
-function InMemoryEntitySetMixin(superclass) {
-    return class InMemoryEntitySetMixin extends superclass {
-        containsEntity(entity) {
-            var _a;
-            return Boolean((_a = entity === null || entity === void 0 ? void 0 : entity.inSet) === null || _a === void 0 ? void 0 : _a.some((ref) => ref._id === this.id));
-        }
-    };
-}
+exports.InMemoryEntitySetMixin = exports.InMemoryEntityInSetMixin = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
+const InMemoryEntityInSetMixin_1 = __importDefault(require("./InMemoryEntityInSetMixin"));
+exports.InMemoryEntityInSetMixin = InMemoryEntityInSetMixin_1.default;
+const InMemoryEntitySetMixin_1 = __importDefault(require("./InMemoryEntitySetMixin"));
+exports.InMemoryEntitySetMixin = InMemoryEntitySetMixin_1.default;

@@ -1,24 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InMemoryEntitySet = void 0;
 const in_memory_1 = require("./in_memory");
+const InMemoryEntitySetBaseMixin_1 = __importDefault(require("./set/InMemoryEntitySetBaseMixin"));
 const mixins_1 = require("./set/mixins");
-class InMemoryEntitySet extends (0, mixins_1.InMemoryEntitySetMixin)((0, mixins_1.InMemoryEntityInSetMixin)(in_memory_1.InMemoryEntity)) {
-    get isEntitySet() {
-        return this.prop("isEntitySet", false);
-    }
-    get entitySetType() {
-        return this.prop("entitySetType");
-    }
-    get entityCls() {
-        return this.prop("entityCls");
-    }
-    get cls() {
-        return this.entityCls || super.cls;
-    }
-    toJSONForInclusionInEntity() {
-        const { _id, type } = this.toJSON();
-        return { _id, type };
-    }
+class InMemoryEntitySet extends (0, mixins_1.InMemoryEntitySetMixin)((0, mixins_1.InMemoryEntityInSetMixin)((0, InMemoryEntitySetBaseMixin_1.default)(in_memory_1.InMemoryEntity))) {
 }
 exports.InMemoryEntitySet = InMemoryEntitySet;
