@@ -55,7 +55,7 @@
         "@babel/register": "^7.25.7",
         "@babel/runtime-corejs3": "^7.25.7",
         "@exabyte-io/eslint-config": "^2025.1.15-0",
-        "@mat3ra/esse": "2025.4.22-0",
+        "@mat3ra/esse": "2025.4.26-0",
         "@mat3ra/tsconfig": "2024.6.3-0",
         "@types/chai": "^4.3.20",
         "@types/crypto-js": "^4.2.2",

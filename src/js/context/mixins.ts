@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
     ApplicationSchemaBase,
+    FileDataItem,
     JobSchema,
     MaterialSchema,
     WorkflowSchema,
@@ -189,6 +190,22 @@ export function MethodDataContextMixin<T extends Constructor>(superclass: T) {
 
         get isMethodDataUpdated() {
             return Boolean(this.extraData && this.extraData.methodDataHash !== this.methodDataHash);
+        }
+
+        /**
+         * Returns array of orbital names: [{element: "Si", valenceOrbitals: ["3s", "3p"]}]
+         */
+        get valenceOrbitals(): { element: string; valenceOrbitals?: Array<string> }[] {
+            const pseudoData = this.methodData?.pseudo || [];
+            return pseudoData.map((item: FileDataItem) => {
+                const valenceConfiguration = item?.valenceConfiguration || [];
+                return {
+                    element: item.element,
+                    valenceOrbitals: valenceConfiguration.map((entry) =>
+                        entry?.orbitalName?.toLowerCase(),
+                    ),
+                };
+            });
         }
     };
 }
