@@ -1,66 +1,53 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ItemKey = void 0;
-exports.RuntimeItemsMixin = RuntimeItemsMixin;
+exports.ItemKey = exports.RuntimeItemsMixin = void 0;
 exports.RuntimeItemsUILogicMixin = RuntimeItemsUILogicMixin;
 exports.RuntimeItemsUIAllowedMixin = RuntimeItemsUIAllowedMixin;
 const object_1 = require("../../utils/object");
-var ItemKey;
-(function (ItemKey) {
-    ItemKey["results"] = "results";
-    ItemKey["monitors"] = "monitors";
-    ItemKey["preProcessors"] = "preProcessors";
-    ItemKey["postProcessors"] = "postProcessors";
-})(ItemKey || (exports.ItemKey = ItemKey = {}));
-/*
- * @summary Contains runtime items: results, monitors, pre/postProcessors
- *          Is meant to work with Entity, InMemoryEntity b/c of `prop` extraction from `_json`.
- */
-function RuntimeItemsMixin(superclass) {
-    return class extends superclass {
-        get results() {
-            return this.prop("results", this.defaultResults).map(object_1.safeMakeObject);
-        }
-        get monitors() {
-            return this.prop("monitors", this.defaultMonitors).map(object_1.safeMakeObject);
-        }
-        get preProcessors() {
-            // TODO: safeMakeObject could return null. Should we throw an error here?
-            return this.prop("preProcessors", this.defaultPreProcessors).map(object_1.safeMakeObject);
-        }
-        get postProcessors() {
-            // TODO: safeMakeObject could return null. Should we throw an error here?
-            return this.prop("postProcessors", this.defaultPostProcessors).map(object_1.safeMakeObject);
-        }
-        get defaultResults() {
-            return [];
-        }
-        get defaultMonitors() {
-            return [];
-        }
-        get defaultPreProcessors() {
-            return [];
-        }
-        get defaultPostProcessors() {
-            return [];
-        }
-        get hashObjectFromRuntimeItems() {
-            return {
-                results: this.results,
-                preProcessors: this.preProcessors,
-                postProcessors: this.postProcessors,
-            };
-        }
-    };
-}
+const RuntimeItemsMixin_1 = __importStar(require("./RuntimeItemsMixin"));
+exports.RuntimeItemsMixin = RuntimeItemsMixin_1.default;
+Object.defineProperty(exports, "ItemKey", { enumerable: true, get: function () { return RuntimeItemsMixin_1.ItemKey; } });
 const allKeys = [
-    ItemKey.results,
-    ItemKey.monitors,
-    ItemKey.postProcessors,
-    ItemKey.preProcessors,
+    RuntimeItemsMixin_1.ItemKey.results,
+    RuntimeItemsMixin_1.ItemKey.monitors,
+    RuntimeItemsMixin_1.ItemKey.postProcessors,
+    RuntimeItemsMixin_1.ItemKey.preProcessors,
 ];
 function RuntimeItemsUILogicMixin(superclass) {
-    return class extends RuntimeItemsMixin(superclass) {
+    return class extends (0, RuntimeItemsMixin_1.default)(superclass) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(...params) {
             super(...params);
@@ -68,13 +55,13 @@ function RuntimeItemsUILogicMixin(superclass) {
             this._initRuntimeItems(allKeys, config);
         }
         getDefaultsByKey(key) {
-            if (key === ItemKey.results) {
+            if (key === RuntimeItemsMixin_1.ItemKey.results) {
                 return this.defaultResults;
             }
-            if (key === ItemKey.monitors) {
+            if (key === RuntimeItemsMixin_1.ItemKey.monitors) {
                 return this.defaultMonitors;
             }
-            if (key === ItemKey.preProcessors) {
+            if (key === RuntimeItemsMixin_1.ItemKey.preProcessors) {
                 return this.defaultPreProcessors;
             }
             return this.defaultPostProcessors;
@@ -98,7 +85,7 @@ function RuntimeItemsUILogicMixin(superclass) {
             });
         }
         // eslint-disable-next-line default-param-last
-        _addRuntimeItem(key = ItemKey.results, config) {
+        _addRuntimeItem(key = RuntimeItemsMixin_1.ItemKey.results, config) {
             const runtimeItems = this._json[key];
             if (!runtimeItems) {
                 throw new Error("not found");
@@ -106,7 +93,7 @@ function RuntimeItemsUILogicMixin(superclass) {
             runtimeItems.push((0, object_1.safeMakeObject)(config));
         }
         // eslint-disable-next-line default-param-last
-        _removeRuntimeItem(key = ItemKey.results, config) {
+        _removeRuntimeItem(key = RuntimeItemsMixin_1.ItemKey.results, config) {
             const newConfig = (0, object_1.safeMakeObject)(config);
             this._removeRuntimeItemByName(key, (newConfig === null || newConfig === void 0 ? void 0 : newConfig.name) || "");
         }
@@ -115,7 +102,7 @@ function RuntimeItemsUILogicMixin(superclass) {
         }
         _toggleRuntimeItem(
         // eslint-disable-next-line default-param-last
-        key = ItemKey.results, data, isAdding) {
+        key = RuntimeItemsMixin_1.ItemKey.results, data, isAdding) {
             if (isAdding) {
                 this._addRuntimeItem(key, data);
             }
@@ -124,16 +111,16 @@ function RuntimeItemsUILogicMixin(superclass) {
             }
         }
         toggleResult(data, isAdding) {
-            this._toggleRuntimeItem(ItemKey.results, data, isAdding);
+            this._toggleRuntimeItem(RuntimeItemsMixin_1.ItemKey.results, data, isAdding);
         }
         toggleMonitor(data, isAdding) {
-            this._toggleRuntimeItem(ItemKey.monitors, data, isAdding);
+            this._toggleRuntimeItem(RuntimeItemsMixin_1.ItemKey.monitors, data, isAdding);
         }
         togglePreProcessor(data, isAdding) {
-            this._toggleRuntimeItem(ItemKey.preProcessors, data, isAdding);
+            this._toggleRuntimeItem(RuntimeItemsMixin_1.ItemKey.preProcessors, data, isAdding);
         }
         togglePostProcessor(data, isAdding) {
-            this._toggleRuntimeItem(ItemKey.postProcessors, data, isAdding);
+            this._toggleRuntimeItem(RuntimeItemsMixin_1.ItemKey.postProcessors, data, isAdding);
         }
         get resultNames() {
             return this.results.map((r) => {
