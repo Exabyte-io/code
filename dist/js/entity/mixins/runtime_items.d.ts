@@ -66,6 +66,11 @@ export declare function RuntimeItemsUILogicMixin<T extends Constructor<BaseRunti
         monitors: NameResultSchema[];
         preProcessors: NameResultSchema[];
         postProcessors: NameResultSchema[];
+        hashObjectFromRuntimeItems: {
+            results: NameResultSchema[];
+            preProcessors: NameResultSchema[];
+            postProcessors: NameResultSchema[];
+        };
     };
 } & T;
 export declare function RuntimeItemsUIAllowedMixin<T extends InMemoryEntityConstructor>(superclass: T): {

@@ -369,6 +369,11 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         monitors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
         preProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
         postProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        hashObjectFromRuntimeItems: {
+            results: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+            preProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+            postProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        };
     };
 } & {
     new (...args: any[]): {

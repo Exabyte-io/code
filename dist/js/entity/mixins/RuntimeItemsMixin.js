@@ -16,95 +16,35 @@ var ItemKey;
  *          Is meant to work with Entity, InMemoryEntity b/c of `prop` extraction from `_json`.
  */
 function runtimeItemsMixin(item) {
+    // @ts-expect-error - this is a hack to get the properties of the item
     const properties = {
         get results() {
-            const self = this;
-            return self.prop("results", self.defaultResults || []).map(object_1.safeMakeObject);
-        },
-        set results(array) {
-            const self = this;
-            self.setProp("results", array);
+            var _a;
+            return this.prop("results", (_a = this.defaultResults) !== null && _a !== void 0 ? _a : []).map(object_1.safeMakeObject);
         },
         get monitors() {
-            const self = this;
-            return self.prop("monitors", self.defaultMonitors || []).map(object_1.safeMakeObject);
-        },
-        set monitors(array) {
-            const self = this;
-            self.setProp("monitors", array);
+            var _a;
+            return this.prop("monitors", (_a = this.defaultMonitors) !== null && _a !== void 0 ? _a : []).map(object_1.safeMakeObject);
         },
         get preProcessors() {
-            const self = this;
-            return self.prop("preProcessors", self.defaultPreProcessors || []).map(object_1.safeMakeObject);
-        },
-        set preProcessors(array) {
-            const self = this;
-            self.setProp("preProcessors", array);
+            var _a;
+            // TODO: safeMakeObject could return null. Should we throw an error here?
+            return this.prop("preProcessors", (_a = this.defaultPreProcessors) !== null && _a !== void 0 ? _a : []).map(object_1.safeMakeObject);
         },
         get postProcessors() {
-            const self = this;
-            return self
-                .prop("postProcessors", self.defaultPostProcessors || [])
-                .map(object_1.safeMakeObject);
+            var _a;
+            // TODO: safeMakeObject could return null. Should we throw an error here?
+            return this.prop("postProcessors", (_a = this.defaultPostProcessors) !== null && _a !== void 0 ? _a : []).map(object_1.safeMakeObject);
         },
-        set postProcessors(array) {
-            const self = this;
-            self.setProp("postProcessors", array);
-        },
-        get resultNames() {
-            return this.results.map((r) => r === null || r === void 0 ? void 0 : r.name);
-        },
-        get monitorNames() {
-            return this.monitors.map((r) => r === null || r === void 0 ? void 0 : r.name);
-        },
-        get preProcessorNames() {
-            return this.preProcessors.map((r) => r === null || r === void 0 ? void 0 : r.name);
-        },
-        get postProcessorNames() {
-            return this.postProcessors.map((r) => r === null || r === void 0 ? void 0 : r.name);
-        },
-        _addRuntimeItem(key, config) {
-            const self = this;
-            const runtimeItems = self._json[key || ItemKey.results];
-            if (!runtimeItems) {
-                throw new Error("not found");
-            }
-            runtimeItems.push((0, object_1.safeMakeObject)(config));
-        },
-        _removeRuntimeItem(key, config) {
-            const newConfig = (0, object_1.safeMakeObject)(config);
-            this._removeRuntimeItemByName(key, (newConfig === null || newConfig === void 0 ? void 0 : newConfig.name) || "");
-        },
-        _removeRuntimeItemByName(key, name) {
-            const self = this;
-            self._json[key] = self._json[key].filter((x) => x.name !== name);
-        },
-        _toggleRuntimeItem(key, data, isAdding) {
-            if (isAdding) {
-                this._addRuntimeItem(key, data);
-            }
-            else {
-                this._removeRuntimeItem(key, data);
-            }
-        },
-        toggleResult(data, isAdding) {
-            this._toggleRuntimeItem(ItemKey.results, data, isAdding);
-        },
-        toggleMonitor(data, isAdding) {
-            this._toggleRuntimeItem(ItemKey.monitors, data, isAdding);
-        },
-        togglePreProcessor(data, isAdding) {
-            this._toggleRuntimeItem(ItemKey.preProcessors, data, isAdding);
-        },
-        togglePostProcessor(data, isAdding) {
-            this._toggleRuntimeItem(ItemKey.postProcessors, data, isAdding);
-        },
-        getResultByName(name) {
-            return this.results.find((r) => (r === null || r === void 0 ? void 0 : r.name) === name);
+        get hashObjectFromRuntimeItems() {
+            return {
+                results: this.results,
+                preProcessors: this.preProcessors,
+                postProcessors: this.postProcessors,
+            };
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-    return properties;
 }
 function RuntimeItemsMixin(superclass) {
     class RuntimeItemsMixin extends superclass {
