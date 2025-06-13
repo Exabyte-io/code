@@ -320,13 +320,13 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
 } & {
     new (...params: any): {
         _json: import("./mixins/runtime_items").RuntimeItemsUILogicJSON;
-        getDefaultsByKey(key: import("./mixins/runtime_items").ItemKey): import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        getDefaultsByKey(key: import("./mixins/RuntimeItemsMixin").ItemKey): import("@mat3ra/esse/dist/js/types").NameResultSchema[] | undefined;
         setRuntimeItemsToDefaultValues(): void;
-        _initRuntimeItems(keys: import("./mixins/runtime_items").ItemKey[], _config: object): void;
-        _addRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, config: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema): void;
-        _removeRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, config: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema): void;
-        _removeRuntimeItemByName(key: import("./mixins/runtime_items").ItemKey, name: string): void;
-        _toggleRuntimeItem(key: import("./mixins/runtime_items").ItemKey | undefined, data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
+        _initRuntimeItems(keys: import("./mixins/RuntimeItemsMixin").ItemKey[], _config: object): void;
+        _addRuntimeItem(key: import("./mixins/RuntimeItemsMixin").ItemKey | undefined, config: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema): void;
+        _removeRuntimeItem(key: import("./mixins/RuntimeItemsMixin").ItemKey | undefined, config: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema): void;
+        _removeRuntimeItemByName(key: import("./mixins/RuntimeItemsMixin").ItemKey, name: string): void;
+        _toggleRuntimeItem(key: import("./mixins/RuntimeItemsMixin").ItemKey | undefined, data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
         toggleResult(data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
         toggleMonitor(data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
         togglePreProcessor(data: import("@mat3ra/esse/dist/js/types").RuntimeItemSchema, isAdding: boolean): void;
@@ -336,19 +336,6 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         readonly postProcessorNames: string[];
         readonly preProcessorNames: string[];
         getResultByName(name: string): import("@mat3ra/esse/dist/js/types").NameResultSchema | undefined;
-        readonly results: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly monitors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly preProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly postProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly defaultResults: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly defaultMonitors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly defaultPreProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly defaultPostProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        readonly hashObjectFromRuntimeItems: {
-            results: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-            preProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-            postProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
-        };
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
         setProp(name: string, value: unknown): void;
@@ -374,6 +361,14 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         systemName: string;
         readonly slug: string;
         readonly isSystemEntity: boolean;
+        defaultResults?: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        defaultMonitors?: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        defaultPreProcessors?: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        defaultPostProcessors?: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        results: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        monitors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        preProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
+        postProcessors: import("@mat3ra/esse/dist/js/types").NameResultSchema[];
     };
 } & {
     new (...args: any[]): {
