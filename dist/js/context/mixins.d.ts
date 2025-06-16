@@ -1,6 +1,10 @@
-import { ApplicationSchemaBase, JobSchema, MaterialSchema, WorkflowSchema } from "@mat3ra/esse/dist/js/types";
-import { InMemoryEntity } from "../entity";
+import { ApplicationSchemaBase } from "@mat3ra/esse/dist/js/types";
 import type { OrderedInMemoryEntityInSet } from "../entity/set/ordered/OrderedInMemoryEntityInSetMixin";
+import { JobContextMixin } from "./JobContextMixin";
+import { MaterialContextMixin } from "./MaterialContextMixin";
+import { MaterialsContextMixin } from "./MaterialsContextMixin";
+import { MethodDataContextMixin } from "./MethodDataContextMixin";
+import { WorkflowContextMixin } from "./WorkflowContextMixin";
 type Constructor<T = any> = new (...args: any[]) => T;
 export declare function ApplicationContextMixin<T extends Constructor>(superclass: T): {
     new (...args: any): {
@@ -9,24 +13,7 @@ export declare function ApplicationContextMixin<T extends Constructor>(superclas
         readonly application: ApplicationSchemaBase;
     };
 } & T;
-type Material = InMemoryEntity & MaterialSchema & {
-    hash: string;
-};
-export declare function MaterialContextMixin<T extends Constructor>(superclass: T): {
-    new (...args: any): {
-        [x: string]: any;
-        _material: Material;
-        extraData?: {
-            materialHash: string;
-        };
-        isEdited?: boolean;
-        readonly isEditedIsSetToFalseOnMaterialUpdate: boolean;
-        updateMaterialHash(): void;
-        readonly isMaterialCreatedDefault: boolean;
-        readonly isMaterialUpdated: boolean;
-        readonly material: Material;
-    };
-} & T;
+export { MaterialContextMixin, MaterialsContextMixin, MethodDataContextMixin, WorkflowContextMixin, JobContextMixin, };
 export declare function MaterialsSetContextMixin<T extends Constructor>(superclass: T): {
     new (...params: any): {
         [x: string]: any;
@@ -37,41 +24,3 @@ export declare function MaterialsSetContextMixin<T extends Constructor>(supercla
         }[];
     };
 } & T;
-export declare function MaterialsContextMixin<T extends Constructor>(superclass: T): {
-    new (...params: any): {
-        [x: string]: any;
-        _materials: any;
-        readonly materials: any;
-    };
-} & T;
-export declare function MethodDataContextMixin<T extends Constructor>(superclass: T): {
-    new (...params: any): {
-        [x: string]: any;
-        _methodData: any;
-        isEdited: boolean;
-        methodDataHash?: string;
-        extraData?: {
-            methodDataHash?: string;
-        };
-        _initMethodDataHash(): void;
-        readonly methodData: any;
-        readonly isMethodDataUpdated: boolean;
-    };
-} & T;
-export declare function WorkflowContextMixin<T extends Constructor>(superclass: T): {
-    new (...params: any): {
-        [x: string]: any;
-        _workflow: WorkflowSchema;
-        isEdited: boolean;
-        readonly workflow: WorkflowSchema;
-    };
-} & T;
-export declare function JobContextMixin<T extends Constructor>(superclass: T): {
-    new (...params: any): {
-        [x: string]: any;
-        _job: JobSchema;
-        isEdited: boolean;
-        readonly job: JobSchema;
-    };
-} & T;
-export {};
