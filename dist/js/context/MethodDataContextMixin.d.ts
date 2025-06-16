@@ -1,13 +1,19 @@
 import type { Constructor } from "../utils/types";
 import type { ContextProvider } from "./provider";
-interface Pseudo {
+export interface Pseudo {
     element: string;
     filename?: string;
     path?: string;
 }
-interface MethodData {
+export interface MethodData {
     pseudo?: Pseudo[];
 }
+export type MethodDataConfig = {
+    context?: {
+        methodData?: MethodData;
+    };
+    isEdited?: boolean;
+};
 export type MethodDataContextMixinType = {
     isEdited?: boolean;
     methodDataHash?: string;
@@ -22,4 +28,3 @@ export type MethodDataContextMixinType = {
 };
 export declare function methodDataContextMixin(item: ContextProvider): void;
 export declare function MethodDataContextMixin<T extends Constructor<ContextProvider>>(superclass: T): T & Constructor<MethodDataContextMixinType>;
-export {};

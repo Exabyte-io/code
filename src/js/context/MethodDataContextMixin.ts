@@ -3,17 +3,17 @@ import CryptoJS from "crypto-js";
 import type { Constructor } from "../utils/types";
 import type { ContextProvider } from "./provider";
 
-interface Pseudo {
+export interface Pseudo {
     element: string;
     filename?: string;
     path?: string;
 }
 
-interface MethodData {
+export interface MethodData {
     pseudo?: Pseudo[];
 }
 
-type MethodDataConfig = {
+export type MethodDataConfig = {
     context?: {
         methodData?: MethodData;
     };
