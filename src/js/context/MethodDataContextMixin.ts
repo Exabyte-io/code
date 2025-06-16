@@ -3,9 +3,19 @@ import CryptoJS from "crypto-js";
 import type { Constructor } from "../utils/types";
 import type { ContextProvider } from "./provider";
 
+interface Pseudo {
+    element: string;
+    filename?: string;
+    path?: string;
+}
+
+interface MethodData {
+    pseudo?: Pseudo[];
+}
+
 type MethodDataConfig = {
     context?: {
-        methodData?: any;
+        methodData?: MethodData;
     };
     isEdited?: boolean;
 };
@@ -16,8 +26,8 @@ export type MethodDataContextMixinType = {
     extraData?: {
         methodDataHash?: string;
     };
-    methodData: any;
-    _methodData: any;
+    methodData: MethodData;
+    _methodData: MethodData;
     isMethodDataUpdated: boolean;
     _initMethodDataHash: () => void;
     initMethodDataContextMixin: () => void;
