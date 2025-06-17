@@ -1,4 +1,16 @@
+import type { ContextProvider, ContextProviderConfig, ContextProviderStatic } from "./provider";
+
+export interface ContextProviderInstance {
+    constructor: typeof ContextProvider;
+    config: ContextProviderConfig;
+}
+
 export class ContextProviderRegistryContainer {
+    _providers: {
+        name: string;
+        instance: ContextProviderInstance;
+    }[];
+
     constructor() {
         this._providers = [];
     }
@@ -11,32 +23,33 @@ export class ContextProviderRegistryContainer {
         this._providers = p;
     }
 
-    addProvider({ name, instance }) {
+    addProvider({ name, instance }: { name: string; instance: ContextProviderInstance }) {
         this._providers.push({
             name,
             instance,
         });
     }
 
-    findProviderInstanceByName(name) {
+    findProviderInstanceByName(name: string) {
         const provider = this.providers.find((p) => p.name === name);
         return provider && provider.instance;
     }
 
-    removeProvider(providerCls) {
+    removeProvider(providerCls: ContextProvider) {
         this.providers = this.providers.filter((p) => p.name === providerCls.name);
     }
 
-    removeProviderByName(name) {
+    removeProviderByName(name: string) {
         this.providers = this.providers.filter((p) => p.name === name);
     }
 }
 
+type ContextProviderStaticEntry = [
+    keyof ContextProviderStatic,
+    ContextProviderStatic[keyof ContextProviderStatic],
+];
+
 /** Extends an existing context provider registry container and patches static class variables if applicable.
- *
- * @param {ContextProviderRegistryContainer} registryContainer
- * @param {Object} classConfigMap
- * @param {Object} classesToPatch
  * @example
  * const classConfigMap = {
  *     PlanewaveCutoffDataManager: {
@@ -44,23 +57,33 @@ export class ContextProviderRegistryContainer {
  *         config: _makeImportant({ name: "cutoffs", entityName: "subworkflow" })
  *     },
  * };
- *
  */
 export const extendAndPatchRegistry = (
-    registryContainer,
-    classConfigMap,
-    classesToPatch = {},
-    defaultSettings = {},
+    registryContainer: ContextProviderRegistryContainer,
+    classConfigMap: Record<
+        string,
+        { providerCls: typeof ContextProvider; config: ContextProviderConfig }
+    >,
+    classesToPatch: Partial<ContextProviderStatic> = {},
+    defaultSettings: Partial<Record<string, ContextProviderStatic>> = {},
 ) => {
     Object.entries(classConfigMap).forEach(([name, { providerCls, config }]) => {
-        Object.entries(classesToPatch).forEach(([clsName, cls]) => {
+        const entries = Object.entries(classesToPatch) as ContextProviderStaticEntry[];
+
+        entries.forEach(([clsName, cls]) => {
             if (providerCls[clsName]) {
+                // @ts-expect-error
                 providerCls[clsName] = cls;
             }
             const providerDefaultSettings = defaultSettings[providerCls.name];
             if (providerDefaultSettings) {
-                Object.entries(providerDefaultSettings).forEach(([key, value]) => {
+                const providerDefaultSettingsEntries = Object.entries(
+                    providerDefaultSettings,
+                ) as ContextProviderStaticEntry[];
+
+                providerDefaultSettingsEntries.forEach(([key, value]) => {
                     if (providerCls[key]) {
+                        // @ts-expect-error
                         providerCls[key] = value;
                     }
                 });
@@ -81,9 +104,12 @@ export const extendAndPatchRegistry = (
  * @param {{Material: SpecificMockMaterial}} classesToPatch
  */
 export const createAndPatchRegistry = (
-    classConfigMap,
-    classesToPatch = {},
-    defaultSettings = {},
+    classConfigMap: Record<
+        string,
+        { providerCls: typeof ContextProvider; config: ContextProviderConfig }
+    >,
+    classesToPatch: Partial<ContextProviderStatic> = {},
+    defaultSettings: Partial<Record<string, ContextProviderStatic>> = {},
 ) => {
     const registryContainer = new ContextProviderRegistryContainer();
     return extendAndPatchRegistry(

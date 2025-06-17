@@ -1,3 +1,4 @@
+import type { ContextProviderInstance } from "./registry";
 export interface ContextProviderConfig {
     name: string;
     domain?: string;
@@ -6,6 +7,12 @@ export interface ContextProviderConfig {
     extraData?: object;
     isEdited?: boolean;
     context?: object;
+}
+export interface ContextProviderStatic {
+    getConstructorConfig: (config: ContextProviderConfig) => ContextProviderInstance;
+    createConfigFromContext: (config: ContextProviderConfig) => ContextProviderConfig;
+    getExtraDataKeyByName: (name: string) => string;
+    getIsEditedKeyByName: (name: string) => string;
 }
 export declare class ContextProvider {
     config: ContextProviderConfig;
@@ -16,10 +23,7 @@ export declare class ContextProvider {
     extraData?: object;
     isEdited?: boolean;
     constructor(config: ContextProviderConfig);
-    static getConstructorConfig(config: ContextProviderConfig): {
-        constructor: Function;
-        config: ContextProviderConfig;
-    };
+    static getConstructorConfig(config: ContextProviderConfig): ContextProviderInstance;
     static createConfigFromContext(config: ContextProviderConfig): ContextProviderConfig & ({
         data: any;
         extraData: any;

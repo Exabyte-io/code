@@ -12,6 +12,7 @@
 import lodash from "lodash";
 
 import { deepClone } from "../utils/clone";
+import type { ContextProviderInstance } from "./registry";
 
 export interface ContextProviderConfig {
     name: string;
@@ -21,6 +22,13 @@ export interface ContextProviderConfig {
     extraData?: object;
     isEdited?: boolean;
     context?: object;
+}
+
+export interface ContextProviderStatic {
+    getConstructorConfig: (config: ContextProviderConfig) => ContextProviderInstance;
+    createConfigFromContext: (config: ContextProviderConfig) => ContextProviderConfig;
+    getExtraDataKeyByName: (name: string) => string;
+    getIsEditedKeyByName: (name: string) => string;
 }
 
 export class ContextProvider {
@@ -59,9 +67,9 @@ export class ContextProvider {
         this.yieldData = this.yieldData.bind(this);
     }
 
-    static getConstructorConfig(config: ContextProviderConfig) {
+    static getConstructorConfig(config: ContextProviderConfig): ContextProviderInstance {
         return {
-            constructor: this.prototype.constructor,
+            constructor: this.prototype.constructor as typeof ContextProvider,
             config,
         };
     }

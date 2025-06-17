@@ -30,10 +30,6 @@ class ContextProviderRegistryContainer {
 }
 exports.ContextProviderRegistryContainer = ContextProviderRegistryContainer;
 /** Extends an existing context provider registry container and patches static class variables if applicable.
- *
- * @param {ContextProviderRegistryContainer} registryContainer
- * @param {Object} classConfigMap
- * @param {Object} classesToPatch
  * @example
  * const classConfigMap = {
  *     PlanewaveCutoffDataManager: {
@@ -41,18 +37,21 @@ exports.ContextProviderRegistryContainer = ContextProviderRegistryContainer;
  *         config: _makeImportant({ name: "cutoffs", entityName: "subworkflow" })
  *     },
  * };
- *
  */
 const extendAndPatchRegistry = (registryContainer, classConfigMap, classesToPatch = {}, defaultSettings = {}) => {
     Object.entries(classConfigMap).forEach(([name, { providerCls, config }]) => {
-        Object.entries(classesToPatch).forEach(([clsName, cls]) => {
+        const entries = Object.entries(classesToPatch);
+        entries.forEach(([clsName, cls]) => {
             if (providerCls[clsName]) {
+                // @ts-expect-error
                 providerCls[clsName] = cls;
             }
             const providerDefaultSettings = defaultSettings[providerCls.name];
             if (providerDefaultSettings) {
-                Object.entries(providerDefaultSettings).forEach(([key, value]) => {
+                const providerDefaultSettingsEntries = Object.entries(providerDefaultSettings);
+                providerDefaultSettingsEntries.forEach(([key, value]) => {
                     if (providerCls[key]) {
+                        // @ts-expect-error
                         providerCls[key] = value;
                     }
                 });
