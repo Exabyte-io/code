@@ -1,10 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ApplicationContextMixin = exports.WorkflowContextPickKeysForMixin = exports.JSONSchemaFormDataProvider = exports.JobContextPickKeysForMixin = exports.createAndPatchRegistry = exports.extendAndPatchRegistry = exports.ContextProviderRegistryContainer = exports.ContextProvider = void 0;
+exports.WorkflowContextPickKeysForMixin = exports.JSONSchemaFormDataProvider = exports.JobContextPickKeysForMixin = exports.createAndPatchRegistry = exports.extendAndPatchRegistry = exports.ContextProviderRegistryContainer = exports.ContextProvider = void 0;
 const json_schema_provider_1 = require("./json_schema_provider");
 Object.defineProperty(exports, "JSONSchemaFormDataProvider", { enumerable: true, get: function () { return json_schema_provider_1.JSONSchemaFormDataProvider; } });
-const mixins_1 = require("./mixins");
-Object.defineProperty(exports, "ApplicationContextMixin", { enumerable: true, get: function () { return mixins_1.ApplicationContextMixin; } });
 const pickers_1 = require("./pickers");
 Object.defineProperty(exports, "JobContextPickKeysForMixin", { enumerable: true, get: function () { return pickers_1.JobContextPickKeysForMixin; } });
 Object.defineProperty(exports, "WorkflowContextPickKeysForMixin", { enumerable: true, get: function () { return pickers_1.WorkflowContextPickKeysForMixin; } });
