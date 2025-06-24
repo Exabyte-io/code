@@ -42,10 +42,10 @@ defaultableEntityStaticMixin(DefaultableInMemoryEntity);
 export class NamedInMemoryEntity extends (InMemoryEntity as NamedBase) {}
 namedEntityMixin(NamedInMemoryEntity.prototype);
 
-export class NamedDefaultableInMemoryEntity extends (InMemoryEntity as NamedDefaultableBase) {}
+export class NamedDefaultableInMemoryEntity extends (DefaultableInMemoryEntity as NamedDefaultableBase) {}
 namedEntityMixin(NamedDefaultableInMemoryEntity.prototype);
 
-export class HasMetadataNamedDefaultableInMemoryEntity extends (InMemoryEntity as HasMetadataNamedDefaultableBase) {}
+export class HasMetadataNamedDefaultableInMemoryEntity extends (NamedDefaultableInMemoryEntity as HasMetadataNamedDefaultableBase) {}
 hasMetadataMixin(HasMetadataNamedDefaultableInMemoryEntity.prototype);
 
 export class HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity extends (HasMetadataNamedDefaultableInMemoryEntity as HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase) {}
