@@ -10,5 +10,4 @@ export type DefaultableInMemoryEntity = {
 export type DefaultableInMemoryStaticEntity = {
     createDefault: () => InMemoryEntity & DefaultableInMemoryEntity;
 };
-export type DefaultableInMemoryEntityConstructor = Constructor<DefaultableInMemoryEntity>;
-export type DefaultableConstructor = DefaultableInMemoryEntityConstructor & DefaultableInMemoryStaticEntity;
+export type DefaultableInMemoryEntityConstructor = Constructor<DefaultableInMemoryEntity> & DefaultableInMemoryStaticEntity;
