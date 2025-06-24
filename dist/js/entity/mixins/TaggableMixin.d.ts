@@ -1,9 +1,8 @@
 import type { Constructor } from "../../utils/types";
-import type { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
-export declare function taggableMixin(item: InMemoryEntity): {
-    setTags(array: string[]): void;
+import { InMemoryEntity } from "../in_memory";
+export declare function taggableMixin<T extends InMemoryEntity>(item: T): InMemoryEntity & TaggableInMemoryEntity;
+export type TaggableInMemoryEntity = {
     tags: string[];
+    setTags: (array: string[]) => void;
 };
-export type TaggableInMemoryEntity = ReturnType<typeof taggableMixin>;
 export type TaggableInMemoryEntityConstructor = Constructor<TaggableInMemoryEntity>;
-export default function TaggableMixin<S extends InMemoryEntityConstructor>(superclass: S): S & TaggableInMemoryEntityConstructor;

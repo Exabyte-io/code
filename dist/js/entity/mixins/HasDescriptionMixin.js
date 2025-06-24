@@ -1,35 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasDescriptionMixin = hasDescriptionMixin;
-exports.default = HasDescriptionMixin;
-function schemaMixin(item) {
-    const schema = {
+function hasDescriptionMixin(item) {
+    // @ts-expect-error
+    const properties = {
         get description() {
-            return item.prop("description", "");
+            return this.prop("description", "");
         },
         set description(string) {
-            item.setProp("description", string);
+            this.setProp("description", string);
         },
         get descriptionObject() {
-            return item.prop("descriptionObject");
+            return this.prop("descriptionObject");
         },
         set descriptionObject(obj) {
-            item.setProp("descriptionObject", obj);
+            this.setProp("descriptionObject", obj);
         },
     };
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
-    return schema;
-}
-function hasDescriptionMixin(item) {
-    return schemaMixin(item);
-}
-function HasDescriptionMixin(superclass) {
-    class HasDescriptionMixin extends superclass {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...args) {
-            super(...args);
-            hasDescriptionMixin(this);
-        }
-    }
-    return HasDescriptionMixin;
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    return properties;
 }
