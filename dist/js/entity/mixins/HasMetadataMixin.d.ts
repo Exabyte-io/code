@@ -1,9 +1,8 @@
 import type { Constructor } from "../../utils/types";
-import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
-export declare function hasMetadataMixin(item: InMemoryEntity): {
-    updateMetadata(object: object): void;
+import { InMemoryEntity } from "../in_memory";
+export declare function hasMetadataMixin<T extends InMemoryEntity>(item: T): InMemoryEntity & HasMetadataInMemoryEntity;
+export type HasMetadataInMemoryEntity = {
     metadata: object;
+    updateMetadata: (object: object) => void;
 };
-export type HasMetadataInMemoryEntity = ReturnType<typeof hasMetadataMixin>;
 export type HasMetadataInMemoryEntityConstructor = Constructor<HasMetadataInMemoryEntity>;
-export default function HasMetadataMixin<S extends InMemoryEntityConstructor>(superclass: S): S & HasMetadataInMemoryEntityConstructor;

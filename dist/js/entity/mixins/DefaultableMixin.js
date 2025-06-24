@@ -1,36 +1,28 @@
 "use strict";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.defaultableMixinProps = defaultableMixinProps;
-exports.defaultableMixinStaticProps = defaultableMixinStaticProps;
-exports.default = DefaultableMixin;
-function defaultableMixinProps(item) {
+exports.defaultableEntityMixin = defaultableEntityMixin;
+exports.defaultableEntityStaticMixin = defaultableEntityStaticMixin;
+function defaultableEntityMixin(item) {
+    // @ts-expect-error
     const properties = {
         get isDefault() {
-            return item.prop("isDefault", false);
+            return this.prop("isDefault", false);
         },
         set isDefault(isDefault) {
-            item.setProp("isDefault", isDefault);
+            this.setProp("isDefault", isDefault);
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
     return properties;
 }
-const staticProperties = {
-    createDefault() {
-        return new this(this.defaultConfig);
-    },
-};
-function defaultableMixinStaticProps(Item) {
+function defaultableEntityStaticMixin(Item) {
+    // @ts-expect-error
+    const staticProperties = {
+        createDefault() {
+            return new this(this.defaultConfig);
+        },
+    };
     Object.defineProperties(Item, Object.getOwnPropertyDescriptors(staticProperties));
     return staticProperties;
-}
-function DefaultableMixin(superclass) {
-    class DefaultableMixin extends superclass {
-        constructor(...args) {
-            super(...args);
-            defaultableMixinProps(this);
-        }
-    }
-    defaultableMixinStaticProps(DefaultableMixin);
-    return DefaultableMixin;
 }

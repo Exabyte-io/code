@@ -3,15 +3,7 @@ import { ContextAndRenderFieldsMixin } from "./mixins/context";
 import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
 import { FlowchartEntityMixin, FlowchartItemMixin } from "./mixins/flowchart";
 import { HashedInputArrayMixin } from "./mixins/hash";
-import {
-    DefaultableMixin,
-    HasConsistencyChecksMixin,
-    HasDescriptionMixin,
-    HasMetadataMixin,
-    HasScopeTrackMixin,
-    NamedEntityMixin,
-    TaggableMixin,
-} from "./mixins/props";
+import { HasDescriptionMixin, HasScopeTrackMixin, TaggableMixin } from "./mixins/props";
 import { RuntimeItemsMixin } from "./mixins/runtime_items";
 import {
     DefaultableInMemoryEntity,
@@ -43,13 +35,9 @@ export {
     NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
     NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
     HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity,
-    HasConsistencyChecksMixin,
-    DefaultableMixin,
     HasDescriptionMixin,
-    HasMetadataMixin,
     TaggableMixin,
     HasScopeTrackMixin,
-    NamedEntityMixin,
     RuntimeItemsMixin,
     RuntimeContextFieldMixin,
     HashedInputArrayMixin,

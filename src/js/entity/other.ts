@@ -1,35 +1,34 @@
 import { InMemoryEntity } from "./in_memory";
 import { ContextAndRenderFieldsMixin, ImportantSettingsProviderMixin } from "./mixins/context";
+import { defaultableEntityMixin, defaultableEntityStaticMixin } from "./mixins/DefaultableMixin";
+import { hasConsistencyChecksMixin } from "./mixins/HasConsistencyChecksMixin";
 import { HashedEntityMixin } from "./mixins/hash";
-import {
-    DefaultableMixin,
-    HasConsistencyChecksMixin,
-    HasMetadataMixin,
-    NamedEntityMixin,
-} from "./mixins/props";
+import { hasMetadataMixin } from "./mixins/HasMetadataMixin";
+import { namedEntityMixin } from "./mixins/NamedEntityMixin";
 import { HasRepetitionMixin } from "./mixins/repetition";
 import { RuntimeItemsUIAllowedMixin, RuntimeItemsUILogicMixin } from "./mixins/runtime_items";
 
-export class DefaultableInMemoryEntity extends DefaultableMixin(InMemoryEntity) {}
+export class DefaultableInMemoryEntity extends InMemoryEntity {}
+defaultableEntityMixin(DefaultableInMemoryEntity.prototype);
+defaultableEntityStaticMixin(DefaultableInMemoryEntity);
 
-export const NamedInMemoryEntity = NamedEntityMixin(InMemoryEntity);
+export class NamedInMemoryEntity extends InMemoryEntity {}
+namedEntityMixin(NamedInMemoryEntity.prototype);
 
-export const NamedDefaultableInMemoryEntity = NamedEntityMixin(DefaultableMixin(InMemoryEntity));
+export class NamedDefaultableInMemoryEntity extends DefaultableInMemoryEntity {}
+namedEntityMixin(NamedDefaultableInMemoryEntity.prototype);
 
-export const HasMetadataNamedDefaultableInMemoryEntity = HasMetadataMixin(
-    NamedEntityMixin(DefaultableMixin(InMemoryEntity)),
-);
+export class HasMetadataNamedDefaultableInMemoryEntity extends NamedDefaultableInMemoryEntity {}
+hasMetadataMixin(HasMetadataNamedDefaultableInMemoryEntity.prototype);
 
-export const HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity =
-    HasConsistencyChecksMixin(HasMetadataNamedDefaultableInMemoryEntity);
+export class HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity extends HasMetadataNamedDefaultableInMemoryEntity {}
+hasConsistencyChecksMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity.prototype);
 
 export const NamedDefaultableRepetitionImportantSettingsInMemoryEntity =
-    ImportantSettingsProviderMixin(
-        HasRepetitionMixin(NamedEntityMixin(DefaultableMixin(InMemoryEntity))),
-    );
+    ImportantSettingsProviderMixin(HasRepetitionMixin(NamedDefaultableInMemoryEntity));
 
 export const NamedDefaultableRepetitionContextAndRenderInMemoryEntity = ContextAndRenderFieldsMixin(
-    HasRepetitionMixin(NamedEntityMixin(DefaultableMixin(InMemoryEntity))),
+    HasRepetitionMixin(NamedDefaultableInMemoryEntity),
 );
 
 export const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity =
@@ -37,9 +36,7 @@ export const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRe
         ContextAndRenderFieldsMixin(
             ImportantSettingsProviderMixin(
                 RuntimeItemsUIAllowedMixin(
-                    RuntimeItemsUILogicMixin(
-                        HasRepetitionMixin(NamedEntityMixin(DefaultableMixin(InMemoryEntity))),
-                    ),
+                    RuntimeItemsUILogicMixin(HasRepetitionMixin(NamedDefaultableInMemoryEntity)),
                 ),
             ),
         ),

@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FlowchartItemMixin = exports.FlowchartEntityMixin = exports.ContextAndRenderFieldsMixin = exports.OrderedInMemoryEntityInSetMixin = exports.OrderedInMemoryEntitySetMixin = exports.InMemoryEntityInSetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.InMemoryEntitySet = exports.HashedInputArrayMixin = exports.RuntimeContextFieldMixin = exports.RuntimeItemsMixin = exports.NamedEntityMixin = exports.HasScopeTrackMixin = exports.TaggableMixin = exports.HasMetadataMixin = exports.HasDescriptionMixin = exports.DefaultableMixin = exports.HasConsistencyChecksMixin = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity = exports.NamedDefaultableRepetitionImportantSettingsInMemoryEntity = exports.NamedDefaultableRepetitionContextAndRenderInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
+exports.FlowchartItemMixin = exports.FlowchartEntityMixin = exports.ContextAndRenderFieldsMixin = exports.OrderedInMemoryEntityInSetMixin = exports.OrderedInMemoryEntitySetMixin = exports.InMemoryEntityInSetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.InMemoryEntitySet = exports.HashedInputArrayMixin = exports.RuntimeContextFieldMixin = exports.RuntimeItemsMixin = exports.HasScopeTrackMixin = exports.TaggableMixin = exports.HasDescriptionMixin = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity = exports.NamedDefaultableRepetitionImportantSettingsInMemoryEntity = exports.NamedDefaultableRepetitionContextAndRenderInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
 const in_memory_1 = require("./in_memory");
 Object.defineProperty(exports, "InMemoryEntity", { enumerable: true, get: function () { return in_memory_1.InMemoryEntity; } });
 const context_1 = require("./mixins/context");
@@ -46,12 +46,8 @@ Object.defineProperty(exports, "FlowchartItemMixin", { enumerable: true, get: fu
 const hash_1 = require("./mixins/hash");
 Object.defineProperty(exports, "HashedInputArrayMixin", { enumerable: true, get: function () { return hash_1.HashedInputArrayMixin; } });
 const props_1 = require("./mixins/props");
-Object.defineProperty(exports, "DefaultableMixin", { enumerable: true, get: function () { return props_1.DefaultableMixin; } });
-Object.defineProperty(exports, "HasConsistencyChecksMixin", { enumerable: true, get: function () { return props_1.HasConsistencyChecksMixin; } });
 Object.defineProperty(exports, "HasDescriptionMixin", { enumerable: true, get: function () { return props_1.HasDescriptionMixin; } });
-Object.defineProperty(exports, "HasMetadataMixin", { enumerable: true, get: function () { return props_1.HasMetadataMixin; } });
 Object.defineProperty(exports, "HasScopeTrackMixin", { enumerable: true, get: function () { return props_1.HasScopeTrackMixin; } });
-Object.defineProperty(exports, "NamedEntityMixin", { enumerable: true, get: function () { return props_1.NamedEntityMixin; } });
 Object.defineProperty(exports, "TaggableMixin", { enumerable: true, get: function () { return props_1.TaggableMixin; } });
 const runtime_items_1 = require("./mixins/runtime_items");
 Object.defineProperty(exports, "RuntimeItemsMixin", { enumerable: true, get: function () { return runtime_items_1.RuntimeItemsMixin; } });
