@@ -19,11 +19,11 @@ class NamedInMemoryEntity extends in_memory_1.InMemoryEntity {
 }
 exports.NamedInMemoryEntity = NamedInMemoryEntity;
 (0, NamedEntityMixin_1.namedEntityMixin)(NamedInMemoryEntity.prototype);
-class NamedDefaultableInMemoryEntity extends DefaultableInMemoryEntity {
+class NamedDefaultableInMemoryEntity extends in_memory_1.InMemoryEntity {
 }
 exports.NamedDefaultableInMemoryEntity = NamedDefaultableInMemoryEntity;
 (0, NamedEntityMixin_1.namedEntityMixin)(NamedDefaultableInMemoryEntity.prototype);
-class HasMetadataNamedDefaultableInMemoryEntity extends NamedDefaultableInMemoryEntity {
+class HasMetadataNamedDefaultableInMemoryEntity extends in_memory_1.InMemoryEntity {
 }
 exports.HasMetadataNamedDefaultableInMemoryEntity = HasMetadataNamedDefaultableInMemoryEntity;
 (0, HasMetadataMixin_1.hasMetadataMixin)(HasMetadataNamedDefaultableInMemoryEntity.prototype);
