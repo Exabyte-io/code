@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HashedEntityMixin = HashedEntityMixin;
-exports.HashedInputArrayMixin = HashedInputArrayMixin;
 const hash_1 = require("../../utils/hash");
-const str_1 = require("../../utils/str");
 function HashedEntityMixin(superclass) {
     return class extends superclass {
         /*
@@ -21,19 +19,6 @@ function HashedEntityMixin(superclass) {
          */
         calculateHash() {
             return (0, hash_1.calculateHashFromObject)(this.getHashObject());
-        }
-    };
-}
-function HashedInputArrayMixin(superclass) {
-    return class extends superclass {
-        /*
-         * @summary expects an array with elements containing field [{content: "..."}]
-         */
-        get hashFromArrayInputContent() {
-            const objectForHashing = this.input.map((i) => {
-                return (0, str_1.removeEmptyLinesFromString)((0, str_1.removeCommentsFromSourceCode)(i.content));
-            });
-            return (0, hash_1.calculateHashFromObject)(objectForHashing);
         }
     };
 }

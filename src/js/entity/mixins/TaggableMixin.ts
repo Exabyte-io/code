@@ -1,27 +1,17 @@
-import type { EntityTagsSchema } from "@mat3ra/esse/dist/js/types";
-
 import type { Constructor } from "../../utils/types";
-import type { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
+import { InMemoryEntity } from "../in_memory";
 
-function schemaMixin(item: InMemoryEntity) {
-    const schema = {
+export function taggableMixin<T extends InMemoryEntity>(item: T) {
+    // @ts-expect-error
+    const properties: InMemoryEntity & TaggableInMemoryEntity = {
         get tags(): string[] {
-            return item.prop("tags", []);
+            return this.prop("tags", []);
         },
         set tags(array: string[]) {
-            item.setProp("tags", array);
+            this.setProp("tags", array);
         },
-    } satisfies EntityTagsSchema;
-
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
-
-    return schema;
-}
-
-function propertiesMixin(item: InMemoryEntity & EntityTagsSchema) {
-    const properties = {
         setTags(array: string[]) {
-            item.tags = array.filter((value, index, self) => self.indexOf(value) === index);
+            this.tags = array.filter((value, index, self) => self.indexOf(value) === index);
         },
     };
 
@@ -30,24 +20,9 @@ function propertiesMixin(item: InMemoryEntity & EntityTagsSchema) {
     return properties;
 }
 
-export function taggableMixin(item: InMemoryEntity) {
-    return {
-        ...schemaMixin(item),
-        ...propertiesMixin(item),
-    };
-}
+export type TaggableInMemoryEntity = {
+    tags: string[];
+    setTags: (array: string[]) => void;
+};
 
-export type TaggableInMemoryEntity = ReturnType<typeof taggableMixin>;
 export type TaggableInMemoryEntityConstructor = Constructor<TaggableInMemoryEntity>;
-
-export default function TaggableMixin<S extends InMemoryEntityConstructor>(superclass: S) {
-    class TaggableMixin extends superclass {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...args: any[]) {
-            super(...args);
-            taggableMixin(this);
-        }
-    }
-
-    return TaggableMixin as S & TaggableInMemoryEntityConstructor;
-}
