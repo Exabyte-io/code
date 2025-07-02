@@ -2,7 +2,6 @@ import { InMemoryEntity } from "./in_memory";
 import { ContextAndRenderFieldsMixin } from "./mixins/context";
 import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
 import { FlowchartEntityMixin, FlowchartItemMixin } from "./mixins/flowchart";
-import { HashedInputArrayMixin } from "./mixins/hash";
 import { HasScopeTrackMixin } from "./mixins/props";
 import { RuntimeItemsMixin } from "./mixins/runtime_items";
 import {
@@ -38,7 +37,6 @@ export {
     HasScopeTrackMixin,
     RuntimeItemsMixin,
     RuntimeContextFieldMixin,
-    HashedInputArrayMixin,
     InMemoryEntitySet,
     ENTITY_SET_TYPES,
     constructEntitySetFactoryByConfig,

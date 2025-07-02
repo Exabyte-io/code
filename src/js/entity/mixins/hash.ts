@@ -1,7 +1,4 @@
-import { ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines } from "@mat3ra/esse/dist/js/types";
-
 import { calculateHashFromObject } from "../../utils/hash";
-import { removeCommentsFromSourceCode, removeEmptyLinesFromString } from "../../utils/str";
 import { InMemoryEntityConstructor } from "../in_memory";
 
 export function HashedEntityMixin<T extends InMemoryEntityConstructor>(superclass: T) {
@@ -22,22 +19,6 @@ export function HashedEntityMixin<T extends InMemoryEntityConstructor>(superclas
          */
         calculateHash() {
             return calculateHashFromObject(this.getHashObject());
-        }
-    };
-}
-
-export function HashedInputArrayMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass {
-        declare input: ExecutionUnitInputItemSchemaForPhysicsBasedSimulationEngines[];
-
-        /*
-         * @summary expects an array with elements containing field [{content: "..."}]
-         */
-        get hashFromArrayInputContent() {
-            const objectForHashing = this.input.map((i) => {
-                return removeEmptyLinesFromString(removeCommentsFromSourceCode(i.content));
-            });
-            return calculateHashFromObject(objectForHashing);
         }
     };
 }
