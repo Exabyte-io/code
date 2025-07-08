@@ -19,7 +19,7 @@ dependencies = [
     "numpy",
     "jsonschema>=2.6.0",
     "pydantic>=2.7.1",
-    "mat3ra-esse>=2025.4.15.post0",
+    "mat3ra-esse @ git+https://github.com/exabyte-io/esse.git@f29565a8bb2cf91a3b0002ce9ab9955cfa64f3de",
     "mat3ra-utils>=2024.5.15.post0",
 ]
 
