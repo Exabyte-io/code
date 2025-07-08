@@ -74,7 +74,7 @@ class ArrayWithIds(BaseModel):
         self.values = [self.values[i] for i in range(len(self.values)) if i in index_set]
         self.ids = [self.ids[i] for i in range(len(self.ids)) if i in index_set]
 
-    def filter_by_ids(self, ids: Union[List[int], int], invert: bool = False):
+    def filter_by_ids(self, ids: Union[List[int], int], invert: bool = False, reset_ids: bool = False):
         if isinstance(ids, int):
             ids = [ids]
         if not invert:
@@ -84,6 +84,8 @@ class ArrayWithIds(BaseModel):
         keep_indices = [index for index, id_ in enumerate(self.ids) if id_ in ids_set]
         self.values = [self.values[index] for index in keep_indices]
         self.ids = [self.ids[index] for index in keep_indices]
+        if reset_ids:
+            self.ids = list(range(len(self.values)))
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, ArrayWithIds) and self.values == other.values and self.ids == other.ids
