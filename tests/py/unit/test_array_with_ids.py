@@ -213,7 +213,7 @@ def test_filter_by_ids_reset_ids():
     instance = ArrayWithIds(**ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG_NON_CONSECUTIVE)
     # Filter to keep only first and third elements (ids 2 and 6)
     instance.filter_by_ids([2, 6], reset_ids=True)
-    
+
     # Values should be filtered correctly
     assert instance.values == [
         ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG_NON_CONSECUTIVE["values"][0],
@@ -221,12 +221,12 @@ def test_filter_by_ids_reset_ids():
     ]
     # IDs should be reset to consecutive integers starting from 0
     assert instance.ids == [0, 1]
-    
+
     # Test with invert=True
     instance = ArrayWithIds(**ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG_NON_CONSECUTIVE)
     # Filter to exclude first element (id 2), keep second and third (ids 4, 6)
     instance.filter_by_ids([2], invert=True, reset_ids=True)
-    
+
     assert instance.values == [
         ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG_NON_CONSECUTIVE["values"][1],
         ARRAY_WITH_IDS_ARRAYS_OF_FLOAT_VALUES_CONFIG_NON_CONSECUTIVE["values"][2],
