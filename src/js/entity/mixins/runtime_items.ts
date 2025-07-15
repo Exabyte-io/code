@@ -1,66 +1,16 @@
 /* eslint-disable class-methods-use-this */
 import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { NameResultSchema, RuntimeItemSchema } from "@mat3ra/esse/dist/js/types";
+import type { Constructor } from "src/js/utils/types";
 
 import { safeMakeObject } from "../../utils/object";
 import { InMemoryEntityConstructor } from "../in_memory";
+import RuntimeItemsMixin, {
+    type BaseRuntimeItemsInMemoryEntity,
+    ItemKey,
+} from "./RuntimeItemsMixin";
 
-export enum ItemKey {
-    results = "results",
-    monitors = "monitors",
-    preProcessors = "preProcessors",
-    postProcessors = "postProcessors",
-}
-/*
- * @summary Contains runtime items: results, monitors, pre/postProcessors
- *          Is meant to work with Entity, InMemoryEntity b/c of `prop` extraction from `_json`.
- */
-
-export function RuntimeItemsMixin<T extends InMemoryEntityConstructor>(superclass: T) {
-    return class extends superclass {
-        get results(): NameResultSchema[] {
-            return this.prop("results", this.defaultResults).map(safeMakeObject);
-        }
-
-        get monitors(): NameResultSchema[] {
-            return this.prop("monitors", this.defaultMonitors).map(safeMakeObject);
-        }
-
-        get preProcessors(): NameResultSchema[] {
-            // TODO: safeMakeObject could return null. Should we throw an error here?
-            return this.prop("preProcessors", this.defaultPreProcessors).map(safeMakeObject);
-        }
-
-        get postProcessors(): NameResultSchema[] {
-            // TODO: safeMakeObject could return null. Should we throw an error here?
-            return this.prop("postProcessors", this.defaultPostProcessors).map(safeMakeObject);
-        }
-
-        get defaultResults(): NameResultSchema[] {
-            return [];
-        }
-
-        get defaultMonitors(): NameResultSchema[] {
-            return [];
-        }
-
-        get defaultPreProcessors(): NameResultSchema[] {
-            return [];
-        }
-
-        get defaultPostProcessors(): NameResultSchema[] {
-            return [];
-        }
-
-        get hashObjectFromRuntimeItems() {
-            return {
-                results: this.results,
-                preProcessors: this.preProcessors,
-                postProcessors: this.postProcessors,
-            };
-        }
-    };
-}
+export { RuntimeItemsMixin, ItemKey };
 
 export interface RuntimeItemsUILogicJSON extends AnyObject {
     results?: NameResultSchema[];
@@ -76,7 +26,9 @@ const allKeys: ItemKey[] = [
     ItemKey.preProcessors,
 ];
 
-export function RuntimeItemsUILogicMixin<T extends InMemoryEntityConstructor>(superclass: T) {
+export function RuntimeItemsUILogicMixin<T extends Constructor<BaseRuntimeItemsInMemoryEntity>>(
+    superclass: T,
+) {
     return class extends RuntimeItemsMixin(superclass) {
         declare _json: RuntimeItemsUILogicJSON;
 
