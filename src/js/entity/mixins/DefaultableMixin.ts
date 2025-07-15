@@ -1,53 +1,48 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { DefaultableEntitySchema } from "@mat3ra/esse/dist/js/types";
 
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
-type ClassBase = Constructor<InMemoryEntity> & {
-    defaultConfig?: object | null;
-};
-
-export function defaultableMixinProps<T extends InMemoryEntity>(item: T) {
-    const properties = {
+export function defaultableEntityMixin<T extends InMemoryEntity>(item: T) {
+    // @ts-expect-error
+    const properties: InMemoryEntity & DefaultableInMemoryEntity = {
         get isDefault() {
-            return item.prop("isDefault", false);
+            return this.prop("isDefault", false);
         },
         set isDefault(isDefault: boolean) {
-            item.setProp("isDefault", isDefault);
+            this.setProp("isDefault", isDefault);
         },
-    } satisfies DefaultableEntitySchema;
+    };
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
     return properties;
 }
 
-const staticProperties = {
-    createDefault<T extends ClassBase>(this: T) {
-        return new this(this.defaultConfig) as InstanceType<T> & DefaultableInMemoryEntity;
-    },
-};
+export function defaultableEntityStaticMixin(Item: Constructor<InMemoryEntity>) {
+    // @ts-expect-error
+    const staticProperties: DefaultableInMemoryStaticEntity &
+        Constructor<InMemoryEntity> &
+        Constructor<DefaultableInMemoryEntity> & {
+            defaultConfig?: object | null;
+        } = {
+        createDefault() {
+            return new this(this.defaultConfig);
+        },
+    };
 
-export function defaultableMixinStaticProps<T extends ClassBase>(Item: T) {
     Object.defineProperties(Item, Object.getOwnPropertyDescriptors(staticProperties));
 
     return staticProperties;
 }
 
-export type DefaultableInMemoryEntity = ReturnType<typeof defaultableMixinProps>;
-export type DefaultableInMemoryEntityConstructor = Constructor<DefaultableInMemoryEntity>;
-export type DefaultableConstructor = DefaultableInMemoryEntityConstructor & typeof staticProperties;
+export type DefaultableInMemoryEntity = {
+    isDefault: boolean;
+};
 
-export default function DefaultableMixin<S extends ClassBase>(superclass: S) {
-    class DefaultableMixin extends superclass {
-        constructor(...args: any[]) {
-            super(...args);
-            defaultableMixinProps(this);
-        }
-    }
+export type DefaultableInMemoryStaticEntity = {
+    createDefault: () => InMemoryEntity & DefaultableInMemoryEntity;
+};
 
-    defaultableMixinStaticProps(DefaultableMixin);
-
-    return DefaultableMixin as S & DefaultableConstructor;
-}
+export type DefaultableInMemoryEntityConstructor = Constructor<DefaultableInMemoryEntity> &
+    DefaultableInMemoryStaticEntity;

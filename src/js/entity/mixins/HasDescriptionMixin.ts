@@ -1,44 +1,33 @@
 import type { DescriptionSchema } from "@mat3ra/esse/dist/js/types";
 
 import type { Constructor } from "../../utils/types";
-import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
+import { InMemoryEntity } from "../in_memory";
 
-function schemaMixin(item: InMemoryEntity) {
-    const schema = {
+export function hasDescriptionMixin<T extends InMemoryEntity>(item: T) {
+    // @ts-expect-error
+    const properties: InMemoryEntity & HasDescriptionInMemoryEntity = {
         get description(): string {
-            return item.prop("description", "");
+            return this.prop("description", "");
         },
         set description(string: string) {
-            item.setProp("description", string);
+            this.setProp("description", string);
         },
         get descriptionObject() {
-            return item.prop<DescriptionSchema["descriptionObject"]>("descriptionObject");
+            return this.prop<DescriptionSchema["descriptionObject"]>("descriptionObject");
         },
         set descriptionObject(obj: DescriptionSchema["descriptionObject"]) {
-            item.setProp("descriptionObject", obj);
+            this.setProp("descriptionObject", obj);
         },
-    } satisfies DescriptionSchema;
+    };
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
-    return schema;
+    return properties;
 }
 
-export function hasDescriptionMixin(item: InMemoryEntity) {
-    return schemaMixin(item);
-}
+export type HasDescriptionInMemoryEntity = {
+    description: string;
+    descriptionObject: DescriptionSchema["descriptionObject"];
+};
 
-export type HasDescriptionInMemoryEntity = ReturnType<typeof hasDescriptionMixin>;
 export type HasDescriptionInMemoryEntityConstructor = Constructor<HasDescriptionInMemoryEntity>;
-
-export default function HasDescriptionMixin<S extends InMemoryEntityConstructor>(superclass: S) {
-    class HasDescriptionMixin extends superclass {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...args: any[]) {
-            super(...args);
-            hasDescriptionMixin(this);
-        }
-    }
-
-    return HasDescriptionMixin as S & HasDescriptionInMemoryEntityConstructor;
-}

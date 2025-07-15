@@ -1,10 +1,9 @@
 import type { ConsistencyCheck } from "@mat3ra/esse/dist/js/types";
 import type { Constructor } from "../../utils/types";
-import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
-export declare function hasConsistencyChecksMixin(item: InMemoryEntity): {
-    addConsistencyChecks(array: ConsistencyCheck[]): void;
+import { InMemoryEntity } from "../in_memory";
+export declare function hasConsistencyChecksMixin<T extends InMemoryEntity>(item: T): InMemoryEntity & HasConsistencyChecksInMemoryEntity;
+export type HasConsistencyChecksInMemoryEntity = {
     consistencyChecks: ConsistencyCheck[];
+    addConsistencyChecks: (array: ConsistencyCheck[]) => void;
 };
-export type HasConsistencyChecksInMemoryEntity = ReturnType<typeof hasConsistencyChecksMixin>;
 export type HasConsistencyChecksInMemoryEntityConstructor = Constructor<HasConsistencyChecksInMemoryEntity>;
-export default function HasConsistencyChecksMixin<S extends InMemoryEntityConstructor>(superclass: S): S & HasConsistencyChecksInMemoryEntityConstructor;

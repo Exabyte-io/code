@@ -1,27 +1,17 @@
-import type { MetadataSchema } from "@mat3ra/esse/dist/js/types";
-
 import type { Constructor } from "../../utils/types";
-import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
+import { InMemoryEntity } from "../in_memory";
 
-function schemaMixin(item: InMemoryEntity) {
-    const schema = {
+export function hasMetadataMixin<T extends InMemoryEntity>(item: T) {
+    // @ts-expect-error
+    const properties: InMemoryEntity & HasMetadataInMemoryEntity = {
         get metadata(): object {
-            return item.prop("metadata", {});
+            return this.prop("metadata", {});
         },
         set metadata(object: object) {
-            item.setProp("metadata", object);
+            this.setProp("metadata", object);
         },
-    } satisfies MetadataSchema;
-
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
-
-    return schema;
-}
-
-function propertiesMixin(item: InMemoryEntity & MetadataSchema) {
-    const properties = {
         updateMetadata(object: object) {
-            item.metadata = { ...item.metadata, ...object };
+            this.metadata = { ...this.metadata, ...object };
         },
     };
 
@@ -30,24 +20,9 @@ function propertiesMixin(item: InMemoryEntity & MetadataSchema) {
     return properties;
 }
 
-export function hasMetadataMixin(item: InMemoryEntity) {
-    return {
-        ...schemaMixin(item),
-        ...propertiesMixin(item),
-    };
-}
+export type HasMetadataInMemoryEntity = {
+    metadata: object;
+    updateMetadata: (object: object) => void;
+};
 
-export type HasMetadataInMemoryEntity = ReturnType<typeof hasMetadataMixin>;
 export type HasMetadataInMemoryEntityConstructor = Constructor<HasMetadataInMemoryEntity>;
-
-export default function HasMetadataMixin<S extends InMemoryEntityConstructor>(superclass: S) {
-    class HasMetadataMixin extends superclass {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...args: any[]) {
-            super(...args);
-            hasMetadataMixin(this);
-        }
-    }
-
-    return HasMetadataMixin as S & HasMetadataInMemoryEntityConstructor;
-}
