@@ -2,44 +2,29 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inMemoryEntityInSetMixin = inMemoryEntityInSetMixin;
 exports.default = InMemoryEntityInSetMixin;
-function schemaMixin(item) {
-    const schema = {
+function inMemoryEntityInSetMixin(item) {
+    // @ts-expect-error
+    const properties = {
         get inSet() {
-            return item.prop("inSet", []);
+            return this.prop("inSet", []);
         },
         set inSet(inSet) {
-            item.setProp("inSet", inSet);
+            this.setProp("inSet", inSet);
         },
-    };
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
-    return schema;
-}
-function propertiesMixin(item) {
-    const properties = {
         getInSetFilteredByCls(cls) {
-            return item.inSet.filter((ref) => ref.cls === cls);
+            return this.inSet.filter((ref) => ref.cls === cls);
         },
         // finds a parent entity set of the same cls (hence `cls` field is absent)
         // NOTE: assumes that only one entry of this kind is present => gets the first one
         get parentEntitySetReference() {
-            return item.inSet.find((item) => item._id && !item.cls);
+            return this.inSet.find((inSetItem) => inSetItem._id && !inSetItem.cls);
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-    return properties;
-}
-function inMemoryEntityInSetMixin(item) {
-    return {
-        ...schemaMixin(item),
-        ...propertiesMixin(item),
-    };
 }
 function InMemoryEntityInSetMixin(superclass) {
     class InMemoryEntityInSetMixin extends superclass {
-        constructor(...args) {
-            super(...args);
-            inMemoryEntityInSetMixin(this);
-        }
     }
+    inMemoryEntityInSetMixin(InMemoryEntityInSetMixin.prototype);
     return InMemoryEntityInSetMixin;
 }
