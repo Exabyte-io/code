@@ -14,20 +14,19 @@ export declare function getOneMatchFromObject(obj: object, attribute: string, va
  */
 export declare function convertKeysToCamelCaseForObject(obj: object): import("lodash").Dictionary<any>;
 export declare function renameKeysForObject<T>(o: T, keysOriginal: string[], keysRenamed: string[]): T;
-export interface NameValueObject {
+export type NameValueObject = {
     name: string;
     value: unknown;
-    [key: string]: unknown;
-}
+    units?: string;
+};
+export type NameValueObjectExtended = NameValueObject & {
+    [key: string]: NameValueObject | string | number | undefined;
+};
 /**
  * @summary Converts object into string. Recursive. Required properties for object: "name", "value".
  * "units" property is ignored. Only one extra property is allowed. Function is called recursively on extraProperty.
  * E.g. {name: "propName", value: 1} -> 'propName=1'
  * {name: "propName", value: 1, extraProp: {name: "extraPropName", value: "2"}} -> "propName=1:extraPropName=2"
- * @param {Object} obj Object to stringify.
- * @param {String} [levelSeparator] ':' by default.
- * @param {String} [keyValueSeparator] '=' by default.
- * @param {String} [prefix] Empty by default.
  */
 export declare function stringifyObject(obj: NameValueObject, levelSeparator?: string, keyValueSeparator?: string, prefix?: string): string;
 /**
@@ -35,13 +34,8 @@ export declare function stringifyObject(obj: NameValueObject, levelSeparator?: s
  * "units" property is ignored. Only one extra property is allowed. E.g.
  * {name: 'propName', value: 1} -> {propName: 1}
  * {name: "propName", value: 1, extraProp: {name: "extraPropName", value: "2"}} -> {"propName:extraPropName=2": 1}
- * @param {Object} obj Object to stringify.
- * @param {String} [levelSeparator] ':' by default.
- * @param {String} [keyValueSeparator] '=' by default.
- * @param {String} [suffix]
- * @return {Object}
  */
-export declare function flattenObject(obj: NameValueObject, levelSeparator?: string, keyValueSeparator?: string, suffix?: string | undefined): {
+export declare function flattenObject(obj: NameValueObjectExtended, levelSeparator?: string, keyValueSeparator?: string, suffix?: string | undefined): {
     [x: string]: unknown;
 };
 /**

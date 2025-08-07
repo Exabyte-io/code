@@ -34,6 +34,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -72,6 +73,7 @@ export declare const NamedDefaultableRepetitionImportantSettingsInMemoryEntity: 
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -111,6 +113,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -149,6 +152,7 @@ export declare const NamedDefaultableRepetitionContextAndRenderInMemoryEntity: {
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -181,6 +185,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -219,6 +224,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -254,6 +260,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -286,6 +293,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -331,6 +339,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         getResultByName(name: string): import("@mat3ra/esse/dist/js/types").NameResultSchema | undefined;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;
@@ -382,6 +391,7 @@ export declare const NamedDefaultableRepetitionRuntimeItemsImportantSettingsCont
         _json: import("@mat3ra/esse/dist/js/esse/types").AnyObject;
         prop<T = undefined>(name: string, defaultValue: T): T;
         prop<T = undefined>(name: string): T | undefined;
+        requiredProp<T>(name: string): T;
         setProp(name: string, value: unknown): void;
         unsetProp(name: string): void;
         setProps(json?: import("@mat3ra/esse/dist/js/esse/types").AnyObject): /*elided*/ any;

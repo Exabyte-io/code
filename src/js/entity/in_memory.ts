@@ -11,6 +11,7 @@ import { clone, deepClone } from "../utils/clone";
 export enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
     ENTITY_REFERENCE_ERROR = "ENTITY_REFERENCE_ERROR",
+    REQUIRED_PROPERTY_MISSING = "REQUIRED_PROPERTY_MISSING",
 }
 
 interface ErrorDetails {
@@ -61,6 +62,24 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
     prop<T = undefined>(name: string, defaultValue?: T): T | undefined {
         // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
         return (getValue(this._json, name, defaultValue) as T) || defaultValue;
+    }
+
+    /**
+     * @summary Return a required prop, throwing an error if it doesn't exist or is undefined/null
+     */
+    requiredProp<T>(name: string): T {
+        const value = this.prop<T>(name);
+        if (value === undefined || value === null) {
+            throw new EntityError({
+                code: ValidationErrorCode.REQUIRED_PROPERTY_MISSING,
+                details: {
+                    error: null,
+                    json: this._json,
+                    schema: (this.constructor as typeof InMemoryEntity).jsonSchema || {},
+                },
+            });
+        }
+        return value;
     }
 
     /**

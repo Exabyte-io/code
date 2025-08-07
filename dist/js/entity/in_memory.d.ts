@@ -3,7 +3,8 @@ import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
 import { BaseInMemoryEntitySchema, EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
 export declare enum ValidationErrorCode {
     IN_MEMORY_ENTITY_DATA_INVALID = "IN_MEMORY_ENTITY_DATA_INVALID",
-    ENTITY_REFERENCE_ERROR = "ENTITY_REFERENCE_ERROR"
+    ENTITY_REFERENCE_ERROR = "ENTITY_REFERENCE_ERROR",
+    REQUIRED_PROPERTY_MISSING = "REQUIRED_PROPERTY_MISSING"
 }
 interface ErrorDetails {
     error?: object | null;
@@ -27,6 +28,10 @@ export declare class InMemoryEntity implements BaseInMemoryEntitySchema {
     constructor(config?: {});
     prop<T = undefined>(name: string, defaultValue: T): T;
     prop<T = undefined>(name: string): T | undefined;
+    /**
+     * @summary Return a required prop, throwing an error if it doesn't exist or is undefined/null
+     */
+    requiredProp<T>(name: string): T;
     /**
      * @summary Set a prop
      */

@@ -91,20 +91,21 @@ export function renameKeysForObject(
     return result;
 }
 
-export interface NameValueObject {
+export type NameValueObject = {
     name: string;
     value: unknown;
-    [key: string]: unknown;
-}
+    units?: string;
+};
+
+export type NameValueObjectExtended = NameValueObject & {
+    [key: string]: NameValueObject | string | number | undefined;
+};
+
 /**
  * @summary Converts object into string. Recursive. Required properties for object: "name", "value".
  * "units" property is ignored. Only one extra property is allowed. Function is called recursively on extraProperty.
  * E.g. {name: "propName", value: 1} -> 'propName=1'
  * {name: "propName", value: 1, extraProp: {name: "extraPropName", value: "2"}} -> "propName=1:extraPropName=2"
- * @param {Object} obj Object to stringify.
- * @param {String} [levelSeparator] ':' by default.
- * @param {String} [keyValueSeparator] '=' by default.
- * @param {String} [prefix] Empty by default.
  */
 export function stringifyObject(
     obj: NameValueObject,
@@ -147,15 +148,10 @@ export function stringifyObject(
  * "units" property is ignored. Only one extra property is allowed. E.g.
  * {name: 'propName', value: 1} -> {propName: 1}
  * {name: "propName", value: 1, extraProp: {name: "extraPropName", value: "2"}} -> {"propName:extraPropName=2": 1}
- * @param {Object} obj Object to stringify.
- * @param {String} [levelSeparator] ':' by default.
- * @param {String} [keyValueSeparator] '=' by default.
- * @param {String} [suffix]
- * @return {Object}
  */
 // eslint-disable-next-line default-param-last
 export function flattenObject(
-    obj: NameValueObject,
+    obj: NameValueObjectExtended,
     levelSeparator = ":",
     keyValueSeparator = "=",
     suffix: string | undefined = undefined,
@@ -176,7 +172,7 @@ export function flattenObject(
     }
 
     const extraPropertyKey = extraKeys[0];
-    const extraPropertyValue = obj[extraKeys[0]] as NameValueObject;
+    const extraPropertyValue = obj[extraKeys[0]];
 
     if (!isObject(extraPropertyValue)) {
         return {

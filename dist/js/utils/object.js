@@ -84,10 +84,6 @@ o, keysOriginal = [], keysRenamed = []) {
  * "units" property is ignored. Only one extra property is allowed. Function is called recursively on extraProperty.
  * E.g. {name: "propName", value: 1} -> 'propName=1'
  * {name: "propName", value: 1, extraProp: {name: "extraPropName", value: "2"}} -> "propName=1:extraPropName=2"
- * @param {Object} obj Object to stringify.
- * @param {String} [levelSeparator] ':' by default.
- * @param {String} [keyValueSeparator] '=' by default.
- * @param {String} [prefix] Empty by default.
  */
 function stringifyObject(obj, levelSeparator = ":", keyValueSeparator = "=", prefix = "") {
     const requiredKeys = ["name", "value"];
@@ -118,11 +114,6 @@ function stringifyObject(obj, levelSeparator = ":", keyValueSeparator = "=", pre
  * "units" property is ignored. Only one extra property is allowed. E.g.
  * {name: 'propName', value: 1} -> {propName: 1}
  * {name: "propName", value: 1, extraProp: {name: "extraPropName", value: "2"}} -> {"propName:extraPropName=2": 1}
- * @param {Object} obj Object to stringify.
- * @param {String} [levelSeparator] ':' by default.
- * @param {String} [keyValueSeparator] '=' by default.
- * @param {String} [suffix]
- * @return {Object}
  */
 // eslint-disable-next-line default-param-last
 function flattenObject(obj, levelSeparator = ":", keyValueSeparator = "=", suffix = undefined) {

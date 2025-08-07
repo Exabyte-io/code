@@ -46,6 +46,7 @@ var ValidationErrorCode;
 (function (ValidationErrorCode) {
     ValidationErrorCode["IN_MEMORY_ENTITY_DATA_INVALID"] = "IN_MEMORY_ENTITY_DATA_INVALID";
     ValidationErrorCode["ENTITY_REFERENCE_ERROR"] = "ENTITY_REFERENCE_ERROR";
+    ValidationErrorCode["REQUIRED_PROPERTY_MISSING"] = "REQUIRED_PROPERTY_MISSING";
 })(ValidationErrorCode || (exports.ValidationErrorCode = ValidationErrorCode = {}));
 class EntityError extends Error {
     constructor({ code, details }) {
@@ -71,6 +72,23 @@ class InMemoryEntity {
     prop(name, defaultValue) {
         // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
         return (0, get_1.default)(this._json, name, defaultValue) || defaultValue;
+    }
+    /**
+     * @summary Return a required prop, throwing an error if it doesn't exist or is undefined/null
+     */
+    requiredProp(name) {
+        const value = this.prop(name);
+        if (value === undefined || value === null) {
+            throw new EntityError({
+                code: ValidationErrorCode.REQUIRED_PROPERTY_MISSING,
+                details: {
+                    error: null,
+                    json: this._json,
+                    schema: this.constructor.jsonSchema || {},
+                },
+            });
+        }
+        return value;
     }
     /**
      * @summary Set a prop
