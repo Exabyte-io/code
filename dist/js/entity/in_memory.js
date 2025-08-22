@@ -70,8 +70,9 @@ class InMemoryEntity {
      * @summary Return a prop or the default
      */
     prop(name, defaultValue) {
+        var _a;
         // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
-        return (0, get_1.default)(this._json, name, defaultValue) || defaultValue;
+        return (_a = (0, get_1.default)(this._json, name, defaultValue)) !== null && _a !== void 0 ? _a : defaultValue;
     }
     /**
      * @summary Return a required prop, throwing an error if it doesn't exist or is undefined/null

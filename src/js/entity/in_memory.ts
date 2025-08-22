@@ -61,7 +61,7 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
      */
     prop<T = undefined>(name: string, defaultValue?: T): T | undefined {
         // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
-        return (getValue(this._json, name, defaultValue) as T) || defaultValue;
+        return (getValue(this._json, name, defaultValue) as T) ?? defaultValue;
     }
 
     /**
