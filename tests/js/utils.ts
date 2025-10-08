@@ -1,4 +1,4 @@
-import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
+import type { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { expect } from "chai";
 
 export function assertObject(prop: unknown): prop is AnyObject {
