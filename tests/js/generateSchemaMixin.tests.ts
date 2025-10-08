@@ -6,7 +6,10 @@ import path from "path";
 
 import generateShemaMixin from "../../src/js/generateSchemaMixin";
 
-describe("generateSchemaMixin Tests", () => {
+describe("generateSchemaMixin Tests", function () {
+    // Increase timeout to 10 seconds because generateShemaMixin runs ESLint autofix
+    // which can take several seconds to complete, especially on first run
+    this.timeout(10000);
     const tempDir = path.join(__dirname, "temp_test_output");
 
     // Mock schemas for testing
@@ -24,10 +27,7 @@ describe("generateSchemaMixin Tests", () => {
         },
     ];
 
-    beforeEach(function setupTests() {
-        // Increase timeout to 10 seconds because generateShemaMixin runs ESLint autofix
-        // which can take several seconds to complete, especially on first run
-        this.timeout(10000);
+    beforeEach(() => {
         // Create a temporary directory for test files
         if (!fs.existsSync(tempDir)) {
             fs.mkdirSync(tempDir, { recursive: true });
