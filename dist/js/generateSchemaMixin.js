@@ -1,0 +1,236 @@
+#!/usr/bin/env node
+"use strict";
+/* eslint-disable no-restricted-syntax */
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Script to generate mixin properties from JSON schema
+ *
+ * This script generates mixin functions for property/holder, property/meta_holder,
+ * and property/proto_holder schemas automatically.
+ *
+ * Usage:
+ *   node scripts/generate-mixin-properties.js
+ */
+const JSONSchemasInterface_1 = __importDefault(require("@mat3ra/esse/dist/js/esse/JSONSchemasInterface"));
+const schemas_json_1 = __importDefault(require("@mat3ra/esse/dist/js/schemas.json"));
+const child_process_1 = require("child_process");
+const fs_1 = __importDefault(require("fs"));
+/**
+ * Determines if a property should use requiredProp() or prop()
+ * @param propertyName - Name of the property
+ * @param requiredProperties - Array of required property names
+ * @returns - True if property is required
+ */
+function isRequiredProperty(propertyName, requiredProperties) {
+    return requiredProperties.includes(propertyName);
+}
+/**
+ * Generates TypeScript type annotation for a property
+ * @param propertyName - The property name
+ * @param schemaName - Name of the schema (for type reference)
+ * @returns - TypeScript type annotation
+ */
+function generateTypeAnnotation(propertyName, schemaName) {
+    return `${schemaName}["${propertyName}"]`;
+}
+/**
+ * Extracts properties from a schema, handling allOf if present
+ * @param schema - The JSON schema
+ * @returns - Object with properties and required fields
+ */
+function extractSchemaProperties(schema) {
+    let properties = {};
+    let required = [];
+    // Handle allOf by merging properties from all schemas
+    if (schema.allOf && Array.isArray(schema.allOf)) {
+        for (const subSchema of schema.allOf) {
+            const extracted = extractSchemaProperties(subSchema);
+            properties = { ...properties, ...extracted.properties };
+            required = [...required, ...extracted.required];
+        }
+    }
+    // Add properties from current schema
+    if (schema.properties) {
+        properties = { ...properties, ...schema.properties };
+    }
+    if (schema.required) {
+        required = [...required, ...schema.required];
+    }
+    return { properties, required };
+}
+/**
+ * Generates the complete mixin function
+ * @param schema - The JSON schema
+ * @param schemaName - Name of the schema
+ * @param mixinTypeName - Name of the mixin type
+ * @param entityTypeName - Name of the entity type
+ * @param skipFields - Array of field names to skip
+ * @returns - Generated TypeScript code
+ */
+function generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName, skipFields = []) {
+    // Convert mixin type name to camelCase for function name
+    const functionName = mixinTypeName.charAt(0).toLowerCase() + mixinTypeName.slice(1);
+    // Extract properties, handling allOf if present
+    const { properties, required } = extractSchemaProperties(schema);
+    if (Object.keys(properties).length === 0) {
+        throw new Error("No properties found in schema");
+    }
+    // Filter out skip fields
+    const propertyEntries = Object.entries(properties).filter(([propertyName]) => !skipFields.includes(propertyName));
+    let code = `import type { InMemoryEntity } from "@mat3ra/code/dist/js/entity";\n`;
+    code += `import type { ${schemaName} } from "@mat3ra/esse/dist/js/types";\n\n`;
+    // Generate the mixin type using Omit utility
+    const skipFieldNames = skipFields.map((field) => `"${field}"`).join(" | ");
+    code += `export type ${mixinTypeName} = Omit<${schemaName}, ${skipFieldNames}>;\n\n`;
+    // Generate the entity type
+    code += `export type ${entityTypeName} = InMemoryEntity & ${mixinTypeName};\n\n`;
+    code += `export function ${functionName}(item: InMemoryEntity) {\n`;
+    code += `    // @ts-expect-error\n`;
+    code += `    const properties: InMemoryEntity & ${mixinTypeName} = {\n`;
+    for (let i = 0; i < propertyEntries.length; i++) {
+        const [propertyName] = propertyEntries[i];
+        const isRequired = isRequiredProperty(propertyName, required);
+        const methodName = isRequired ? "requiredProp" : "prop";
+        const typeAnnotation = generateTypeAnnotation(propertyName, schemaName);
+        code += `get ${propertyName}() {\n`;
+        code += `return this.${methodName}<${typeAnnotation}>("${propertyName}");\n`;
+        code += `}`;
+        // Add comma for all properties except the last one
+        if (i < propertyEntries.length - 1) {
+            code += `,\n`;
+        }
+        else {
+            code += `,\n`;
+        }
+    }
+    code += `    };\n\n`;
+    code += `    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));\n`;
+    code += `}\n`;
+    return code;
+}
+/**
+ * Generates mixin function for a given schema ID
+ * @param schemaId - The schema ID (e.g., "property/holder")
+ * @param outputPath - The output file path
+ * @param skipFields - Array of field names to skip
+ * @returns - Generated TypeScript code
+ */
+function generateMixinFromSchemaId(schemaId, outputPath, skipFields = []) {
+    var _a, _b;
+    // Get the resolved schema by ID
+    const schema = JSONSchemasInterface_1.default.getSchemaById(schemaId);
+    if (!schema) {
+        throw new Error(`Schema not found with ID: ${schemaId}`);
+    }
+    // Extract schema name from title for import
+    let schemaName;
+    if (schema.title) {
+        // Convert title to proper schema name
+        schemaName = schema.title
+            .split(/\s+/)
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join("");
+    }
+    else {
+        // Convert schema ID to proper schema name
+        schemaName =
+            schemaId
+                .split(/[/-]/)
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join("") + "Schema";
+    }
+    // Extract type names from output file path
+    const fileName = (_b = (_a = outputPath.split("/").pop()) === null || _a === void 0 ? void 0 : _a.replace(".ts", "")) !== null && _b !== void 0 ? _b : "";
+    if (!fileName) {
+        throw new Error(`Invalid output path: ${outputPath}`);
+    }
+    const mixinTypeName = fileName;
+    const entityTypeName = fileName.replace("SchemaMixin", "InMemoryEntity");
+    // Generate the complete mixin function
+    return generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName, skipFields);
+}
+/**
+ * Runs ESLint autofix on generated files
+ * @param filePaths - Array of file paths to fix
+ */
+function runESLintAutofix(filePaths) {
+    if (filePaths.length === 0)
+        return;
+    try {
+        console.log("Running ESLint autofix on generated files...");
+        const filesToFix = filePaths.join(" ");
+        (0, child_process_1.execSync)(`npx eslint --fix ${filesToFix}`, { stdio: "inherit" });
+        console.log("✓ ESLint autofix completed successfully");
+    }
+    catch (error) {
+        console.warn("⚠ ESLint autofix failed:", error instanceof Error ? error.message : String(error));
+        // Don't fail the entire process if ESLint autofix fails
+    }
+}
+/**
+ * Generates mixins for multiple schemas
+ * @param outputPaths - Object mapping schema IDs to output file paths
+ * @param skipFields - Array of field names to skip during generation
+ * @returns - Object with success and error counts
+ */
+function generateShemaMixin(outputPaths, skipFields = []) {
+    // Setup schemas
+    JSONSchemasInterface_1.default.setSchemas(schemas_json_1.default);
+    console.log("Generating mixin properties for all schemas...");
+    const schemaIds = Object.keys(outputPaths);
+    let successCount = 0;
+    let errorCount = 0;
+    const generatedFiles = [];
+    for (const schemaId of schemaIds) {
+        try {
+            console.log(`\nProcessing schema: ${schemaId}`);
+            const outputPath = outputPaths[schemaId];
+            if (!outputPath) {
+                throw new Error(`No output path defined for schema: ${schemaId}`);
+            }
+            const generatedCode = generateMixinFromSchemaId(schemaId, outputPath, skipFields);
+            // Ensure the directory exists
+            const dir = outputPath.substring(0, outputPath.lastIndexOf("/"));
+            if (!fs_1.default.existsSync(dir)) {
+                fs_1.default.mkdirSync(dir, { recursive: true });
+            }
+            fs_1.default.writeFileSync(outputPath, generatedCode);
+            console.log(`✓ Generated mixin written to: ${outputPath}`);
+            generatedFiles.push(outputPath);
+            successCount += 1;
+        }
+        catch (error) {
+            console.error(`✗ Error processing schema ${schemaId}: ${error instanceof Error ? error.message : String(error)}`);
+            errorCount += 1;
+        }
+    }
+    // Run ESLint autofix on generated files
+    if (generatedFiles.length > 0) {
+        runESLintAutofix(generatedFiles);
+    }
+    console.log(`\n=== Summary ===`);
+    console.log(`Successfully generated: ${successCount} mixins`);
+    if (errorCount > 0) {
+        console.log(`Errors: ${errorCount} schemas failed`);
+    }
+    else {
+        console.log("All mixins generated successfully!");
+    }
+    return { successCount, errorCount };
+}
+/**
+ * @example
+ * ```ts
+ * import generateShemaMixin from "@mat3ra/code/dist/js/generateSchemaMixin";
+ *
+ * const result = generateShemaMixin(OUTPUT_PATHS, SKIP_FIELDS);
+ *
+ * if (result.errorCount > 0) {
+ *     process.exit(1);
+ * }
+ * ```
+ */
+exports.default = generateShemaMixin;
