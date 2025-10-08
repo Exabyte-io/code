@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { expect } from "chai";
 import fs from "fs";
+import type { JSONSchema7 } from "json-schema";
 import path from "path";
 
 import generateShemaMixin from "../../src/js/generateSchemaMixin";
@@ -8,7 +9,25 @@ import generateShemaMixin from "../../src/js/generateSchemaMixin";
 describe("generateSchemaMixin Tests", () => {
     const tempDir = path.join(__dirname, "temp_test_output");
 
-    beforeEach(() => {
+    // Mock schemas for testing
+    const mockSchemas: JSONSchema7[] = [
+        {
+            $id: "property/holder",
+            title: "Property Holder",
+            type: "object",
+            properties: {
+                metadata: { type: "object" },
+                name: { type: "string" },
+                description: { type: "string" },
+            },
+            required: ["name"],
+        },
+    ];
+
+    beforeEach(function setupTests() {
+        // Increase timeout to 10 seconds because generateShemaMixin runs ESLint autofix
+        // which can take several seconds to complete, especially on first run
+        this.timeout(10000);
         // Create a temporary directory for test files
         if (!fs.existsSync(tempDir)) {
             fs.mkdirSync(tempDir, { recursive: true });
@@ -41,7 +60,7 @@ describe("generateSchemaMixin Tests", () => {
         it("should handle empty output paths object", () => {
             const outputPaths = {};
 
-            const result = generateShemaMixin(outputPaths);
+            const result = generateShemaMixin(mockSchemas, outputPaths);
 
             expect(result.successCount).to.equal(0);
             expect(result.errorCount).to.equal(0);
@@ -53,7 +72,7 @@ describe("generateSchemaMixin Tests", () => {
                 "property/holder": path.join(nestedDir, "PropertyHolderSchemaMixin.ts"),
             };
 
-            generateShemaMixin(outputPaths);
+            generateShemaMixin(mockSchemas, outputPaths);
 
             // The function should attempt to create the directory
             expect(fs.existsSync(nestedDir)).to.be.true;
@@ -67,7 +86,7 @@ describe("generateSchemaMixin Tests", () => {
 
             // This should not throw an error even if the schema doesn't exist
             expect(() => {
-                generateShemaMixin(outputPaths, skipFields);
+                generateShemaMixin(mockSchemas, outputPaths, skipFields);
             }).to.not.throw();
         });
     });
@@ -78,7 +97,7 @@ describe("generateSchemaMixin Tests", () => {
                 "non/existent": path.join(tempDir, "NonExistentSchemaMixin.ts"),
             };
 
-            const result = generateShemaMixin(outputPaths);
+            const result = generateShemaMixin(mockSchemas, outputPaths);
 
             expect(result.successCount).to.equal(0);
             expect(result.errorCount).to.equal(1);
@@ -89,7 +108,7 @@ describe("generateSchemaMixin Tests", () => {
                 "property/holder": undefined as unknown as string,
             };
 
-            const result = generateShemaMixin(outputPaths);
+            const result = generateShemaMixin(mockSchemas, outputPaths);
 
             expect(result.successCount).to.equal(0);
             expect(result.errorCount).to.equal(1);
@@ -100,7 +119,7 @@ describe("generateSchemaMixin Tests", () => {
                 "property/holder": "",
             };
 
-            const result = generateShemaMixin(outputPaths);
+            const result = generateShemaMixin(mockSchemas, outputPaths);
 
             expect(result.successCount).to.equal(0);
             expect(result.errorCount).to.equal(1);
@@ -111,7 +130,7 @@ describe("generateSchemaMixin Tests", () => {
         it("should return an object with successCount and errorCount", () => {
             const outputPaths = {};
 
-            const result = generateShemaMixin(outputPaths);
+            const result = generateShemaMixin(mockSchemas, outputPaths);
 
             expect(result).to.have.property("successCount");
             expect(result).to.have.property("errorCount");
@@ -125,7 +144,7 @@ describe("generateSchemaMixin Tests", () => {
                 "another/non/existent": path.join(tempDir, "AnotherNonExistentSchemaMixin.ts"),
             };
 
-            const result = generateShemaMixin(outputPaths);
+            const result = generateShemaMixin(mockSchemas, outputPaths);
 
             expect(result.successCount).to.equal(0);
             expect(result.errorCount).to.equal(2);
@@ -133,20 +152,28 @@ describe("generateSchemaMixin Tests", () => {
     });
 
     describe("generateShemaMixin - Function Interface", () => {
-        it("should accept outputPaths as first parameter", () => {
+        it("should accept schemas as first parameter", () => {
             const outputPaths = {};
 
             expect(() => {
-                generateShemaMixin(outputPaths);
+                generateShemaMixin(mockSchemas, outputPaths);
             }).to.not.throw();
         });
 
-        it("should accept skipFields as optional second parameter", () => {
+        it("should accept outputPaths as second parameter", () => {
+            const outputPaths = {};
+
+            expect(() => {
+                generateShemaMixin(mockSchemas, outputPaths);
+            }).to.not.throw();
+        });
+
+        it("should accept skipFields as optional third parameter", () => {
             const outputPaths = {};
             const skipFields = ["field1", "field2"];
 
             expect(() => {
-                generateShemaMixin(outputPaths, skipFields);
+                generateShemaMixin(mockSchemas, outputPaths, skipFields);
             }).to.not.throw();
         });
 
@@ -154,7 +181,7 @@ describe("generateSchemaMixin Tests", () => {
             const outputPaths = {};
 
             expect(() => {
-                generateShemaMixin(outputPaths);
+                generateShemaMixin(mockSchemas, outputPaths);
             }).to.not.throw();
         });
     });

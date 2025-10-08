@@ -12,7 +12,6 @@
  */
 
 import JSONSchemasInterface from "@mat3ra/esse/dist/js/esse/JSONSchemasInterface";
-import allSchemas from "@mat3ra/esse/dist/js/schemas.json";
 import { execSync } from "child_process";
 import fs from "fs";
 import type { JSONSchema7 } from "json-schema";
@@ -211,13 +210,18 @@ function runESLintAutofix(filePaths: string[]): void {
 
 /**
  * Generates mixins for multiple schemas
+ * @param schemas - Array of JSON schemas to use for generation
  * @param outputPaths - Object mapping schema IDs to output file paths
  * @param skipFields - Array of field names to skip during generation
  * @returns - Object with success and error counts
  */
-function generateShemaMixin(outputPaths: Record<string, string>, skipFields: string[] = []) {
+function generateShemaMixin(
+    schemas: JSONSchema7[],
+    outputPaths: Record<string, string>,
+    skipFields: string[] = [],
+) {
     // Setup schemas
-    JSONSchemasInterface.setSchemas(allSchemas as JSONSchema7[]);
+    JSONSchemasInterface.setSchemas(schemas);
 
     console.log("Generating mixin properties for all schemas...");
 
@@ -277,8 +281,9 @@ function generateShemaMixin(outputPaths: Record<string, string>, skipFields: str
  * @example
  * ```ts
  * import generateShemaMixin from "@mat3ra/code/dist/js/generateSchemaMixin";
+ * import allSchemas from "@mat3ra/esse/dist/js/schemas.json";
  *
- * const result = generateShemaMixin(OUTPUT_PATHS, SKIP_FIELDS);
+ * const result = generateShemaMixin(allSchemas, OUTPUT_PATHS, SKIP_FIELDS);
  *
  * if (result.errorCount > 0) {
  *     process.exit(1);
