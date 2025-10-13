@@ -5,9 +5,10 @@ import type { JSONSchema7 } from "json-schema";
  * @param schemas - Array of JSON schemas to use for generation
  * @param outputPaths - Object mapping schema IDs to output file paths
  * @param skipFields - Array of field names to skip during generation
+ * @param from - Import path for the schema type (default: "@mat3ra/esse/dist/js/types")
  * @returns - Object with success and error counts
  */
-declare function generateShemaMixin(schemas: JSONSchema7[], outputPaths: Record<string, string>, skipFields?: string[]): {
+declare function generateShemaMixin(schemas: JSONSchema7[], outputPaths: Record<string, string>, skipFields?: string[], from?: string): {
     successCount: number;
     errorCount: number;
 };

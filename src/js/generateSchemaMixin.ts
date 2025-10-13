@@ -75,6 +75,7 @@ function extractSchemaProperties(schema: JSONSchema7): {
  * @param mixinTypeName - Name of the mixin type
  * @param entityTypeName - Name of the entity type
  * @param skipFields - Array of field names to skip
+ * @param from - Import path for the schema type (default: "@mat3ra/esse/dist/js/types")
  * @returns - Generated TypeScript code
  */
 function generateMixinFunction(
@@ -83,6 +84,7 @@ function generateMixinFunction(
     mixinTypeName: string,
     entityTypeName: string,
     skipFields: string[] = [],
+    from = "@mat3ra/esse/dist/js/types",
 ): string {
     // Convert mixin type name to camelCase for function name
     const functionName = mixinTypeName.charAt(0).toLowerCase() + mixinTypeName.slice(1);
@@ -100,7 +102,7 @@ function generateMixinFunction(
     );
 
     let code = `import type { InMemoryEntity } from "@mat3ra/code/dist/js/entity";\n`;
-    code += `import type { ${schemaName} } from "@mat3ra/esse/dist/js/types";\n\n`;
+    code += `import type { ${schemaName} } from "${from}";\n\n`;
 
     // Generate the mixin type using Omit utility
     const skipFieldNames = skipFields.map((field) => `"${field}"`).join(" | ");
@@ -143,12 +145,14 @@ function generateMixinFunction(
  * @param schemaId - The schema ID (e.g., "property/holder")
  * @param outputPath - The output file path
  * @param skipFields - Array of field names to skip
+ * @param from - Import path for the schema type (default: "@mat3ra/esse/dist/js/types")
  * @returns - Generated TypeScript code
  */
 function generateMixinFromSchemaId(
     schemaId: string,
     outputPath: string,
     skipFields: string[] = [],
+    from = "@mat3ra/esse/dist/js/types",
 ): string {
     // Get the resolved schema by ID
     const schema = JSONSchemasInterface.getSchemaById(schemaId);
@@ -184,7 +188,14 @@ function generateMixinFromSchemaId(
     const entityTypeName = fileName.replace("SchemaMixin", "InMemoryEntity");
 
     // Generate the complete mixin function
-    return generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName, skipFields);
+    return generateMixinFunction(
+        schema,
+        schemaName,
+        mixinTypeName,
+        entityTypeName,
+        skipFields,
+        from,
+    );
 }
 
 /**
@@ -213,12 +224,14 @@ function runESLintAutofix(filePaths: string[]): void {
  * @param schemas - Array of JSON schemas to use for generation
  * @param outputPaths - Object mapping schema IDs to output file paths
  * @param skipFields - Array of field names to skip during generation
+ * @param from - Import path for the schema type (default: "@mat3ra/esse/dist/js/types")
  * @returns - Object with success and error counts
  */
 function generateShemaMixin(
     schemas: JSONSchema7[],
     outputPaths: Record<string, string>,
     skipFields: string[] = [],
+    from = "@mat3ra/esse/dist/js/types",
 ) {
     // Setup schemas
     JSONSchemasInterface.setSchemas(schemas);
@@ -239,7 +252,7 @@ function generateShemaMixin(
                 throw new Error(`No output path defined for schema: ${schemaId}`);
             }
 
-            const generatedCode = generateMixinFromSchemaId(schemaId, outputPath, skipFields);
+            const generatedCode = generateMixinFromSchemaId(schemaId, outputPath, skipFields, from);
 
             // Ensure the directory exists
             const dir = outputPath.substring(0, outputPath.lastIndexOf("/"));
