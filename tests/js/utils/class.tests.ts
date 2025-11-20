@@ -6,10 +6,7 @@ import {
     NamedInMemoryEntity,
     RuntimeItemsMixin,
 } from "../../../src/js/entity/index";
-import {
-    defaultableEntityMixin,
-    defaultableEntityStaticMixin,
-} from "../../../src/js/entity/mixins/DefaultableMixin";
+import { defaultableEntityMixin } from "../../../src/js/entity/mixins/DefaultableMixin";
 import { extendClass, extendThis } from "../../../src/js/utils/class";
 
 class BaseEntity extends RuntimeItemsMixin(InMemoryEntity) {
@@ -31,8 +28,7 @@ class ExtendClassEntity extends NamedInMemoryEntity {
     }
 }
 
-defaultableEntityStaticMixin(ExtendClassEntity);
-defaultableEntityMixin(ExtendClassEntity.prototype);
+defaultableEntityMixin(ExtendClassEntity);
 
 class BaseBetweenEntity extends NamedInMemoryEntity {
     static staticAttr = "base";
@@ -75,8 +71,7 @@ class ExtendThisEntity extends BetweenEntity {
     }
 }
 
-defaultableEntityStaticMixin(ExtendThisEntity);
-defaultableEntityMixin(ExtendThisEntity.prototype);
+defaultableEntityMixin(ExtendThisEntity);
 
 describe("extendClass", () => {
     it("extends classes no excluded props", () => {

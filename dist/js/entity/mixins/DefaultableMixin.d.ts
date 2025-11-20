@@ -1,13 +1,9 @@
+import { type DefaultableSchemaMixin } from "../../generated/DefaultableSchemaMixin";
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
-export declare function defaultableEntityMixin<T extends InMemoryEntity>(item: T): InMemoryEntity & DefaultableInMemoryEntity;
-export declare function defaultableEntityStaticMixin(Item: Constructor<InMemoryEntity>): DefaultableInMemoryStaticEntity & Constructor<InMemoryEntity> & Constructor<DefaultableInMemoryEntity> & {
-    defaultConfig?: object | null;
-};
-export type DefaultableInMemoryEntity = {
-    isDefault: boolean;
-};
+export type DefaultableInMemoryEntity = DefaultableSchemaMixin;
 export type DefaultableInMemoryStaticEntity = {
-    createDefault: () => InMemoryEntity & DefaultableInMemoryEntity;
+    createDefault: () => InMemoryEntity & DefaultableSchemaMixin;
 };
-export type DefaultableInMemoryEntityConstructor = Constructor<DefaultableInMemoryEntity> & DefaultableInMemoryStaticEntity;
+export type DefaultableInMemoryEntityConstructor = Constructor<DefaultableSchemaMixin> & DefaultableInMemoryStaticEntity;
+export declare function defaultableEntityMixin(Item: Constructor<InMemoryEntity>): void;

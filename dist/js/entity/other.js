@@ -13,8 +13,7 @@ const runtime_items_1 = require("./mixins/runtime_items");
 class DefaultableInMemoryEntity extends in_memory_1.InMemoryEntity {
 }
 exports.DefaultableInMemoryEntity = DefaultableInMemoryEntity;
-(0, DefaultableMixin_1.defaultableEntityMixin)(DefaultableInMemoryEntity.prototype);
-(0, DefaultableMixin_1.defaultableEntityStaticMixin)(DefaultableInMemoryEntity);
+(0, DefaultableMixin_1.defaultableEntityMixin)(DefaultableInMemoryEntity);
 class NamedInMemoryEntity extends in_memory_1.InMemoryEntity {
 }
 exports.NamedInMemoryEntity = NamedInMemoryEntity;

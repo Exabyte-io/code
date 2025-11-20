@@ -2,20 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.defaultableEntityMixin = defaultableEntityMixin;
-exports.defaultableEntityStaticMixin = defaultableEntityStaticMixin;
-function defaultableEntityMixin(item) {
-    // @ts-expect-error
-    const properties = {
-        get isDefault() {
-            return this.prop("isDefault", false);
-        },
-        set isDefault(isDefault) {
-            this.setProp("isDefault", isDefault);
-        },
-    };
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-    return properties;
-}
+const DefaultableSchemaMixin_1 = require("../../generated/DefaultableSchemaMixin");
 function defaultableEntityStaticMixin(Item) {
     // @ts-expect-error
     const staticProperties = {
@@ -25,4 +12,8 @@ function defaultableEntityStaticMixin(Item) {
     };
     Object.defineProperties(Item, Object.getOwnPropertyDescriptors(staticProperties));
     return staticProperties;
+}
+function defaultableEntityMixin(Item) {
+    (0, DefaultableSchemaMixin_1.defaultableSchemaMixin)(Item.prototype);
+    defaultableEntityStaticMixin(Item);
 }

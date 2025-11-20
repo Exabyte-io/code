@@ -9,7 +9,8 @@
         "prepare": "husky install",
         "prettier": "prettier --check src/js tests/js",
         "test": "nyc --reporter=text mocha --recursive --bail tests/js",
-        "transpile": "tsc -p tsconfig-transpile.json"
+        "transpile": "tsc -p tsconfig-transpile.json",
+        "generate-mixins": "ts-node scripts/generate-mixins.ts"
     },
     "repository": {
         "type": "git",

@@ -3,7 +3,6 @@ import { ContextAndRenderFieldsMixin, ImportantSettingsProviderMixin } from "./m
 import {
     type DefaultableInMemoryEntityConstructor,
     defaultableEntityMixin,
-    defaultableEntityStaticMixin,
 } from "./mixins/DefaultableMixin";
 import {
     type HasConsistencyChecksInMemoryEntityConstructor,
@@ -36,8 +35,7 @@ type HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase =
         HasConsistencyChecksInMemoryEntityConstructor;
 
 export class DefaultableInMemoryEntity extends (InMemoryEntity as DefaultableBase) {}
-defaultableEntityMixin(DefaultableInMemoryEntity.prototype);
-defaultableEntityStaticMixin(DefaultableInMemoryEntity);
+defaultableEntityMixin(DefaultableInMemoryEntity);
 
 export class NamedInMemoryEntity extends (InMemoryEntity as NamedBase) {}
 namedEntityMixin(NamedInMemoryEntity.prototype);
