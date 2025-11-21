@@ -9,13 +9,15 @@ type HasMetadataProperties = {
     updateMetadata: (object: object) => void;
 };
 
+type HasMetadata = HasMetadataSchemaMixin & HasMetadataProperties;
+
 export function hasMetadataMixin<T extends InMemoryEntity>(
     item: T,
-): asserts item is T & HasMetadataProperties {
+): asserts item is T & HasMetadata {
     hasMetadataSchemaMixin(item);
 
     // @ts-expect-error
-    const properties: InMemoryEntity & HasMetadataSchemaMixin & HasMetadataProperties = {
+    const properties: InMemoryEntity & HasMetadata = {
         updateMetadata(object: object) {
             this.metadata = { ...this.metadata, ...object };
         },

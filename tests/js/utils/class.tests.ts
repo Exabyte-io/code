@@ -1,19 +1,18 @@
 /* eslint-disable max-classes-per-file, class-methods-use-this */
 import { expect } from "chai";
 
-import {
-    InMemoryEntity,
-    NamedInMemoryEntity,
-    RuntimeItemsMixin,
-} from "../../../src/js/entity/index";
+import { InMemoryEntity, NamedInMemoryEntity } from "../../../src/js/entity/index";
 import { defaultableEntityMixin } from "../../../src/js/entity/mixins/DefaultableMixin";
+import { runtimeItemsNameObjectMixin } from "../../../src/js/entity/mixins/RuntimeItemsNameObjectMixin";
 import { extendClass, extendThis } from "../../../src/js/utils/class";
 
-class BaseEntity extends RuntimeItemsMixin(InMemoryEntity) {
+class BaseEntity extends InMemoryEntity {
     baseMethod() {
         return "base";
     }
 }
+
+runtimeItemsNameObjectMixin(BaseEntity.prototype);
 
 class ExtendClassEntity extends NamedInMemoryEntity {
     declare results: unknown;
@@ -97,7 +96,7 @@ describe("extendThis", () => {
     });
 
     it("extends this support base mixins", () => {
-        const obj = new ExtendThisEntity({ results: ["test"] });
+        const obj = new ExtendThisEntity({ results: [{ name: "test" }] });
         expect(JSON.stringify(obj.results)).to.be.equal(JSON.stringify([{ name: "test" }]));
     });
 

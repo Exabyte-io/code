@@ -6,13 +6,13 @@ type TaggableProperties = {
     setTags: (array: string[]) => void;
 };
 
-export function taggableMixin<T extends InMemoryEntity>(
-    item: T,
-): asserts item is T & TaggableProperties {
+type Taggable = TaggableSchemaMixin & TaggableProperties;
+
+export function taggableMixin<T extends InMemoryEntity>(item: T): asserts item is T & Taggable {
     taggableSchemaMixin(item);
 
     // @ts-expect-error
-    const properties: InMemoryEntity & TaggableSchemaMixin & TaggableProperties = {
+    const properties: InMemoryEntity & Taggable = {
         setTags(array: string[]) {
             this.tags = array.filter((value, index, self) => self.indexOf(value) === index);
         },

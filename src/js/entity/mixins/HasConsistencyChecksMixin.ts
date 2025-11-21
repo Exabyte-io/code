@@ -11,15 +11,15 @@ type HasConsistencyChecksProperties = {
     addConsistencyChecks: (array: ConsistencyCheck[]) => void;
 };
 
+type HasConsistencyChecks = HasConsistencyChecksSchemaMixin & HasConsistencyChecksProperties;
+
 export function hasConsistencyChecksMixin<T extends InMemoryEntity>(
     item: T,
-): asserts item is T & HasConsistencyChecksProperties {
+): asserts item is T & HasConsistencyChecks {
     hasConsistencyChecksSchemaMixin(item);
 
     // @ts-expect-error
-    const properties: InMemoryEntity &
-        HasConsistencyChecksSchemaMixin &
-        HasConsistencyChecksProperties = {
+    const properties: InMemoryEntity & HasConsistencyChecks = {
         addConsistencyChecks(array: ConsistencyCheck[]) {
             this.consistencyChecks = [...(this.consistencyChecks || []), ...array];
         },

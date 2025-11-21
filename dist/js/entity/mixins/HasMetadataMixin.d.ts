@@ -4,7 +4,8 @@ import { InMemoryEntity } from "../in_memory";
 type HasMetadataProperties = {
     updateMetadata: (object: object) => void;
 };
-export declare function hasMetadataMixin<T extends InMemoryEntity>(item: T): asserts item is T & HasMetadataProperties;
+type HasMetadata = HasMetadataSchemaMixin & HasMetadataProperties;
+export declare function hasMetadataMixin<T extends InMemoryEntity>(item: T): asserts item is T & HasMetadata;
 export type HasMetadataInMemoryEntity = HasMetadataSchemaMixin & HasMetadataProperties;
 export type HasMetadataInMemoryEntityConstructor = Constructor<HasMetadataInMemoryEntity>;
 export {};

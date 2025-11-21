@@ -1,15 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity = exports.NamedDefaultableRepetitionContextAndRenderInMemoryEntity = exports.NamedDefaultableRepetitionImportantSettingsInMemoryEntity = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.DefaultableInMemoryEntity = void 0;
+exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.DefaultableInMemoryEntity = void 0;
 const in_memory_1 = require("./in_memory");
-const context_1 = require("./mixins/context");
+// import { ContextAndRenderFieldsMixin, ImportantSettingsProviderMixin } from "./mixins/context";
 const DefaultableMixin_1 = require("./mixins/DefaultableMixin");
 const HasConsistencyChecksMixin_1 = require("./mixins/HasConsistencyChecksMixin");
-const hash_1 = require("./mixins/hash");
+// import { HashedEntityMixin } from "./mixins/hash";
 const HasMetadataMixin_1 = require("./mixins/HasMetadataMixin");
 const NamedEntityMixin_1 = require("./mixins/NamedEntityMixin");
-const repetition_1 = require("./mixins/repetition");
-const runtime_items_1 = require("./mixins/runtime_items");
 class DefaultableInMemoryEntity extends in_memory_1.InMemoryEntity {
 }
 exports.DefaultableInMemoryEntity = DefaultableInMemoryEntity;
@@ -30,6 +28,18 @@ class HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity extends HasM
 }
 exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity;
 (0, HasConsistencyChecksMixin_1.hasConsistencyChecksMixin)(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity.prototype);
-exports.NamedDefaultableRepetitionImportantSettingsInMemoryEntity = (0, context_1.ImportantSettingsProviderMixin)((0, repetition_1.HasRepetitionMixin)(NamedDefaultableInMemoryEntity));
-exports.NamedDefaultableRepetitionContextAndRenderInMemoryEntity = (0, context_1.ContextAndRenderFieldsMixin)((0, repetition_1.HasRepetitionMixin)(NamedDefaultableInMemoryEntity));
-exports.NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity = (0, hash_1.HashedEntityMixin)((0, context_1.ContextAndRenderFieldsMixin)((0, context_1.ImportantSettingsProviderMixin)((0, runtime_items_1.RuntimeItemsUIAllowedMixin)((0, runtime_items_1.RuntimeItemsUILogicMixin)((0, repetition_1.HasRepetitionMixin)(NamedDefaultableInMemoryEntity))))));
+// export const NamedDefaultableRepetitionImportantSettingsInMemoryEntity =
+//     ImportantSettingsProviderMixin(HasRepetitionMixin(NamedDefaultableInMemoryEntity));
+// export const NamedDefaultableRepetitionContextAndRenderInMemoryEntity = ContextAndRenderFieldsMixin(
+//     HasRepetitionMixin(NamedDefaultableInMemoryEntity),
+// );
+// export const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity =
+//     HashedEntityMixin(
+//         ContextAndRenderFieldsMixin(
+//             ImportantSettingsProviderMixin(
+//                 RuntimeItemsUIAllowedMixin(
+//                     RuntimeItemsUILogicMixin(HasRepetitionMixin(NamedDefaultableInMemoryEntity)),
+//                 ),
+//             ),
+//         ),
+//     );

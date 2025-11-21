@@ -5,7 +5,8 @@ import { InMemoryEntity } from "../in_memory";
 type HasConsistencyChecksProperties = {
     addConsistencyChecks: (array: ConsistencyCheck[]) => void;
 };
-export declare function hasConsistencyChecksMixin<T extends InMemoryEntity>(item: T): asserts item is T & HasConsistencyChecksProperties;
+type HasConsistencyChecks = HasConsistencyChecksSchemaMixin & HasConsistencyChecksProperties;
+export declare function hasConsistencyChecksMixin<T extends InMemoryEntity>(item: T): asserts item is T & HasConsistencyChecks;
 export type HasConsistencyChecksInMemoryEntity = HasConsistencyChecksSchemaMixin & HasConsistencyChecksProperties;
 export type HasConsistencyChecksInMemoryEntityConstructor = Constructor<HasConsistencyChecksInMemoryEntity>;
 export {};
