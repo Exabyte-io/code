@@ -13,7 +13,12 @@ type RuntimeItemsNameObjectProperties = {
     };
 };
 
-type RuntimeItemsNameObject = RuntimeItemsNameObjectSchemaMixin & RuntimeItemsNameObjectProperties;
+export type RuntimeItemsNameObject = RuntimeItemsNameObjectSchemaMixin &
+    RuntimeItemsNameObjectProperties;
+
+export type RuntimeItemsNameObjectInMemoryEntity = RuntimeItemsNameObject;
+
+export type RuntimeItemsNameObjectInMemoryEntityConstructor = Constructor<RuntimeItemsNameObject>;
 
 export function runtimeItemsNameObjectMixin<T extends InMemoryEntity>(
     item: T,
@@ -33,9 +38,3 @@ export function runtimeItemsNameObjectMixin<T extends InMemoryEntity>(
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 }
-
-export type RuntimeItemsNameObjectInMemoryEntity = RuntimeItemsNameObjectSchemaMixin &
-    RuntimeItemsNameObjectProperties;
-
-export type RuntimeItemsNameObjectInMemoryEntityConstructor =
-    Constructor<RuntimeItemsNameObjectInMemoryEntity>;

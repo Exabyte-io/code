@@ -1,18 +1,21 @@
-import { type HasDescriptionSchemaMixin } from "../../generated/HasDescriptionSchemaMixin";
 import { calculateHashFromObject } from "../../utils/hash";
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
-type HashedEntityProperties = {
+export type HashedEntity = {
     calculateHash: () => string;
     getHashObject?: () => object;
 };
 
+export type HashedEntityInMemoryEntity = HashedEntity;
+
+export type HashedEntityInMemoryEntityConstructor = Constructor<HashedEntityInMemoryEntity>;
+
 export function hashedEntityMixin<T extends InMemoryEntity>(
     item: T,
-): asserts item is T & HashedEntityProperties {
+): asserts item is T & HashedEntity {
     // @ts-expect-error
-    const properties: InMemoryEntity & HashedEntityProperties = {
+    const properties: InMemoryEntity & HashedEntity = {
         /**
          * @summary Calculates hash based on meaningful fields and unit-specific fields. Unit-specific fields are
          *          separated into _typeSpecificHash function which can be overwritten by child classes.
@@ -25,7 +28,3 @@ export function hashedEntityMixin<T extends InMemoryEntity>(
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 }
-
-export type HasDescriptionInMemoryEntity = HasDescriptionSchemaMixin;
-
-export type HasDescriptionInMemoryEntityConstructor = Constructor<HasDescriptionInMemoryEntity>;

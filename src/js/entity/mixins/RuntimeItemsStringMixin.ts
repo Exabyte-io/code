@@ -4,9 +4,11 @@ import {
 } from "../../generated/RuntimeItemsStringSchemaMixin";
 import type { Constructor } from "../../utils/types";
 
-export const runtimeItemsStringMixin = runtimeItemsStringSchemaMixin;
+export type RuntimeItemsString = RuntimeItemsStringSchemaMixin;
 
-export type RuntimeItemsStringInMemoryEntity = RuntimeItemsStringSchemaMixin;
+export type RuntimeItemsStringInMemoryEntity = RuntimeItemsString;
 
 export type RuntimeItemsStringInMemoryEntityConstructor =
     Constructor<RuntimeItemsStringInMemoryEntity>;
+
+export const runtimeItemsStringMixin = runtimeItemsStringSchemaMixin;

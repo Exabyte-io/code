@@ -9,6 +9,12 @@ type NamedEntityProperties = {
     setName: (name: string) => void;
 };
 
+export type NamedEntity = NamedEntitySchemaMixin & NamedEntityProperties;
+
+export type NamedInMemoryEntity = NamedEntity;
+
+export type NamedInMemoryEntityConstructor = Constructor<NamedInMemoryEntity>;
+
 export function namedEntityMixin<T extends InMemoryEntity>(
     item: T,
 ): asserts item is T & NamedEntityProperties {
@@ -23,7 +29,3 @@ export function namedEntityMixin<T extends InMemoryEntity>(
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 }
-
-export type NamedInMemoryEntity = NamedEntitySchemaMixin & NamedEntityProperties;
-
-export type NamedInMemoryEntityConstructor = Constructor<NamedInMemoryEntity>;

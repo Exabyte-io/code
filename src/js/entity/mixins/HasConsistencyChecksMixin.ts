@@ -11,7 +11,11 @@ type HasConsistencyChecksProperties = {
     addConsistencyChecks: (array: ConsistencyCheck[]) => void;
 };
 
-type HasConsistencyChecks = HasConsistencyChecksSchemaMixin & HasConsistencyChecksProperties;
+export type HasConsistencyChecks = HasConsistencyChecksSchemaMixin & HasConsistencyChecksProperties;
+
+export type HasConsistencyChecksInMemoryEntity = HasConsistencyChecks;
+
+export type HasConsistencyChecksInMemoryEntityConstructor = Constructor<HasConsistencyChecks>;
 
 export function hasConsistencyChecksMixin<T extends InMemoryEntity>(
     item: T,
@@ -27,9 +31,3 @@ export function hasConsistencyChecksMixin<T extends InMemoryEntity>(
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 }
-
-export type HasConsistencyChecksInMemoryEntity = HasConsistencyChecksSchemaMixin &
-    HasConsistencyChecksProperties;
-
-export type HasConsistencyChecksInMemoryEntityConstructor =
-    Constructor<HasConsistencyChecksInMemoryEntity>;

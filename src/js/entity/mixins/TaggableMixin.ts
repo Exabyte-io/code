@@ -6,7 +6,11 @@ type TaggableProperties = {
     setTags: (array: string[]) => void;
 };
 
-type Taggable = TaggableSchemaMixin & TaggableProperties;
+export type Taggable = TaggableSchemaMixin & TaggableProperties;
+
+export type TaggableInMemoryEntity = Taggable;
+
+export type TaggableInMemoryEntityConstructor = Constructor<TaggableInMemoryEntity>;
 
 export function taggableMixin<T extends InMemoryEntity>(item: T): asserts item is T & Taggable {
     taggableSchemaMixin(item);
@@ -20,7 +24,3 @@ export function taggableMixin<T extends InMemoryEntity>(item: T): asserts item i
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 }
-
-export type TaggableInMemoryEntity = TaggableSchemaMixin & TaggableProperties;
-
-export type TaggableInMemoryEntityConstructor = Constructor<TaggableInMemoryEntity>;

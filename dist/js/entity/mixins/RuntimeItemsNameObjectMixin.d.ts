@@ -8,8 +8,8 @@ type RuntimeItemsNameObjectProperties = {
         postProcessors: RuntimeItemsNameObjectSchemaMixin["postProcessors"];
     };
 };
-type RuntimeItemsNameObject = RuntimeItemsNameObjectSchemaMixin & RuntimeItemsNameObjectProperties;
+export type RuntimeItemsNameObject = RuntimeItemsNameObjectSchemaMixin & RuntimeItemsNameObjectProperties;
+export type RuntimeItemsNameObjectInMemoryEntity = RuntimeItemsNameObject;
+export type RuntimeItemsNameObjectInMemoryEntityConstructor = Constructor<RuntimeItemsNameObject>;
 export declare function runtimeItemsNameObjectMixin<T extends InMemoryEntity>(item: T): asserts item is T & RuntimeItemsNameObject;
-export type RuntimeItemsNameObjectInMemoryEntity = RuntimeItemsNameObjectSchemaMixin & RuntimeItemsNameObjectProperties;
-export type RuntimeItemsNameObjectInMemoryEntityConstructor = Constructor<RuntimeItemsNameObjectInMemoryEntity>;
 export {};

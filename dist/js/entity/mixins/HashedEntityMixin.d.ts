@@ -1,11 +1,9 @@
-import { type HasDescriptionSchemaMixin } from "../../generated/HasDescriptionSchemaMixin";
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
-type HashedEntityProperties = {
+export type HashedEntity = {
     calculateHash: () => string;
     getHashObject?: () => object;
 };
-export declare function hashedEntityMixin<T extends InMemoryEntity>(item: T): asserts item is T & HashedEntityProperties;
-export type HasDescriptionInMemoryEntity = HasDescriptionSchemaMixin;
-export type HasDescriptionInMemoryEntityConstructor = Constructor<HasDescriptionInMemoryEntity>;
-export {};
+export type HashedEntityInMemoryEntity = HashedEntity;
+export type HashedEntityInMemoryEntityConstructor = Constructor<HashedEntityInMemoryEntity>;
+export declare function hashedEntityMixin<T extends InMemoryEntity>(item: T): asserts item is T & HashedEntity;

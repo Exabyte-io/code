@@ -9,7 +9,11 @@ type HasMetadataProperties = {
     updateMetadata: (object: object) => void;
 };
 
-type HasMetadata = HasMetadataSchemaMixin & HasMetadataProperties;
+export type HasMetadata = HasMetadataSchemaMixin & HasMetadataProperties;
+
+export type HasMetadataInMemoryEntity = HasMetadata;
+
+export type HasMetadataInMemoryEntityConstructor = Constructor<HasMetadataInMemoryEntity>;
 
 export function hasMetadataMixin<T extends InMemoryEntity>(
     item: T,
@@ -25,7 +29,3 @@ export function hasMetadataMixin<T extends InMemoryEntity>(
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 }
-
-export type HasMetadataInMemoryEntity = HasMetadataSchemaMixin & HasMetadataProperties;
-
-export type HasMetadataInMemoryEntityConstructor = Constructor<HasMetadataInMemoryEntity>;
