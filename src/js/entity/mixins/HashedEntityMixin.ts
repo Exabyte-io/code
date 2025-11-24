@@ -3,8 +3,8 @@ import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
 export type HashedEntity = {
-    calculateHash: () => string;
-    getHashObject?: () => object;
+    calculateHash(): string;
+    getHashObject?(): object;
 };
 
 export type HashedEntityInMemoryEntity = HashedEntity;
