@@ -5,7 +5,7 @@ export interface ContextProvider {
     domain: string;
 }
 
-type ImportantSettingsProvider = {
+export type ImportantSettingsProvider = {
     contextProviders: ContextProvider[];
     important: object;
     setImportant(key: string, value: unknown): void;
