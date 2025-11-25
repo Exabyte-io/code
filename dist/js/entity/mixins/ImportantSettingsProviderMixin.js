@@ -5,7 +5,6 @@ const clone_1 = require("../../utils/clone");
 function importantSettingsProviderMixin(item) {
     // @ts-expect-error
     const properties = {
-        contextProviders: [],
         get important() {
             return (0, clone_1.deepClone)(this._json.important || {});
         },

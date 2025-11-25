@@ -6,19 +6,21 @@ export interface ContextProvider {
 }
 
 export type ImportantSettingsProvider = {
-    contextProviders: ContextProvider[];
     important: object;
     setImportant(key: string, value: unknown): void;
     importantSettingsProviders: ContextProvider[];
     isImportantEdited: boolean | undefined;
 };
 
-export function importantSettingsProviderMixin<T extends InMemoryEntity>(
+type AbstractBase = {
+    contextProviders: ContextProvider[];
+};
+
+export function importantSettingsProviderMixin<T extends InMemoryEntity & AbstractBase>(
     item: T,
 ): asserts item is T & ImportantSettingsProvider {
     // @ts-expect-error
-    const properties: InMemoryEntity & ImportantSettingsProvider = {
-        contextProviders: [],
+    const properties: InMemoryEntity & AbstractBase & ImportantSettingsProvider = {
         get important() {
             return deepClone(this._json.important || {});
         },
