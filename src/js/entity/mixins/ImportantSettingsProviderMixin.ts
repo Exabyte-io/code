@@ -2,7 +2,7 @@ import { deepClone } from "../../utils/clone";
 import type { InMemoryEntity } from "../in_memory";
 
 export interface ContextProvider {
-    domain: string;
+    domain?: string;
 }
 
 export type ImportantSettingsProvider = {
