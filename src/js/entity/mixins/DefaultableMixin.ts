@@ -4,7 +4,7 @@ import {
     type DefaultableSchemaMixin,
     defaultableSchemaMixin,
 } from "../../generated/DefaultableSchemaMixin";
-import type { Constructor } from "../../utils/types";
+import type { AbstractConstructor, Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
 export type Defaultable = DefaultableSchemaMixin;
@@ -18,7 +18,7 @@ export type DefaultableInMemoryStaticEntity = {
 export type DefaultableInMemoryEntityConstructor = Constructor<Defaultable> &
     DefaultableInMemoryStaticEntity;
 
-function defaultableEntityStaticMixin(Item: Constructor<InMemoryEntity>) {
+function defaultableEntityStaticMixin(Item: AbstractConstructor<InMemoryEntity>) {
     // @ts-expect-error
     const staticProperties: DefaultableInMemoryStaticEntity &
         Constructor<InMemoryEntity> &
@@ -35,7 +35,7 @@ function defaultableEntityStaticMixin(Item: Constructor<InMemoryEntity>) {
     return staticProperties;
 }
 
-export function defaultableEntityMixin(Item: Constructor<InMemoryEntity>) {
+export function defaultableEntityMixin(Item: AbstractConstructor<InMemoryEntity>) {
     defaultableSchemaMixin(Item.prototype);
     defaultableEntityStaticMixin(Item);
 }
