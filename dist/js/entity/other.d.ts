@@ -1,13 +1,14 @@
+import type { Constructor } from "../utils/types";
 import { InMemoryEntity } from "./in_memory";
-import { type DefaultableInMemoryEntityConstructor } from "./mixins/DefaultableMixin";
-import { type HasConsistencyChecksInMemoryEntityConstructor } from "./mixins/HasConsistencyChecksMixin";
-import { type HasMetadataInMemoryEntityConstructor } from "./mixins/HasMetadataMixin";
-import { type NamedInMemoryEntityConstructor } from "./mixins/NamedEntityMixin";
-type DefaultableBase = typeof InMemoryEntity & DefaultableInMemoryEntityConstructor;
-type NamedBase = typeof InMemoryEntity & NamedInMemoryEntityConstructor;
-type NamedDefaultableBase = typeof InMemoryEntity & DefaultableInMemoryEntityConstructor & NamedInMemoryEntityConstructor;
-type HasMetadataNamedDefaultableBase = typeof InMemoryEntity & DefaultableInMemoryEntityConstructor & NamedInMemoryEntityConstructor & HasMetadataInMemoryEntityConstructor;
-type HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase = typeof HasMetadataNamedDefaultableInMemoryEntity & HasConsistencyChecksInMemoryEntityConstructor;
+import { type Defaultable } from "./mixins/DefaultableMixin";
+import { type HasConsistencyChecks } from "./mixins/HasConsistencyChecksMixin";
+import { type HasMetadata } from "./mixins/HasMetadataMixin";
+import { type NamedEntity } from "./mixins/NamedEntityMixin";
+type DefaultableBase = typeof InMemoryEntity & Constructor<Defaultable>;
+type NamedBase = typeof InMemoryEntity & Constructor<NamedEntity>;
+type NamedDefaultableBase = typeof InMemoryEntity & Constructor<Defaultable> & Constructor<NamedEntity>;
+type HasMetadataNamedDefaultableBase = typeof InMemoryEntity & Constructor<Defaultable> & Constructor<NamedEntity> & Constructor<HasMetadata>;
+type HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase = typeof HasMetadataNamedDefaultableInMemoryEntity & Constructor<HasConsistencyChecks>;
 declare const DefaultableInMemoryEntity_base: DefaultableBase;
 export declare class DefaultableInMemoryEntity extends DefaultableInMemoryEntity_base {
 }

@@ -30,8 +30,7 @@ const OUTPUT_PATHS = {
     "system/metadata": "src/js/generated/HasMetadataSchemaMixin.ts",
     "system/name": "src/js/generated/NamedEntitySchemaMixin.ts",
     "system/tags": "src/js/generated/TaggableSchemaMixin.ts",
-    "system/runtime-items-name-object": "src/js/generated/RuntimeItemsNameObjectSchemaMixin.ts",
-    "system/runtime-items-string": "src/js/generated/RuntimeItemsStringSchemaMixin.ts",
+    "system/runtime-items": "src/js/generated/RuntimeItemsSchemaMixin.ts",
 };
 
 function main() {

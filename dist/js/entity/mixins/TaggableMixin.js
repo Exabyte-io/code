@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.taggableMixin = taggableMixin;
 const TaggableSchemaMixin_1 = require("../../generated/TaggableSchemaMixin");
-function taggableMixin(item) {
-    (0, TaggableSchemaMixin_1.taggableSchemaMixin)(item);
+function taggablePropertiesMixin(item) {
     // @ts-expect-error
     const properties = {
         setTags(array) {
@@ -11,4 +10,8 @@ function taggableMixin(item) {
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+}
+function taggableMixin(item) {
+    (0, TaggableSchemaMixin_1.taggableSchemaMixin)(item);
+    taggablePropertiesMixin(item);
 }

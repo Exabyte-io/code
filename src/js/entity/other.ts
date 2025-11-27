@@ -1,37 +1,31 @@
+import type { Constructor } from "../utils/types";
 import { InMemoryEntity } from "./in_memory";
 // import { ContextAndRenderFieldsMixin, ImportantSettingsProviderMixin } from "./mixins/context";
+import { type Defaultable, defaultableEntityMixin } from "./mixins/DefaultableMixin";
 import {
-    type DefaultableInMemoryEntityConstructor,
-    defaultableEntityMixin,
-} from "./mixins/DefaultableMixin";
-import {
-    type HasConsistencyChecksInMemoryEntityConstructor,
+    type HasConsistencyChecks,
     hasConsistencyChecksMixin,
 } from "./mixins/HasConsistencyChecksMixin";
 // import { HashedEntityMixin } from "./mixins/hash";
-import {
-    type HasMetadataInMemoryEntityConstructor,
-    hasMetadataMixin,
-} from "./mixins/HasMetadataMixin";
-import { type NamedInMemoryEntityConstructor, namedEntityMixin } from "./mixins/NamedEntityMixin";
+import { type HasMetadata, hasMetadataMixin } from "./mixins/HasMetadataMixin";
+import { type NamedEntity, namedEntityMixin } from "./mixins/NamedEntityMixin";
 // import { HasRepetitionMixin } from "./mixins/repetition";
 
-type DefaultableBase = typeof InMemoryEntity & DefaultableInMemoryEntityConstructor;
+type DefaultableBase = typeof InMemoryEntity & Constructor<Defaultable>;
 
-type NamedBase = typeof InMemoryEntity & NamedInMemoryEntityConstructor;
+type NamedBase = typeof InMemoryEntity & Constructor<NamedEntity>;
 
 type NamedDefaultableBase = typeof InMemoryEntity &
-    DefaultableInMemoryEntityConstructor &
-    NamedInMemoryEntityConstructor;
+    Constructor<Defaultable> &
+    Constructor<NamedEntity>;
 
 type HasMetadataNamedDefaultableBase = typeof InMemoryEntity &
-    DefaultableInMemoryEntityConstructor &
-    NamedInMemoryEntityConstructor &
-    HasMetadataInMemoryEntityConstructor;
+    Constructor<Defaultable> &
+    Constructor<NamedEntity> &
+    Constructor<HasMetadata>;
 
 type HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase =
-    typeof HasMetadataNamedDefaultableInMemoryEntity &
-        HasConsistencyChecksInMemoryEntityConstructor;
+    typeof HasMetadataNamedDefaultableInMemoryEntity & Constructor<HasConsistencyChecks>;
 
 export class DefaultableInMemoryEntity extends (InMemoryEntity as DefaultableBase) {}
 defaultableEntityMixin(DefaultableInMemoryEntity);
@@ -39,13 +33,19 @@ defaultableEntityMixin(DefaultableInMemoryEntity);
 export class NamedInMemoryEntity extends (InMemoryEntity as NamedBase) {}
 namedEntityMixin(NamedInMemoryEntity.prototype);
 
-export class NamedDefaultableInMemoryEntity extends (DefaultableInMemoryEntity as NamedDefaultableBase) {}
+export class NamedDefaultableInMemoryEntity extends (InMemoryEntity as NamedDefaultableBase) {}
 namedEntityMixin(NamedDefaultableInMemoryEntity.prototype);
+defaultableEntityMixin(NamedDefaultableInMemoryEntity);
 
-export class HasMetadataNamedDefaultableInMemoryEntity extends (NamedDefaultableInMemoryEntity as HasMetadataNamedDefaultableBase) {}
+export class HasMetadataNamedDefaultableInMemoryEntity extends (InMemoryEntity as HasMetadataNamedDefaultableBase) {}
+namedEntityMixin(HasMetadataNamedDefaultableInMemoryEntity.prototype);
+defaultableEntityMixin(HasMetadataNamedDefaultableInMemoryEntity);
 hasMetadataMixin(HasMetadataNamedDefaultableInMemoryEntity.prototype);
 
-export class HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity extends (HasMetadataNamedDefaultableInMemoryEntity as HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase) {}
+export class HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity extends (InMemoryEntity as HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase) {}
+namedEntityMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity.prototype);
+defaultableEntityMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity);
+hasMetadataMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity.prototype);
 hasConsistencyChecksMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity.prototype);
 
 // export const NamedDefaultableRepetitionImportantSettingsInMemoryEntity =

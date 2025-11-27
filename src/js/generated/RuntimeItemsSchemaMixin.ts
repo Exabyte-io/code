@@ -2,16 +2,15 @@ import type { RuntimeItemsNameObjectSchema } from "@mat3ra/esse/dist/js/types";
 
 import type { InMemoryEntity } from "../entity/in_memory";
 
-export type RuntimeItemsNameObjectSchemaMixin = RuntimeItemsNameObjectSchema;
+export type RuntimeItemsSchemaMixin = RuntimeItemsNameObjectSchema;
 
-export type RuntimeItemsNameObjectInMemoryEntity = InMemoryEntity &
-    RuntimeItemsNameObjectSchemaMixin;
+export type RuntimeItemsInMemoryEntity = InMemoryEntity & RuntimeItemsSchemaMixin;
 
-export function runtimeItemsNameObjectSchemaMixin<T extends InMemoryEntity>(
+export function runtimeItemsSchemaMixin<T extends InMemoryEntity>(
     item: InMemoryEntity,
-): asserts item is T & RuntimeItemsNameObjectSchemaMixin {
+): asserts item is T & RuntimeItemsSchemaMixin {
     // @ts-expect-error
-    const properties: InMemoryEntity & RuntimeItemsNameObjectSchemaMixin = {
+    const properties: InMemoryEntity & RuntimeItemsSchemaMixin = {
         get preProcessors() {
             return this.requiredProp<RuntimeItemsNameObjectSchema["preProcessors"]>(
                 "preProcessors",

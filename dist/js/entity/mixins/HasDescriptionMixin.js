@@ -1,7 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hasDescriptionMixin = hasDescriptionMixin;
+exports.hasDescriptionPropertiesMixin = void 0;
 const HasDescriptionSchemaMixin_1 = require("../../generated/HasDescriptionSchemaMixin");
-function hasDescriptionMixin(item) {
-    (0, HasDescriptionSchemaMixin_1.hasDescriptionSchemaMixin)(item);
-}
+exports.hasDescriptionPropertiesMixin = HasDescriptionSchemaMixin_1.hasDescriptionSchemaMixin;

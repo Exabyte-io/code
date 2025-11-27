@@ -3,7 +3,7 @@ import { expect } from "chai";
 
 import { InMemoryEntity, NamedInMemoryEntity } from "../../../src/js/entity/index";
 import { defaultableEntityMixin } from "../../../src/js/entity/mixins/DefaultableMixin";
-import { runtimeItemsNameObjectMixin } from "../../../src/js/entity/mixins/RuntimeItemsNameObjectMixin";
+import { runtimeItemsMixin } from "../../../src/js/entity/mixins/RuntimeItemsMixin";
 import { extendClass, extendThis } from "../../../src/js/utils/class";
 
 class BaseEntity extends InMemoryEntity {
@@ -12,7 +12,7 @@ class BaseEntity extends InMemoryEntity {
     }
 }
 
-runtimeItemsNameObjectMixin(BaseEntity.prototype);
+runtimeItemsMixin(BaseEntity.prototype);
 
 class ExtendClassEntity extends NamedInMemoryEntity {
     declare results: unknown;

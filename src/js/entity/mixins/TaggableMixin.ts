@@ -1,5 +1,4 @@
 import { type TaggableSchemaMixin, taggableSchemaMixin } from "../../generated/TaggableSchemaMixin";
-import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
 type TaggableProperties = {
@@ -8,13 +7,7 @@ type TaggableProperties = {
 
 export type Taggable = TaggableSchemaMixin & TaggableProperties;
 
-export type TaggableInMemoryEntity = Taggable;
-
-export type TaggableInMemoryEntityConstructor = Constructor<TaggableInMemoryEntity>;
-
-export function taggableMixin<T extends InMemoryEntity>(item: T): asserts item is T & Taggable {
-    taggableSchemaMixin(item);
-
+function taggablePropertiesMixin<T extends InMemoryEntity>(item: T): asserts item is T & Taggable {
     // @ts-expect-error
     const properties: InMemoryEntity & Taggable = {
         setTags(array: string[]) {
@@ -23,4 +16,9 @@ export function taggableMixin<T extends InMemoryEntity>(item: T): asserts item i
     };
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+}
+
+export function taggableMixin<T extends InMemoryEntity>(item: T): asserts item is T & Taggable {
+    taggableSchemaMixin(item);
+    taggablePropertiesMixin(item);
 }

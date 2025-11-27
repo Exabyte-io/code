@@ -5,7 +5,7 @@ function namedEntitySchemaMixin(item) {
     // @ts-expect-error
     const properties = {
         get name() {
-            return this.prop("name");
+            return this.requiredProp("name");
         },
         set name(value) {
             this.setProp("name", value);

@@ -4,7 +4,6 @@ import {
     type HasConsistencyChecksSchemaMixin,
     hasConsistencyChecksSchemaMixin,
 } from "../../generated/HasConsistencyChecksSchemaMixin";
-import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
 type HasConsistencyChecksProperties = {
@@ -12,10 +11,6 @@ type HasConsistencyChecksProperties = {
 };
 
 export type HasConsistencyChecks = HasConsistencyChecksSchemaMixin & HasConsistencyChecksProperties;
-
-export type HasConsistencyChecksInMemoryEntity = HasConsistencyChecks;
-
-export type HasConsistencyChecksInMemoryEntityConstructor = Constructor<HasConsistencyChecks>;
 
 export function hasConsistencyChecksMixin<T extends InMemoryEntity>(
     item: T,
