@@ -1,3 +1,5 @@
+import type { Constructor } from "src/js/utils/types";
+
 import {
     type NamedEntitySchemaMixin,
     namedEntitySchemaMixin,
@@ -9,6 +11,8 @@ type NamedEntityProperties = {
 };
 
 export type NamedEntity = NamedEntitySchemaMixin & NamedEntityProperties;
+
+export type NamedInMemoryEntityConstructor = Constructor<NamedEntity>;
 
 function namedEntityPropertiesMixin<T extends InMemoryEntity>(
     item: T,

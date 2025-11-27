@@ -1,3 +1,5 @@
+import type { Constructor } from "src/js/utils/types";
+
 import { type TaggableSchemaMixin, taggableSchemaMixin } from "../../generated/TaggableSchemaMixin";
 import { InMemoryEntity } from "../in_memory";
 
@@ -6,6 +8,8 @@ type TaggableProperties = {
 };
 
 export type Taggable = TaggableSchemaMixin & TaggableProperties;
+
+export type TaggableInMemoryEntityConstructor = Constructor<Taggable>;
 
 function taggablePropertiesMixin<T extends InMemoryEntity>(item: T): asserts item is T & Taggable {
     // @ts-expect-error

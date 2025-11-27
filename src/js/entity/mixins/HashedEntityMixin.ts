@@ -1,3 +1,5 @@
+import type { Constructor } from "src/js/utils/types";
+
 import { calculateHashFromObject } from "../../utils/hash";
 import { InMemoryEntity } from "../in_memory";
 
@@ -5,6 +7,8 @@ export type HashedEntity = {
     calculateHash(): string;
     getHashObject?(): object;
 };
+
+export type HashedInMemoryEntityConstructor = Constructor<HashedEntity>;
 
 export function hashedEntityMixin<T extends InMemoryEntity>(
     item: T,

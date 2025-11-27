@@ -1,3 +1,4 @@
+import type { Constructor } from "src/js/utils/types";
 import type { InMemoryEntity } from "../in_memory";
 export interface ContextProvider {
     domain?: string;
@@ -11,5 +12,6 @@ export type ImportantSettingsProvider = {
 type AbstractBase = {
     contextProviders: ContextProvider[];
 };
+export type ImportantSettingsProviderInMemoryEntityConstructor = Constructor<ImportantSettingsProvider>;
 export declare function importantSettingsProviderMixin<T extends InMemoryEntity & AbstractBase>(item: T): asserts item is T & ImportantSettingsProvider;
 export {};

@@ -1,3 +1,5 @@
+import type { Constructor } from "src/js/utils/types";
+
 import {
     type HasMetadataSchemaMixin,
     hasMetadataSchemaMixin,
@@ -9,6 +11,8 @@ type HasMetadataProperties = {
 };
 
 export type HasMetadata = HasMetadataSchemaMixin & HasMetadataProperties;
+
+export type HasMetadataInMemoryEntityConstructor = Constructor<HasMetadata>;
 
 function hasMetadataPropertiesMixin<T extends InMemoryEntity>(
     item: T,

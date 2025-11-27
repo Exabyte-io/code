@@ -2,7 +2,6 @@ import { type DefaultableSchemaMixin } from "../../generated/DefaultableSchemaMi
 import type { AbstractConstructor, Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 export type Defaultable = DefaultableSchemaMixin;
-export type DefaultableInMemoryEntity = Defaultable;
 export type DefaultableInMemoryStaticEntity = {
     createDefault: () => InMemoryEntity & Defaultable;
 };

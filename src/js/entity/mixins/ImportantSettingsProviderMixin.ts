@@ -1,3 +1,5 @@
+import type { Constructor } from "src/js/utils/types";
+
 import { deepClone } from "../../utils/clone";
 import type { InMemoryEntity } from "../in_memory";
 
@@ -15,6 +17,9 @@ export type ImportantSettingsProvider = {
 type AbstractBase = {
     contextProviders: ContextProvider[];
 };
+
+export type ImportantSettingsProviderInMemoryEntityConstructor =
+    Constructor<ImportantSettingsProvider>;
 
 export function importantSettingsProviderMixin<T extends InMemoryEntity & AbstractBase>(
     item: T,

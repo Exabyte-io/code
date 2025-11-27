@@ -2,10 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.DefaultableInMemoryEntity = void 0;
 const in_memory_1 = require("./in_memory");
-// import { ContextAndRenderFieldsMixin, ImportantSettingsProviderMixin } from "./mixins/context";
 const DefaultableMixin_1 = require("./mixins/DefaultableMixin");
 const HasConsistencyChecksMixin_1 = require("./mixins/HasConsistencyChecksMixin");
-// import { HashedEntityMixin } from "./mixins/hash";
 const HasMetadataMixin_1 = require("./mixins/HasMetadataMixin");
 const NamedEntityMixin_1 = require("./mixins/NamedEntityMixin");
 class DefaultableInMemoryEntity extends in_memory_1.InMemoryEntity {

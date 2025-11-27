@@ -1,3 +1,5 @@
+import type { Constructor } from "src/js/utils/types";
+
 import {
     type RuntimeItemsSchemaMixin,
     runtimeItemsSchemaMixin,
@@ -13,6 +15,8 @@ type RuntimeItemsProperties = {
 };
 
 export type RuntimeItems = RuntimeItemsSchemaMixin & RuntimeItemsProperties;
+
+export type RuntimeItemsInMemoryEntityConstructor = Constructor<RuntimeItems>;
 
 function runtimeItemsPropertiesMixin<T extends InMemoryEntity>(
     item: T,

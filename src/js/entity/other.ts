@@ -1,31 +1,35 @@
-import type { Constructor } from "../utils/types";
 import { InMemoryEntity } from "./in_memory";
-// import { ContextAndRenderFieldsMixin, ImportantSettingsProviderMixin } from "./mixins/context";
-import { type Defaultable, defaultableEntityMixin } from "./mixins/DefaultableMixin";
 import {
-    type HasConsistencyChecks,
+    type DefaultableInMemoryEntityConstructor,
+    defaultableEntityMixin,
+} from "./mixins/DefaultableMixin";
+import {
+    type HasConsistencyChecksInMemoryEntityConstructor,
     hasConsistencyChecksMixin,
 } from "./mixins/HasConsistencyChecksMixin";
-// import { HashedEntityMixin } from "./mixins/hash";
-import { type HasMetadata, hasMetadataMixin } from "./mixins/HasMetadataMixin";
-import { type NamedEntity, namedEntityMixin } from "./mixins/NamedEntityMixin";
-// import { HasRepetitionMixin } from "./mixins/repetition";
+import {
+    type HasMetadataInMemoryEntityConstructor,
+    hasMetadataMixin,
+} from "./mixins/HasMetadataMixin";
+import { type NamedInMemoryEntityConstructor, namedEntityMixin } from "./mixins/NamedEntityMixin";
 
-type DefaultableBase = typeof InMemoryEntity & Constructor<Defaultable>;
+type DefaultableBase = typeof InMemoryEntity & DefaultableInMemoryEntityConstructor;
 
-type NamedBase = typeof InMemoryEntity & Constructor<NamedEntity>;
+type NamedBase = typeof InMemoryEntity & NamedInMemoryEntityConstructor;
 
 type NamedDefaultableBase = typeof InMemoryEntity &
-    Constructor<Defaultable> &
-    Constructor<NamedEntity>;
+    DefaultableInMemoryEntityConstructor &
+    NamedInMemoryEntityConstructor;
 
 type HasMetadataNamedDefaultableBase = typeof InMemoryEntity &
-    Constructor<Defaultable> &
-    Constructor<NamedEntity> &
-    Constructor<HasMetadata>;
+    DefaultableInMemoryEntityConstructor &
+    NamedInMemoryEntityConstructor &
+    HasMetadataInMemoryEntityConstructor;
 
-type HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase =
-    typeof HasMetadataNamedDefaultableInMemoryEntity & Constructor<HasConsistencyChecks>;
+type HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntityBase = typeof InMemoryEntity &
+    DefaultableInMemoryEntityConstructor &
+    NamedInMemoryEntityConstructor &
+    HasConsistencyChecksInMemoryEntityConstructor;
 
 export class DefaultableInMemoryEntity extends (InMemoryEntity as DefaultableBase) {}
 defaultableEntityMixin(DefaultableInMemoryEntity);
