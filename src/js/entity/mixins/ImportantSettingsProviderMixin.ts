@@ -1,6 +1,5 @@
-import type { Constructor } from "src/js/utils/types";
-
 import { deepClone } from "../../utils/clone";
+import type { Constructor } from "../../utils/types";
 import type { InMemoryEntity } from "../in_memory";
 
 export interface ContextProvider {

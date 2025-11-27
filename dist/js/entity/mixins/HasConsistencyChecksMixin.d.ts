@@ -1,6 +1,6 @@
 import type { ConsistencyCheck } from "@mat3ra/esse/dist/js/types";
-import type { Constructor } from "src/js/utils/types";
 import { type HasConsistencyChecksSchemaMixin } from "../../generated/HasConsistencyChecksSchemaMixin";
+import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 type HasConsistencyChecksProperties = {
     addConsistencyChecks: (array: ConsistencyCheck[]) => void;

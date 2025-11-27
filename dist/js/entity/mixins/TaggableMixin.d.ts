@@ -1,5 +1,5 @@
-import type { Constructor } from "src/js/utils/types";
 import { type TaggableSchemaMixin } from "../../generated/TaggableSchemaMixin";
+import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 type TaggableProperties = {
     setTags: (array: string[]) => void;

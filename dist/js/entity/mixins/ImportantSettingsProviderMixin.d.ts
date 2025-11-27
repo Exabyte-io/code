@@ -1,4 +1,4 @@
-import type { Constructor } from "src/js/utils/types";
+import type { Constructor } from "../../utils/types";
 import type { InMemoryEntity } from "../in_memory";
 export interface ContextProvider {
     domain?: string;

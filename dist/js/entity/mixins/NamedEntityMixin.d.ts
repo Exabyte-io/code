@@ -1,5 +1,5 @@
-import type { Constructor } from "src/js/utils/types";
 import { type NamedEntitySchemaMixin } from "../../generated/NamedEntitySchemaMixin";
+import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 type NamedEntityProperties = {
     setName: (name: string) => void;
