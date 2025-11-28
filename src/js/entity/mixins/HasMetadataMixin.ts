@@ -1,24 +1,31 @@
-import {
-    type HasMetadataSchemaMixin,
-    hasMetadataSchemaMixin,
-} from "../../generated/HasMetadataSchemaMixin";
+import type { MetadataSchema } from "@mat3ra/esse/dist/js/types";
+
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
-type HasMetadataProperties = {
-    updateMetadata: (object: object) => void;
+type Metadata = MetadataSchema["metadata"];
+
+export type HasMetadata<T extends Metadata = Metadata> = {
+    metadata?: T;
+    updateMetadata: (object: Partial<T>) => void;
 };
 
-export type HasMetadata = HasMetadataSchemaMixin & HasMetadataProperties;
+export type HasMetadataInMemoryEntityConstructor<T extends Metadata = Metadata> = Constructor<
+    HasMetadata<T>
+>;
 
-export type HasMetadataInMemoryEntityConstructor = Constructor<HasMetadata>;
-
-function hasMetadataPropertiesMixin<T extends InMemoryEntity>(
+function hasMetadataPropertiesMixin<T extends InMemoryEntity, M extends Metadata = Metadata>(
     item: T,
 ): asserts item is T & HasMetadata {
     // @ts-expect-error
-    const properties: InMemoryEntity & HasMetadata = {
-        updateMetadata(object: object) {
+    const properties: InMemoryEntity & HasMetadata<M> = {
+        get metadata() {
+            return this.prop<M>("metadata");
+        },
+        set metadata(value: M | undefined) {
+            this.setProp("metadata", value);
+        },
+        updateMetadata(object: Partial<M>) {
             this.setProp("metadata", { ...this.metadata, ...object });
         },
     };
@@ -28,6 +35,5 @@ function hasMetadataPropertiesMixin<T extends InMemoryEntity>(
 export function hasMetadataMixin<T extends InMemoryEntity>(
     item: T,
 ): asserts item is T & HasMetadata {
-    hasMetadataSchemaMixin(item);
     hasMetadataPropertiesMixin(item);
 }
