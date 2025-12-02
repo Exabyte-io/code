@@ -27,7 +27,6 @@ const OUTPUT_PATHS = {
     "system/defaultable": "src/js/generated/DefaultableSchemaMixin.ts",
     "system/has-consistency-check": "src/js/generated/HasConsistencyChecksSchemaMixin.ts",
     "system/description": "src/js/generated/HasDescriptionSchemaMixin.ts",
-    // "system/metadata": "src/js/generated/HasMetadataSchemaMixin.ts",
     "system/name": "src/js/generated/NamedEntitySchemaMixin.ts",
     "system/tags": "src/js/generated/TaggableSchemaMixin.ts",
     "system/runtime-items": "src/js/generated/RuntimeItemsSchemaMixin.ts",

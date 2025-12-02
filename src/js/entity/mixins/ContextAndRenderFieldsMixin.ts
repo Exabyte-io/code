@@ -10,7 +10,6 @@ export type ContextAndRenderFields = {
     getPersistentContext(): Context | undefined;
     updatePersistentContext(ctx: Context): void;
     getCombinedContext(): Context;
-    render(ctx: Context): void;
 };
 
 type AbstractBase = {
