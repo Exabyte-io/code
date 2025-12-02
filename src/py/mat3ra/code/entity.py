@@ -87,9 +87,6 @@ class InMemoryEntityPydantic(BaseModel):
         return self.model_copy(update=extra_context or {}, deep=deep)
 
 
-S = TypeVar("S", bound="InMemoryEntitySnakeCase")
-
-
 class InMemoryEntitySnakeCase(InMemoryEntityPydantic):
     model_config = ConfigDict(
         arbitrary_types_allowed=True,

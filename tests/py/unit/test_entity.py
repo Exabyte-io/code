@@ -1,6 +1,11 @@
 import json
 
+import pytest
+
 from . import (
+    CAMEL_CASE_CONFIG,
+    CAMEL_CASE_CONFIG as EXPECTED_CAMEL_CASE_OUTPUT,
+    MIXED_CASE_CONFIG,
     REFERENCE_OBJECT_DOUBLE_NESTED_VALID,
     REFERENCE_OBJECT_INVALID,
     REFERENCE_OBJECT_NESTED_VALID,
@@ -10,6 +15,7 @@ from . import (
     REFERENCE_OBJECT_VALID_UPDATED,
     REFERENCE_OBJECT_VALID_WITH_EXTRA_KEY,
     REFERENCE_OBJECT_VALID_WITH_MISSING_KEY,
+    SNAKE_CASE_CONFIG,
     ExampleClass,
     ExampleDefaultableClass,
     ExampleDoubleNestedKeyAsClassInstancesClass,
@@ -20,6 +26,7 @@ from . import (
     ExampleSchema,
     SampleEnum,
     SampleEntityWithEnum,
+    SnakeCaseEntity,
 )
 
 
@@ -211,3 +218,30 @@ def test_clone_deep():
     cloned_entity_deep.key1 = "adjusted_value"
     assert entity.key1 == "value1"
     assert cloned_entity_deep.key1 == "adjusted_value"
+
+
+@pytest.mark.parametrize(
+    "config,expected_output",
+    [
+        (SNAKE_CASE_CONFIG, EXPECTED_CAMEL_CASE_OUTPUT),
+        (CAMEL_CASE_CONFIG, EXPECTED_CAMEL_CASE_OUTPUT),
+        (MIXED_CASE_CONFIG, EXPECTED_CAMEL_CASE_OUTPUT),
+    ],
+)
+def test_create_entity_snake_case(config, expected_output):
+    entity = SnakeCaseEntity(**config)
+    assert entity.applicationName == expected_output["applicationName"]
+    assert entity.applicationVersion == expected_output["applicationVersion"]
+    assert entity.executableName == expected_output["executableName"]
+
+    result_dict = entity.to_dict()
+    assert result_dict == expected_output
+    assert "applicationName" in result_dict
+    assert "application_name" not in result_dict
+
+    result_json = json.loads(entity.to_json())
+    assert result_json == expected_output
+
+    entity_from_create = SnakeCaseEntity.create(config)
+    assert entity_from_create.to_dict() == expected_output
+
