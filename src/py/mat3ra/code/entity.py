@@ -2,7 +2,8 @@ from typing import Any, Dict, List, Optional, Type, TypeVar
 
 import jsonschema
 from mat3ra.utils import object as object_utils
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+from pydantic.alias_generators import to_snake
 from typing_extensions import Self
 
 from . import BaseUnderscoreJsonPropsHandler
@@ -84,6 +85,14 @@ class InMemoryEntityPydantic(BaseModel):
 
     def clone(self: T, extra_context: Optional[Dict[str, Any]] = None, deep=True) -> T:
         return self.model_copy(update=extra_context or {}, deep=deep)
+
+
+class InMemoryEntitySnakeCase(InMemoryEntityPydantic):
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+        alias_generator=to_snake,
+        populate_by_name=True,
+    )
 
 
 # TODO: remove in the next PR

@@ -1,7 +1,8 @@
 import json
 from enum import Enum
+from typing import Optional
 
-from mat3ra.code.entity import InMemoryEntityPydantic
+from mat3ra.code.entity import InMemoryEntityPydantic, InMemoryEntitySnakeCase
 from pydantic import BaseModel
 
 REFERENCE_OBJECT_VALID = {"key1": "value1", "key2": 1}
@@ -68,3 +69,32 @@ class SampleModelWithEnum(BaseModel):
 
 class SampleEntityWithEnum(SampleModelWithEnum, InMemoryEntityPydantic):
     pass
+
+
+class CamelCaseSchema(BaseModel):
+    applicationName: str
+    applicationVersion: Optional[str] = None
+    executableName: Optional[str] = None
+
+
+class SnakeCaseEntity(CamelCaseSchema, InMemoryEntitySnakeCase):
+    pass
+
+
+SNAKE_CASE_CONFIG = {
+    "application_name": "espresso",
+    "application_version": "7.2",
+    "executable_name": "pw.x",
+}
+
+CAMEL_CASE_CONFIG = {
+    "applicationName": "espresso",
+    "applicationVersion": "7.2",
+    "executableName": "pw.x",
+}
+
+MIXED_CASE_CONFIG = {
+    "application_name": "espresso",
+    "applicationVersion": "7.2",
+    "executable_name": "pw.x",
+}
