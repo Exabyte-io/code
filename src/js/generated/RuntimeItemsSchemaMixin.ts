@@ -1,8 +1,8 @@
-import type { RuntimeItemsNameObjectSchema } from "@mat3ra/esse/dist/js/types";
+import type { RuntimeItemsSchema } from "@mat3ra/esse/dist/js/types";
 
 import type { InMemoryEntity } from "../entity/in_memory";
 
-export type RuntimeItemsSchemaMixin = RuntimeItemsNameObjectSchema;
+export type RuntimeItemsSchemaMixin = RuntimeItemsSchema;
 
 export type RuntimeItemsInMemoryEntity = InMemoryEntity & RuntimeItemsSchemaMixin;
 
@@ -12,31 +12,27 @@ export function runtimeItemsSchemaMixin<T extends InMemoryEntity>(
     // @ts-expect-error
     const properties: InMemoryEntity & RuntimeItemsSchemaMixin = {
         get preProcessors() {
-            return this.requiredProp<RuntimeItemsNameObjectSchema["preProcessors"]>(
-                "preProcessors",
-            );
+            return this.requiredProp<RuntimeItemsSchema["preProcessors"]>("preProcessors");
         },
-        set preProcessors(value: RuntimeItemsNameObjectSchema["preProcessors"]) {
+        set preProcessors(value: RuntimeItemsSchema["preProcessors"]) {
             this.setProp("preProcessors", value);
         },
         get postProcessors() {
-            return this.requiredProp<RuntimeItemsNameObjectSchema["postProcessors"]>(
-                "postProcessors",
-            );
+            return this.requiredProp<RuntimeItemsSchema["postProcessors"]>("postProcessors");
         },
-        set postProcessors(value: RuntimeItemsNameObjectSchema["postProcessors"]) {
+        set postProcessors(value: RuntimeItemsSchema["postProcessors"]) {
             this.setProp("postProcessors", value);
         },
         get monitors() {
-            return this.requiredProp<RuntimeItemsNameObjectSchema["monitors"]>("monitors");
+            return this.requiredProp<RuntimeItemsSchema["monitors"]>("monitors");
         },
-        set monitors(value: RuntimeItemsNameObjectSchema["monitors"]) {
+        set monitors(value: RuntimeItemsSchema["monitors"]) {
             this.setProp("monitors", value);
         },
         get results() {
-            return this.requiredProp<RuntimeItemsNameObjectSchema["results"]>("results");
+            return this.requiredProp<RuntimeItemsSchema["results"]>("results");
         },
-        set results(value: RuntimeItemsNameObjectSchema["results"]) {
+        set results(value: RuntimeItemsSchema["results"]) {
             this.setProp("results", value);
         },
     };
