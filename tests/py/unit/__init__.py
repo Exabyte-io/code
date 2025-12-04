@@ -98,3 +98,14 @@ MIXED_CASE_CONFIG = {
     "applicationVersion": "7.2",
     "executable_name": "pw.x",
 }
+
+
+class AutoSnakeCaseTestSchema(BaseModel):
+    contextProviders: list = []
+    applicationName: str
+    applicationVersion: Optional[str] = None
+    executableName: Optional[str] = None
+
+
+class AutoSnakeCaseTestEntity(AutoSnakeCaseTestSchema, InMemoryEntitySnakeCase):
+    pass
