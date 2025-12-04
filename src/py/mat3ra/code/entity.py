@@ -94,6 +94,35 @@ class InMemoryEntitySnakeCase(InMemoryEntityPydantic):
         populate_by_name=True,
     )
 
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        if not issubclass(cls, BaseModel):
+            return
+
+        try:
+            model_fields = cls.model_fields
+        except Exception:
+            return
+
+        for field_name, field_info in model_fields.items():
+            if field_name == to_snake(field_name):
+                continue
+
+            snake_case_name = to_snake(field_name)
+            if hasattr(cls, snake_case_name):
+                continue
+
+            def create_property(camel_name: str):
+                def getter(self):
+                    return getattr(self, camel_name)
+
+                def setter(self, value: Any):
+                    setattr(self, camel_name, value)
+
+                return property(getter, setter)
+
+            setattr(cls, snake_case_name, create_property(field_name))
+
 
 # TODO: remove in the next PR
 class InMemoryEntity(BaseUnderscoreJsonPropsHandler):
