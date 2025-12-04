@@ -244,4 +244,3 @@ def test_create_entity_snake_case(config, expected_output):
 
     entity_from_create = SnakeCaseEntity.create(config)
     assert entity_from_create.to_dict() == expected_output
-
