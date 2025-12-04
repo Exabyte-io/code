@@ -9,6 +9,9 @@ function hasRepetitionMixin(item) {
         get repetition() {
             return this._repetition;
         },
+        set repetition(repetition) {
+            this._repetition = repetition;
+        },
         get totalRepetitions() {
             return this._totalRepetitions || 1;
         },

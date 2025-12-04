@@ -21,6 +21,9 @@ export function hasRepetitionMixin<T extends InMemoryEntity>(
         get repetition() {
             return this._repetition;
         },
+        set repetition(repetition: number) {
+            this._repetition = repetition;
+        },
         get totalRepetitions() {
             return this._totalRepetitions || 1;
         },
