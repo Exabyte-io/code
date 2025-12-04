@@ -1,28 +1,39 @@
+import type { MetadataSchema } from "@mat3ra/esse/dist/js/types";
+
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
-export function hasMetadataMixin<T extends InMemoryEntity>(item: T) {
-    // @ts-expect-error
-    const properties: InMemoryEntity & HasMetadataInMemoryEntity = {
-        get metadata(): object {
-            return this.prop("metadata", {});
-        },
-        set metadata(object: object) {
-            this.setProp("metadata", object);
-        },
-        updateMetadata(object: object) {
-            this.metadata = { ...this.metadata, ...object };
-        },
-    };
+type Metadata = MetadataSchema["metadata"];
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-
-    return properties;
-}
-
-export type HasMetadataInMemoryEntity = {
-    metadata: object;
-    updateMetadata: (object: object) => void;
+export type HasMetadata<T extends Metadata = Metadata> = {
+    metadata?: T;
+    updateMetadata: (object: Partial<T>) => void;
 };
 
-export type HasMetadataInMemoryEntityConstructor = Constructor<HasMetadataInMemoryEntity>;
+export type HasMetadataInMemoryEntityConstructor<T extends Metadata = Metadata> = Constructor<
+    HasMetadata<T>
+>;
+
+function hasMetadataPropertiesMixin<T extends InMemoryEntity, M extends Metadata = Metadata>(
+    item: T,
+): asserts item is T & HasMetadata {
+    // @ts-expect-error
+    const properties: InMemoryEntity & HasMetadata<M> = {
+        get metadata() {
+            return this.prop<M>("metadata");
+        },
+        set metadata(value: M | undefined) {
+            this.setProp("metadata", value);
+        },
+        updateMetadata(object: Partial<M>) {
+            this.setProp("metadata", { ...this.metadata, ...object });
+        },
+    };
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+}
+
+export function hasMetadataMixin<T extends InMemoryEntity>(
+    item: T,
+): asserts item is T & HasMetadata {
+    hasMetadataPropertiesMixin(item);
+}

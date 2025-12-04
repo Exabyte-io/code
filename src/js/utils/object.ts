@@ -1,5 +1,4 @@
 import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
-import { NameResultSchema } from "@mat3ra/esse/dist/js/types";
 import camelCase from "lodash/camelCase";
 import filterObject from "lodash/filter";
 import isArray from "lodash/isArray";
@@ -12,6 +11,10 @@ import omit from "lodash/omit";
 
 import { safeMakeArray } from "./array";
 import { deepClone } from "./clone";
+
+export type NameResultSchema = {
+    name: string;
+};
 
 /**
  * @summary Safely convert input to { name: str } if it is not already

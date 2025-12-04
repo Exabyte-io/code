@@ -1,19 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.namedEntityMixin = namedEntityMixin;
-function namedEntityMixin(item) {
+const NamedEntitySchemaMixin_1 = require("../../generated/NamedEntitySchemaMixin");
+function namedEntityPropertiesMixin(item) {
     // @ts-expect-error
     const properties = {
-        get name() {
-            return this.prop("name", "");
-        },
-        set name(name) {
-            this.setProp("name", name);
-        },
         setName(name) {
             this.setProp("name", name);
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-    return properties;
+}
+function namedEntityMixin(item) {
+    (0, NamedEntitySchemaMixin_1.namedEntitySchemaMixin)(item);
+    namedEntityPropertiesMixin(item);
 }

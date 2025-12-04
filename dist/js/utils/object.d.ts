@@ -1,4 +1,6 @@
-import { NameResultSchema } from "@mat3ra/esse/dist/js/types";
+export type NameResultSchema = {
+    name: string;
+};
 /**
  * @summary Safely convert input to { name: str } if it is not already
  * @param name {String|Object} the input to convert
