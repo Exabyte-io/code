@@ -66,12 +66,14 @@ class InMemoryEntityPydantic(BaseModel):
 class InMemoryEntitySnakeCase(InMemoryEntityPydantic):
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
+        # Generate snake_case aliases for all fields (e.g. myField -> my_field)
         alias_generator=to_snake,
+        # Allow populating fields using either the original name or the snake_case alias
         populate_by_name=True,
     )
 
     @staticmethod
-    def _create_property(camel_name: str):
+    def _create_property_from_camel_case(camel_name: str):
         def getter(self):
             return getattr(self, camel_name)
 
@@ -98,7 +100,7 @@ class InMemoryEntitySnakeCase(InMemoryEntityPydantic):
             if hasattr(cls, snake_case_name):
                 continue
 
-            setattr(cls, snake_case_name, cls._create_property(field_name))
+            setattr(cls, snake_case_name, cls._create_property_from_camel_case(field_name))
 
 
 class HasDescriptionHasMetadataNamedDefaultableInMemoryEntityPydantic(
