@@ -66,11 +66,16 @@ class InMemoryEntityPydantic(BaseModel):
 class InMemoryEntitySnakeCase(InMemoryEntityPydantic):
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
+        extra='allow',
         # Generate snake_case aliases for all fields (e.g. myField -> my_field)
         alias_generator=to_snake,
         # Allow populating fields using either the original name or the snake_case alias
         populate_by_name=True,
     )
+
+    def __init__(self, **data: Any) -> None:
+        """Initialize with explicit **data to avoid parameter ordering issues in multiple inheritance."""
+        super().__init__(**data)
 
     @staticmethod
     def _create_property_from_camel_case(camel_name: str):
