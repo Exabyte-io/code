@@ -28,7 +28,11 @@ class InMemoryEntityPydantic(BaseModel):
                 if v is not None or k in keep_as_none_set
             }
         elif isinstance(obj, list):
-            return [cls._filter_none_recursive(item, keep_as_none_set) for item in obj]
+            return [
+                cls._filter_none_recursive(item, keep_as_none_set)
+                for item in obj
+                if item is not None
+            ]
         else:
             return obj
 
