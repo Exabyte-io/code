@@ -1,6 +1,7 @@
+import json
 from typing import Any, Dict, List, Optional, Type, TypeVar
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import AliasGenerator, BaseModel, ConfigDict
 from pydantic.alias_generators import to_snake
 from typing_extensions import Self
 
@@ -12,6 +13,25 @@ B = TypeVar("B", bound="BaseModel")
 
 class InMemoryEntityPydantic(BaseModel):
     model_config = {"arbitrary_types_allowed": True}
+
+    @classmethod
+    def _filter_none_values(cls, data: Dict[str, Any], keep_as_none: Optional[List[str]] = None) -> Dict[str, Any]:
+        keep_as_none_set = set(keep_as_none) if keep_as_none else set()
+        return cls._filter_none_recursive(data, keep_as_none_set)
+    
+    @classmethod
+    def _filter_none_recursive(cls, obj: Any, keep_as_none_set: set) -> Any:
+        if isinstance(obj, dict):
+            return {
+                k: cls._filter_none_recursive(v, keep_as_none_set)
+                for k, v in obj.items()
+                if v is not None or k in keep_as_none_set
+            }
+        elif isinstance(obj, list):
+            return [cls._filter_none_recursive(item, keep_as_none_set) for item in obj]
+        else:
+            return obj
+
 
     @classmethod
     def create(cls: Type[T], config: Dict[str, Any]) -> T:
@@ -53,11 +73,19 @@ class InMemoryEntityPydantic(BaseModel):
     def get_cls_name(self) -> str:
         return self.__class__.__name__
 
-    def to_dict(self, exclude: Optional[List[str]] = None) -> Dict[str, Any]:
-        return self.model_dump(mode="json", exclude=set(exclude) if exclude else None)
+    def to_dict(
+            self, exclude: Optional[List[str]] = None, keep_as_none: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
+        data = self.model_dump(
+            mode="json",
+            exclude=set(exclude) if exclude else None,
+            by_alias=True,
+            exclude_none=False,
+        )
+        return self._filter_none_values(data, keep_as_none=keep_as_none)
 
-    def to_json(self, exclude: Optional[List[str]] = None) -> str:
-        return self.model_dump_json(exclude=set(exclude) if exclude else None)
+    def to_json(self, exclude: Optional[List[str]] = None, keep_as_none: Optional[List[str]] = None) -> str:
+        return json.dumps(self.to_dict(exclude=exclude, keep_as_none=keep_as_none))
 
     def clone(self: T, extra_context: Optional[Dict[str, Any]] = None, deep=True) -> T:
         return self.model_copy(update=extra_context or {}, deep=deep)
@@ -68,7 +96,7 @@ class InMemoryEntitySnakeCase(InMemoryEntityPydantic):
         arbitrary_types_allowed=True,
         extra='allow',
         # Generate snake_case aliases for all fields (e.g. myField -> my_field)
-        alias_generator=to_snake,
+        alias_generator=AliasGenerator(validation_alias=to_snake, serialization_alias=lambda field_name: field_name),
         # Allow populating fields using either the original name or the snake_case alias
         populate_by_name=True,
     )
