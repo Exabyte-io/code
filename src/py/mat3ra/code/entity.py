@@ -1,6 +1,6 @@
 import json
 from typing import Any, Dict, List, Optional, Type, TypeVar
-
+from mat3ra.utils.object import filter_out_none_values
 from pydantic import AliasGenerator, BaseModel, ConfigDict
 from pydantic.alias_generators import to_snake
 from typing_extensions import Self
@@ -13,29 +13,6 @@ B = TypeVar("B", bound="BaseModel")
 
 class InMemoryEntityPydantic(BaseModel):
     model_config = {"arbitrary_types_allowed": True}
-
-    @classmethod
-    def _filter_none_values(cls, data: Dict[str, Any], keep_as_none: Optional[List[str]] = None) -> Dict[str, Any]:
-        keep_as_none_set = set(keep_as_none) if keep_as_none else set()
-        return cls._filter_none_recursive(data, keep_as_none_set)
-    
-    @classmethod
-    def _filter_none_recursive(cls, obj: Any, keep_as_none_set: set) -> Any:
-        if isinstance(obj, dict):
-            return {
-                k: cls._filter_none_recursive(v, keep_as_none_set)
-                for k, v in obj.items()
-                if v is not None or k in keep_as_none_set
-            }
-        elif isinstance(obj, list):
-            return [
-                cls._filter_none_recursive(item, keep_as_none_set)
-                for item in obj
-                if item is not None
-            ]
-        else:
-            return obj
-
 
     @classmethod
     def create(cls: Type[T], config: Dict[str, Any]) -> T:
@@ -86,7 +63,7 @@ class InMemoryEntityPydantic(BaseModel):
             by_alias=True,
             exclude_none=False,
         )
-        return self._filter_none_values(data, keep_as_none=keep_as_none)
+        return filter_out_none_values(data, keep_as_none=keep_as_none)
 
     def to_json(self, exclude: Optional[List[str]] = None, keep_as_none: Optional[List[str]] = None) -> str:
         return json.dumps(self.to_dict(exclude=exclude, keep_as_none=keep_as_none))
