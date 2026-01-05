@@ -1,6 +1,7 @@
+import json
 from typing import Any, Dict, List, Optional, Type, TypeVar
-
-from pydantic import BaseModel, ConfigDict
+from mat3ra.utils.object import filter_out_none_values
+from pydantic import AliasGenerator, BaseModel, ConfigDict
 from pydantic.alias_generators import to_snake
 from typing_extensions import Self
 
@@ -53,11 +54,19 @@ class InMemoryEntityPydantic(BaseModel):
     def get_cls_name(self) -> str:
         return self.__class__.__name__
 
-    def to_dict(self, exclude: Optional[List[str]] = None) -> Dict[str, Any]:
-        return self.model_dump(mode="json", exclude=set(exclude) if exclude else None)
+    def to_dict(
+            self, exclude: Optional[List[str]] = None, keep_as_none: Optional[List[str]] = None
+    ) -> Dict[str, Any]:
+        data = self.model_dump(
+            mode="json",
+            exclude=set(exclude) if exclude else None,
+            by_alias=True,
+            exclude_none=False,
+        )
+        return filter_out_none_values(data, keep_as_none=keep_as_none)
 
-    def to_json(self, exclude: Optional[List[str]] = None) -> str:
-        return self.model_dump_json(exclude=set(exclude) if exclude else None)
+    def to_json(self, exclude: Optional[List[str]] = None, keep_as_none: Optional[List[str]] = None) -> str:
+        return json.dumps(self.to_dict(exclude=exclude, keep_as_none=keep_as_none))
 
     def clone(self: T, extra_context: Optional[Dict[str, Any]] = None, deep=True) -> T:
         return self.model_copy(update=extra_context or {}, deep=deep)
@@ -66,11 +75,16 @@ class InMemoryEntityPydantic(BaseModel):
 class InMemoryEntitySnakeCase(InMemoryEntityPydantic):
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
+        extra='allow',
         # Generate snake_case aliases for all fields (e.g. myField -> my_field)
-        alias_generator=to_snake,
+        alias_generator=AliasGenerator(validation_alias=to_snake, serialization_alias=lambda field_name: field_name),
         # Allow populating fields using either the original name or the snake_case alias
         populate_by_name=True,
     )
+
+    def __init__(self, **data: Any) -> None:
+        """Initialize with explicit **data to avoid parameter ordering issues in multiple inheritance."""
+        super().__init__(**data)
 
     @staticmethod
     def _create_property_from_camel_case(camel_name: str):
