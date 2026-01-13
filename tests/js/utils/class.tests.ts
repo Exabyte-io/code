@@ -1,22 +1,18 @@
 /* eslint-disable max-classes-per-file, class-methods-use-this */
 import { expect } from "chai";
 
-import {
-    InMemoryEntity,
-    NamedInMemoryEntity,
-    RuntimeItemsMixin,
-} from "../../../src/js/entity/index";
-import {
-    defaultableEntityMixin,
-    defaultableEntityStaticMixin,
-} from "../../../src/js/entity/mixins/DefaultableMixin";
+import { InMemoryEntity, NamedInMemoryEntity } from "../../../src/js/entity/index";
+import { defaultableEntityMixin } from "../../../src/js/entity/mixins/DefaultableMixin";
+import { runtimeItemsMixin } from "../../../src/js/entity/mixins/RuntimeItemsMixin";
 import { extendClass, extendThis } from "../../../src/js/utils/class";
 
-class BaseEntity extends RuntimeItemsMixin(InMemoryEntity) {
+class BaseEntity extends InMemoryEntity {
     baseMethod() {
         return "base";
     }
 }
+
+runtimeItemsMixin(BaseEntity.prototype);
 
 class ExtendClassEntity extends NamedInMemoryEntity {
     declare results: unknown;
@@ -31,8 +27,7 @@ class ExtendClassEntity extends NamedInMemoryEntity {
     }
 }
 
-defaultableEntityStaticMixin(ExtendClassEntity);
-defaultableEntityMixin(ExtendClassEntity.prototype);
+defaultableEntityMixin(ExtendClassEntity);
 
 class BaseBetweenEntity extends NamedInMemoryEntity {
     static staticAttr = "base";
@@ -75,8 +70,7 @@ class ExtendThisEntity extends BetweenEntity {
     }
 }
 
-defaultableEntityStaticMixin(ExtendThisEntity);
-defaultableEntityMixin(ExtendThisEntity.prototype);
+defaultableEntityMixin(ExtendThisEntity);
 
 describe("extendClass", () => {
     it("extends classes no excluded props", () => {
@@ -102,7 +96,7 @@ describe("extendThis", () => {
     });
 
     it("extends this support base mixins", () => {
-        const obj = new ExtendThisEntity({ results: ["test"] });
+        const obj = new ExtendThisEntity({ results: [{ name: "test" }] });
         expect(JSON.stringify(obj.results)).to.be.equal(JSON.stringify([{ name: "test" }]));
     });
 

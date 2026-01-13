@@ -1,31 +1,31 @@
 import type { ConsistencyCheck } from "@mat3ra/esse/dist/js/types";
 
+import {
+    type HasConsistencyChecksSchemaMixin,
+    hasConsistencyChecksSchemaMixin,
+} from "../../generated/HasConsistencyChecksSchemaMixin";
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
-export function hasConsistencyChecksMixin<T extends InMemoryEntity>(item: T) {
+type HasConsistencyChecksProperties = {
+    addConsistencyChecks: (array: ConsistencyCheck[]) => void;
+};
+
+export type HasConsistencyChecks = HasConsistencyChecksSchemaMixin & HasConsistencyChecksProperties;
+
+export type HasConsistencyChecksInMemoryEntityConstructor = Constructor<HasConsistencyChecks>;
+
+export function hasConsistencyChecksMixin<T extends InMemoryEntity>(
+    item: T,
+): asserts item is T & HasConsistencyChecks {
+    hasConsistencyChecksSchemaMixin(item);
+
     // @ts-expect-error
-    const properties: InMemoryEntity & HasConsistencyChecksInMemoryEntity = {
-        get consistencyChecks(): ConsistencyCheck[] {
-            return this.prop("consistencyChecks", []);
-        },
-        set consistencyChecks(array: ConsistencyCheck[]) {
-            this.setProp("consistencyChecks", array);
-        },
+    const properties: InMemoryEntity & HasConsistencyChecks = {
         addConsistencyChecks(array: ConsistencyCheck[]) {
             this.consistencyChecks = [...(this.consistencyChecks || []), ...array];
         },
     };
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-
-    return properties;
 }
-
-export type HasConsistencyChecksInMemoryEntity = {
-    consistencyChecks: ConsistencyCheck[];
-    addConsistencyChecks: (array: ConsistencyCheck[]) => void;
-};
-
-export type HasConsistencyChecksInMemoryEntityConstructor =
-    Constructor<HasConsistencyChecksInMemoryEntity>;
