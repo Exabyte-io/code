@@ -1,29 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import type { Constructor } from "../../utils/types";
+import {
+    type DefaultableSchemaMixin,
+    defaultableSchemaMixin,
+} from "../../generated/DefaultableSchemaMixin";
+import type { AbstractConstructor, Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
 
-export function defaultableEntityMixin<T extends InMemoryEntity>(item: T) {
-    // @ts-expect-error
-    const properties: InMemoryEntity & DefaultableInMemoryEntity = {
-        get isDefault() {
-            return this.prop("isDefault", false);
-        },
-        set isDefault(isDefault: boolean) {
-            this.setProp("isDefault", isDefault);
-        },
-    };
+export type Defaultable = DefaultableSchemaMixin;
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+export type DefaultableInMemoryStaticEntity = {
+    createDefault: () => InMemoryEntity & Defaultable;
+};
 
-    return properties;
-}
+export type DefaultableInMemoryEntityConstructor = Constructor<Defaultable> &
+    DefaultableInMemoryStaticEntity;
 
-export function defaultableEntityStaticMixin(Item: Constructor<InMemoryEntity>) {
+function defaultableEntityStaticMixin(Item: AbstractConstructor<InMemoryEntity>) {
     // @ts-expect-error
     const staticProperties: DefaultableInMemoryStaticEntity &
         Constructor<InMemoryEntity> &
-        Constructor<DefaultableInMemoryEntity> & {
+        Constructor<DefaultableSchemaMixin> & {
             defaultConfig?: object | null;
         } = {
         createDefault() {
@@ -36,13 +33,7 @@ export function defaultableEntityStaticMixin(Item: Constructor<InMemoryEntity>) 
     return staticProperties;
 }
 
-export type DefaultableInMemoryEntity = {
-    isDefault: boolean;
-};
-
-export type DefaultableInMemoryStaticEntity = {
-    createDefault: () => InMemoryEntity & DefaultableInMemoryEntity;
-};
-
-export type DefaultableInMemoryEntityConstructor = Constructor<DefaultableInMemoryEntity> &
-    DefaultableInMemoryStaticEntity;
+export function defaultableEntityMixin(Item: AbstractConstructor<InMemoryEntity>) {
+    defaultableSchemaMixin(Item.prototype);
+    defaultableEntityStaticMixin(Item);
+}
