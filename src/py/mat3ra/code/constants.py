@@ -2,6 +2,8 @@ from math import pi
 
 from mat3ra.esse.models.definitions.constants import FundamentalConstants
 
+HASH_TOLERANCE = 3  # decimal places; mirrors @mat3ra/code/dist/js/constants.ts HASH_TOLERANCE
+
 CONSTANTS = FundamentalConstants()
 
 
