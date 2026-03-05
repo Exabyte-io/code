@@ -87,11 +87,7 @@ class ExtendThisEntity extends BetweenEntity {
 class ExtendThisEntityFromMixedBase extends BetweenEntity {
     constructor(config: object) {
         super(config);
-        extendThis(
-            ExtendThisEntityFromMixedBase,
-            BaseEntityWithPrototypeMethodFromMixin,
-            config,
-        );
+        extendThis(ExtendThisEntityFromMixedBase, BaseEntityWithPrototypeMethodFromMixin, config);
     }
 }
 
