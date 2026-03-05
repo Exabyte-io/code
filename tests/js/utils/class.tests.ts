@@ -18,6 +18,15 @@ class BaseEntity extends RuntimeItemsMixin(InMemoryEntity) {
     }
 }
 
+const PrototypeMethodMixin = (superclass: any) =>
+    class extends superclass {
+        methodFromMixinPrototype() {
+            return "from-mixin";
+        }
+    };
+
+class BaseEntityWithPrototypeMethodFromMixin extends PrototypeMethodMixin(BaseEntity) {}
+
 class ExtendClassEntity extends NamedInMemoryEntity {
     declare results: unknown;
 
@@ -75,6 +84,17 @@ class ExtendThisEntity extends BetweenEntity {
     }
 }
 
+class ExtendThisEntityFromMixedBase extends BetweenEntity {
+    constructor(config: object) {
+        super(config);
+        extendThis(
+            ExtendThisEntityFromMixedBase,
+            BaseEntityWithPrototypeMethodFromMixin,
+            config,
+        );
+    }
+}
+
 defaultableEntityStaticMixin(ExtendThisEntity);
 defaultableEntityMixin(ExtendThisEntity.prototype);
 
@@ -104,6 +124,11 @@ describe("extendThis", () => {
     it("extends this support base mixins", () => {
         const obj = new ExtendThisEntity({ results: ["test"] });
         expect(JSON.stringify(obj.results)).to.be.equal(JSON.stringify([{ name: "test" }]));
+    });
+
+    it("copies prototype methods defined by mixins", () => {
+        const obj = new ExtendThisEntityFromMixedBase({});
+        expect((obj as any).methodFromMixinPrototype()).to.be.equal("from-mixin");
     });
 
     it("remembers intermediate methods", () => {
