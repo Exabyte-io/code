@@ -66,7 +66,7 @@ export function extendThis(childClass, parentClass, config) {
                 if (get || set) {
                     Object.defineProperty(childClass.prototype, prop, { get, set });
                 } else {
-                    childClass.prototype[prop] = parentClass.prototype[prop];
+                    childClass.prototype[prop] = protos[prop];
                 }
                 seen.push(prop); // don't override with older definition in hierarchy
                 return null;

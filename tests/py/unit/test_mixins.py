@@ -1,6 +1,7 @@
 from typing import Optional
 
-from mat3ra.code.mixins import DefaultableMixin, NamedMixin
+from mat3ra.code.mixins import DefaultableMixin, HashedEntityMixin, NamedMixin
+from mat3ra.utils.object import calculate_hash_from_object
 
 
 def test_defaultable_mixin():
@@ -60,3 +61,13 @@ def test_complex_mixin():
     assert instance.key is None
     assert instance.number is None
     assert hasattr(instance, "isDefault")
+
+
+def test_hashed_entity_mixin():
+    class ExampleHashed(HashedEntityMixin):
+        def get_hash_object(self):
+            return {"b": 1, "a": 2}
+
+    instance = ExampleHashed()
+    assert instance.calculate_hash() == calculate_hash_from_object({"b": 1, "a": 2})
+    assert instance.hash == instance.calculate_hash()
