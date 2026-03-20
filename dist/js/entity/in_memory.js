@@ -62,9 +62,14 @@ class InMemoryEntity {
     }
     constructor(config = {}) {
         this._json = {};
-        this._json = this.constructor._isDeepCloneRequired
-            ? (0, clone_1.deepClone)(config)
-            : (0, clone_1.clone)(config);
+        if (config instanceof InMemoryEntity) {
+            this._json = config.toJSON();
+        }
+        else {
+            this._json = this.constructor._isDeepCloneRequired
+                ? (0, clone_1.deepClone)(config)
+                : (0, clone_1.clone)(config);
+        }
     }
     /**
      * @summary Return a prop or the default
