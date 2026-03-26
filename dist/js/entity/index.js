@@ -32,10 +32,15 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrderedInMemoryEntityInSetMixin = exports.OrderedInMemoryEntitySetMixin = exports.InMemoryEntityInSetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.InMemoryEntitySet = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
+exports.HasScopeTrackMixin = exports.OrderedInMemoryEntityInSetMixin = exports.OrderedInMemoryEntitySetMixin = exports.InMemoryEntityInSetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.InMemoryEntitySet = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
 const in_memory_1 = require("./in_memory");
 Object.defineProperty(exports, "InMemoryEntity", { enumerable: true, get: function () { return in_memory_1.InMemoryEntity; } });
+const HasScopeTrackMixin_1 = __importDefault(require("./mixins/HasScopeTrackMixin"));
+exports.HasScopeTrackMixin = HasScopeTrackMixin_1.default;
 const other_1 = require("./other");
 Object.defineProperty(exports, "DefaultableInMemoryEntity", { enumerable: true, get: function () { return other_1.DefaultableInMemoryEntity; } });
 Object.defineProperty(exports, "HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity", { enumerable: true, get: function () { return other_1.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity; } });

@@ -1,4 +1,5 @@
 import { InMemoryEntity } from "./in_memory";
+import HasScopeTrackMixin from "./mixins/HasScopeTrackMixin";
 import {
     DefaultableInMemoryEntity,
     HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity,
@@ -31,4 +32,5 @@ export {
     InMemoryEntityInSetMixin,
     OrderedInMemoryEntitySetMixin,
     OrderedInMemoryEntityInSetMixin,
+    HasScopeTrackMixin,
 };
