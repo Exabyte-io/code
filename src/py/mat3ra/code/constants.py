@@ -45,6 +45,8 @@ class Coefficients:
     cm_inv_to_ev = 0.00012398  # cm^-1 to eV
     ry_bohr_to_eV_A = 25.71104309541616  # or RYDBERG / BOHR
 
+    EV_PER_ANGSTROM3_TO_GPA = CONSTANTS.e / (1e-10) ** 3 / 1e9
+
 
 class Tolerance:
     # in crystal coordinates
