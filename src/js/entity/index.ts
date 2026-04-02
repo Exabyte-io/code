@@ -1,20 +1,15 @@
 import { InMemoryEntity } from "./in_memory";
-import { RuntimeContextFieldMixin } from "./mixins/context_runtime";
-// import { RuntimeItemsMixin } from "./mixins/runtime_items";
 import {
     DefaultableInMemoryEntity,
     HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     NamedInMemoryEntity,
-    // NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
-    // NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
-    // NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
 } from "./other";
 import { InMemoryEntitySet } from "./set";
 import { ENTITY_SET_TYPES } from "./set/enums";
 import { constructEntitySetFactoryByConfig } from "./set/factory";
-import { InMemoryEntityInSetMixin, InMemoryEntitySetMixin } from "./set/mixins";
+import { InMemoryEntitySetMixin } from "./set/mixins";
 import {
     OrderedInMemoryEntityInSetMixin,
     OrderedInMemoryEntitySetMixin,
@@ -27,18 +22,12 @@ export {
     DefaultableInMemoryEntity,
     NamedDefaultableInMemoryEntity,
     HasMetadataNamedDefaultableInMemoryEntity,
-    // NamedDefaultableRepetitionContextAndRenderInMemoryEntity,
-    // NamedDefaultableRepetitionImportantSettingsInMemoryEntity,
-    // NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity,
     HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity,
-    // RuntimeItemsMixin,
-    RuntimeContextFieldMixin,
     InMemoryEntitySet,
     ENTITY_SET_TYPES,
     constructEntitySetFactoryByConfig,
     selectorsForEntitySet,
     InMemoryEntitySetMixin,
-    InMemoryEntityInSetMixin,
     OrderedInMemoryEntitySetMixin,
     OrderedInMemoryEntityInSetMixin,
 };

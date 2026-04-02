@@ -46,10 +46,14 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
 
     _json: AnyObject = {};
 
-    constructor(config = {}) {
-        this._json = (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
-            ? deepClone(config)
-            : clone(config);
+    constructor(config: object | InMemoryEntity = {}) {
+        if (config instanceof InMemoryEntity) {
+            this._json = config.toJSON();
+        } else {
+            this._json = (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
+                ? deepClone(config)
+                : clone(config);
+        }
     }
 
     prop<T = undefined>(name: string, defaultValue: T): T;

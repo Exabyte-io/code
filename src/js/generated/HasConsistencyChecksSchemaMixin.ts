@@ -12,7 +12,10 @@ export function hasConsistencyChecksSchemaMixin<T extends InMemoryEntity>(
     // @ts-expect-error
     const properties: InMemoryEntity & HasConsistencyChecksSchemaMixin = {
         get consistencyChecks() {
-            return this.prop<HasConsistencyCheckSchema["consistencyChecks"]>("consistencyChecks");
+            return this.prop<HasConsistencyCheckSchema["consistencyChecks"]>(
+                "consistencyChecks",
+                [],
+            );
         },
         set consistencyChecks(value: HasConsistencyCheckSchema["consistencyChecks"]) {
             this.setProp("consistencyChecks", value);
