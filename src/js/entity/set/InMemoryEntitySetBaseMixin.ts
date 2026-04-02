@@ -13,41 +13,47 @@ export enum EntitySetType {
 }
 
 function schemaMixin<E extends InMemoryEntity>(item: E) {
-    const schema = {
+    // @ts-expect-error
+    const properties: InMemoryEntity & EntitySetSchema = {
         get isEntitySet() {
-            return item.prop("isEntitySet", false);
+            return this.prop("isEntitySet", false);
         },
 
         get entitySetType() {
-            return item.prop("entitySetType", EntitySetType.unordered);
+            return this.prop("entitySetType", EntitySetType.unordered);
         },
 
         get entityCls() {
-            return item.prop<string | undefined>("entityCls");
+            return this.prop<string | undefined>("entityCls");
         },
-    } satisfies EntitySetSchema;
+    };
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
-    return schema;
+    return properties;
 }
+
+type EntitySetBaseMethodsDescriptor = {
+    toJSONForInclusionInEntity(): { _id: string; type: string };
+};
 
 function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema) {
     const originalCls = item.cls;
 
-    const methods = {
+    // @ts-expect-error
+    const properties: InMemoryEntity & EntitySetSchema & EntitySetBaseMethodsDescriptor = {
         get cls() {
-            return item.entityCls || originalCls;
+            return this.entityCls || originalCls;
         },
         toJSONForInclusionInEntity() {
-            const { _id, type } = item.toJSON() as { _id: string; type: string };
+            const { _id, type } = this.toJSON() as { _id: string; type: string };
             return { _id, type };
         },
     };
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
-    return methods;
+    return properties;
 }
 
 export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(item: T) {

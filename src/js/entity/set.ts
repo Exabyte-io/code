@@ -1,7 +1,10 @@
 import { InMemoryEntity } from "./in_memory";
+import { inMemoryEntityInSetMixin } from "./set/InMemoryEntityInSetMixin";
 import InMemoryEntitySetBaseMixin from "./set/InMemoryEntitySetBaseMixin";
-import { InMemoryEntityInSetMixin, InMemoryEntitySetMixin } from "./set/mixins";
+import { InMemoryEntitySetMixin } from "./set/mixins";
 
 export class InMemoryEntitySet extends InMemoryEntitySetMixin(
-    InMemoryEntityInSetMixin(InMemoryEntitySetBaseMixin(InMemoryEntity)),
+    InMemoryEntitySetBaseMixin(InMemoryEntity),
 ) {}
+
+inMemoryEntityInSetMixin(InMemoryEntitySet.prototype);

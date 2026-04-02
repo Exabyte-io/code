@@ -7,18 +7,14 @@ export declare enum EntitySetType {
     ordered = "ordered",
     unordered = "unordered"
 }
-declare function schemaMixin<E extends InMemoryEntity>(item: E): {
-    readonly isEntitySet: boolean;
-    readonly entitySetType: EntitySetType;
-    readonly entityCls: string | undefined;
-};
-declare function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema): {
-    readonly cls: string;
+declare function schemaMixin<E extends InMemoryEntity>(item: E): InMemoryEntity & EntitySetSchema;
+type EntitySetBaseMethodsDescriptor = {
     toJSONForInclusionInEntity(): {
         _id: string;
         type: string;
     };
 };
+declare function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema): InMemoryEntity & EntitySetSchema & EntitySetBaseMethodsDescriptor;
 export declare function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(item: T): void;
 export type InMemoryEntitySetBase = ReturnType<typeof schemaMixin> & ReturnType<typeof methodsMixin>;
 export type InMemoryEntitySetBaseConstructor = Constructor<InMemoryEntitySetBase>;

@@ -5,7 +5,7 @@ function hasConsistencyChecksSchemaMixin(item) {
     // @ts-expect-error
     const properties = {
         get consistencyChecks() {
-            return this.prop("consistencyChecks");
+            return this.prop("consistencyChecks", []);
         },
         set consistencyChecks(value) {
             this.setProp("consistencyChecks", value);

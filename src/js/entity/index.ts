@@ -1,5 +1,4 @@
 import { InMemoryEntity } from "./in_memory";
-import HasScopeTrackMixin from "./mixins/HasScopeTrackMixin";
 import {
     DefaultableInMemoryEntity,
     HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity,
@@ -10,7 +9,7 @@ import {
 import { InMemoryEntitySet } from "./set";
 import { ENTITY_SET_TYPES } from "./set/enums";
 import { constructEntitySetFactoryByConfig } from "./set/factory";
-import { InMemoryEntityInSetMixin, InMemoryEntitySetMixin } from "./set/mixins";
+import { InMemoryEntitySetMixin } from "./set/mixins";
 import {
     OrderedInMemoryEntityInSetMixin,
     OrderedInMemoryEntitySetMixin,
@@ -29,8 +28,6 @@ export {
     constructEntitySetFactoryByConfig,
     selectorsForEntitySet,
     InMemoryEntitySetMixin,
-    InMemoryEntityInSetMixin,
     OrderedInMemoryEntitySetMixin,
     OrderedInMemoryEntityInSetMixin,
-    HasScopeTrackMixin,
 };

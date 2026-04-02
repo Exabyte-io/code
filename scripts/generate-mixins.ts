@@ -30,6 +30,7 @@ const OUTPUT_PATHS = {
     "system/name": "src/js/generated/NamedEntitySchemaMixin.ts",
     "system/tags": "src/js/generated/TaggableSchemaMixin.ts",
     "system/runtime-items": "src/js/generated/RuntimeItemsSchemaMixin.ts",
+    "system/in-set": "src/js/generated/InSetSchemaMixin.ts",
 };
 
 function main() {

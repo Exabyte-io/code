@@ -141,10 +141,13 @@ function generateMixinFromSchemaId(schemaId, outputPath, skipFields = [], from =
     // Extract schema name from title for import
     let schemaName;
     if (schema.title) {
-        // Convert title to proper schema name
+        // Split on spaces and hyphens so titles like "System in-set schema" become SystemInSetSchema,
+        // not SystemIn-setSchema (hyphens are not valid in TS identifiers).
         schemaName = schema.title
             .split(/\s+/)
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .flatMap((word) => word.split("-"))
+            .filter((segment) => segment.length > 0)
+            .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
             .join("");
     }
     else {

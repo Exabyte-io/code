@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.taggableSchemaMixin = taggableSchemaMixin;
-function taggableSchemaMixin(item) {
+exports.inSetSchemaMixin = inSetSchemaMixin;
+function inSetSchemaMixin(item) {
     // @ts-expect-error
     const properties = {
-        get tags() {
-            return this.prop("tags", []);
+        get inSet() {
+            return this.requiredProp("inSet");
         },
-        set tags(value) {
-            this.setProp("tags", value);
+        set inSet(value) {
+            this.setProp("inSet", value);
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));

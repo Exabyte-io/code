@@ -32,15 +32,10 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HasScopeTrackMixin = exports.OrderedInMemoryEntityInSetMixin = exports.OrderedInMemoryEntitySetMixin = exports.InMemoryEntityInSetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.InMemoryEntitySet = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
+exports.OrderedInMemoryEntityInSetMixin = exports.OrderedInMemoryEntitySetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.InMemoryEntitySet = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
 const in_memory_1 = require("./in_memory");
 Object.defineProperty(exports, "InMemoryEntity", { enumerable: true, get: function () { return in_memory_1.InMemoryEntity; } });
-const HasScopeTrackMixin_1 = __importDefault(require("./mixins/HasScopeTrackMixin"));
-exports.HasScopeTrackMixin = HasScopeTrackMixin_1.default;
 const other_1 = require("./other");
 Object.defineProperty(exports, "DefaultableInMemoryEntity", { enumerable: true, get: function () { return other_1.DefaultableInMemoryEntity; } });
 Object.defineProperty(exports, "HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity", { enumerable: true, get: function () { return other_1.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity; } });
@@ -54,7 +49,6 @@ Object.defineProperty(exports, "ENTITY_SET_TYPES", { enumerable: true, get: func
 const factory_1 = require("./set/factory");
 Object.defineProperty(exports, "constructEntitySetFactoryByConfig", { enumerable: true, get: function () { return factory_1.constructEntitySetFactoryByConfig; } });
 const mixins_1 = require("./set/mixins");
-Object.defineProperty(exports, "InMemoryEntityInSetMixin", { enumerable: true, get: function () { return mixins_1.InMemoryEntityInSetMixin; } });
 Object.defineProperty(exports, "InMemoryEntitySetMixin", { enumerable: true, get: function () { return mixins_1.InMemoryEntitySetMixin; } });
 const mixins_2 = require("./set/ordered/mixins");
 Object.defineProperty(exports, "OrderedInMemoryEntityInSetMixin", { enumerable: true, get: function () { return mixins_2.OrderedInMemoryEntityInSetMixin; } });
