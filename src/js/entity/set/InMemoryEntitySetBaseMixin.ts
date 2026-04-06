@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { type EntitySetSchema, SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 
-import type { Constructor } from "../../utils/types";
 import { type InMemoryEntity } from "../in_memory";
 
 export type SystemInSet = Required<SystemInSetSchema>;
@@ -56,24 +54,12 @@ function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema) {
     return properties;
 }
 
-export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(item: T) {
-    schemaMixin(item);
-    methodsMixin(item as T & EntitySetSchema);
-}
-
 export type InMemoryEntitySetBase = ReturnType<typeof schemaMixin> &
     ReturnType<typeof methodsMixin>;
-export type InMemoryEntitySetBaseConstructor = Constructor<InMemoryEntitySetBase>;
 
-type Base = Constructor<InMemoryEntity>;
-
-export default function InMemoryEntitySetBaseMixin<S extends Base = Base>(superclass: S) {
-    class InMemoryEntitySetBaseMixin extends superclass {
-        constructor(...args: any[]) {
-            super(...args);
-            inMemoryEntitySetBaseMixin(this);
-        }
-    }
-
-    return InMemoryEntitySetBaseMixin as S & InMemoryEntitySetBaseConstructor;
+export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(
+    item: T,
+): asserts item is T & InMemoryEntitySetBase {
+    schemaMixin(item);
+    methodsMixin(item as T & EntitySetSchema);
 }

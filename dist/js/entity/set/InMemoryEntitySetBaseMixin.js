@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EntitySetType = void 0;
 exports.inMemoryEntitySetBaseMixin = inMemoryEntitySetBaseMixin;
-exports.default = InMemoryEntitySetBaseMixin;
 var EntitySetType;
 (function (EntitySetType) {
     EntitySetType["ordered"] = "ordered";
@@ -42,13 +41,4 @@ function methodsMixin(item) {
 function inMemoryEntitySetBaseMixin(item) {
     schemaMixin(item);
     methodsMixin(item);
-}
-function InMemoryEntitySetBaseMixin(superclass) {
-    class InMemoryEntitySetBaseMixin extends superclass {
-        constructor(...args) {
-            super(...args);
-            inMemoryEntitySetBaseMixin(this);
-        }
-    }
-    return InMemoryEntitySetBaseMixin;
 }

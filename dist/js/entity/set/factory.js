@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.constructEntitySetFactoryByConfig = void 0;
-const set_1 = require("../set");
-const enums_1 = require("./enums");
-const constructEntitySetFactoryByConfig = ({ entitySetCls = set_1.InMemoryEntitySet, orderedEntitySetCls = set_1.InMemoryEntitySet }) => (config, entityCls) => {
-    const Cls = config.entitySetType === enums_1.ENTITY_SET_TYPES.ordered ? orderedEntitySetCls : entitySetCls;
+const in_memory_1 = require("../in_memory");
+const constructEntitySetFactoryByConfig = ({ entitySetCls = in_memory_1.InMemoryEntity }) => (config, entityCls) => {
+    const Cls = entitySetCls;
     return new Cls({
         ...config,
         entityCls,

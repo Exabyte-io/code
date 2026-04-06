@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrderedInMemoryEntityInSetMixin = exports.OrderedInMemoryEntitySetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.InMemoryEntitySet = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
+exports.orderedEntityInSetMixin = exports.orderedEntitySetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
 const in_memory_1 = require("./in_memory");
 Object.defineProperty(exports, "InMemoryEntity", { enumerable: true, get: function () { return in_memory_1.InMemoryEntity; } });
 const other_1 = require("./other");
@@ -42,8 +42,6 @@ Object.defineProperty(exports, "HasConsistencyChecksHasMetadataNamedDefaultableI
 Object.defineProperty(exports, "HasMetadataNamedDefaultableInMemoryEntity", { enumerable: true, get: function () { return other_1.HasMetadataNamedDefaultableInMemoryEntity; } });
 Object.defineProperty(exports, "NamedDefaultableInMemoryEntity", { enumerable: true, get: function () { return other_1.NamedDefaultableInMemoryEntity; } });
 Object.defineProperty(exports, "NamedInMemoryEntity", { enumerable: true, get: function () { return other_1.NamedInMemoryEntity; } });
-const set_1 = require("./set");
-Object.defineProperty(exports, "InMemoryEntitySet", { enumerable: true, get: function () { return set_1.InMemoryEntitySet; } });
 const enums_1 = require("./set/enums");
 Object.defineProperty(exports, "ENTITY_SET_TYPES", { enumerable: true, get: function () { return enums_1.ENTITY_SET_TYPES; } });
 const factory_1 = require("./set/factory");
@@ -51,7 +49,7 @@ Object.defineProperty(exports, "constructEntitySetFactoryByConfig", { enumerable
 const mixins_1 = require("./set/mixins");
 Object.defineProperty(exports, "InMemoryEntitySetMixin", { enumerable: true, get: function () { return mixins_1.InMemoryEntitySetMixin; } });
 const mixins_2 = require("./set/ordered/mixins");
-Object.defineProperty(exports, "OrderedInMemoryEntityInSetMixin", { enumerable: true, get: function () { return mixins_2.OrderedInMemoryEntityInSetMixin; } });
-Object.defineProperty(exports, "OrderedInMemoryEntitySetMixin", { enumerable: true, get: function () { return mixins_2.OrderedInMemoryEntitySetMixin; } });
+Object.defineProperty(exports, "orderedEntityInSetMixin", { enumerable: true, get: function () { return mixins_2.orderedEntityInSetMixin; } });
+Object.defineProperty(exports, "orderedEntitySetMixin", { enumerable: true, get: function () { return mixins_2.orderedEntitySetMixin; } });
 const selectorsForEntitySet = __importStar(require("./set/selectors"));
 exports.selectorsForEntitySet = selectorsForEntitySet;
