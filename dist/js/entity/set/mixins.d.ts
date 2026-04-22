@@ -1,3 +1,1 @@
-import InMemoryEntityInSetMixin from "./InMemoryEntityInSetMixin";
-import InMemoryEntitySetMixin from "./InMemoryEntitySetMixin";
-export { InMemoryEntityInSetMixin, InMemoryEntitySetMixin };
+export { inMemoryEntitySetMixin, inMemoryEntitySetMixin as InMemoryEntitySetMixin, } from "./InMemoryEntitySetMixin";

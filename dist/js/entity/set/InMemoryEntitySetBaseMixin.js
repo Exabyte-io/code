@@ -2,51 +2,43 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EntitySetType = void 0;
 exports.inMemoryEntitySetBaseMixin = inMemoryEntitySetBaseMixin;
-exports.default = InMemoryEntitySetBaseMixin;
 var EntitySetType;
 (function (EntitySetType) {
     EntitySetType["ordered"] = "ordered";
     EntitySetType["unordered"] = "unordered";
 })(EntitySetType || (exports.EntitySetType = EntitySetType = {}));
 function schemaMixin(item) {
-    const schema = {
+    // @ts-expect-error
+    const properties = {
         get isEntitySet() {
-            return item.prop("isEntitySet", false);
+            return this.prop("isEntitySet", false);
         },
         get entitySetType() {
-            return item.prop("entitySetType", EntitySetType.unordered);
+            return this.prop("entitySetType", EntitySetType.unordered);
         },
         get entityCls() {
-            return item.prop("entityCls");
+            return this.prop("entityCls");
         },
     };
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
-    return schema;
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    return properties;
 }
 function methodsMixin(item) {
     const originalCls = item.cls;
-    const methods = {
+    // @ts-expect-error
+    const properties = {
         get cls() {
-            return item.entityCls || originalCls;
+            return this.entityCls || originalCls;
         },
         toJSONForInclusionInEntity() {
-            const { _id, type } = item.toJSON();
+            const { _id, type } = this.toJSON();
             return { _id, type };
         },
     };
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(methods));
-    return methods;
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    return properties;
 }
 function inMemoryEntitySetBaseMixin(item) {
     schemaMixin(item);
     methodsMixin(item);
-}
-function InMemoryEntitySetBaseMixin(superclass) {
-    class InMemoryEntitySetBaseMixin extends superclass {
-        constructor(...args) {
-            super(...args);
-            inMemoryEntitySetBaseMixin(this);
-        }
-    }
-    return InMemoryEntitySetBaseMixin;
 }

@@ -91,6 +91,29 @@ describe("generateSchemaMixin Tests", function () {
         });
     });
 
+    describe("generateShemaMixin - Schema title normalization", () => {
+        it("should produce valid TS identifiers when title words contain hyphens", () => {
+            const schemasWithHyphenTitle: JSONSchema7[] = [
+                {
+                    $id: "system/in-set",
+                    title: "System in-set schema",
+                    type: "object",
+                    properties: {
+                        inSet: { type: "string" },
+                    },
+                },
+            ];
+            const outputPath = path.join(tempDir, "HyphenInTitleSchemaMixin.ts");
+            generateShemaMixin(schemasWithHyphenTitle, {
+                "system/in-set": outputPath,
+            });
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.include("SystemInSetSchema");
+            expect(generatedCode).to.not.include("SystemIn-setSchema");
+        });
+    });
+
     describe("generateShemaMixin - Error Handling", () => {
         it("should handle non-existent schema IDs gracefully", () => {
             const outputPaths = {

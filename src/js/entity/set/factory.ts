@@ -1,15 +1,12 @@
 import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { EntitySetSchema } from "@mat3ra/esse/dist/js/types";
 
-import { InMemoryEntitySet } from "../set";
-import { ENTITY_SET_TYPES } from "./enums";
-import { OrderedInMemoryEntitySet } from "./ordered";
+import { InMemoryEntity } from "../in_memory";
 
 export const constructEntitySetFactoryByConfig =
-    ({ entitySetCls = InMemoryEntitySet, orderedEntitySetCls = OrderedInMemoryEntitySet }) =>
+    ({ entitySetCls = InMemoryEntity }) =>
     (config: AnyObject, entityCls: EntitySetSchema["entityCls"]) => {
-        const Cls =
-            config.entitySetType === ENTITY_SET_TYPES.ordered ? orderedEntitySetCls : entitySetCls;
+        const Cls = entitySetCls;
         return new Cls({
             ...config,
             entityCls,

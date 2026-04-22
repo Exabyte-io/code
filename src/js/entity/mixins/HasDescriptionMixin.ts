@@ -5,4 +5,4 @@ import {
 
 export type HasDescription = HasDescriptionSchemaMixin;
 
-export const hasDescriptionPropertiesMixin = hasDescriptionSchemaMixin;
+export const hasDescriptionMixin = hasDescriptionSchemaMixin;
