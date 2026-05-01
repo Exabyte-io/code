@@ -4,6 +4,7 @@ from mat3ra.esse.models.system.defaultable import DefaultableEntitySchema
 from mat3ra.esse.models.system.description import DescriptionSchema
 from mat3ra.esse.models.system.metadata import MetadataSchema
 from mat3ra.esse.models.system.name import NameEntitySchema
+from .hashed_entity import HashedEntityMixin
 
 
 class DefaultableMixin(DefaultableEntitySchema):
