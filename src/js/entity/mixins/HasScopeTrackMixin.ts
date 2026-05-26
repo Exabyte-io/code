@@ -1,19 +1,24 @@
-import type { Constructor } from "../../utils/types";
-import { InMemoryEntity, InMemoryEntityConstructor } from "../in_memory";
+import { InMemoryEntity } from "../in_memory";
+
+type ScopeTrackDescriptor = {
+    get scopeTrack(): unknown[];
+    set scopeTrack(array: unknown[]);
+};
 
 function schemaMixin(item: InMemoryEntity) {
-    const schema = {
+    // @ts-expect-error
+    const properties: InMemoryEntity & ScopeTrackDescriptor = {
         get scopeTrack(): unknown[] {
-            return item.prop("scopeTrack", []);
+            return this.prop("scopeTrack", []);
         },
         set scopeTrack(array: unknown[]) {
-            item.setProp("scopeTrack", array);
+            this.setProp("scopeTrack", array);
         },
     };
 
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 
-    return schema;
+    return properties;
 }
 
 export function hasScopeTrackMixin(item: InMemoryEntity) {
@@ -21,16 +26,3 @@ export function hasScopeTrackMixin(item: InMemoryEntity) {
 }
 
 export type HasScopeTrackInMemoryEntity = ReturnType<typeof hasScopeTrackMixin>;
-export type HasScopeTrackInMemoryEntityConstructor = Constructor<HasScopeTrackInMemoryEntity>;
-
-export default function HasScopeTrackMixin<S extends InMemoryEntityConstructor>(superclass: S) {
-    class HasScopeTrackMixin extends superclass {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...args: any[]) {
-            super(...args);
-            hasScopeTrackMixin(this);
-        }
-    }
-
-    return HasScopeTrackMixin as S & HasScopeTrackInMemoryEntityConstructor;
-}

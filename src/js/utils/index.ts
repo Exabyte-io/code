@@ -1,6 +1,6 @@
 import { compareEntitiesInOrderedSetForSorting } from "../entity/set/ordered/utils";
 import { convertToCompactCSVArrayOfObjects, safeMakeArray } from "./array";
-import { cloneClass, extendClass, extendClassStaticProps, extendThis } from "./class";
+import { cloneClass } from "./class";
 import { deepClone } from "./clone";
 import { refreshCodeMirror } from "./codemirror";
 import {
@@ -50,9 +50,6 @@ export {
     safeMakeArray,
     convertToCompactCSVArrayOfObjects,
     cloneClass,
-    extendThis,
-    extendClass,
-    extendClassStaticProps,
     deepClone,
     refreshCodeMirror,
     getOneMatchFromObject,

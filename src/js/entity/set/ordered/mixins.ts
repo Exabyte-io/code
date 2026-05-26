@@ -1,4 +1,4 @@
-import OrderedInMemoryEntityInSetMixin from "./OrderedInMemoryEntityInSetMixin";
-import OrderedInMemoryEntitySetMixin from "./OrderedInMemoryEntitySetMixin";
+import { orderedEntityInSetMixin } from "./OrderedInMemoryEntityInSetMixin";
+import { orderedEntitySetMixin } from "./OrderedInMemoryEntitySetMixin";
 
-export { OrderedInMemoryEntityInSetMixin, OrderedInMemoryEntitySetMixin };
+export { orderedEntityInSetMixin, orderedEntitySetMixin };
