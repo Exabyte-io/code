@@ -51,21 +51,3 @@ namedEntityMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity.p
 defaultableEntityMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity);
 hasMetadataMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity.prototype);
 hasConsistencyChecksMixin(HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity.prototype);
-
-// export const NamedDefaultableRepetitionImportantSettingsInMemoryEntity =
-//     ImportantSettingsProviderMixin(HasRepetitionMixin(NamedDefaultableInMemoryEntity));
-
-// export const NamedDefaultableRepetitionContextAndRenderInMemoryEntity = ContextAndRenderFieldsMixin(
-//     HasRepetitionMixin(NamedDefaultableInMemoryEntity),
-// );
-
-// export const NamedDefaultableRepetitionRuntimeItemsImportantSettingsContextAndRenderHashedInMemoryEntity =
-//     HashedEntityMixin(
-//         ContextAndRenderFieldsMixin(
-//             ImportantSettingsProviderMixin(
-//                 RuntimeItemsUIAllowedMixin(
-//                     RuntimeItemsUILogicMixin(HasRepetitionMixin(NamedDefaultableInMemoryEntity)),
-//                 ),
-//             ),
-//         ),
-//     );
