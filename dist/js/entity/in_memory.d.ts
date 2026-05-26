@@ -25,7 +25,7 @@ export declare class InMemoryEntity implements BaseInMemoryEntitySchema {
     static allowJsonSchemaTypesCoercing: boolean;
     static readonly jsonSchema?: JSONSchema;
     _json: AnyObject;
-    constructor(config?: {});
+    constructor(config?: object | InMemoryEntity);
     prop<T = undefined>(name: string, defaultValue: T): T;
     prop<T = undefined>(name: string): T | undefined;
     /**

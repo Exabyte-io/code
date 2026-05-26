@@ -1,16 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.inMemoryEntityInSetMixin = inMemoryEntityInSetMixin;
-exports.default = InMemoryEntityInSetMixin;
+const InSetSchemaMixin_1 = require("../../generated/InSetSchemaMixin");
 function inMemoryEntityInSetMixin(item) {
+    (0, InSetSchemaMixin_1.inSetSchemaMixin)(item);
     // @ts-expect-error
     const properties = {
-        get inSet() {
-            return this.prop("inSet", []);
-        },
-        set inSet(inSet) {
-            this.setProp("inSet", inSet);
-        },
         getInSetFilteredByCls(cls) {
             return this.inSet.filter((ref) => ref.cls === cls);
         },
@@ -21,10 +16,4 @@ function inMemoryEntityInSetMixin(item) {
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-}
-function InMemoryEntityInSetMixin(superclass) {
-    class InMemoryEntityInSetMixin extends superclass {
-    }
-    inMemoryEntityInSetMixin(InMemoryEntityInSetMixin.prototype);
-    return InMemoryEntityInSetMixin;
 }
