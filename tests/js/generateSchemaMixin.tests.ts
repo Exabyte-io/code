@@ -91,6 +91,29 @@ describe("generateSchemaMixin Tests", function () {
         });
     });
 
+    describe("generateShemaMixin - Schema title normalization", () => {
+        it("should produce valid TS identifiers when title words contain hyphens", () => {
+            const schemasWithHyphenTitle: JSONSchema7[] = [
+                {
+                    $id: "system/in-set",
+                    title: "System in-set schema",
+                    type: "object",
+                    properties: {
+                        inSet: { type: "string" },
+                    },
+                },
+            ];
+            const outputPath = path.join(tempDir, "HyphenInTitleSchemaMixin.ts");
+            generateShemaMixin(schemasWithHyphenTitle, {
+                "system/in-set": outputPath,
+            });
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.include("SystemInSetSchema");
+            expect(generatedCode).to.not.include("SystemIn-setSchema");
+        });
+    });
+
     describe("generateShemaMixin - Error Handling", () => {
         it("should handle non-existent schema IDs gracefully", () => {
             const outputPaths = {
@@ -183,6 +206,149 @@ describe("generateSchemaMixin Tests", function () {
             expect(() => {
                 generateShemaMixin(mockSchemas, outputPaths);
             }).to.not.throw();
+        });
+    });
+
+    describe("generateShemaMixin - Omit Type Generation", () => {
+        it("should not use Omit when skipFields is undefined", () => {
+            const outputPath = path.join(tempDir, "NoSkipFieldsSchemaMixin.ts");
+            const outputPaths = {
+                "property/holder": outputPath,
+            };
+
+            generateShemaMixin(mockSchemas, outputPaths);
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.not.include("Omit<");
+            expect(generatedCode).to.include(
+                "export type NoSkipFieldsSchemaMixin = PropertyHolder;",
+            );
+            // Verify getters and setters are generated
+            expect(generatedCode).to.include("get name()");
+            expect(generatedCode).to.include("set name(value:");
+            expect(generatedCode).to.include('this.setProp("name", value);');
+            // Verify generic type and assertion
+            expect(generatedCode).to.include(
+                "export function noSkipFieldsSchemaMixin<T extends InMemoryEntity>",
+            );
+            expect(generatedCode).to.include("): asserts item is T & NoSkipFieldsSchemaMixin {");
+        });
+
+        it("should not use Omit when skipFields is an empty array", () => {
+            const outputPath = path.join(tempDir, "EmptySkipFieldsSchemaMixin.ts");
+            const outputPaths = {
+                "property/holder": outputPath,
+            };
+            const skipFields: string[] = [];
+
+            generateShemaMixin(mockSchemas, outputPaths, skipFields);
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.not.include("Omit<");
+            expect(generatedCode).to.include(
+                "export type EmptySkipFieldsSchemaMixin = PropertyHolder;",
+            );
+            // Verify getters and setters are generated
+            expect(generatedCode).to.include("get description()");
+            expect(generatedCode).to.include("set description(value:");
+            expect(generatedCode).to.include('this.setProp("description", value);');
+            // Verify generic type and assertion
+            expect(generatedCode).to.include(
+                "export function emptySkipFieldsSchemaMixin<T extends InMemoryEntity>",
+            );
+            expect(generatedCode).to.include("): asserts item is T & EmptySkipFieldsSchemaMixin {");
+        });
+
+        it("should use Omit when skipFields has values", () => {
+            const outputPath = path.join(tempDir, "WithSkipFieldsSchemaMixin.ts");
+            const outputPaths = {
+                "property/holder": outputPath,
+            };
+            const skipFields = ["metadata"];
+
+            generateShemaMixin(mockSchemas, outputPaths, skipFields);
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.include("Omit<");
+            expect(generatedCode).to.include(
+                'export type WithSkipFieldsSchemaMixin = Omit<PropertyHolder, "metadata">;',
+            );
+            // Verify getters and setters are generated (metadata should be skipped)
+            expect(generatedCode).to.include("get name()");
+            expect(generatedCode).to.include("set name(value:");
+            expect(generatedCode).to.not.include("get metadata()");
+            expect(generatedCode).to.not.include("set metadata(");
+        });
+
+        it("should use Omit with multiple fields when skipFields has multiple values", () => {
+            const outputPath = path.join(tempDir, "MultipleSkipFieldsSchemaMixin.ts");
+            const outputPaths = {
+                "property/holder": outputPath,
+            };
+            const skipFields = ["metadata", "description"];
+
+            generateShemaMixin(mockSchemas, outputPaths, skipFields);
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.include("Omit<");
+            expect(generatedCode).to.include(
+                'export type MultipleSkipFieldsSchemaMixin = Omit<PropertyHolder, "metadata" | "description">;',
+            );
+            // Verify getters and setters are generated (only name should be present)
+            expect(generatedCode).to.include("get name()");
+            expect(generatedCode).to.include("set name(value:");
+            expect(generatedCode).to.not.include("get metadata()");
+            expect(generatedCode).to.not.include("get description()");
+        });
+    });
+
+    describe("generateShemaMixin - Entity Import Path", () => {
+        it("should use default entity import path when not specified", () => {
+            const outputPath = path.join(tempDir, "DefaultEntityPathSchemaMixin.ts");
+            const outputPaths = {
+                "property/holder": outputPath,
+            };
+
+            generateShemaMixin(mockSchemas, outputPaths);
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.include(
+                'import type { InMemoryEntity } from "@mat3ra/code/dist/js/entity";',
+            );
+            // Verify setters are generated
+            expect(generatedCode).to.include("set name(value:");
+            expect(generatedCode).to.include('this.setProp("name", value);');
+            // Verify generic type and assertion
+            expect(generatedCode).to.include(
+                "export function defaultEntityPathSchemaMixin<T extends InMemoryEntity>",
+            );
+            expect(generatedCode).to.include(
+                "): asserts item is T & DefaultEntityPathSchemaMixin {",
+            );
+        });
+
+        it("should use custom entity import path when specified", () => {
+            const outputPath = path.join(tempDir, "CustomEntityPathSchemaMixin.ts");
+            const outputPaths = {
+                "property/holder": outputPath,
+            };
+            const customEntityPath = "@custom/package/dist/entity";
+
+            generateShemaMixin(
+                mockSchemas,
+                outputPaths,
+                [],
+                "@mat3ra/esse/dist/js/types",
+                customEntityPath,
+            );
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.include(
+                `import type { InMemoryEntity } from "${customEntityPath}";`,
+            );
+            // Verify setters are generated
+            expect(generatedCode).to.include("set description(value:");
+            expect(generatedCode).to.include('this.setProp("description", value);');
         });
     });
 });

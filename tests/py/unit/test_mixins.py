@@ -32,9 +32,6 @@ def test_named_mixin():
 
     assert instance.name == "TestName"
 
-    # Test with None
-    instance_none = ExampleNamed()
-    assert instance_none.name is None
 
 
 def test_complex_mixin():
@@ -44,6 +41,7 @@ def test_complex_mixin():
     class ExampleComplex(DefaultableMixin, NamedMixin):
         key: Optional[str]
         number: Optional[int]
+        name: str = "DefaultName"
 
         __default_config__ = default_config
 

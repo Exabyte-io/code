@@ -1,23 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
 
-import type { Constructor } from "../../utils/types";
+import { inSetSchemaMixin } from "../../generated/InSetSchemaMixin";
 import { type InMemoryEntity } from "../in_memory";
 
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
 
-export function inMemoryEntityInSetMixin<E extends InMemoryEntity>(item: E) {
+export function inMemoryEntityInSetMixin<E extends InMemoryEntity>(
+    item: E,
+): asserts item is E & InMemoryEntityInSet {
+    inSetSchemaMixin<E>(item);
+
     // @ts-expect-error
-    const properties: SystemInSet & InSetPropertiesInMemoryEntity & E = {
-        get inSet() {
-            return this.prop<InSet[]>("inSet", []);
-        },
-
-        set inSet(inSet: InSet[]) {
-            this.setProp("inSet", inSet);
-        },
-
+    const properties: InMemoryEntity & InMemoryEntityInSet = {
         getInSetFilteredByCls(cls: string) {
             return this.inSet.filter((ref) => ref.cls === cls);
         },
@@ -38,14 +34,3 @@ export type InSetPropertiesInMemoryEntity = {
 };
 
 export type InMemoryEntityInSet = SystemInSet & InSetPropertiesInMemoryEntity;
-export type InMemoryEntityInSetConstructor = Constructor<InMemoryEntityInSet>;
-
-type Base = Constructor<InMemoryEntity>;
-
-export default function InMemoryEntityInSetMixin<S extends Base = Base>(superclass: S) {
-    class InMemoryEntityInSetMixin extends superclass {}
-
-    inMemoryEntityInSetMixin(InMemoryEntityInSetMixin.prototype);
-
-    return InMemoryEntityInSetMixin as S & InMemoryEntityInSetConstructor;
-}

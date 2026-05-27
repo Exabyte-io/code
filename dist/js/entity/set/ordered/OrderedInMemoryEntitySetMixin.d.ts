@@ -1,11 +1,6 @@
-import type { Constructor } from "../../../utils/types";
 import { type InMemoryEntity } from "../../in_memory";
-import type { InMemoryEntitySetBase, InMemoryEntitySetBaseConstructor } from "../InMemoryEntitySetBaseMixin";
-export declare function orderedEntitySetMixin(item: InMemoryEntity & InMemoryEntitySetBase): {
-    readonly isOrderedSet: boolean;
+import type { InMemoryEntitySetBase } from "../InMemoryEntitySetBaseMixin";
+export type OrderedInMemoryEntitySet = {
+    get isOrderedSet(): boolean;
 };
-export type OrderedInMemoryEntitySet = ReturnType<typeof orderedEntitySetMixin>;
-export type OrderedInMemoryEntitySetConstructor = Constructor<OrderedInMemoryEntitySet>;
-type Base = Constructor<InMemoryEntity> & InMemoryEntitySetBaseConstructor;
-export default function OrderedInMemoryEntitySetMixin<S extends Base = Base>(superclass: S): S & OrderedInMemoryEntitySetConstructor;
-export {};
+export declare function orderedEntitySetMixin<T extends InMemoryEntity & InMemoryEntitySetBase>(item: T): asserts item is T & OrderedInMemoryEntitySet;

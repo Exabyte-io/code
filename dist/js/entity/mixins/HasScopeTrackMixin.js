@@ -1,29 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasScopeTrackMixin = hasScopeTrackMixin;
-exports.default = HasScopeTrackMixin;
 function schemaMixin(item) {
-    const schema = {
+    // @ts-expect-error
+    const properties = {
         get scopeTrack() {
-            return item.prop("scopeTrack", []);
+            return this.prop("scopeTrack", []);
         },
         set scopeTrack(array) {
-            item.setProp("scopeTrack", array);
+            this.setProp("scopeTrack", array);
         },
     };
-    Object.defineProperties(item, Object.getOwnPropertyDescriptors(schema));
-    return schema;
+    Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
+    return properties;
 }
 function hasScopeTrackMixin(item) {
     return schemaMixin(item);
-}
-function HasScopeTrackMixin(superclass) {
-    class HasScopeTrackMixin extends superclass {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(...args) {
-            super(...args);
-            hasScopeTrackMixin(this);
-        }
-    }
-    return HasScopeTrackMixin;
 }

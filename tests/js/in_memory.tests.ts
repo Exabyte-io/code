@@ -50,7 +50,9 @@ describe("InMemoryEntity", () => {
     });
 
     it("unsetProp unsets props", () => {
+        console.log("obj", obj);
         const entity = new InMemoryEntity(obj);
+        console.log("obj", obj);
         expect(entity.prop("a")).to.equal("b");
         entity.unsetProp("a");
         // eslint-disable-next-line no-unused-expressions
