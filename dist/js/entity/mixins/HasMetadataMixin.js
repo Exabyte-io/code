@@ -1,19 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasMetadataMixin = hasMetadataMixin;
-function hasMetadataMixin(item) {
+function hasMetadataPropertiesMixin(item) {
     // @ts-expect-error
     const properties = {
         get metadata() {
-            return this.prop("metadata", {});
+            return this.prop("metadata");
         },
-        set metadata(object) {
-            this.setProp("metadata", object);
+        set metadata(value) {
+            this.setProp("metadata", value);
         },
         updateMetadata(object) {
-            this.metadata = { ...this.metadata, ...object };
+            this.setProp("metadata", { ...this.metadata, ...object });
         },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
-    return properties;
+}
+function hasMetadataMixin(item) {
+    hasMetadataPropertiesMixin(item);
 }
