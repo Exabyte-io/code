@@ -93,7 +93,9 @@
         "node": ">=12.0.0"
     },
     "lint-staged": {
-        "*.js": "eslint --cache --fix",
-        "*.{js,css}": "prettier --write"
+        "src/js/**/*.{js,ts}": "eslint --cache --fix",
+        "tests/js/**/*.{js,ts}": "eslint --cache --fix",
+        "src/js/**/*.{js,ts,css}": "prettier --write",
+        "tests/js/**/*.{js,ts,css}": "prettier --write"
     }
 }
