@@ -1,5 +1,5 @@
 # convert an array of arrays into a flattened array
 case1: !flatten
-    - [a, b, c]
-    - d
-    - [e, f]
+  - [a, b, c]
+  - d
+  - [e, f]
