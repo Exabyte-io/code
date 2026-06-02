@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
 import inMemoryEntitySchema from "@mat3ra/esse/dist/js/schema/in_memory_entity/base.json";
+import type { BaseInMemoryEntitySchema } from "@mat3ra/esse/dist/js/types";
 import { expect } from "chai";
 
 import { InMemoryEntity } from "../../src/js/entity/in_memory";
@@ -19,48 +20,46 @@ function validateEntity(entity: DerivedInMemoryEntity) {
 }
 
 describe("InMemoryEntity", () => {
-    const obj = {
-        a: "b",
-        name: "test",
+    const obj: BaseInMemoryEntitySchema = {
+        _id: "123",
+        schemaVersion: "2022.8.16",
     };
 
     it("can be created", () => {
-        const empty = new InMemoryEntity();
-        // eslint-disable-next-line no-unused-expressions
-        expect(empty).to.exist;
+        const empty = new InMemoryEntity({});
         const entity = new InMemoryEntity(obj);
-        // eslint-disable-next-line no-unused-expressions
+
+        expect(empty).to.exist;
         expect(entity).to.exist;
     });
 
     it("prop gets props", () => {
         const entity = new InMemoryEntity(obj);
-        expect(entity.prop("a")).to.equal("b");
-        expect(entity.prop("b")).to.equal(undefined);
-        expect(entity.prop("b", "a")).to.equal("a");
+        expect(entity._id).to.equal(obj._id);
+        expect(entity.schemaVersion).to.equal(obj.schemaVersion);
+        expect(entity.systemName).to.equal(undefined);
     });
 
     it("setProp sets props", () => {
         const entity = new InMemoryEntity(obj);
-        expect(entity.prop("a")).to.equal("b");
-        entity.setProp("b", "c");
-        expect(entity.prop("b")).to.equal("c");
-        entity.setProp("a", "d");
-        expect(entity.prop("a")).to.equal("d");
+        entity.setProp("systemName", "b");
+        expect(entity.systemName).to.equal("b");
+        entity.setProp("slug", "c");
+        expect(entity.slug).to.equal("c");
     });
 
     it("unsetProp unsets props", () => {
-        console.log("obj", obj);
         const entity = new InMemoryEntity(obj);
-        console.log("obj", obj);
-        expect(entity.prop("a")).to.equal("b");
-        entity.unsetProp("a");
-        // eslint-disable-next-line no-unused-expressions
-        expect(entity.prop("a")).not.to.exist;
+        expect(entity._id).to.equal(obj._id);
+        entity.unsetProp("_id");
+        expect(entity._id).to.equal(undefined);
     });
 
     it("toJSON converts to JSON", () => {
-        const entity = new DerivedInMemoryEntity({ _id: "123", type: "type" });
+        const entity = new DerivedInMemoryEntity({
+            _id: "123",
+            additional: "additional",
+        } as BaseInMemoryEntitySchema);
         expect(JSON.stringify(entity.toJSON())).to.be.equal(
             JSON.stringify({ _id: "123", schemaVersion: "2022.8.16" }),
         );
@@ -73,7 +72,10 @@ describe("InMemoryEntity", () => {
 
     it("jsonSchema validate", async () => {
         const validEntity = new DerivedInMemoryEntity({ _id: "123", slug: "slug" });
-        const invalidEntity = new DerivedInMemoryEntity({ _id: "123", slug: ["slug"] });
+        const invalidEntity = new DerivedInMemoryEntity({
+            _id: "123",
+            slug: ["slug"],
+        } as unknown as BaseInMemoryEntitySchema);
 
         expect(validateEntity(validEntity)).to.be.true;
         expect(validateEntity(invalidEntity)).to.be.false;
@@ -85,7 +87,7 @@ describe("InMemoryEntity", () => {
             slug: "slug",
             additional: "additional",
         };
-        const cleanConfig = new DerivedInMemoryEntity().clean({ ...config });
+        const cleanConfig = new DerivedInMemoryEntity({}).clean({ ...config });
 
         expect(cleanConfig).to.be.deep.equal({
             _id: "123",

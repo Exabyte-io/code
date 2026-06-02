@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.orderedEntityInSetMixin = exports.orderedEntitySetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.constructEntitySetFactoryByConfig = exports.ENTITY_SET_TYPES = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
+exports.orderedEntityInSetMixin = exports.orderedEntitySetMixin = exports.InMemoryEntitySetMixin = exports.selectorsForEntitySet = exports.ENTITY_SET_TYPES = exports.HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity = exports.HasMetadataNamedDefaultableInMemoryEntity = exports.NamedDefaultableInMemoryEntity = exports.DefaultableInMemoryEntity = exports.NamedInMemoryEntity = exports.InMemoryEntity = void 0;
 const in_memory_1 = require("./in_memory");
 Object.defineProperty(exports, "InMemoryEntity", { enumerable: true, get: function () { return in_memory_1.InMemoryEntity; } });
 const other_1 = require("./other");
@@ -44,8 +44,6 @@ Object.defineProperty(exports, "NamedDefaultableInMemoryEntity", { enumerable: t
 Object.defineProperty(exports, "NamedInMemoryEntity", { enumerable: true, get: function () { return other_1.NamedInMemoryEntity; } });
 const enums_1 = require("./set/enums");
 Object.defineProperty(exports, "ENTITY_SET_TYPES", { enumerable: true, get: function () { return enums_1.ENTITY_SET_TYPES; } });
-const factory_1 = require("./set/factory");
-Object.defineProperty(exports, "constructEntitySetFactoryByConfig", { enumerable: true, get: function () { return factory_1.constructEntitySetFactoryByConfig; } });
 const mixins_1 = require("./set/mixins");
 Object.defineProperty(exports, "InMemoryEntitySetMixin", { enumerable: true, get: function () { return mixins_1.InMemoryEntitySetMixin; } });
 const mixins_2 = require("./set/ordered/mixins");

@@ -1,4 +1,3 @@
-import { AnyObject } from "@mat3ra/esse/dist/js/esse/types";
 import { JSONSchema } from "@mat3ra/esse/dist/js/esse/utils";
 import { BaseInMemoryEntitySchema, EntityReferenceSchema } from "@mat3ra/esse/dist/js/types";
 export declare enum ValidationErrorCode {
@@ -8,7 +7,7 @@ export declare enum ValidationErrorCode {
 }
 interface ErrorDetails {
     error?: object | null;
-    json: AnyObject;
+    json: object;
     schema: JSONSchema;
 }
 export declare class EntityError extends Error {
@@ -19,48 +18,49 @@ export declare class EntityError extends Error {
         details?: ErrorDetails;
     });
 }
-export declare class InMemoryEntity implements BaseInMemoryEntitySchema {
-    static create(config: object): InMemoryEntity;
+type Schema = BaseInMemoryEntitySchema;
+export declare class InMemoryEntity<S extends Schema = Schema> implements Schema {
+    static create<T extends InMemoryEntity<Schema>>(config: Schema): T;
     static _isDeepCloneRequired: boolean;
     static allowJsonSchemaTypesCoercing: boolean;
     static readonly jsonSchema?: JSONSchema;
-    _json: AnyObject;
-    constructor(config?: object | InMemoryEntity);
-    prop<T = undefined>(name: string, defaultValue: T): T;
-    prop<T = undefined>(name: string): T | undefined;
+    _json: S;
+    constructor(config: S);
+    prop<K extends keyof S>(name: K, defaultValue: S[K]): S[K];
+    prop<K extends keyof S>(name: K): S[K] | undefined;
     /**
      * @summary Return a required prop, throwing an error if it doesn't exist or is undefined/null
      */
-    requiredProp<T>(name: string): T;
+    requiredProp<K extends keyof S>(name: K): S[K];
     /**
      * @summary Set a prop
      */
-    setProp(name: string, value: unknown): void;
+    setProp(name: keyof S, value: S[typeof name]): void;
     /**
      * @summary Remove a prop
      */
-    unsetProp(name: string): void;
+    unsetProp(name: keyof S): void;
     /**
      * Updates internal JSON. Works the same as Mongo's $set operator
      * @see https://www.mongodb.com/docs/manual/reference/operator/update/set/#-set
      */
-    setProps(json?: AnyObject): this;
+    setProps(json?: Partial<S>): this;
     /**
      * @summary Array of fields to exclude from resulted JSON
      */
-    toJSON(exclude?: string[]): AnyObject;
-    toJSONSafe(exclude?: string[]): AnyObject;
-    toJSONQuick(exclude?: string[]): AnyObject;
+    toJSON(exclude?: (keyof S)[]): S;
+    toJSONSafe(exclude?: (keyof S)[]): S;
+    toJSONQuick(exclude?: (keyof S)[]): S;
     /**
      * @summary Clone this entity
      */
     clone(extraContext?: object): this;
-    static validateData(data: AnyObject, clean?: boolean, jsonSchema?: import("json-schema").JSONSchema7 | undefined): AnyObject;
+    static validateData(data: object, clean?: boolean, jsonSchema?: import("json-schema").JSONSchema7 | undefined): object;
     /**
      * @summary Validate entity contents against schema
      */
     validate(): void;
-    clean(config: AnyObject): AnyObject;
+    clean(config: S): S;
     isValid(): boolean;
     static get cls(): string;
     get cls(): string;
@@ -71,26 +71,18 @@ export declare class InMemoryEntity implements BaseInMemoryEntitySchema {
      * @returns identifying data
      */
     getAsEntityReference(byIdOnly: true): {
-        _id: string;
+        _id: NonNullable<S["_id"]>;
     };
     getAsEntityReference(byIdOnly?: false): Required<EntityReferenceSchema>;
-    /**
-     * @summary Pluck an entity from a collection by name.
-     *          If no name is provided and no entity has prop isDefault, return the first entity
-     * @param entities the entities
-     * @param entity the kind of entities
-     * @param name the name of the entity to choose
-     */
-    getEntityByName(entities: InMemoryEntity[], entity: string, name: string): InMemoryEntity;
-    get id(): string;
-    set id(id: string);
-    get _id(): string;
-    set _id(id: string);
-    get schemaVersion(): string;
-    set schemaVersion(schemaVersion: string);
-    get systemName(): string;
-    set systemName(systemName: string);
-    get slug(): string;
+    get id(): S["_id"];
+    set id(id: S["_id"]);
+    get _id(): S["_id"];
+    set _id(id: S["_id"]);
+    get schemaVersion(): S["schemaVersion"];
+    set schemaVersion(schemaVersion: S["schemaVersion"]);
+    get systemName(): S["systemName"];
+    set systemName(systemName: S["systemName"]);
+    get slug(): S["slug"] | undefined;
     get isSystemEntity(): boolean;
 }
 export type InMemoryEntityConstructor<T extends InMemoryEntity = InMemoryEntity> = new (...args: any[]) => T;

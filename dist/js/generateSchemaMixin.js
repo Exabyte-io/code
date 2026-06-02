@@ -97,14 +97,14 @@ function generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName
     code += `    item: InMemoryEntity,\n`;
     code += `): asserts item is T & ${mixinTypeName} {\n`;
     code += `    // @ts-expect-error\n`;
-    code += `    const properties: InMemoryEntity & ${mixinTypeName} = {\n`;
+    code += `    const properties: InMemoryEntity<${mixinTypeName}> & ${mixinTypeName} = {\n`;
     for (let i = 0; i < propertyEntries.length; i++) {
         const [propertyName] = propertyEntries[i];
         const isRequired = isRequiredProperty(propertyName, required);
         const methodName = isRequired ? "requiredProp" : "prop";
         const typeAnnotation = generateTypeAnnotation(propertyName, schemaName);
         code += `get ${propertyName}() {\n`;
-        code += `return this.${methodName}<${typeAnnotation}>("${propertyName}");\n`;
+        code += `return this.${methodName}("${propertyName}");\n`;
         code += `},\n`;
         code += `set ${propertyName}(value: ${typeAnnotation}) {\n`;
         code += `this.setProp("${propertyName}", value);\n`;

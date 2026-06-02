@@ -10,9 +10,9 @@ export function namedEntitySchemaMixin<T extends InMemoryEntity>(
     item: InMemoryEntity,
 ): asserts item is T & NamedEntitySchemaMixin {
     // @ts-expect-error
-    const properties: InMemoryEntity & NamedEntitySchemaMixin = {
+    const properties: InMemoryEntity<NamedEntitySchemaMixin> & NamedEntitySchemaMixin = {
         get name() {
-            return this.requiredProp<NameEntitySchema["name"]>("name");
+            return this.requiredProp("name");
         },
         set name(value: NameEntitySchema["name"]) {
             this.setProp("name", value);

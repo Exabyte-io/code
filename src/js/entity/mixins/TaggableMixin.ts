@@ -12,7 +12,7 @@ export type TaggableInMemoryEntityConstructor = Constructor<Taggable>;
 
 function taggablePropertiesMixin<T extends InMemoryEntity>(item: T): asserts item is T & Taggable {
     // @ts-expect-error
-    const properties: InMemoryEntity & Taggable = {
+    const properties: InMemoryEntity<TaggableSchemaMixin> & Taggable = {
         setTags(array: string[]) {
             this.tags = array.filter((value, index, self) => self.indexOf(value) === index);
         },

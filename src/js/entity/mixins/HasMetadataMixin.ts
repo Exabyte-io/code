@@ -5,9 +5,12 @@ import { InMemoryEntity } from "../in_memory";
 
 type Metadata = MetadataSchema["metadata"];
 
-export type HasMetadata<T extends Metadata = Metadata> = {
-    metadata?: T;
-    updateMetadata: (object: Partial<T>) => void;
+type HasMetadataSchema<M extends Metadata = Metadata> = {
+    metadata?: M;
+};
+
+export type HasMetadata<M extends Metadata = Metadata> = HasMetadataSchema<M> & {
+    updateMetadata: (object: M) => void;
 };
 
 export type HasMetadataInMemoryEntityConstructor<T extends Metadata = Metadata> = Constructor<
@@ -16,16 +19,16 @@ export type HasMetadataInMemoryEntityConstructor<T extends Metadata = Metadata> 
 
 function hasMetadataPropertiesMixin<T extends InMemoryEntity, M extends Metadata = Metadata>(
     item: T,
-): asserts item is T & HasMetadata {
+): asserts item is T & HasMetadata<M> {
     // @ts-expect-error
-    const properties: InMemoryEntity & HasMetadata<M> = {
+    const properties: InMemoryEntity<HasMetadataSchema<M>> & HasMetadata<M> = {
         get metadata() {
-            return this.prop<M>("metadata");
+            return this.prop("metadata");
         },
         set metadata(value: M | undefined) {
             this.setProp("metadata", value);
         },
-        updateMetadata(object: Partial<M>) {
+        updateMetadata(object: M) {
             this.setProp("metadata", { ...this.metadata, ...object });
         },
     };

@@ -21,7 +21,7 @@ export function hasConsistencyChecksMixin<T extends InMemoryEntity>(
     hasConsistencyChecksSchemaMixin(item);
 
     // @ts-expect-error
-    const properties: InMemoryEntity & HasConsistencyChecks = {
+    const properties: InMemoryEntity<HasConsistencyChecksSchemaMixin> & HasConsistencyChecks = {
         addConsistencyChecks(array: ConsistencyCheck[]) {
             this.consistencyChecks = [...(this.consistencyChecks || []), ...array];
         },

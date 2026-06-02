@@ -5,4 +5,4 @@ export type InSet = SystemInSet["inSet"][0];
 export type InMemoryEntitySet = {
     containsEntity(entity?: SystemInSetSchema): boolean;
 };
-export declare function inMemoryEntitySetMixin<T extends InMemoryEntity>(item: T): InMemoryEntity & InMemoryEntitySet;
+export declare function inMemoryEntitySetMixin<T extends InMemoryEntity>(item: T): InMemoryEntity<import("@mat3ra/esse/dist/js/types").BaseInMemoryEntitySchema> & InMemoryEntitySet;

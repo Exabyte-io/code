@@ -60,23 +60,17 @@ class InMemoryEntity {
     static create(config) {
         return new this.prototype.constructor(config);
     }
-    constructor(config = {}) {
-        this._json = {};
-        if (config instanceof InMemoryEntity) {
-            this._json = config.toJSON();
-        }
-        else {
-            this._json = this.constructor._isDeepCloneRequired
-                ? (0, clone_1.deepClone)(config)
-                : (0, clone_1.clone)(config);
-        }
+    constructor(config) {
+        this._json = this.constructor._isDeepCloneRequired
+            ? (0, clone_1.deepClone)(config)
+            : (0, clone_1.clone)(config);
     }
     /**
      * @summary Return a prop or the default
      */
     prop(name, defaultValue) {
         var _a;
-        // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
+        // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `??`
         return (_a = (0, get_1.default)(this._json, name, defaultValue)) !== null && _a !== void 0 ? _a : defaultValue;
     }
     /**
@@ -114,7 +108,10 @@ class InMemoryEntity {
      * @see https://www.mongodb.com/docs/manual/reference/operator/update/set/#-set
      */
     setProps(json = {}) {
-        Object.entries(json).forEach(([key, value]) => this.setProp(key, value));
+        Object.entries(json).forEach(([key, value]) => {
+            const keyType = key;
+            this.setProp(keyType, value);
+        });
         return this;
     }
     /**
@@ -206,7 +203,7 @@ class InMemoryEntity {
         return this.constructor.name;
     }
     getAsEntityReference(byIdOnly = false) {
-        if (!this.id) {
+        if (!this._id || !this.slug) {
             throw new EntityError({
                 code: ValidationErrorCode.ENTITY_REFERENCE_ERROR,
                 details: {
@@ -216,64 +213,41 @@ class InMemoryEntity {
             });
         }
         if (byIdOnly) {
-            return { _id: this.id };
+            return { _id: this._id };
         }
         return {
-            _id: this.id,
+            _id: this._id,
             slug: this.slug,
             cls: this.getClsName(),
         };
     }
-    /**
-     * @summary Pluck an entity from a collection by name.
-     *          If no name is provided and no entity has prop isDefault, return the first entity
-     * @param entities the entities
-     * @param entity the kind of entities
-     * @param name the name of the entity to choose
-     */
-    // eslint-disable-next-line class-methods-use-this
-    getEntityByName(entities, entity, name) {
-        let filtered;
-        if (!name) {
-            filtered = entities.filter((ent) => ent.prop("isDefault") === true);
-            if (!filtered.length)
-                filtered = [entities[0]];
-        }
-        else {
-            filtered = entities.filter((ent) => ent.prop("name") === name);
-        }
-        if (filtered.length !== 1) {
-            console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
-        }
-        return filtered[0];
-    }
     // Properties from BaseInMemoryEntitySchema
     get id() {
-        return this.prop("_id", "");
+        return this.prop("_id");
     }
     set id(id) {
         this.setProp("_id", id);
     }
     get _id() {
-        return this.prop("_id", "");
+        return this.prop("_id");
     }
     set _id(id) {
         this.setProp("_id", id);
     }
     get schemaVersion() {
-        return this.prop("schemaVersion", "");
+        return this.prop("schemaVersion");
     }
     set schemaVersion(schemaVersion) {
         this.setProp("schemaVersion", schemaVersion);
     }
     get systemName() {
-        return this.prop("systemName", "");
+        return this.prop("systemName");
     }
     set systemName(systemName) {
         this.setProp("systemName", systemName);
     }
     get slug() {
-        return this.prop("slug", "");
+        return this.prop("slug");
     }
     get isSystemEntity() {
         return Boolean(this.systemName);

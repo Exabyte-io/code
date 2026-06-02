@@ -10,9 +10,9 @@ export function taggableSchemaMixin<T extends InMemoryEntity>(
     item: InMemoryEntity,
 ): asserts item is T & TaggableSchemaMixin {
     // @ts-expect-error
-    const properties: InMemoryEntity & TaggableSchemaMixin = {
+    const properties: InMemoryEntity<TaggableSchemaMixin> & TaggableSchemaMixin = {
         get tags() {
-            return this.prop<EntityTagsSchema["tags"]>("tags", []);
+            return this.prop("tags");
         },
         set tags(value: EntityTagsSchema["tags"]) {
             this.setProp("tags", value);
