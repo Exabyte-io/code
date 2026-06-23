@@ -17,12 +17,6 @@ export function bankableSchemaMixin<T extends InMemoryEntity>(
         set exabyteId(value: BankableSchema["exabyteId"]) {
             this.setProp("exabyteId", value);
         },
-        get hash() {
-            return this.requiredProp("hash");
-        },
-        set hash(value: BankableSchema["hash"]) {
-            this.setProp("hash", value);
-        },
     };
 
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));

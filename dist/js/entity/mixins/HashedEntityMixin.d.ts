@@ -1,6 +1,7 @@
+import { type HashedSchemaMixin } from "../../generated/HashedSchemaMixin";
 import type { Constructor } from "../../utils/types";
 import { InMemoryEntity } from "../in_memory";
-export type HashedEntity = {
+export type HashedEntity = HashedSchemaMixin & {
     calculateHash(): string;
     getHashObject?(): object;
 };

@@ -24,6 +24,7 @@ const SKIP_FIELDS: string[] = [];
  * Output file paths for each schema
  */
 const OUTPUT_PATHS = {
+    "system/hashed": "src/js/generated/HashedSchemaMixin.ts",
     "system/bankable": "src/js/generated/BankableSchemaMixin.ts",
     "system/defaultable": "src/js/generated/DefaultableSchemaMixin.ts",
     "system/has-consistency-check": "src/js/generated/HasConsistencyChecksSchemaMixin.ts",

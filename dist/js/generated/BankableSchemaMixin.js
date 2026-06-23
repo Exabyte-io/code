@@ -10,12 +10,6 @@ function bankableSchemaMixin(item) {
         set exabyteId(value) {
             this.setProp("exabyteId", value);
         },
-        get hash() {
-            return this.requiredProp("hash");
-        },
-        set hash(value) {
-            this.setProp("hash", value);
-        },
     };
     Object.defineProperties(item, Object.getOwnPropertyDescriptors(properties));
 }
