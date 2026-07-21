@@ -25,7 +25,7 @@ export declare class InMemoryEntity<S extends Schema = Schema> implements Schema
     static allowJsonSchemaTypesCoercing: boolean;
     static readonly jsonSchema?: JSONSchema;
     _json: S;
-    constructor(config: S);
+    constructor(config: NoInfer<S>);
     prop<K extends keyof S>(name: K, defaultValue: S[K]): S[K];
     prop<K extends keyof S>(name: K): S[K] | undefined;
     /**

@@ -60,6 +60,7 @@ class InMemoryEntity {
     static create(config) {
         return new this.prototype.constructor(config);
     }
+    // NoInfer: keep default S (or an explicit type arg) instead of inferring S from the config literal.
     constructor(config) {
         this._json = this.constructor._isDeepCloneRequired
             ? (0, clone_1.deepClone)(config)

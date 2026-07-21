@@ -115,7 +115,7 @@ function generateMixinFunction(
     }
 
     // Generate the entity type
-    code += `export type ${entityTypeName} = InMemoryEntity & ${mixinTypeName};\n\n`;
+    code += `export type ${entityTypeName} = InMemoryEntity<${mixinTypeName}> & ${mixinTypeName};\n\n`;
 
     code += `export function ${functionName}<T extends InMemoryEntity>(\n`;
     code += `    item: InMemoryEntity,\n`;

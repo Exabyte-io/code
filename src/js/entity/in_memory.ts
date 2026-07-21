@@ -48,7 +48,8 @@ export class InMemoryEntity<S extends Schema = Schema> implements Schema {
 
     _json: S;
 
-    constructor(config: S) {
+    // NoInfer: keep default S (or an explicit type arg) instead of inferring S from the config literal.
+    constructor(config: NoInfer<S>) {
         this._json = (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
             ? deepClone(config)
             : clone(config);
@@ -114,7 +115,7 @@ export class InMemoryEntity<S extends Schema = Schema> implements Schema {
     /**
      * @summary Array of fields to exclude from resulted JSON
      */
-    toJSON(exclude: (keyof S)[] = []) {
+    toJSON(exclude: (keyof S)[] = []): S {
         return (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
             ? this.toJSONSafe(exclude)
             : this.toJSONQuick(exclude);
