@@ -62,12 +62,16 @@ function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema) {
     return properties;
 }
 
-export type InMemoryEntitySetBase = ReturnType<typeof schemaMixin> &
-    ReturnType<typeof methodsMixin>;
+/** Mixin shape only — safe to merge into schema-generic subclasses (no baked-in `_json`). */
+export type InMemoryEntitySetBaseMixin = EntitySetSchema & EntitySetBaseMethodsDescriptor;
+
+/** Instance type with default entity-set schema (includes `InMemoryEntity<_json>`). */
+export type InMemoryEntitySetBase = InMemoryEntity<EntitySetEntitySchema> &
+    InMemoryEntitySetBaseMixin;
 
 export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(
     item: T,
-): asserts item is T & InMemoryEntitySetBase {
+): asserts item is T & InMemoryEntitySetBaseMixin {
     schemaMixin(item);
     methodsMixin(item as T & EntitySetSchema);
 }
