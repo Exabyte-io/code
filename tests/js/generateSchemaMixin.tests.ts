@@ -210,6 +210,18 @@ describe("generateSchemaMixin Tests", function () {
     });
 
     describe("generateShemaMixin - Omit Type Generation", () => {
+        it("should not generate unused in-memory entity aliases", () => {
+            const outputPath = path.join(tempDir, "NoEntityAliasSchemaMixin.ts");
+            const outputPaths = {
+                "property/holder": outputPath,
+            };
+
+            generateShemaMixin(mockSchemas, outputPaths);
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.not.include("NoEntityAliasInMemoryEntity");
+        });
+
         it("should not use Omit when skipFields is undefined", () => {
             const outputPath = path.join(tempDir, "NoSkipFieldsSchemaMixin.ts");
             const outputPaths = {

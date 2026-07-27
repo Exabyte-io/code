@@ -73,7 +73,6 @@ function extractSchemaProperties(schema: JSONSchema7): {
  * @param schema - The JSON schema
  * @param schemaName - Name of the schema
  * @param mixinTypeName - Name of the mixin type
- * @param entityTypeName - Name of the entity type
  * @param skipFields - Array of field names to skip
  * @param from - Import path for the schema type (default: "@mat3ra/esse/dist/js/types")
  * @param entityFrom - Import path for the entity type (default: "@mat3ra/code/dist/js/entity")
@@ -83,7 +82,6 @@ function generateMixinFunction(
     schema: JSONSchema7,
     schemaName: string,
     mixinTypeName: string,
-    entityTypeName: string,
     skipFields: string[] = [],
     from = "@mat3ra/esse/dist/js/types",
     entityFrom = "@mat3ra/code/dist/js/entity",
@@ -113,9 +111,6 @@ function generateMixinFunction(
     } else {
         code += `export type ${mixinTypeName} = ${schemaName};\n\n`;
     }
-
-    // Generate the entity type
-    code += `export type ${entityTypeName} = InMemoryEntity<${mixinTypeName}> & ${mixinTypeName};\n\n`;
 
     code += `export function ${functionName}<T extends InMemoryEntity>(\n`;
     code += `    item: InMemoryEntity,\n`;
@@ -201,18 +196,8 @@ function generateMixinFromSchemaId(
     }
 
     const mixinTypeName = fileName;
-    const entityTypeName = fileName.replace("SchemaMixin", "InMemoryEntity");
-
     // Generate the complete mixin function
-    return generateMixinFunction(
-        schema,
-        schemaName,
-        mixinTypeName,
-        entityTypeName,
-        skipFields,
-        from,
-        entityFrom,
-    );
+    return generateMixinFunction(schema, schemaName, mixinTypeName, skipFields, from, entityFrom);
 }
 
 /**

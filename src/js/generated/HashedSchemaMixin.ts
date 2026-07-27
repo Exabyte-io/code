@@ -4,8 +4,6 @@ import type { InMemoryEntity } from "../entity/in_memory";
 
 export type HashedSchemaMixin = HashedSchema;
 
-export type HashedInMemoryEntity = InMemoryEntity & HashedSchemaMixin;
-
 export function hashedSchemaMixin<T extends InMemoryEntity>(
     item: InMemoryEntity,
 ): asserts item is T & HashedSchemaMixin {

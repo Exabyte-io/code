@@ -4,8 +4,6 @@ import type { InMemoryEntity } from "../entity/in_memory";
 
 export type BankableSchemaMixin = BankableSchema;
 
-export type BankableInMemoryEntity = InMemoryEntity & BankableSchemaMixin;
-
 export function bankableSchemaMixin<T extends InMemoryEntity>(
     item: InMemoryEntity,
 ): asserts item is T & BankableSchemaMixin {

@@ -4,8 +4,6 @@ import type { InMemoryEntity } from "../entity/in_memory";
 
 export type InSetSchemaMixin = SystemInSetSchema;
 
-export type InSetInMemoryEntity = InMemoryEntity & InSetSchemaMixin;
-
 export function inSetSchemaMixin<T extends InMemoryEntity>(
     item: InMemoryEntity,
 ): asserts item is T & InSetSchemaMixin {

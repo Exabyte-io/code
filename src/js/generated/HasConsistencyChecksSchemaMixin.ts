@@ -4,8 +4,6 @@ import type { InMemoryEntity } from "../entity/in_memory";
 
 export type HasConsistencyChecksSchemaMixin = HasConsistencyCheckSchema;
 
-export type HasConsistencyChecksInMemoryEntity = InMemoryEntity & HasConsistencyChecksSchemaMixin;
-
 export function hasConsistencyChecksSchemaMixin<T extends InMemoryEntity>(
     item: InMemoryEntity,
 ): asserts item is T & HasConsistencyChecksSchemaMixin {

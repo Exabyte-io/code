@@ -65,13 +65,12 @@ function extractSchemaProperties(schema) {
  * @param schema - The JSON schema
  * @param schemaName - Name of the schema
  * @param mixinTypeName - Name of the mixin type
- * @param entityTypeName - Name of the entity type
  * @param skipFields - Array of field names to skip
  * @param from - Import path for the schema type (default: "@mat3ra/esse/dist/js/types")
  * @param entityFrom - Import path for the entity type (default: "@mat3ra/code/dist/js/entity")
  * @returns - Generated TypeScript code
  */
-function generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName, skipFields = [], from = "@mat3ra/esse/dist/js/types", entityFrom = "@mat3ra/code/dist/js/entity") {
+function generateMixinFunction(schema, schemaName, mixinTypeName, skipFields = [], from = "@mat3ra/esse/dist/js/types", entityFrom = "@mat3ra/code/dist/js/entity") {
     // Convert mixin type name to camelCase for function name
     const functionName = mixinTypeName.charAt(0).toLowerCase() + mixinTypeName.slice(1);
     // Extract properties, handling allOf if present
@@ -91,8 +90,6 @@ function generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName
     else {
         code += `export type ${mixinTypeName} = ${schemaName};\n\n`;
     }
-    // Generate the entity type
-    code += `export type ${entityTypeName} = InMemoryEntity<${mixinTypeName}> & ${mixinTypeName};\n\n`;
     code += `export function ${functionName}<T extends InMemoryEntity>(\n`;
     code += `    item: InMemoryEntity,\n`;
     code += `): asserts item is T & ${mixinTypeName} {\n`;
@@ -164,9 +161,8 @@ function generateMixinFromSchemaId(schemaId, outputPath, skipFields = [], from =
         throw new Error(`Invalid output path: ${outputPath}`);
     }
     const mixinTypeName = fileName;
-    const entityTypeName = fileName.replace("SchemaMixin", "InMemoryEntity");
     // Generate the complete mixin function
-    return generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName, skipFields, from, entityFrom);
+    return generateMixinFunction(schema, schemaName, mixinTypeName, skipFields, from, entityFrom);
 }
 /**
  * Runs ESLint autofix on generated files
