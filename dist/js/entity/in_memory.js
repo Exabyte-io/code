@@ -204,7 +204,9 @@ class InMemoryEntity {
         return this.constructor.name;
     }
     getAsEntityReference(byIdOnly = false) {
-        if (!this._id || !this.slug) {
+        // Slug is usually present on entity references, but not required for all entities
+        // (e.g. workflows are not slugified). Only `_id` is required to form a reference.
+        if (!this._id) {
             throw new EntityError({
                 code: ValidationErrorCode.ENTITY_REFERENCE_ERROR,
                 details: {
@@ -218,7 +220,7 @@ class InMemoryEntity {
         }
         return {
             _id: this._id,
-            slug: this.slug,
+            ...(this.slug !== undefined ? { slug: this.slug } : {}),
             cls: this.getClsName(),
         };
     }

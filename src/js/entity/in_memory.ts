@@ -220,10 +220,12 @@ export class InMemoryEntity<S extends Schema = Schema> implements Schema {
      */
     getAsEntityReference(byIdOnly: true): { _id: NonNullable<S["_id"]> };
 
-    getAsEntityReference(byIdOnly?: false): Required<EntityReferenceSchema>;
+    getAsEntityReference(byIdOnly?: false): EntityReferenceSchema & { _id: string; cls: string };
 
     getAsEntityReference(byIdOnly = false) {
-        if (!this._id || !this.slug) {
+        // Slug is usually present on entity references, but not required for all entities
+        // (e.g. workflows are not slugified). Only `_id` is required to form a reference.
+        if (!this._id) {
             throw new EntityError({
                 code: ValidationErrorCode.ENTITY_REFERENCE_ERROR,
                 details: {
@@ -239,9 +241,9 @@ export class InMemoryEntity<S extends Schema = Schema> implements Schema {
 
         return {
             _id: this._id,
-            slug: this.slug,
+            ...(this.slug !== undefined ? { slug: this.slug } : {}),
             cls: this.getClsName(),
-        } as Required<EntityReferenceSchema>;
+        };
     }
 
     // Properties from BaseInMemoryEntitySchema

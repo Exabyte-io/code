@@ -73,7 +73,10 @@ export declare class InMemoryEntity<S extends Schema = Schema> implements Schema
     getAsEntityReference(byIdOnly: true): {
         _id: NonNullable<S["_id"]>;
     };
-    getAsEntityReference(byIdOnly?: false): Required<EntityReferenceSchema>;
+    getAsEntityReference(byIdOnly?: false): EntityReferenceSchema & {
+        _id: string;
+        cls: string;
+    };
     get id(): S["_id"];
     set id(id: S["_id"]);
     get _id(): S["_id"];

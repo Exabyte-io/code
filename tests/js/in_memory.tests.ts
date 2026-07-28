@@ -55,6 +55,25 @@ describe("InMemoryEntity", () => {
         expect(entity._id).to.equal(undefined);
     });
 
+    it("getAsEntityReference requires _id but not slug", () => {
+        const withoutSlug = new InMemoryEntity({ _id: "123" });
+        expect(withoutSlug.getAsEntityReference()).to.deep.equal({
+            _id: "123",
+            cls: "InMemoryEntity",
+        });
+        expect(withoutSlug.getAsEntityReference(true)).to.deep.equal({ _id: "123" });
+
+        const withSlug = new InMemoryEntity({ _id: "123", slug: "total-energy" });
+        expect(withSlug.getAsEntityReference()).to.deep.equal({
+            _id: "123",
+            slug: "total-energy",
+            cls: "InMemoryEntity",
+        });
+
+        const missingId = new InMemoryEntity({});
+        expect(() => missingId.getAsEntityReference()).to.throw("ENTITY_REFERENCE_ERROR");
+    });
+
     it("toJSON converts to JSON", () => {
         const entity = new DerivedInMemoryEntity({
             _id: "123",
