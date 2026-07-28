@@ -113,20 +113,26 @@ export class InMemoryEntity<S extends Schema = Schema> implements Schema {
     }
 
     /**
-     * @summary Array of fields to exclude from resulted JSON
+     * @summary Array of fields to exclude from resulted JSON.
+     * JSON.stringify calls `toJSON(key)` with the parent property name (a string).
+     * Only an actual array is treated as an omit list — otherwise stringify would
+     * strip fields whose names match the property key (e.g. systemTeams.owner).
      */
     toJSON(exclude: (keyof S)[] = []): S {
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
         return (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
-            ? this.toJSONSafe(exclude)
-            : this.toJSONQuick(exclude);
+            ? this.toJSONSafe(omitKeys)
+            : this.toJSONQuick(omitKeys);
     }
 
     toJSONSafe(exclude: (keyof S)[] = []): S {
-        return this.clean(deepClone(omit(this._json, exclude)));
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
+        return this.clean(deepClone(omit(this._json, omitKeys)));
     }
 
     toJSONQuick(exclude: (keyof S)[] = []): S {
-        return this.clean(clone(omit(this._json, exclude)));
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
+        return this.clean(clone(omit(this._json, omitKeys)));
     }
 
     /**

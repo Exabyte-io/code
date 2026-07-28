@@ -116,18 +116,24 @@ class InMemoryEntity {
         return this;
     }
     /**
-     * @summary Array of fields to exclude from resulted JSON
+     * @summary Array of fields to exclude from resulted JSON.
+     * JSON.stringify calls `toJSON(key)` with the parent property name (a string).
+     * Only an actual array is treated as an omit list — otherwise stringify would
+     * strip fields whose names match the property key (e.g. systemTeams.owner).
      */
     toJSON(exclude = []) {
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
         return this.constructor._isDeepCloneRequired
-            ? this.toJSONSafe(exclude)
-            : this.toJSONQuick(exclude);
+            ? this.toJSONSafe(omitKeys)
+            : this.toJSONQuick(omitKeys);
     }
     toJSONSafe(exclude = []) {
-        return this.clean((0, clone_1.deepClone)((0, omit_1.default)(this._json, exclude)));
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
+        return this.clean((0, clone_1.deepClone)((0, omit_1.default)(this._json, omitKeys)));
     }
     toJSONQuick(exclude = []) {
-        return this.clean((0, clone_1.clone)((0, omit_1.default)(this._json, exclude)));
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
+        return this.clean((0, clone_1.clone)((0, omit_1.default)(this._json, omitKeys)));
     }
     /**
      * @summary Clone this entity

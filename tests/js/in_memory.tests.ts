@@ -84,6 +84,36 @@ describe("InMemoryEntity", () => {
         );
     });
 
+    it("toJSON ignores JSON.stringify property-key argument so fields are not stripped", () => {
+        // JSON.stringify calls value.toJSON(key) when serializing a nested object.
+        // systemTeams.owner → toJSON("owner") must not omit the entity's owner field.
+        const entity = new DerivedInMemoryEntity({
+            _id: "123",
+            slug: "owner",
+        } as BaseInMemoryEntitySchema);
+
+        expect(entity.toJSON("owner" as unknown as (keyof BaseInMemoryEntitySchema)[])).to.include({
+            _id: "123",
+            slug: "owner",
+        });
+
+        const wrapped = { owner: entity };
+        const parsed = JSON.parse(JSON.stringify(wrapped));
+        expect(parsed.owner).to.include({ _id: "123", slug: "owner" });
+    });
+
+    it("toJSON still omits when given an explicit exclude array", () => {
+        const entity = new DerivedInMemoryEntity({
+            _id: "123",
+            slug: "owner",
+        } as BaseInMemoryEntitySchema);
+
+        expect(entity.toJSON(["slug"])).to.deep.equal({
+            _id: "123",
+            schemaVersion: "2022.8.16",
+        });
+    });
+
     it("jsonSchema returns correct registered schema", async () => {
         expect(DerivedInMemoryEntity.jsonSchema).to.be.an("object");
         expect(DerivedInMemoryEntity.jsonSchema).to.have.nested.property("properties._id"); // check mix schemas
