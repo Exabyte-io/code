@@ -104,7 +104,7 @@ function generateMixinFunction(
     );
 
     let code = `import type { InMemoryEntity } from "${entityFrom}";\n`;
-    code += `import type { ${schemaName} } from "${from}";\n\n`;
+    code += `import type { BaseInMemoryEntitySchema, ${schemaName} } from "${from}";\n\n`;
 
     // Generate the mixin type - only use Omit if skipFields has values
     if (skipFields && skipFields.length > 0) {
@@ -114,8 +114,8 @@ function generateMixinFunction(
         code += `export type ${mixinTypeName} = ${schemaName};\n\n`;
     }
 
-    // Generate the entity type
-    code += `export type ${entityTypeName} = InMemoryEntity<${mixinTypeName}> & ${mixinTypeName};\n\n`;
+    // Entity schema must include base fields so `_json` / `toJSON` stay compatible with InMemoryEntity
+    code += `export type ${entityTypeName} = InMemoryEntity<BaseInMemoryEntitySchema & ${mixinTypeName}>;\n\n`;
 
     code += `export function ${functionName}<T extends InMemoryEntity>(\n`;
     code += `    item: InMemoryEntity,\n`;
