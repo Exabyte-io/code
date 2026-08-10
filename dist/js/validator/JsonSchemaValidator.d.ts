@@ -3,11 +3,25 @@ import type { AnyObject, ValidationSchema } from "./types";
 type ErrorResult = {
     [key: string]: string | ErrorResult;
 };
+export type JsonSchemaValidatorOptions = {
+    /**
+     * Delete object properties whose value is `null` before AJV (default: `true`).
+     * Nested objects are walked; array elements are not removed.
+     */
+    removeNull?: boolean;
+    /**
+     * Delete object properties whose value is `""` before AJV (default: `true`).
+     * Keep `false` when empty strings are intentional placeholders (e.g. flowchart links).
+     */
+    removeEmptyStrings?: boolean;
+};
 export declare class JsonSchemaValidator {
     private readonly ajv;
+    private readonly removeNull;
+    private readonly removeEmptyStrings;
     private readonly formatCodeMap;
     private readonly keywordsCodeMap;
-    constructor();
+    constructor({ removeNull, removeEmptyStrings }?: JsonSchemaValidatorOptions);
     /**
      * Register host-specific AJV formats/keywords (e.g. web-app password/phone) on this instance.
      */
@@ -97,15 +111,17 @@ export declare class JsonSchemaValidator {
     transformErrors(errors?: ErrorObject[] | null): ErrorResult | undefined;
     /**
      * Validates and cleans data against the schema.
-     * Drops null properties (via esse) and empty-string properties, then AJV removeAdditional.
+     * Optionally drops null / empty-string properties (constructor options), then AJV removeAdditional.
      */
     validateAndClean(data: AnyObject, jsonSchema: ValidationSchema): {
         isValid: boolean | Promise<any>;
         errors: ErrorResult | undefined;
         rawErrors: ErrorObject<string, Record<string, any>, unknown>[] | null | undefined;
-        validated: import("@mat3ra/esse/dist/js/utils/removeEmptyAndNullProperties").AnyObject;
+        validated: {
+            [x: string]: any;
+        };
     };
 }
-/** Shared singleton — hosts register app formats on this instance. */
+/** Shared singleton — hosts register app formats on this instance (null + "" strip on). */
 export declare const jsonSchemaValidator: JsonSchemaValidator;
 export {};
