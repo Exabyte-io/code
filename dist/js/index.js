@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.utils = exports.context = exports.entity = exports.Vector3D = exports.RoundedVector3D = exports.RoundedArrayWithIds = exports.RoundedValueWithId = exports.ValueWithId = exports.ArrayWithIds = void 0;
+exports.jsonSchemaValidator = exports.JsonSchemaValidator = exports.validator = exports.utils = exports.context = exports.entity = exports.Vector3D = exports.RoundedVector3D = exports.RoundedArrayWithIds = exports.RoundedValueWithId = exports.ValueWithId = exports.ArrayWithIds = void 0;
 const ArrayWithIds_1 = require("./ArrayWithIds");
 Object.defineProperty(exports, "ArrayWithIds", { enumerable: true, get: function () { return ArrayWithIds_1.ArrayWithIds; } });
 Object.defineProperty(exports, "RoundedArrayWithIds", { enumerable: true, get: function () { return ArrayWithIds_1.RoundedArrayWithIds; } });
@@ -43,12 +43,17 @@ const entity = __importStar(require("./entity"));
 exports.entity = entity;
 const utils = __importStar(require("./utils"));
 exports.utils = utils;
+const validator = __importStar(require("./validator"));
+exports.validator = validator;
 const ValueWithId_1 = require("./ValueWithId");
 Object.defineProperty(exports, "RoundedValueWithId", { enumerable: true, get: function () { return ValueWithId_1.RoundedValueWithId; } });
 Object.defineProperty(exports, "ValueWithId", { enumerable: true, get: function () { return ValueWithId_1.ValueWithId; } });
 const vector_1 = require("./vector");
 Object.defineProperty(exports, "RoundedVector3D", { enumerable: true, get: function () { return vector_1.RoundedVector3D; } });
 Object.defineProperty(exports, "Vector3D", { enumerable: true, get: function () { return vector_1.Vector3D; } });
+var validator_1 = require("./validator");
+Object.defineProperty(exports, "JsonSchemaValidator", { enumerable: true, get: function () { return validator_1.JsonSchemaValidator; } });
+Object.defineProperty(exports, "jsonSchemaValidator", { enumerable: true, get: function () { return validator_1.jsonSchemaValidator; } });
 const Code = {
     ArrayWithIds: ArrayWithIds_1.ArrayWithIds,
     ValueWithId: ValueWithId_1.ValueWithId,
@@ -59,5 +64,6 @@ const Code = {
     entity,
     context,
     utils,
+    validator,
 };
 exports.default = Code;

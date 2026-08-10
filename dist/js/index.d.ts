@@ -2,10 +2,12 @@ import { ArrayWithIds, RoundedArrayWithIds } from "./ArrayWithIds";
 import * as context from "./context";
 import * as entity from "./entity";
 import * as utils from "./utils";
+import * as validator from "./validator";
 import { RoundedValueWithId, ValueWithId } from "./ValueWithId";
 import { RoundedVector3D, Vector3D } from "./vector";
 export { ArrayWithIds, ValueWithId, RoundedValueWithId, RoundedArrayWithIds, RoundedVector3D, Vector3D, };
-export { entity, context, utils };
+export { entity, context, utils, validator };
+export { JsonSchemaValidator, jsonSchemaValidator } from "./validator";
 declare const Code: {
     ArrayWithIds: typeof ArrayWithIds;
     ValueWithId: typeof ValueWithId;
@@ -16,6 +18,7 @@ declare const Code: {
     entity: typeof entity;
     context: typeof context;
     utils: typeof utils;
+    validator: typeof validator;
 };
 export type CodeType = typeof Code;
 export default Code;
