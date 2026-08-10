@@ -31,13 +31,14 @@ describe("JsonSchemaValidator.transformErrors", () => {
 });
 
 describe("JsonSchemaValidator.validateAndClean", () => {
-    it("strips nulls and additional properties", () => {
+    it("strips nulls, empty strings, and additional properties", () => {
         const schema = {
             $id: "test/code-validator-clean",
             type: "object",
             properties: {
                 name: { type: "string" },
                 slug: { type: "string" },
+                description: { type: "string" },
             },
             required: ["name"],
             additionalProperties: false,
@@ -46,6 +47,7 @@ describe("JsonSchemaValidator.validateAndClean", () => {
         const data = {
             name: "Si",
             slug: null,
+            description: "",
             owner: { _id: "x" },
         };
 

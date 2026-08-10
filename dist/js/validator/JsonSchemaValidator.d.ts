@@ -97,7 +97,7 @@ export declare class JsonSchemaValidator {
     transformErrors(errors?: ErrorObject[] | null): ErrorResult | undefined;
     /**
      * Validates and cleans data against the schema.
-     * Drops empty-string and null properties first, then AJV removeAdditional.
+     * Drops null properties (via esse) and empty-string properties, then AJV removeAdditional.
      */
     validateAndClean(data: AnyObject, jsonSchema: ValidationSchema): {
         isValid: boolean | Promise<any>;

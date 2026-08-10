@@ -60,7 +60,7 @@
         "@babel/register": "^7.25.7",
         "@babel/runtime-corejs3": "^7.25.7",
         "@exabyte-io/eslint-config": "^2025.1.15-0",
-        "@mat3ra/esse": "https://github.com/mat3ra/esse/tarball/3e238aa153206beeed0d7759ce6fe780b75c6728",
+        "@mat3ra/esse": "https://github.com/mat3ra/esse/tarball/13eb236299a2d5f3a43e75d1fe9e121deb674c0e",
         "@mat3ra/tsconfig": "2024.6.3-0",
         "@types/chai": "^4.3.20",
         "@types/crypto-js": "^4.2.2",

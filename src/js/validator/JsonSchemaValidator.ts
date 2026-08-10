@@ -4,11 +4,11 @@
  * Why this exists (alongside esse `utils/ajv`):
  * - Compose schemas with `mergeAllOf` and enforce allowlists via `additionalProperties: false`
  *   so callers can reject unknown / system-owned fields.
- * - Strip empty strings and nulls before type checks (common in exported or loosely typed JSON).
+ * - Strip null and empty-string properties before type checks (exported JSON often uses `null`).
  * - Map raw AJV errors into stable nested field → code objects (LIVR-style) for consumers that
  *   need machine-readable validation results.
  *
- * Distinct from `@mat3ra/esse` `utils/ajv.validateAndClean` (lighter entity clean used by
+ * Distinct from `@mat3ra/esse` `utils/ajv.validateAndClean` (entity clean: null-only strip used by
  * `InMemoryEntity.toJSON*`). Prefer this class/API for application validation; register host
  * formats with {@link JsonSchemaValidator.registerExtensions}.
  */
@@ -26,6 +26,33 @@ import type { AnyObject, ValidationSchema } from "./types";
 type ErrorResult = {
     [key: string]: string | ErrorResult;
 };
+
+/**
+ * Recursively deletes empty-string object properties (mutates in place).
+ * Used by application validation; entity clean keeps "" placeholders via esse null-only strip.
+ */
+function removeEmptyStringProperties(obj: AnyObject): AnyObject {
+    if (typeof obj !== "object" || obj === null) {
+        return obj;
+    }
+
+    if (Array.isArray(obj)) {
+        obj.forEach((item) => removeEmptyStringProperties(item));
+        return obj;
+    }
+
+    Object.keys(obj).forEach((key) => {
+        const value = obj[key];
+
+        if (value === "") {
+            delete obj[key];
+        } else if (typeof value === "object") {
+            removeEmptyStringProperties(value);
+        }
+    });
+
+    return obj;
+}
 
 export class JsonSchemaValidator {
     private readonly ajv: Ajv;
@@ -207,10 +234,11 @@ export class JsonSchemaValidator {
 
     /**
      * Validates and cleans data against the schema.
-     * Drops empty-string and null properties first, then AJV removeAdditional.
+     * Drops null properties (via esse) and empty-string properties, then AJV removeAdditional.
      */
     validateAndClean(data: AnyObject, jsonSchema: ValidationSchema) {
         const validated = removeEmptyAndNullProperties({ ...data });
+        removeEmptyStringProperties(validated);
         const compiledValidator = this.getCompiledValidator({
             ...jsonSchema,
             additionalProperties: false,
