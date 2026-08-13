@@ -17,7 +17,7 @@ function namedEntityPropertiesMixin<T extends InMemoryEntity>(
     item: T,
 ): asserts item is T & NamedEntity {
     // @ts-expect-error
-    const properties: InMemoryEntity & NamedEntity = {
+    const properties: InMemoryEntity<NamedEntitySchemaMixin> & NamedEntity = {
         setName(name: string) {
             this.setProp("name", name);
         },

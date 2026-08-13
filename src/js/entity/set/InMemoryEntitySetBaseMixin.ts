@@ -1,9 +1,15 @@
-import { type EntitySetSchema, SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
+import {
+    type BaseInMemoryEntitySchema,
+    type EntitySetSchema,
+    SystemInSetSchema,
+} from "@mat3ra/esse/dist/js/types";
 
 import { type InMemoryEntity } from "../in_memory";
 
 export type SystemInSet = Required<SystemInSetSchema>;
 export type InSet = SystemInSet["inSet"][0];
+
+type EntitySetEntitySchema = BaseInMemoryEntitySchema & EntitySetSchema;
 
 export enum EntitySetType {
     ordered = "ordered",
@@ -12,7 +18,7 @@ export enum EntitySetType {
 
 function schemaMixin<E extends InMemoryEntity>(item: E) {
     // @ts-expect-error
-    const properties: InMemoryEntity & EntitySetSchema = {
+    const properties: InMemoryEntity<EntitySetEntitySchema> & EntitySetSchema = {
         get isEntitySet() {
             return this.prop("isEntitySet", false);
         },
@@ -22,7 +28,7 @@ function schemaMixin<E extends InMemoryEntity>(item: E) {
         },
 
         get entityCls() {
-            return this.prop<string | undefined>("entityCls");
+            return this.prop("entityCls");
         },
     };
 
@@ -39,7 +45,9 @@ function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema) {
     const originalCls = item.cls;
 
     // @ts-expect-error
-    const properties: InMemoryEntity & EntitySetSchema & EntitySetBaseMethodsDescriptor = {
+    const properties: InMemoryEntity<EntitySetEntitySchema> &
+        EntitySetSchema &
+        EntitySetBaseMethodsDescriptor = {
         get cls() {
             return this.entityCls || originalCls;
         },
@@ -54,12 +62,16 @@ function methodsMixin<E extends InMemoryEntity>(item: E & EntitySetSchema) {
     return properties;
 }
 
-export type InMemoryEntitySetBase = ReturnType<typeof schemaMixin> &
-    ReturnType<typeof methodsMixin>;
+/** Mixin shape only — safe to merge into schema-generic subclasses (no baked-in `_json`). */
+export type InMemoryEntitySetBaseMixin = EntitySetSchema & EntitySetBaseMethodsDescriptor;
+
+/** Instance type with default entity-set schema (includes `InMemoryEntity<_json>`). */
+export type InMemoryEntitySetBase = InMemoryEntity<EntitySetEntitySchema> &
+    InMemoryEntitySetBaseMixin;
 
 export function inMemoryEntitySetBaseMixin<T extends InMemoryEntity>(
     item: T,
-): asserts item is T & InMemoryEntitySetBase {
+): asserts item is T & InMemoryEntitySetBaseMixin {
     schemaMixin(item);
     methodsMixin(item as T & EntitySetSchema);
 }

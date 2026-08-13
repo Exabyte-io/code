@@ -21,7 +21,7 @@ function runtimeItemsPropertiesMixin<T extends InMemoryEntity>(
     item: T,
 ): asserts item is T & RuntimeItems {
     // @ts-expect-error
-    const properties: InMemoryEntity & RuntimeItemsNameObject = {
+    const properties: InMemoryEntity<RuntimeItemsSchemaMixin> & RuntimeItems = {
         get hashObjectFromRuntimeItems() {
             return {
                 results: this.results,

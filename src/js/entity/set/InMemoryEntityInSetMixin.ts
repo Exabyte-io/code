@@ -13,7 +13,7 @@ export function inMemoryEntityInSetMixin<E extends InMemoryEntity>(
     inSetSchemaMixin<E>(item);
 
     // @ts-expect-error
-    const properties: InMemoryEntity & InMemoryEntityInSet = {
+    const properties: InMemoryEntity<SystemInSetSchema> & InMemoryEntityInSet = {
         getInSetFilteredByCls(cls: string) {
             return this.inSet.filter((ref) => ref.cls === cls);
         },

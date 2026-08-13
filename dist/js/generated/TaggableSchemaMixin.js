@@ -5,7 +5,7 @@ function taggableSchemaMixin(item) {
     // @ts-expect-error
     const properties = {
         get tags() {
-            return this.prop("tags", []);
+            return this.prop("tags");
         },
         set tags(value) {
             this.setProp("tags", value);

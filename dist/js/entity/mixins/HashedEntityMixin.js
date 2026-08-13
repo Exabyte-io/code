@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hashedEntityMixin = hashedEntityMixin;
+const HashedSchemaMixin_1 = require("../../generated/HashedSchemaMixin");
 const hash_1 = require("../../utils/hash");
 function hashedEntityMixin(item) {
+    (0, HashedSchemaMixin_1.hashedSchemaMixin)(item);
     // @ts-expect-error
     const properties = {
         /**

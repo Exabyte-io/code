@@ -82,7 +82,7 @@ function generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName
     // Filter out skip fields
     const propertyEntries = Object.entries(properties).filter(([propertyName]) => !skipFields.includes(propertyName));
     let code = `import type { InMemoryEntity } from "${entityFrom}";\n`;
-    code += `import type { ${schemaName} } from "${from}";\n\n`;
+    code += `import type { BaseInMemoryEntitySchema, ${schemaName} } from "${from}";\n\n`;
     // Generate the mixin type - only use Omit if skipFields has values
     if (skipFields && skipFields.length > 0) {
         const skipFieldNames = skipFields.map((field) => `"${field}"`).join(" | ");
@@ -91,20 +91,20 @@ function generateMixinFunction(schema, schemaName, mixinTypeName, entityTypeName
     else {
         code += `export type ${mixinTypeName} = ${schemaName};\n\n`;
     }
-    // Generate the entity type
-    code += `export type ${entityTypeName} = InMemoryEntity & ${mixinTypeName};\n\n`;
+    // Entity schema must include base fields so `_json` / `toJSON` stay compatible with InMemoryEntity
+    code += `export type ${entityTypeName} = InMemoryEntity<BaseInMemoryEntitySchema & ${mixinTypeName}>;\n\n`;
     code += `export function ${functionName}<T extends InMemoryEntity>(\n`;
     code += `    item: InMemoryEntity,\n`;
     code += `): asserts item is T & ${mixinTypeName} {\n`;
     code += `    // @ts-expect-error\n`;
-    code += `    const properties: InMemoryEntity & ${mixinTypeName} = {\n`;
+    code += `    const properties: InMemoryEntity<${mixinTypeName}> & ${mixinTypeName} = {\n`;
     for (let i = 0; i < propertyEntries.length; i++) {
         const [propertyName] = propertyEntries[i];
         const isRequired = isRequiredProperty(propertyName, required);
         const methodName = isRequired ? "requiredProp" : "prop";
         const typeAnnotation = generateTypeAnnotation(propertyName, schemaName);
         code += `get ${propertyName}() {\n`;
-        code += `return this.${methodName}<${typeAnnotation}>("${propertyName}");\n`;
+        code += `return this.${methodName}("${propertyName}");\n`;
         code += `},\n`;
         code += `set ${propertyName}(value: ${typeAnnotation}) {\n`;
         code += `this.setProp("${propertyName}", value);\n`;

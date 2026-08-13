@@ -16,7 +16,7 @@ export enum ValidationErrorCode {
 
 interface ErrorDetails {
     error?: object | null;
-    json: AnyObject;
+    json: object;
     schema: JSONSchema;
 }
 
@@ -32,9 +32,11 @@ export class EntityError extends Error {
     }
 }
 
-export class InMemoryEntity implements BaseInMemoryEntitySchema {
-    static create(config: object) {
-        return new (this.prototype.constructor as typeof InMemoryEntity)(config);
+type Schema = BaseInMemoryEntitySchema;
+
+export class InMemoryEntity<S extends Schema = Schema> implements Schema {
+    static create<T extends InMemoryEntity<Schema>>(config: Schema): T {
+        return new (this.prototype.constructor as InMemoryEntityConstructor<T>)(config);
     }
 
     // Override if deepClone of config is required
@@ -44,35 +46,32 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
 
     static readonly jsonSchema?: JSONSchema;
 
-    _json: AnyObject = {};
+    _json: S;
 
-    constructor(config: object | InMemoryEntity = {}) {
-        if (config instanceof InMemoryEntity) {
-            this._json = config.toJSON();
-        } else {
-            this._json = (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
-                ? deepClone(config)
-                : clone(config);
-        }
+    // NoInfer: keep default S (or an explicit type arg) instead of inferring S from the config literal.
+    constructor(config: NoInfer<S>) {
+        this._json = (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
+            ? deepClone(config)
+            : clone(config);
     }
 
-    prop<T = undefined>(name: string, defaultValue: T): T;
+    prop<K extends keyof S>(name: K, defaultValue: S[K]): S[K];
 
-    prop<T = undefined>(name: string): T | undefined;
+    prop<K extends keyof S>(name: K): S[K] | undefined;
 
     /**
      * @summary Return a prop or the default
      */
-    prop<T = undefined>(name: string, defaultValue?: T): T | undefined {
-        // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `||`
-        return (getValue(this._json, name, defaultValue) as T) ?? defaultValue;
+    prop<K extends keyof S>(name: K, defaultValue?: S[K]): S[K] | undefined {
+        // `lodash.get` gets `null` when the value is `null`, but we still want a default value in this case, hence `??`
+        return (getValue(this._json, name, defaultValue) as S[K] | undefined) ?? defaultValue;
     }
 
     /**
      * @summary Return a required prop, throwing an error if it doesn't exist or is undefined/null
      */
-    requiredProp<T>(name: string): T {
-        const value = this.prop<T>(name);
+    requiredProp<K extends keyof S>(name: K): S[K] {
+        const value = this.prop(name);
         if (value === undefined || value === null) {
             throw new EntityError({
                 code: ValidationErrorCode.REQUIRED_PROPERTY_MISSING,
@@ -89,7 +88,7 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
     /**
      * @summary Set a prop
      */
-    setProp(name: string, value: unknown) {
+    setProp(name: keyof S, value: S[typeof name]) {
         // lodash.set is required to support dot-notation in keys (e.g. "compute.cluster.fqdn")
         set(this._json, name, value);
     }
@@ -97,7 +96,7 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
     /**
      * @summary Remove a prop
      */
-    unsetProp(name: string) {
+    unsetProp(name: keyof S) {
         delete this._json[name];
     }
 
@@ -105,26 +104,35 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
      * Updates internal JSON. Works the same as Mongo's $set operator
      * @see https://www.mongodb.com/docs/manual/reference/operator/update/set/#-set
      */
-    setProps(json: AnyObject = {}) {
-        Object.entries(json).forEach(([key, value]) => this.setProp(key, value));
+    setProps(json: Partial<S> = {}) {
+        Object.entries(json).forEach(([key, value]) => {
+            const keyType = key as keyof S;
+            this.setProp(keyType, value as S[typeof keyType]);
+        });
         return this;
     }
 
     /**
-     * @summary Array of fields to exclude from resulted JSON
+     * @summary Array of fields to exclude from resulted JSON.
+     * JSON.stringify calls `toJSON(key)` with the parent property name (a string).
+     * Only an actual array is treated as an omit list — otherwise stringify would
+     * strip fields whose names match the property key (e.g. systemTeams.owner).
      */
-    toJSON(exclude: string[] = []) {
+    toJSON(exclude: (keyof S)[] = []): S {
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
         return (this.constructor as typeof InMemoryEntity)._isDeepCloneRequired
-            ? this.toJSONSafe(exclude)
-            : this.toJSONQuick(exclude);
+            ? this.toJSONSafe(omitKeys)
+            : this.toJSONQuick(omitKeys);
     }
 
-    toJSONSafe(exclude: string[] = []): AnyObject {
-        return this.clean(deepClone(omit(this._json, exclude)));
+    toJSONSafe(exclude: (keyof S)[] = []): S {
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
+        return this.clean(deepClone(omit(this._json, omitKeys)));
     }
 
-    toJSONQuick(exclude: string[] = []): AnyObject {
-        return this.clean(clone(omit(this._json, exclude)));
+    toJSONQuick(exclude: (keyof S)[] = []): S {
+        const omitKeys = Array.isArray(exclude) ? exclude : [];
+        return this.clean(clone(omit(this._json, omitKeys)));
     }
 
     /**
@@ -140,15 +148,15 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
         });
     }
 
-    static validateData(data: AnyObject, clean = false, jsonSchema = this.jsonSchema) {
+    static validateData(data: object, clean = false, jsonSchema = this.jsonSchema) {
         if (!jsonSchema) {
             return data;
         }
         const result = clean
-            ? ajv.validateAndClean(data, jsonSchema, {
+            ? ajv.validateAndClean(data as AnyObject, jsonSchema, {
                   coerceTypes: this.allowJsonSchemaTypesCoercing,
               })
-            : ajv.validate(data, jsonSchema);
+            : ajv.validate(data as AnyObject, jsonSchema);
 
         if (!result.isValid) {
             throw new EntityError({
@@ -173,9 +181,9 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
         }
     }
 
-    clean(config: AnyObject) {
+    clean(config: S) {
         try {
-            return (this.constructor as typeof InMemoryEntity).validateData(config, true);
+            return (this.constructor as typeof InMemoryEntity).validateData(config, true) as S;
         } catch (err) {
             if (err instanceof EntityError) {
                 console.error({
@@ -216,12 +224,14 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
      * @param byIdOnly if true, return only the id
      * @returns identifying data
      */
-    getAsEntityReference(byIdOnly: true): { _id: string };
+    getAsEntityReference(byIdOnly: true): { _id: NonNullable<S["_id"]> };
 
-    getAsEntityReference(byIdOnly?: false): Required<EntityReferenceSchema>;
+    getAsEntityReference(byIdOnly?: false): EntityReferenceSchema & { _id: string; cls: string };
 
     getAsEntityReference(byIdOnly = false) {
-        if (!this.id) {
+        // Slug is usually present on entity references, but not required for all entities
+        // (e.g. workflows are not slugified). Only `_id` is required to form a reference.
+        if (!this._id) {
             throw new EntityError({
                 code: ValidationErrorCode.ENTITY_REFERENCE_ERROR,
                 details: {
@@ -232,74 +242,52 @@ export class InMemoryEntity implements BaseInMemoryEntitySchema {
         }
 
         if (byIdOnly) {
-            return { _id: this.id };
+            return { _id: this._id };
         }
 
         return {
-            _id: this.id,
-            slug: this.slug,
+            _id: this._id,
+            ...(this.slug !== undefined ? { slug: this.slug } : {}),
             cls: this.getClsName(),
         };
-    }
-
-    /**
-     * @summary Pluck an entity from a collection by name.
-     *          If no name is provided and no entity has prop isDefault, return the first entity
-     * @param entities the entities
-     * @param entity the kind of entities
-     * @param name the name of the entity to choose
-     */
-    // eslint-disable-next-line class-methods-use-this
-    getEntityByName(entities: InMemoryEntity[], entity: string, name: string) {
-        let filtered;
-        if (!name) {
-            filtered = entities.filter((ent) => ent.prop("isDefault") === true);
-            if (!filtered.length) filtered = [entities[0]];
-        } else {
-            filtered = entities.filter((ent) => ent.prop("name") === name);
-        }
-        if (filtered.length !== 1) {
-            console.log(`found ${filtered.length} entity ${entity} with name ${name} expected 1`);
-        }
-        return filtered[0];
     }
 
     // Properties from BaseInMemoryEntitySchema
 
     get id() {
-        return this.prop("_id", "");
+        return this.prop("_id");
     }
 
-    set id(id) {
+    set id(id: S["_id"]) {
         this.setProp("_id", id);
     }
 
     get _id() {
-        return this.prop("_id", "");
+        return this.prop("_id");
     }
 
-    set _id(id) {
+    set _id(id: S["_id"]) {
         this.setProp("_id", id);
     }
 
     get schemaVersion() {
-        return this.prop("schemaVersion", "");
+        return this.prop("schemaVersion");
     }
 
-    set schemaVersion(schemaVersion) {
+    set schemaVersion(schemaVersion: S["schemaVersion"]) {
         this.setProp("schemaVersion", schemaVersion);
     }
 
     get systemName() {
-        return this.prop("systemName", "");
+        return this.prop("systemName");
     }
 
-    set systemName(systemName) {
+    set systemName(systemName: S["systemName"]) {
         this.setProp("systemName", systemName);
     }
 
     get slug() {
-        return this.prop("slug", "");
+        return this.prop("slug");
     }
 
     get isSystemEntity() {

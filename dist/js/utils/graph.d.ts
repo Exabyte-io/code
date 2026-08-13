@@ -1,9 +1,6 @@
+import type { SubworkflowUnitSchema } from "@mat3ra/esse/dist/js/types";
 import { InMemoryEntity } from "../entity/in_memory";
-export type UnitEntity = InMemoryEntity & {
-    head: boolean;
-    next?: string;
-    flowchartId: string;
-};
+export type UnitEntity = SubworkflowUnitSchema & InMemoryEntity<SubworkflowUnitSchema>;
 /**
  * @summary Set the head of an array of units
  */

@@ -5,7 +5,8 @@ function schemaMixin(item) {
     // @ts-expect-error
     const properties = {
         get scopeTrack() {
-            return this.prop("scopeTrack", []);
+            var _a;
+            return (_a = this.prop("scopeTrack")) !== null && _a !== void 0 ? _a : [];
         },
         set scopeTrack(array) {
             this.setProp("scopeTrack", array);

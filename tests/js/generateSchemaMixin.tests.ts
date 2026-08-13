@@ -209,6 +209,28 @@ describe("generateSchemaMixin Tests", function () {
         });
     });
 
+    describe("generateShemaMixin - InMemoryEntity type alias", () => {
+        it("should type the entity as InMemoryEntity<BaseInMemoryEntitySchema & Mixin>", () => {
+            const outputPath = path.join(tempDir, "BankableSchemaMixin.ts");
+            const outputPaths = {
+                "property/holder": outputPath,
+            };
+
+            generateShemaMixin(mockSchemas, outputPaths);
+
+            const generatedCode = fs.readFileSync(outputPath, "utf-8");
+            expect(generatedCode).to.include(
+                "import type { BaseInMemoryEntitySchema, PropertyHolder }",
+            );
+            expect(generatedCode).to.include(
+                "export type BankableInMemoryEntity = InMemoryEntity<BaseInMemoryEntitySchema & BankableSchemaMixin>;",
+            );
+            expect(generatedCode).to.not.include(
+                "export type BankableInMemoryEntity = InMemoryEntity<BankableSchemaMixin> & BankableSchemaMixin",
+            );
+        });
+    });
+
     describe("generateShemaMixin - Omit Type Generation", () => {
         it("should not use Omit when skipFields is undefined", () => {
             const outputPath = path.join(tempDir, "NoSkipFieldsSchemaMixin.ts");

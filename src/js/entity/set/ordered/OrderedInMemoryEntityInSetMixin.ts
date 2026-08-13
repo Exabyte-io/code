@@ -1,3 +1,5 @@
+import { SystemInSetSchema } from "@mat3ra/esse/dist/js/types";
+
 import { type InMemoryEntity } from "../../in_memory";
 import type { InMemoryEntityInSet } from "../InMemoryEntityInSetMixin";
 
@@ -9,7 +11,9 @@ export function orderedEntityInSetMixin<T extends InMemoryEntity & InMemoryEntit
     item: T,
 ): asserts item is T & OrderedInMemoryEntityInSet {
     // @ts-expect-error
-    const properties: InMemoryEntity & InMemoryEntityInSet & OrderedInMemoryEntityInSet = {
+    const properties: InMemoryEntity<SystemInSetSchema> &
+        InMemoryEntityInSet &
+        OrderedInMemoryEntityInSet = {
         getIndexByIdInOrderedSet(setId: string): number {
             const setData = this.inSet.find((s) => s._id === setId);
             return setData?.index || 0;

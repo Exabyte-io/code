@@ -7,7 +7,6 @@ import {
     NamedInMemoryEntity,
 } from "./other";
 import { ENTITY_SET_TYPES } from "./set/enums";
-import { constructEntitySetFactoryByConfig } from "./set/factory";
 import { InMemoryEntitySetMixin } from "./set/mixins";
 import { orderedEntityInSetMixin, orderedEntitySetMixin } from "./set/ordered/mixins";
 import * as selectorsForEntitySet from "./set/selectors";
@@ -20,7 +19,6 @@ export {
     HasMetadataNamedDefaultableInMemoryEntity,
     HasConsistencyChecksHasMetadataNamedDefaultableInMemoryEntity,
     ENTITY_SET_TYPES,
-    constructEntitySetFactoryByConfig,
     selectorsForEntitySet,
     InMemoryEntitySetMixin,
     orderedEntitySetMixin,

@@ -1,5 +1,9 @@
 import { InMemoryEntity } from "../in_memory";
 
+type ScopeTrackSchema = {
+    scopeTrack?: unknown[];
+};
+
 type ScopeTrackDescriptor = {
     get scopeTrack(): unknown[];
     set scopeTrack(array: unknown[]);
@@ -7,9 +11,9 @@ type ScopeTrackDescriptor = {
 
 function schemaMixin(item: InMemoryEntity) {
     // @ts-expect-error
-    const properties: InMemoryEntity & ScopeTrackDescriptor = {
+    const properties: InMemoryEntity<ScopeTrackSchema> & ScopeTrackDescriptor = {
         get scopeTrack(): unknown[] {
-            return this.prop("scopeTrack", []);
+            return this.prop("scopeTrack") ?? [];
         },
         set scopeTrack(array: unknown[]) {
             this.setProp("scopeTrack", array);
