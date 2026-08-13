@@ -12,7 +12,8 @@
         "transpile": "tsc -p tsconfig-transpile.json",
         "generate-mixins": "ts-node scripts/generate-mixins.ts",
         "references:sync": "node ../../scripts/manageReferencePackages.mjs sync",
-        "references:install": "node ../../scripts/manageReferencePackages.mjs install"
+        "references:install": "node ../../scripts/manageReferencePackages.mjs install",
+        "prepublishOnly": "npm run transpile"
     },
     "repository": {
         "type": "git",

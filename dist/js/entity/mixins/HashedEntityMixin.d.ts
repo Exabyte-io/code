@@ -1,9 +1,0 @@
-import { type HashedSchemaMixin } from "../../generated/HashedSchemaMixin";
-import type { Constructor } from "../../utils/types";
-import { InMemoryEntity } from "../in_memory";
-export type HashedEntity = HashedSchemaMixin & {
-    calculateHash(): string;
-    getHashObject?(): object;
-};
-export type HashedInMemoryEntityConstructor = Constructor<HashedEntity>;
-export declare function hashedEntityMixin<T extends InMemoryEntity>(item: T): asserts item is T & HashedEntity;
