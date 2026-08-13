@@ -1,0 +1,4 @@
+# Nested consumer pins for the web-app multi-consumer root.
+# Runner: ../../scripts/manageReferencePackages.mjs (shared catalog + tarball cache at repo root).
+targets:
+  esse: chore/SOF-7942
