@@ -1,1 +1,0 @@
-export function getUUID(): any;
