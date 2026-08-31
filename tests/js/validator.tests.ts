@@ -43,6 +43,24 @@ describe("JsonSchemaValidator.transformErrors", () => {
             },
         });
     });
+
+    it("maps additionalProperties errors to the offending key, not the parent object", () => {
+        const transformed = jsonSchemaValidator.transformErrors([
+            {
+                instancePath: "/job",
+                schemaPath: "#/properties/job/additionalProperties",
+                keyword: "additionalProperties",
+                params: { additionalProperty: "someExtraField" },
+                message: "must NOT have additional properties",
+            },
+        ] as never);
+
+        expect(transformed).to.deep.equal({
+            job: {
+                someExtraField: "UNKNOWN_PROPERTY",
+            },
+        });
+    });
 });
 
 describe("JsonSchemaValidator.validateAndClean", () => {

@@ -88,6 +88,7 @@ export class JsonSchemaValidator {
         minLength: "TOO_SHORT",
         maxLength: "TOO_LONG",
         isoDate: "WRONG_DATE",
+        additionalProperties: "UNKNOWN_PROPERTY",
     };
 
     constructor({ removeNull = true, removeEmptyStrings = true }: JsonSchemaValidatorOptions = {}) {
@@ -229,8 +230,13 @@ export class JsonSchemaValidator {
                     ? this.formatCodeMap[error.params.format] || "FORMAT_ERROR"
                     : this.keywordsCodeMap[error.keyword] || "FORMAT_ERROR";
 
-            const instancePath = error.params.missingProperty
-                ? `${error.instancePath}/${error.params.missingProperty}`
+            // AJV reports `additionalProperties` errors (like `required`'s `missingProperty`)
+            // against the *parent* object's instancePath, with the offending key only in
+            // `params` - without this, every rejected key on the same object collapses to one
+            // flat code on the parent, hiding which key(s) were actually unknown.
+            const offendingKey = error.params.missingProperty || error.params.additionalProperty;
+            const instancePath = offendingKey
+                ? `${error.instancePath}/${offendingKey}`
                 : error.instancePath;
 
             pointer.set(result, instancePath, code);
